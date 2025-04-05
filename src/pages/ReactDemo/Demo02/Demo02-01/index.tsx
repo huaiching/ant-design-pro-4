@@ -1,5 +1,5 @@
 import './store/index.css'    // 引入 css 樣式模組
-import Demo from './components/demo1'
+import SubDom from './components/subDom'
 import { PageContainer } from '@ant-design/pro-layout'
 
 const VDOM: React.FC = () => {
@@ -8,7 +8,7 @@ const VDOM: React.FC = () => {
     return (
         <PageContainer>
             {/* 子組件要使用 大寫開頭 */}
-            <Demo/>
+            <SubDom/>
             {/* JS表達式 要用 {} 包住 */}
             <div id={idvName}>
                 {/* 使用 css 樣式模組:，要用 className 屬性 */}

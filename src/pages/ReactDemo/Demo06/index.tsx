@@ -1,15 +1,15 @@
 import React from 'react';
 import { GlobalProvider } from './store/useUserContext';
-import Profile1 from './components/profile1';
-import Profile2 from './components/profile2';
+import SubDom1 from './components/subDom1';
+import SubDom2 from './components/subDom2';
 import { PageContainer } from '@ant-design/pro-layout';
 
 const App: React.FC = () => {
   return (
     <PageContainer>
       <GlobalProvider>
-        <Profile1 />
-        <Profile2 />
+        <SubDom1 />
+        <SubDom2 />
       </GlobalProvider>
     </PageContainer>
   );

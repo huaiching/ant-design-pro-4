@@ -1,9 +1,17 @@
 ﻿// icons: https://4x.ant.design/components/icon-cn/
 
-import route from "mock/route";
-
 export default [
-
+  // {
+  //   path: '/user',
+  //   component: '../layouts/UserLayout',
+  //   routes: [
+  //     {
+  //       name: 'login',
+  //       path: '/user/login',
+  //       component: './User/login',
+  //     },
+  //   ],
+  // },
   {
     path: '/',
     component: '../layouts/BasicLayout',

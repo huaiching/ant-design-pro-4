@@ -1,4 +1,5 @@
 export default {
+  'menu.home': '首頁',
   'menu.welcome': '說明',
 
   'menu.reactDemo': 'React 基本語法範例',
