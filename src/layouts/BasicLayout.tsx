@@ -134,6 +134,9 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     <ProLayout
       logo={logo}  // 設置 logo
       formatMessage={formatMessage}  // 設置國際化格式化方法
+      headerRender={false}  // 完全隱藏頂部Header
+      // menuHeaderRender={false}  // 隱藏菜單頭部(logo和標題)
+      // collapsedButtonRender={false}  // 隱藏摺疊按鈕
       {...props}
       {...settings}
       onCollapse={handleMenuCollapse}  // 折疊菜單的回調
