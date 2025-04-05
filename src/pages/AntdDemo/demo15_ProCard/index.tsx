@@ -1,5 +1,6 @@
 import ProCard from '@ant-design/pro-card';
-import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
+import ProForm, { ProFormText } from '@ant-design/pro-form';
+import type { ProFormInstance } from '@ant-design/pro-form';
 import { Button, Segmented } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { editOption } from './store/editOption';
