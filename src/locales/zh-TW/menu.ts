@@ -22,4 +22,8 @@ export default {
   'menu.reactDemo.demo08': 'useRef 從輸入框獲取值',
 
   'menu.antdDemo': 'Ant Design 元件範例',
+  
+  'menu.apiDemo': 'api 呼叫範例',
+  'menu.apiDemo.demo01': '一般呼叫',
+  'menu.apiDemo.demo02': '下載檔案',
 };

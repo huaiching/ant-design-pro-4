@@ -1,9 +1,8 @@
-import { CaretDownFilled, DownCircleTwoTone } from '@ant-design/icons';
+import { CaretDownFilled } from '@ant-design/icons';
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
 import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
 import { Button, Dropdown, Menu, message } from 'antd';
-import axios from 'axios';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 
 const MyForm: React.FC = () => {
     const formRef = useRef<ProFormInstance>()

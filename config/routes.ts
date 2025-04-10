@@ -160,6 +160,28 @@ export default [
         component: './AntdDemo',  // 組件路徑
       },
       
+      // api 呼叫範例
+      {
+        name: 'apiDemo',  // 路由名稱
+        icon: 'AntDesignOutlined',  // Ant Design 圖標
+        path: '/apiDemo',  // 路徑
+        routes: [  // 嵌套路由
+          {
+            // 頁面文件基本結構示例
+            name: 'demo01', 
+            path: 'demo01',  // 相對路徑，實際為 /reactDemo/demo01
+            component: './ApiDemo/Demo01',
+          },
+          {
+            // 頁面文件基本結構示例
+            name: 'demo02', 
+            path: 'demo02',  // 相對路徑，實際為 /reactDemo/demo01
+            component: './ApiDemo/Demo02',
+          },
+        ]
+
+      },
+      
       // 404 頁面（匹配當前布局下的未匹配路由）
       {
         component: './404',
