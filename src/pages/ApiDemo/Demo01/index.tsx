@@ -33,38 +33,36 @@ const MyForm: React.FC = () => {
     }
 
     return (
-        <>
-            <PageContainer>
-                <ProForm
-                    grid
-                    layout="vertical"
-                    formRef={formRef}
-                    submitter={false}
-                >
-                    <ProFormText
-                        name="clientId"
-                        label="客戶證號"
-                        placeholder="請輸入客戶證號"
-                    />
-                    <ProFormText
-                        name="names"
-                        label="姓名"
-                        placeholder="請輸入姓名"
-                    />
-                    <ProFormText
-                        name="birthDate"
-                        label="出生日期"
-                        placeholder="請輸入出生日期"
-                    />
-                    <ProFormText
-                        name="sex"
-                        label="性別"
-                        placeholder="請輸入性別"
-                    />
-                    <Button type='primary' onClick={async () => {clntSave()}}>clnt 資料存檔</Button>
-                </ProForm>
-            </PageContainer>
-        </>
+        <PageContainer>
+            <ProForm
+                grid
+                layout="vertical"
+                formRef={formRef}
+                submitter={false}
+            >
+                <ProFormText
+                    name="clientId"
+                    label="客戶證號"
+                    placeholder="請輸入客戶證號"
+                />
+                <ProFormText
+                    name="names"
+                    label="姓名"
+                    placeholder="請輸入姓名"
+                />
+                <ProFormText
+                    name="birthDate"
+                    label="出生日期"
+                    placeholder="請輸入出生日期"
+                />
+                <ProFormText
+                    name="sex"
+                    label="性別"
+                    placeholder="請輸入性別"
+                />
+                <Button type='primary' onClick={async () => {clntSave()}}>clnt 資料存檔</Button>
+            </ProForm>
+        </PageContainer>
     )
 };
 
