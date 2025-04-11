@@ -1,14 +1,14 @@
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import React, { useRef } from 'react';
-import { downloadPost } from '../store/Download';
+import { callDownloadApi } from '../store/apiCaller';
 
 const MyForm: React.FC = () => {
     const formRef = useRef<ProFormInstance>()
 
     const downloadReport = () => {
-      downloadPost('http://localhost:8080/export/exportDemo01', 'docx', {
+      callDownloadApi('POST', 'http://localhost:8080/export/exportDemo01', 'docx', {
         clientId: formRef.current?.getFieldValue("clientId"),
       })
     }
