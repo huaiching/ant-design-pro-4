@@ -163,7 +163,7 @@ export default [
       // api 呼叫範例
       {
         name: 'apiDemo',  // 路由名稱
-        icon: 'AntDesignOutlined',  // Ant Design 圖標
+        icon: 'ApiFilled',  // Ant Design 圖標
         path: '/apiDemo',  // 路徑
         routes: [  // 嵌套路由
           {
