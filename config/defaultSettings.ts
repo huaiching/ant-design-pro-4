@@ -13,7 +13,8 @@ const proSettings: DefaultSettings = {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'Ant Design Pro',
+  // title: 'Ant Design Pro',
+  title: '三商美邦人壽',
   pwa: false,
   iconfontUrl: '',
 };
