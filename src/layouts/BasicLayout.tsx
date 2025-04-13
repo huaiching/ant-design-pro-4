@@ -18,7 +18,7 @@ import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import type { ConnectState } from '@/models/connect';
 import { getMatchMenu } from '@umijs/route-utils';
-// import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 
 // 無權限訪問時顯示的頁面
 const noMatch = (
@@ -132,7 +132,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
 
   return (
     <ProLayout
-      logo={false}  // 設置 logo
+      logo={logo}  // 設置 logo
       formatMessage={formatMessage}  // 設置國際化格式化方法
       headerRender={false}  // 完全隱藏頂部Header
       // menuHeaderRender={false}  // 隱藏菜單頭部(logo和標題)
