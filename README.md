@@ -1,3 +1,26 @@
-<div> 此文件 修改至 Ant Design Pro 4 的 Git 範例 </div>
-<div> 主要目的為 練習 React 使用 </div>
-<div> 參考至 https://github.com/ant-design/ant-design-pro.git 的 v4 版 </div>
+# Ant Design Pro 4 練習專案
+
+本專案為基於 [Ant Design Pro v4](https://github.com/ant-design/ant-design-pro) 的練習專案，旨在熟悉 React 框架與 Ant Design Pro 中台前端解決方案的整合與使用。
+
+
+### 📦 安裝與啟動
+
+# 安裝依賴
+yarn install
+
+# 啟動開發伺服器
+yarn start
+啟動後預設網址為： http://localhost:8000
+
+# 主題與佈局設定
+主題與佈局相關設定可於 `config/config.ts` 或 `src/defaultSettings.ts` 中調整：
+```
+export default {
+  navTheme: 'dark', // 導覽列主題：'dark' | 'light'
+  primaryColor: '#1890FF', // 主色
+  layout: 'sidemenu', // 佈局方式：'sidemenu' | 'topmenu'
+  contentWidth: 'Fluid', // 內容寬度：'Fixed' | 'Fluid'
+  fixedHeader: false, // 固定頁首
+  fixSiderbar: false, // 固定側邊欄
+};
+```
