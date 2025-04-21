@@ -21,11 +21,11 @@ yarn clean
 主題與佈局相關設定可於 `config/config.ts` 或 `src/defaultSettings.ts` 中調整：
 ```
 export default {
-  navTheme: 'dark', // 導覽列主題：'dark' | 'light'
-  primaryColor: '#1890FF', // 主色
-  layout: 'sidemenu', // 佈局方式：'sidemenu' | 'topmenu'
-  contentWidth: 'Fluid', // 內容寬度：'Fixed' | 'Fluid'
-  fixedHeader: false, // 固定頁首
-  fixSiderbar: false, // 固定側邊欄
+  navTheme: 'dark',         // 導覽列主題：'dark' | 'light'
+  primaryColor: '#1890FF',  // 主色
+  layout: 'sidemenu',       // 佈局方式：'sidemenu' | 'topmenu'
+  contentWidth: 'Fluid',    // 內容寬度：'Fixed' | 'Fluid'
+  fixedHeader: false,       // 固定頁首
+  fixSiderbar: false,       // 固定側邊欄
 };
 ```
