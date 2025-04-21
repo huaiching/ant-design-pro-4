@@ -3,7 +3,6 @@
 本專案為基於 [Ant Design Pro v4](https://github.com/ant-design/ant-design-pro) 的練習專案，旨在熟悉 React 框架與 Ant Design Pro 中台前端解決方案的整合與使用。
 
 
-### 📦 安裝與啟動
 
 # 安裝依賴
 yarn install
