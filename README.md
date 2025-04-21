@@ -10,10 +10,13 @@ yarn install
 
 # 啟動開發伺服器
 ``node <  16`` : yarn start 
+
 ``node >= 16`` : yarn start:new
 
-
 啟動後預設網址為： http://localhost:8000
+
+# 刪除依賴
+yarn clean
 
 # 主題與佈局設定
 主題與佈局相關設定可於 `config/config.ts` 或 `src/defaultSettings.ts` 中調整：
