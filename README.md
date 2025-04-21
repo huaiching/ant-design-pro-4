@@ -9,7 +9,9 @@
 yarn install
 
 # 啟動開發伺服器
-yarn start
+``node <  16`` : yarn start 
+``node >= 16`` : yarn start:new
+
 
 啟動後預設網址為： http://localhost:8000
 
