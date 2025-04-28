@@ -1,11 +1,16 @@
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Space } from 'antd';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { callActionApi, callDataApi } from '../store/apiCaller';
 
 const MyForm: React.FC = () => {
     const formRef = useRef<ProFormInstance>()
+
+    useEffect(() => {
+        console.log('env: ', process)
+        // console.log('env: ', process.env.REACT_APP_API_URL)  // 這裡的 process.env 是 undefined
+    }, [])
 
     const clntSave = () => {
         callActionApi('POST', 'http://localhost:8080/clnt/save', 
@@ -67,6 +72,9 @@ const MyForm: React.FC = () => {
                     placeholder="請輸入性別"
                 />
             </ProForm>
+            {/* <div>
+                env: ${process.env}
+            </div> */}
         </PageContainer>
     )
 };

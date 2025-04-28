@@ -1,4 +1,4 @@
-import { MliFormRow } from '@/common';
+import MliFormRow from '@/common/components/form/MliFormRow';
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
 import { FooterToolbar } from '@ant-design/pro-layout';
 import { Button, message, Typography } from 'antd';
