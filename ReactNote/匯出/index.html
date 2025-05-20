@@ -10,6 +10,7 @@
       display: flex;
       height: 100vh;
     }
+
     nav {
       width: 350px;
       background-color: #f5f5f5;
@@ -18,24 +19,39 @@
       box-sizing: border-box;
       overflow-y: auto;
     }
+
     nav h2 {
       font-size: 1.2em;
       margin-top: 0;
     }
+
     nav ul {
       list-style: none;
       padding: 0;
     }
+
     nav li {
       margin: 0.5em 0;
     }
+
     nav a {
       color: #007BFF;
       text-decoration: none;
+      display: block;
+      padding: 0.2em;
+      border-radius: 4px;
     }
+
     nav a:hover {
       text-decoration: underline;
     }
+
+    nav a.active {
+      background-color: #007BFF;
+      color: white;
+      font-weight: bold;
+    }
+
     iframe {
       flex: 1;
       border: none;
@@ -58,7 +74,7 @@
       <li><a href="components/08_JS 介紹 - 陣列.html" target="content-frame">08 JS 介紹 - 陣列</a></li>
       <li><a href="components/09_JS 介紹 - 函式.html" target="content-frame">09 JS 介紹 - 函式</a></li>
       <li><a href="components/10_JS 介紹 - 多型別變數(聯集與交集).html" target="content-frame">10 JS 介紹 - 多型別變數(聯集與交集)</a></li>
-      <li><a href="components/11_JS 介紹 - JS 語句.html" target="content-frame">11 JS 介紹 - JS 語句.</a></li>
+      <li><a href="components/11_JS 介紹 - JS 語句.html" target="content-frame">11 JS 介紹 - JS 語句</a></li>
       <li><a href="components/12_JS 介紹 - 樣板字串.html" target="content-frame">12 JS 介紹 - 樣板字串</a></li>
       <li><a href="components/13_JS 介紹 - 空值判斷.html" target="content-frame">13 JS 介紹 - 空值判斷</a></li>
       <li><a href="components/14_useState 狀態機.html" target="content-frame">14 useState 狀態機</a></li>
@@ -71,6 +87,38 @@
     </ul>
   </nav>
 
-  <iframe name="content-frame" src="components/01_前置作業.html"></iframe>
+  <iframe name="content-frame" src="components/01_前置作業.html" id="content-frame"></iframe>
+
+  <script>
+    const links = document.querySelectorAll('nav a');
+    const iframe = document.getElementById('content-frame');
+
+    function setActiveLink(href) {
+      links.forEach(link => {
+        if (link.getAttribute('href') === href) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+
+    // 初始載入
+    setActiveLink(iframe.getAttribute('src'));
+
+    // 當使用者點擊側邊欄連結時，更新樣式
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        setActiveLink(link.getAttribute('href'));
+      });
+    });
+
+    // 當 iframe 中的內容變動時也嘗試更新（部分支援）
+    iframe.addEventListener('load', () => {
+      const src = iframe.contentWindow.location.pathname.split('/').pop();
+      const fullPath = 'components/' + src;
+      setActiveLink(fullPath);
+    });
+  </script>
 </body>
 </html>
