@@ -64,7 +64,4 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM
-
-
-
 ```
