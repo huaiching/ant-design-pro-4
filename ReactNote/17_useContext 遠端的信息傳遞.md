@@ -51,6 +51,7 @@
 ## 進階方法: 設定全域狀態變數
 
 - 全域狀態變數設定
+  
   store/useUserContext.tsx
   
   ```tsx
@@ -100,11 +101,10 @@
       }
       return context;
     }; 
-  
-  
   ```
 
 - 父組件: 使用全域狀態變數
+  
   index.tsx
   
   ```tsx
@@ -171,7 +171,6 @@
   };
   
   export default Profile;
-  
   ```
 
 - 子組件: 顯示全域狀態變數資料
@@ -192,5 +191,4 @@
       )
   }
   export default Component
-  
   ```
