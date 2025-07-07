@@ -1,33 +1,33 @@
 import React from 'react';
 import { ProFormInstance, ProFormText } from '@ant-design/pro-form';
 
-interface Tab2Props {
+interface Tab1Props {
   formRef: React.RefObject<ProFormInstance>;
 }
 
-const Tab2: React.FC<Tab2Props> = ({ formRef }) => {
+const Tab1: React.FC<Tab1Props> = ({ formRef }) => {
   return (
     <>
       <ProFormText
-        name="name"
+        name={['basic', 'name']}
         label="基本資料-姓名 (唯讀)"
         readonly
         fieldProps={{
-          value: formRef.current?.getFieldValue('name'),
+          value: formRef.current?.getFieldValue('basic.name'),
         }}
       />
       <ProFormText
-        name="tab2_field1"
-        label="分頁2 欄位1"
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
         rules={[{ required: true, message: '此欄位為必填' }]}
       />
       <ProFormText
-        name="tab2_field2"
-        label="分頁2 欄位2"
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
         rules={[{ required: true, message: '此欄位為必填' }]}
       />
     </>
   );
 };
 
-export default Tab2;
+export default Tab1;

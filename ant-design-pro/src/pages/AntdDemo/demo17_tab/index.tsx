@@ -2,9 +2,9 @@ import React, { useRef, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
 import { Button, Card, Tabs, message } from 'antd';
-import Tab1 from './components/StepOne';
-import Tab2 from './components/StepTwo';
-import Tab3 from './components/StepThree';
+import Tab1 from './components/Tab1';
+import Tab2 from './components/Tab2';
+import Tab3 from './components/Tab3';
 
 const { TabPane } = Tabs;
 
@@ -101,12 +101,12 @@ const TabExample: React.FC = () => {
         <Card>
           <h3>基本資料</h3>
           <ProFormText
-            name="name"
+            name={['basic', 'name']}
             label="姓名"
             rules={[{ required: true, message: '請輸入姓名' }]}
           />
           <ProFormText
-            name="email"
+            name={['basic', 'email']}
             label="電子郵件"
             rules={[{ required: true, message: '請輸入電子郵件' }]}
           />
