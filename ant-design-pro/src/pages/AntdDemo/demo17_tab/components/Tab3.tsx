@@ -9,11 +9,11 @@ const Tab1: React.FC<Tab1Props> = ({ formRef }) => {
   return (
     <>
       <ProFormText
-        name={['basic', 'name']}
-        label="基本資料-姓名 (唯讀)"
+        name={['basic', 'clientId']}
+        label="申請人ID"
         readonly
         fieldProps={{
-          value: formRef.current?.getFieldValue('basic.name'),
+          value: formRef.current?.getFieldValue('basic.clientId'),
         }}
       />
       <ProFormText
