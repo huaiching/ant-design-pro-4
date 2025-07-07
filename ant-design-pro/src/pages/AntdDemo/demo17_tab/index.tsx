@@ -1,22 +1,41 @@
 import React, { useRef, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
-import { Button, Tabs, message } from 'antd';
+import { Button, Card, Tabs, message } from 'antd';
 import Tab1 from './components/StepOne';
 import Tab2 from './components/StepTwo';
 import Tab3 from './components/StepThree';
 
 const { TabPane } = Tabs;
 
+// 定義 Tab 配置
+const tabConfig = [
+  {
+    key: 'tab1',
+    title: '分頁1',
+    component: Tab1,
+  },
+  {
+    key: 'tab2',
+    title: '分頁2',
+    component: Tab2,
+  },
+  {
+    key: 'tab3',
+    title: '分頁3',
+    component: Tab3,
+  },
+];
+
 const TabExample: React.FC = () => {
   const formRef = useRef<ProFormInstance>(null);
-  const [activeTab, setActiveTab] = useState<string>('tab1');
+  const [activeTab, setActiveTab] = useState<string>(tabConfig[0].key);
 
   // 表單提交處理
   const handleSubmit = async () => {
     try {
       const values = await formRef.current?.validateFields();
-      console.log('Form Values:', values);
+      console.log('表單數據:', values);
       message.success('表單數據已輸出至控制台');
     } catch (error) {
       message.error('表單驗證失敗');
@@ -34,19 +53,17 @@ const TabExample: React.FC = () => {
 
   // 上一頁
   const handlePrevTab = () => {
-    const tabs = ['tab1', 'tab2', 'tab3'];
-    const currentIndex = tabs.indexOf(activeTab);
+    const currentIndex = tabConfig.findIndex(tab => tab.key === activeTab);
     if (currentIndex > 0) {
-      handleTabChange(tabs[currentIndex - 1]);
+      handleTabChange(tabConfig[currentIndex - 1].key);
     }
   };
 
   // 下一頁
   const handleNextTab = () => {
-    const tabs = ['tab1', 'tab2', 'tab3'];
-    const currentIndex = tabs.indexOf(activeTab);
-    if (currentIndex < tabs.length - 1) {
-      handleTabChange(tabs[currentIndex + 1]);
+    const currentIndex = tabConfig.findIndex(tab => tab.key === activeTab);
+    if (currentIndex < tabConfig.length - 1) {
+      handleTabChange(tabConfig[currentIndex + 1].key);
     }
   };
 
@@ -63,14 +80,14 @@ const TabExample: React.FC = () => {
             <Button
               key="prev"
               onClick={handlePrevTab}
-              disabled={activeTab === 'tab1'}
+              disabled={activeTab === tabConfig[0].key}
             >
               上一頁
             </Button>,
             <Button
               key="next"
               onClick={handleNextTab}
-              disabled={activeTab === 'tab3'}
+              disabled={activeTab === tabConfig[tabConfig.length - 1].key}
             >
               下一頁
             </Button>,
@@ -80,8 +97,8 @@ const TabExample: React.FC = () => {
           ],
         }}
       >
-        {/* 上區：基本資料 */}
-        <div style={{ background: '#fff', padding: 24, marginBottom: 24 }}>
+        {/* 基本資料區 */}
+        <Card>
           <h3>基本資料</h3>
           <ProFormText
             name="name"
@@ -93,22 +110,20 @@ const TabExample: React.FC = () => {
             label="電子郵件"
             rules={[{ required: true, message: '請輸入電子郵件' }]}
           />
-        </div>
+        </Card>
+        <br />
 
-        {/* 下區：Tabs */}
-        <div style={{ background: '#fff', padding: 24 }}>
+        {/* Tab 區 */}
+        <Card>
           <Tabs activeKey={activeTab} onChange={handleTabChange}>
-            <TabPane tab="分頁1" key="tab1">
-              <Tab1 formRef={formRef} />
-            </TabPane>
-            <TabPane tab="分頁2" key="tab2">
-              <Tab2 formRef={formRef} />
-            </TabPane>
-            <TabPane tab="分頁3" key="tab3">
-              <Tab3 formRef={formRef} />
-            </TabPane>
+            {tabConfig.map(({ key, title, component: Component }) => (
+              <TabPane tab={title} key={key}>
+                <Component formRef={formRef} />
+              </TabPane>
+            ))}
           </Tabs>
-        </div>
+        </Card>
+        <br />
       </ProForm>
     </PageContainer>
   );
