@@ -1,5 +1,6 @@
 import React from 'react';
 import { ProFormInstance, ProFormText } from '@ant-design/pro-form';
+import MliFormRow from '@/common/components/form/MliFormRow';
 
 interface Tab1Props {
   formRef: React.RefObject<ProFormInstance>;
@@ -8,14 +9,24 @@ interface Tab1Props {
 const Tab1: React.FC<Tab1Props> = ({ formRef }) => {
   return (
     <>
-      <ProFormText
-        name={['basic', 'clientId']}
-        label="申請人ID"
-        readonly
-        fieldProps={{
-          value: formRef.current?.getFieldValue('basic.clientId'),
-        }}
-      />
+      <MliFormRow>
+        <ProFormText
+          name={['basic', 'clientId']}
+          label="申請人ID"
+          readonly
+          fieldProps={{
+            value: formRef.current?.getFieldValue('basic.clientId'),
+          }}
+        />
+        <ProFormText
+          name={['basic', 'names']}
+          label="申請人姓名"
+          readonly
+          fieldProps={{
+            value: formRef.current?.getFieldValue('basic.names'),
+          }}
+        />
+      </MliFormRow>
       <ProFormText
         name={['tab1', 'field1']}
         label="分頁1 欄位1"

@@ -1,10 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { PageContainer } from '@ant-design/pro-layout';
+import React, { useRef, useState } from 'react';
+import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
-import { Button, Card, Tabs, message } from 'antd';
+import { Button, Tabs, message } from 'antd';
 import Tab1 from './components/Tab1';
 import Tab2 from './components/Tab2';
 import Tab3 from './components/Tab3';
+import Card1 from './components/Card1';
+import MliFormRow from '@/common/components/form/MliFormRow';
+import ProCard from '@ant-design/pro-card';
 
 const { TabPane } = Tabs;
 
@@ -90,50 +93,80 @@ const TabExample: React.FC = () => {
   };
 
   return (
-    <PageContainer title="表單 Tab 範例" content="這是一個帶有基本資料和多個 Tab 的表單範例">
+    <PageContainer title="表單 Tab 範例" >
       <ProForm
+        grid
+        layout="vertical"
         formRef={formRef}
         onFinish={handleSubmit}
         submitter={{
-          render: () => [
-            <Button key="prev" onClick={handlePrevTab} disabled={activeTab === 'tab1'}>
-              上一頁
-            </Button>,
-            <Button key="next" onClick={handleNextTab} disabled={activeTab === 'tab3'}>
-              下一頁
-            </Button>,
-            <Button
-              key="submit"
-              type="primary"
-              onClick={handleSubmit}
-            >
-              送出
-            </Button>,
-          ],
+          render: () => (
+            <FooterToolbar>
+              <Button key="prev" onClick={handlePrevTab} disabled={activeTab === 'tab1'}>
+                上一頁
+              </Button>
+              <Button key="next" onClick={handleNextTab} disabled={activeTab === 'tab3'}>
+                下一頁
+              </Button>
+              <Button
+                key="submit"
+                type="primary"
+                onClick={handleSubmit}
+              >
+                送出
+              </Button>
+            </FooterToolbar>
+          )
         }}
       >
         {/* 基本資料 */}
-        <Card title="基本資料">
+        <ProCard title="基本資料" style={{ width: '100%' }}>
+          <MliFormRow>
+            <ProFormText 
+            name={['basic', 'clientId']} 
+            label="申請人ID" 
+            rules={[{ required: true, message: '請輸入申請人ID' }]} 
+            fieldProps={{
+              onBlur: async (e) => {
+                const clientId = e.target.value;
+                if (clientId) {
+                  // 模擬 API 呼叫以獲取申請人姓名
+                  const names = await new Promise<string>((resolve) => {
+                    setTimeout(() => resolve('張三'), 1000); // 模擬延遲
+                  });
+                  formRef.current?.setFieldsValue({
+                    basic: { names }
+                  });
+                }
+              }
+            }}
+            />
           <ProFormText 
-           name={['basic', 'clientId']} 
-           label="申請人ID" 
-           rules={[{ required: true, message: '請輸入申請人ID' }]} 
+            name={['basic', 'names']} 
+            label="申請人姓名" 
+            disabled 
+            readonly
           />
-          <ProFormText 
-           name={['basic', 'policyNo']} 
-           label="保單號碼" 
-           rules={[{ required: true, message: '請輸入保單號碼' }]} 
-          />
-          <ProFormText 
-           name={['basic', 'receiveNo']} 
-           label="受理號碼" 
-           rules={[{ required: true, message: '請輸入受理號碼' }]} 
-          />
-        </Card>
+          </MliFormRow>
+          <MliFormRow>
+            <ProFormText 
+              name={['basic', 'policyNo']} 
+              label="保單號碼" 
+              rules={[{ required: true, message: '請輸入保單號碼' }]} 
+            />
+            <ProFormText 
+              name={['basic', 'receiveNo']} 
+              label="受理號碼" 
+              rules={[{ required: true, message: '請輸入受理號碼' }]} 
+            />
+          </MliFormRow>
+        </ProCard>
+        
+        {/* 分頁1 */}
+        <Card1 formRef={formRef} />
 
-        <br />
-
-        <Card>
+        {/* Tab 分頁 */}
+        <ProCard style={{ width: '100%' }}>
           <Tabs activeKey={activeTab} onChange={handleTabChange}>
             {tabConfig.map(({ key, title, component: Component }) => (
               <TabPane tab={title} key={key}>
@@ -141,7 +174,7 @@ const TabExample: React.FC = () => {
               </TabPane>
             ))}
           </Tabs>
-        </Card>
+        </ProCard>
       </ProForm>
     </PageContainer>
   );
