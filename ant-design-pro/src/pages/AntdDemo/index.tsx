@@ -10,12 +10,13 @@ import Demo10 from "./demo10_ProFormUploadButton";
 import Demo11 from "./demo11_ProTable";
 import Demo15 from "./demo15_ProCard";
 import Demo16 from "./demo16_StepsForm";
+import Demo17 from "./demo17_tab";
 
 
 export default function IndexPage() {
   return (
     <div>
-      <Demo2/>
+      <Demo17/>
     </div>
   );
 }
