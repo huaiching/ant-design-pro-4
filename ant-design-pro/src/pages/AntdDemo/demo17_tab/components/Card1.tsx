@@ -8,11 +8,12 @@ interface Tab1Props {
 
 const Tab1: React.FC<Tab1Props> = ({ formRef }) => {
   return (
-    <ProCard
-        title="分頁1"
-        headerBordered      // 有 分隔線
-        collapsible         // 有 摺疊
-        defaultCollapsed    // 預設 折疊
+    <ProCard 
+      ghost
+      title="分頁1"
+      headerBordered      // 有 分隔線
+      collapsible         // 有 摺疊
+      defaultCollapsed    // 預設 折疊
     >
        <h3>分頁1</h3>
     </ProCard>

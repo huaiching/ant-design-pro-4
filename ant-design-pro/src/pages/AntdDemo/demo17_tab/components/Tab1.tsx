@@ -35,7 +35,207 @@ const Tab1: React.FC<Tab1Props> = ({ formRef }) => {
       <ProFormText
         name={['tab1', 'field2']}
         label="分頁1 欄位2"
-        rules={[{ required: true, message: '此欄位為必填' }]}
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field1']}
+        label="分頁1 欄位1"
+        
+      />
+      <ProFormText
+        name={['tab1', 'field2']}
+        label="分頁1 欄位2"
+        
       />
     </>
   );

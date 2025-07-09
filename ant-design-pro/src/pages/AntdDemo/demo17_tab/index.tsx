@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
-import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
-import { Button, Tabs, message } from 'antd';
+import ProForm, { ProFormInstance, ProFormText, ProFormGroup, ProFormSelect, ProFormItem } from '@ant-design/pro-form';
+import { AutoComplete, Button, Col, Layout, Tabs, message } from 'antd';
 import Tab1 from './components/Tab1';
 import Tab2 from './components/Tab2';
 import Tab3 from './components/Tab3';
 import Card1 from './components/Card1';
 import MliFormRow from '@/common/components/form/MliFormRow';
 import ProCard from '@ant-design/pro-card';
+import { Content, Header } from 'antd/lib/layout/layout';
 
 const { TabPane } = Tabs;
 
@@ -15,6 +16,32 @@ const tabConfig = [
   { key: 'tab1', title: '分頁1', component: Tab1 },
   { key: 'tab2', title: '分頁2', component: Tab2 },
   { key: 'tab3', title: '分頁3', component: Tab3 },
+];
+
+// Taiwanese counties for the dropdown
+const countyOptions = [
+  { label: '臺北市', value: '臺北市' },
+  { label: '新北市', value: '新北市' },
+  { label: '桃園市', value: '桃園市' },
+  { label: '臺中市', value: '臺中市' },
+  { label: '臺南市', value: '臺南市' },
+  { label: '高雄市', value: '高雄市' },
+  { label: '基隆市', value: '基隆市' },
+  { label: '新竹市', value: '新竹市' },
+  { label: '嘉義市', value: '嘉義市' },
+  { label: '新竹縣', value: '新竹縣' },
+  { label: '苗栗縣', value: '苗栗縣' },
+  { label: '彰化縣', value: '彰化縣' },
+  { label: '南投縣', value: '南投縣' },
+  { label: '雲林縣', value: '雲林縣' },
+  { label: '嘉義縣', value: '嘉義縣' },
+  { label: '屏東縣', value: '屏東縣' },
+  { label: '宜蘭縣', value: '宜蘭縣' },
+  { label: '花蓮縣', value: '花蓮縣' },
+  { label: '臺東縣', value: '臺東縣' },
+  { label: '澎湖縣', value: '澎湖縣' },
+  { label: '金門縣', value: '金門縣' },
+  { label: '連江縣', value: '連江縣' },
 ];
 
 const TabExample: React.FC = () => {
@@ -92,8 +119,16 @@ const TabExample: React.FC = () => {
     }
   };
 
+  const ActiveComponent = tabConfig.find(item => item.key === activeTab)?.component;
+
   return (
-    <PageContainer title="表單 Tab 範例" >
+    <PageContainer
+      title="表單 Tab 範例"
+      style={{
+        paddingBottom: 0,
+        marginBottom: 0,
+      }}
+    >
       <ProForm
         grid
         layout="vertical"
@@ -120,60 +155,109 @@ const TabExample: React.FC = () => {
         }}
       >
         {/* 基本資料 */}
-        <ProCard title="基本資料" style={{ width: '100%' }}>
+        <ProCard ghost style={{ width: '100%' }}>
           <MliFormRow>
-            <ProFormText 
-            name={['basic', 'clientId']} 
-            label="申請人ID" 
-            rules={[{ required: true, message: '請輸入申請人ID' }]} 
-            fieldProps={{
-              onBlur: async (e) => {
-                const clientId = e.target.value;
-                if (clientId) {
-                  // 模擬 API 呼叫以獲取申請人姓名
-                  const names = await new Promise<string>((resolve) => {
-                    setTimeout(() => resolve('張三'), 1000); // 模擬延遲
-                  });
-                  formRef.current?.setFieldsValue({
-                    basic: { names }
-                  });
+            <ProFormText
+              name={['basic', 'clientId']}
+              label="申請人ID"
+              rules={[{ required: true, message: '請輸入申請人ID' }]}
+              fieldProps={{
+                onBlur: async (e) => {
+                  const clientId = e.target.value;
+                  if (clientId) {
+                    // 模擬 API 呼叫以獲取申請人姓名
+                    const names = await new Promise<string>((resolve) => {
+                      setTimeout(() => resolve('張三'), 1000); // 模擬延遲
+                    });
+                    formRef.current?.setFieldsValue({
+                      basic: { names }
+                    });
+                  }
                 }
-              }
-            }}
+              }}
             />
-          <ProFormText 
-            name={['basic', 'names']} 
-            label="申請人姓名" 
-            disabled 
-            readonly
-          />
+            <ProFormText
+              name={['basic', 'names']}
+              label="申請人姓名"
+              disabled
+              readonly
+            />
           </MliFormRow>
           <MliFormRow>
-            <ProFormText 
-              name={['basic', 'policyNo']} 
-              label="保單號碼" 
-              rules={[{ required: true, message: '請輸入保單號碼' }]} 
+            <ProFormText
+              name={['basic', 'policyNo']}
+              label="保單號碼"
+              rules={[{ required: true, message: '請輸入保單號碼' }]}
             />
-            <ProFormText 
-              name={['basic', 'receiveNo']} 
-              label="受理號碼" 
-              rules={[{ required: true, message: '請輸入受理號碼' }]} 
+            <ProFormText
+              name={['basic', 'receiveNo']}
+              label="受理號碼"
+              rules={[{ required: true, message: '請輸入受理號碼' }]}
             />
+          </MliFormRow>
+          <MliFormRow>
+            <ProFormGroup title="地址資訊" titleStyle={{ fontWeight: 'normal' }}>
+              <ProFormSelect
+                name={['basic', 'address', 'county']}
+                placeholder="請選擇縣市"
+                rules={[{ required: true, message: '請選擇縣市' }]}
+                width="sm"
+                colProps={{ span: 8 }}
+                options={countyOptions}
+                showSearch
+              />
+              <ProFormText
+                name={['basic', 'address', 'district']}
+                placeholder="請輸入區"
+                rules={[{ required: true, message: '請輸入區' }]}
+                width="sm"
+                colProps={{ span: 8 }}
+              />
+              <ProFormText
+                name={['basic', 'address', 'road']}
+                placeholder="請輸入路段"
+                rules={[{ required: true, message: '請輸入路段' }]}
+                width="md"
+                colProps={{ span: 8 }}
+              />
+            </ProFormGroup>
+          </MliFormRow>
+          <MliFormRow>
+            <Col span={3}>
+              <ProFormItem
+                name={['basic', 'customInput']}
+                label="偏好飲料"
+                rules={[{ required: true, message: '請輸入或選擇飲料' }]}
+              >
+                <AutoComplete
+                  placeholder="請輸入或選擇飲料"
+                  options={[
+                    { label: '紅茶', value: '1' },
+                    { label: '綠茶', value: '2' },
+                    { label: '咖啡', value: '3' },
+                  ]}
+                  allowClear
+                />
+              </ProFormItem>
+            </Col>
           </MliFormRow>
         </ProCard>
-        
+
         {/* 分頁1 */}
         <Card1 formRef={formRef} />
 
         {/* Tab 分頁 */}
-        <ProCard style={{ width: '100%' }}>
+        <ProCard ghost style={{ width: '100%' }}>
           <Tabs activeKey={activeTab} onChange={handleTabChange}>
-            {tabConfig.map(({ key, title, component: Component }) => (
-              <TabPane tab={title} key={key}>
-                <Component formRef={formRef} />
-              </TabPane>
+            {tabConfig.map(({ key, title }) => (
+              <TabPane tab={title} key={key} />
             ))}
           </Tabs>
+        </ProCard>
+
+        {/* 動態載入的 Tab 內容 */}
+        <ProCard ghost style={{ width: '100%' }}>
+          {ActiveComponent && <ActiveComponent formRef={formRef} />}
         </ProCard>
       </ProForm>
     </PageContainer>
