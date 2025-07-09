@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
 import ProForm, { ProFormInstance, ProFormText, ProFormGroup, ProFormSelect, ProFormItem } from '@ant-design/pro-form';
-import { AutoComplete, Button, Col, Tabs, message } from 'antd';
+import { AutoComplete, Button, Col, Layout, Tabs, message } from 'antd';
 import Tab1 from './components/Tab1';
 import Tab2 from './components/Tab2';
 import Tab3 from './components/Tab3';
 import Card1 from './components/Card1';
 import MliFormRow from '@/common/components/form/MliFormRow';
 import ProCard from '@ant-design/pro-card';
+import { Content, Header } from 'antd/lib/layout/layout';
 
 const { TabPane } = Tabs;
 
@@ -121,13 +122,8 @@ const TabExample: React.FC = () => {
   const ActiveComponent = tabConfig.find(item => item.key === activeTab)?.component;
 
   return (
-    <PageContainer
-      title="表單 Tab 範例"
-      style={{
-        paddingBottom: 0,
-        marginBottom: 0,
-      }}
-    >
+      <>
+      <PageContainer title="表單 Tab 範例" style={{ width: '100%' }} />
       <ProForm
         grid
         layout="vertical"
@@ -153,6 +149,21 @@ const TabExample: React.FC = () => {
           )
         }}
       >
+        {/* <Layout style={{ minHeight: '100vh' }}>
+        <Header
+          style={{
+            position: 'fixed', // 固定在頁面頂部
+            top: 0, // 頂部對齊
+            width: '100%', // 寬度佔滿頁面
+            height: '50vh', // 高度為視口高度的 50%
+            zIndex: 1000, // 確保層級高於其他內容
+            // padding: 0, // 移除預設內邊距
+            // paddingLeft: 4, // 左邊距
+            // paddingTop: 25, // 上邊距
+            // margin: 0, // 移除外邊距
+            backgroundColor: '#f0f2f5', // 設置透明底色
+          }}
+        > */}
         {/* 基本資料 */}
         <ProCard ghost style={{ width: '100%' }}>
           <MliFormRow>
@@ -244,7 +255,16 @@ const TabExample: React.FC = () => {
 
         {/* 分頁1 */}
         <Card1 formRef={formRef} />
+        {/* </Header> */}
 
+ 
+        {/* <Content
+          style={{
+            marginTop: '50vh', // 從視口高度 50% 處開始，避免被 Header 遮擋
+            height: '50vh', // 高度為視口高度的 50%
+            padding: '0 16px', // 左右邊距 16px
+          }}
+        > */}
         {/* Tab 分頁 */}
         <ProCard ghost style={{ width: '100%' }}>
           <Tabs activeKey={activeTab} onChange={handleTabChange}>
@@ -258,8 +278,10 @@ const TabExample: React.FC = () => {
         <ProCard ghost style={{ width: '100%' }}>
           {ActiveComponent && <ActiveComponent formRef={formRef} />}
         </ProCard>
+        {/* </Content>
+        </Layout> */}
       </ProForm>
-    </PageContainer>
+      </>
   );
 };
 
