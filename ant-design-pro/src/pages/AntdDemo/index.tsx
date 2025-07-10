@@ -1,3 +1,5 @@
+
+import Demo1 from "./demo1_MliFormRow";
 import Demo2 from "./demo2_ProFormText";
 import Demo3 from "./demo3_ProFormTextArea";
 import Demo4 from "./demo4_ProFormSelect";
@@ -18,7 +20,7 @@ import Demo19 from "./demo19_AutoComplete";
 export default function IndexPage() {
   return (
     <div>
-      <Demo17/>
+      <Demo1/>
     </div>
   );
 }
