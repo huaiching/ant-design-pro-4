@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
 import ProForm, { ProFormInstance, ProFormText, ProFormGroup, ProFormSelect, ProFormItem } from '@ant-design/pro-form';
-import { AutoComplete, Button, Col, Layout, Tabs, message } from 'antd';
+import { AutoComplete, BackTop, Button, Col, Layout, Tabs, message } from 'antd';
 import Tab1 from './components/Tab1';
 import Tab2 from './components/Tab2';
 import Tab3 from './components/Tab3';
@@ -281,6 +281,7 @@ const TabExample: React.FC = () => {
         {/* </Content>
         </Layout> */}
       </ProForm>
+      <BackTop/>
       </>
   );
 };

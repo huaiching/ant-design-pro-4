@@ -11,6 +11,8 @@ import Demo11 from "./demo11_ProTable";
 import Demo15 from "./demo15_ProCard";
 import Demo16 from "./demo16_StepsForm";
 import Demo17 from "./demo17_tab";
+import Demo18 from "./demo18_ProFormGroup";
+import Demo19 from "./demo19_AutoComplete";
 
 
 export default function IndexPage() {
