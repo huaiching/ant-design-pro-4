@@ -15,12 +15,13 @@ import Demo16 from "./demo16_StepsForm";
 import Demo17 from "./demo17_tab";
 import Demo18 from "./demo18_ProFormGroup";
 import Demo19 from "./demo19_AutoComplete";
+import Demo20 from "./demo20_ProFormList";
 
 
 export default function IndexPage() {
   return (
     <div>
-      <Demo1/>
+      <Demo20/>
     </div>
   );
 }
