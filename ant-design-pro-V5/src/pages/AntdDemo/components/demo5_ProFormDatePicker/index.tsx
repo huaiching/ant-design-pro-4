@@ -82,8 +82,8 @@ const MyForm: React.FC = () => {
               { required: true, message: '日期為必填項' },
             ]}
             fieldProps={{
-              format: (data: any) => data ? momentTW(data).format('tYY/MM/DD') : '',
-              // format: 'YYYY/MM/DD'
+              // format: (data: any) => momentTW(data).format('tYY/MM/DD'),
+              format: 'YYYY/MM/DD'
             }}
           />
           <ProFormDatePicker
