@@ -1,6 +1,6 @@
 /**
  * loading 占位
- * 解决首次加载时白屏的问题
+ * 解決首次載入時白屏的問題
  */
 (function () {
   const _root = document.querySelector('#root');
@@ -191,10 +191,10 @@
           </div>
         </div>
         <div class="loading-title">
-          正在加载资源
+          正在載入資源
         </div>
         <div class="loading-sub-title">
-          初次加载资源可能需要较多时间 请耐心等待
+          初次載入資源可能需要較多時間 請耐心等待
         </div>
       </div>
     `;
