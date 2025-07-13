@@ -153,6 +153,15 @@ export default defineConfig({
   mock: {
     include: ['mock/**/*', 'src/pages/**/_mock.ts'],
   },
+  // /**
+  //  * @name moment2dayjs 插件
+  //  * @description 将项目中的 moment 替换为 dayjs
+  //  * @doc https://umijs.org/docs/max/moment2dayjs
+  //  */
+  // moment2dayjs: {
+  //   preset: 'antd',
+  //   plugins: ['duration'],
+  // },
   /**
    * @name 是否开启 mako
    * @description 使用 mako 极速研发
