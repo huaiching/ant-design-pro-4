@@ -105,31 +105,33 @@ export default () => {
 
   return (
     <ProForm
-      formRef={formRef}
-      submitter={false}
-      layout="vertical"
+      formRef={formRef}     // 表單引用，用來從外部讀取資料（如匯出）
+      submitter={false}     // 不需要預設的送出按鈕
+      layout="vertical"     // 垂直排列標籤與欄位
     >
       <ProTable<Policy>
-        rowKey="key"
-        actionRef={actionRef}
-        columns={policyColumns}
-        dataSource={dataSource}
-        search={false}
-        pagination={false}
-        expandable={{
+        rowKey="key"                     // 每筆資料的唯一 key
+        actionRef={actionRef}           // 可操作 table，例如重新整理
+        columns={policyColumns}         // 主表格的欄位設定（保單）
+        dataSource={dataSource}         // 資料來源（來自 API，保存在狀態中）
+        search={false}                  // 關閉表格上方的搜尋功能
+        pagination={false}              // 關閉分頁，全部資料一次顯示
+        expandable={{                   // 開啟可展開行（嵌套子表格）
           expandedRowRender: (record) => (
+            // 使用 ProTable 當作子表格，顯示保障項目
             <ProTable<Coverage>
-              rowKey="key"
-              columns={coverageColumns}
-              dataSource={record.coverages}
-              pagination={false}
-              search={false}
-              options={false}
+              rowKey="key"              // 每個保障項目的 key
+              columns={coverageColumns} // 子表格欄位（保障資料）
+              dataSource={record.coverages}  // 子表格資料來自父層的 coverages
+              pagination={false}        // 子表格也關閉分頁
+              search={false}            // 子表格不需要搜尋
+              options={false}           // 子表格不需要右上角設定欄
             />
           ),
         }}
-        headerTitle="保單清單"
+        headerTitle="保單清單"           // 表格上方標題
         toolBarRender={() => [
+          // 工具列：顯示一個按鈕，按下會從 formRef 中導出資料
           <Button key="export" icon={<DownloadOutlined />} onClick={handleExport}>
             導出（console）
           </Button>,
