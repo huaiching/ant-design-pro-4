@@ -28,6 +28,7 @@ import Demo25 from './components/demo25_ProFormGroup'
 import Demo26 from './components/demo26_AutoComplete'
 import Demo27 from './components/demo27_ProFormList'
 import Demo28 from './components/demo28_BackTop'
+import Demo29 from './components/demo29_NestedProTable'
 import BaseMainIndex from '@/common/model/BaseMailIndex'
 
 //asstManagement 主功能名稱
@@ -213,6 +214,12 @@ const AsstManagement: React.FC = () => {
       key: 'BackTop',
       title: 'BackTop',
       component: <Demo28/>
+    },
+    {
+      authCode: '29',
+      key: 'NestedProTable',
+      title: '嵌套表格',
+      component: <Demo29/>
     },
   ]
 
