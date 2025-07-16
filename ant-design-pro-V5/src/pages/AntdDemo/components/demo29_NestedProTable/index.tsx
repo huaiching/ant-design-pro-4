@@ -6,7 +6,7 @@ import type { FormInstance } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 
 // 保障項目資料型別
-type Coverage = {
+type coData = {
   key: string;
   coverageNo: string;
   planCode: string;
@@ -16,16 +16,16 @@ type Coverage = {
 };
 
 // 保單資料型別
-type Policy = {
+type PoData = {
   key: string;
   policyNo: string;
   poStsCode: string;
   poIssueDate: string;
-  coverages?: Coverage[]; // 子資料：保障清單
+  coList?: coData[]; // 子資料：保障清單
 };
 
 // 模擬 API：一次取得所有保單與保障資料
-const fetchAllData = async (): Promise<Policy[]> => {
+const fetchAllData = async (): Promise<PoData[]> => {
   await new Promise((res) => setTimeout(res, 300)); // 模擬延遲
   return [
     {
@@ -33,7 +33,7 @@ const fetchAllData = async (): Promise<Policy[]> => {
       policyNo: 'P20250716001',
       poStsCode: '有效',
       poIssueDate: '2025-01-01',
-      coverages: [
+      coList: [
         {
           key: '1-1',
           coverageNo: 'C001',
@@ -57,7 +57,7 @@ const fetchAllData = async (): Promise<Policy[]> => {
       policyNo: 'P20250716002',
       poStsCode: '失效',
       poIssueDate: '2024-12-20',
-      coverages: [
+      coList: [
         {
           key: '2-1',
           coverageNo: 'C003',
@@ -72,14 +72,14 @@ const fetchAllData = async (): Promise<Policy[]> => {
 };
 
 // 主表格欄位（保單）
-const policyColumns: ProColumns<Policy>[] = [
+const policyColumns: ProColumns<PoData>[] = [
   { title: '保單號碼', dataIndex: 'policyNo' },
   { title: '保單狀態', dataIndex: 'poStsCode' },
   { title: '保單生效日', dataIndex: 'poIssueDate', valueType: 'date' },
 ];
 
 // 子表格欄位（保障清單）
-const coverageColumns: ProColumns<Coverage>[] = [
+const coverageColumns: ProColumns<coData>[] = [
   { title: '保障序號', dataIndex: 'coverageNo' },
   { title: '險種代碼', dataIndex: 'planCode' },
   { title: '險種版數', dataIndex: 'rateScale' },
@@ -90,7 +90,7 @@ const coverageColumns: ProColumns<Coverage>[] = [
 export default () => {
   const formRef = useRef<ProFormInstance>(undefined)    // 表單參照，讀取/寫入資料
   const actionRef = useRef<ActionType>(undefined)       // 表格操作引用（如 reload）
-  const [dataSource, setDataSource] = useState<Policy[]>([]);  // 主表資料
+  const [dataSource, setDataSource] = useState<PoData[]>([]);  // 主表資料
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]); // 勾選中的保單 key
 
   // ✅ 頁面初始化：取得資料並設定到 form 與畫面
@@ -103,7 +103,7 @@ export default () => {
 
   // ✅ 導出按鈕事件：從 formRef 中取得 policies，再過濾出勾選的
   const handleExport = () => {
-    const allData: Policy[] = formRef.current?.getFieldValue('policies') || [];
+    const allData: PoData[] = formRef.current?.getFieldValue('policies') || [];
     const selectedData = allData.filter((item) => selectedRowKeys.includes(item.key));
     console.log('✅ 勾選導出資料：', selectedData);
     message.success(`已導出 ${selectedData.length} 筆資料到 console`);
@@ -115,8 +115,8 @@ export default () => {
       submitter={false}       // 不顯示提交按鈕
       layout="vertical"       // 垂直排列表單項目
     >
-      <ProTable<Policy>
-        rowKey="key"                  // 每筆唯一 key
+      <ProTable<PoData>
+        rowKey="key"                 // 每筆唯一 key
         actionRef={actionRef}        // 表格操作參考
         columns={policyColumns}      // 表格欄位
         dataSource={dataSource}      // 表格資料
@@ -129,10 +129,10 @@ export default () => {
         expandable={{                // ✅ 展開子表格
           expandedRowRender: (record) => (
             // ✅ 子表格：使用 ProTable 顯示該保單的保障資料
-            <ProTable<Coverage>
-              rowKey="key"                     // 每筆保障資料的唯一 key
+            <ProTable<coData>
+              rowKey="key"                    // 每筆保障資料的唯一 key
               columns={coverageColumns}       // 子表格欄位（保障序號、險種代碼等）
-              dataSource={record.coverages}   // 子表格的資料來源為該筆保單的 coverages
+              dataSource={record.coList}      // 子表格的資料來源為該筆保單的 coList
               pagination={false}              // 子表格不使用分頁，直接列出所有保障
               search={false}                  // 子表格關閉搜尋欄
               options={false}                 // 子表格關閉右上角設定選項
