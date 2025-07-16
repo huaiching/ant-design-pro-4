@@ -128,13 +128,14 @@ export default () => {
         }}
         expandable={{                // ✅ 展開子表格
           expandedRowRender: (record) => (
+            // ✅ 子表格：使用 ProTable 顯示該保單的保障資料
             <ProTable<Coverage>
-              rowKey="key"
-              columns={coverageColumns}
-              dataSource={record.coverages}
-              pagination={false}
-              search={false}
-              options={false}
+              rowKey="key"                     // 每筆保障資料的唯一 key
+              columns={coverageColumns}       // 子表格欄位（保障序號、險種代碼等）
+              dataSource={record.coverages}   // 子表格的資料來源為該筆保單的 coverages
+              pagination={false}              // 子表格不使用分頁，直接列出所有保障
+              search={false}                  // 子表格關閉搜尋欄
+              options={false}                 // 子表格關閉右上角設定選項
             />
           ),
         }}
