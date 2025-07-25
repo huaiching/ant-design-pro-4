@@ -1,31 +1,31 @@
 import { Menu } from 'antd';
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const DropdownMenu: React.FC = () => {
+const DropdownMenu: React.FC =() => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const menuClick = (info: any) => {
-    let url = location.pathname;
-
     if (info.key === '1') {
-      url += '?activeKey=ProFormText';
+      navigate('?activeKey=ProFormText');         // 修改網址
+      window.open(window.location.href, '_blank') // 頁面跳轉 (開新視窗)
     }
     if (info.key === '2') {
-      url += '?activeKey=ProFormSelect';
+      navigate('?activeKey=ProFormSelect');
+      window.open(window.location.href, '_blank')
     }
-
-    // 打開新視窗
-    window.open(url, '_blank');
-  };
+  }
 
   return (
     <Menu onClick={menuClick}>
-      <Menu.Item key="1">單行文本輸入</Menu.Item>
-      <Menu.Item key="2">下拉選擇框</Menu.Item>
+      <Menu.Item key='1'> 單行文本輸入 </Menu.Item>
+      <Menu.Item key='2'> 下拉選擇框 </Menu.Item>
     </Menu>
-  );
-};
 
-export default DropdownMenu;
+  )
+}
+
+export default DropdownMenu
+
+
+

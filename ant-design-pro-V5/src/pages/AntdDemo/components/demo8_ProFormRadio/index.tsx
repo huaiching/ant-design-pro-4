@@ -4,7 +4,7 @@ import ProForm, { ProFormInstance, ProFormRadio } from '@ant-design/pro-form';
 import MliFormRow from '@/common/components/form/MliFormRow';
 
 const MyForm: React.FC = () => {
-  const formRef = useRef<ProFormInstance>(undefined)
+  const formRef = useRef<ProFormInstance>()
 
   return (
     <>

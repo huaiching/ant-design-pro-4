@@ -7,9 +7,9 @@ import Step3 from './components/step3'
 import { FooterToolbar } from '@ant-design/pro-layout';
 
 const MyStepsForm: React.FC = () => {
-  const formRef1 = useRef<ProFormInstance>(undefined)
-  const formRef2 = useRef<ProFormInstance>(undefined)
-  const formRef3 = useRef<ProFormInstance>(undefined)
+  const formRef1 = useRef<ProFormInstance>()
+  const formRef2 = useRef<ProFormInstance>()
+  const formRef3 = useRef<ProFormInstance>()
 
   useEffect(()=>{
     formRef1.current?.setFieldsValue({

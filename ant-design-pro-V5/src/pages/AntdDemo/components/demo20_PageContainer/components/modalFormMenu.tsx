@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 
 const MyForm: React.FC = () => {
-  const formRef = useRef<ProFormInstance>(undefined)
+  const formRef = useRef<ProFormInstance>()
   useEffect(()=>{
     formRef.current?.setFieldsValue({
       username: '測試員'

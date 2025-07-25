@@ -5,7 +5,7 @@ import { Button, message } from "antd"
 import { useRef } from "react"
 
 const Demo: React.FC =() => {
-  const formRef = useRef<ProFormInstance>(undefined)
+  const formRef = useRef<ProFormInstance>()
 
   // 控制送出後之動作
   const submitterRender = () => {

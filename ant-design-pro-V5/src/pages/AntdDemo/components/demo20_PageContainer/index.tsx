@@ -8,7 +8,7 @@ import DropdownMenu from './components/dropdownMenu'
 import ModalFormMenu from "./components/modalFormMenu";
 
 const MyForm: React.FC = () => {
-  const formRef = useRef<ProFormInstance>(undefined)
+  const formRef = useRef<ProFormInstance>()
 
   // 控制送出後之動作
   const submitterRender = () => {

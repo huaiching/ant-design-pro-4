@@ -1,13 +1,12 @@
 
 import React, { useRef } from 'react';
-import ProForm, { ProFormInstance, ProFormUploadDragger } from '@ant-design/pro-form';
-import ProFormUploadButton from '@ant-design/pro-form/es/components/UploadButton';
+import ProForm, { ProFormInstance, ProFormUploadButton } from '@ant-design/pro-form';
 import { FooterToolbar } from '@ant-design/pro-layout';
 import { Button, message } from 'antd';
 import MliFormRow from '@/common/components/form/MliFormRow';
 
 const MyForm: React.FC = () => {
-  const formRef = useRef<ProFormInstance>(null)
+  const formRef = useRef<ProFormInstance>()
 
   // 控制送出後之動作
   const submitterRender = () => {
@@ -49,7 +48,7 @@ const MyForm: React.FC = () => {
         submitter={submitterRender()}
       >
         <MliFormRow>
-          <ProFormUploadDragger
+          <ProFormUploadButton
             name="file"
             label="上傳文件"
             title="上傳"

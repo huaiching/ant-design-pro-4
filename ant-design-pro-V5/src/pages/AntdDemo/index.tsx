@@ -29,13 +29,14 @@ import Demo26 from './components/demo26_AutoComplete'
 import Demo27 from './components/demo27_ProFormList'
 import Demo28 from './components/demo28_BackTop'
 import Demo29 from './components/demo29_NestedProTable'
-import BaseMainIndex from '@/common/model/BaseMailIndex'
+import { PageContainer } from '@ant-design/pro-components'
+import { Tabs } from 'antd'
+import TabPane from 'antd/es/tabs/TabPane'
 
 //asstManagement 主功能名稱
 const AsstManagement: React.FC = () => {
   //主功能9000代碼
-  const pageCode = 'demo'
-  const pageDesc = '組件測試頁面'
+  const pageTitle = '組件測試頁面'
 
   //設定tabs 頁面元件
   //主頁主要設定處
@@ -220,10 +221,24 @@ const AsstManagement: React.FC = () => {
       key: 'NestedProTable',
       title: '嵌套表格',
       component: <Demo29/>
-    },
+    }
   ]
 
-  return <BaseMainIndex pageCode={pageCode} pageDesc={pageDesc} tabs={tabs} />
+  // return <BaseMainIndex pageCode={pageCode} pageDesc={pageDesc} tabs={tabs} />
+  
+  return (
+    <PageContainer title={pageTitle}>
+      <Tabs
+        type="card"
+      >
+        {tabs.map((item) => (
+          <TabPane tab={item.title} key={item.key}>
+            {item.component}
+          </TabPane>
+        ))}
+      </Tabs>
+    </PageContainer>
+  );
 }
 
 export default AsstManagement

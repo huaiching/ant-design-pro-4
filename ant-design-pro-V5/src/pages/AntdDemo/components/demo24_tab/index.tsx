@@ -19,7 +19,7 @@ const tabConfig = [
 
 const TabExample: React.FC = () => {
   // 資料變數
-  const formRef = useRef<ProFormInstance>(undefined)
+  const formRef = useRef<ProFormInstance>(null)
   // tab 焦點
   const [activeTab, setActiveTab] = useState<string>('tab1')
   // 紀錄 tab 要檢核的欄位

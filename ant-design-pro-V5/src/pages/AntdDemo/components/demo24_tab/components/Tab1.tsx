@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
-import type { ProFormInstance } from '@ant-design/pro-form';
-import { ProFormText } from '@ant-design/pro-form';
-import MliFormRow from '@/common/components/form/MliFormRow';
+import React, { useEffect } from 'react'
+import { ProFormInstance, ProFormText } from '@ant-design/pro-form'
+import MliFormRow from '@/common/components/form/MliFormRow'
 
-type Props = {
-  formRef: React.RefObject<ProFormInstance | undefined>;
-  setTabFields: (tabKey: string, fields: [string, string][]) => void;
-};
+interface Tab1Props {
+  formRef: React.RefObject<ProFormInstance>;
+  setTabFields: (tabKey: string, fields: string[][]) => void;
+}
 
-const Tab1: React.FC<Props> = ({ formRef, setTabFields }) => {
+const Tab1: React.FC<Tab1Props> = ({ formRef, setTabFields }) => {
   useEffect(() => {
+    // 註冊這個 tab 的欄位定義
     setTabFields('tab1', [
       ['tab1', 'field1'],
-      ['tab1', 'field2'],
-    ]);
-  }, [setTabFields]);
+      ['tab1', 'field2']
+    ])
+  }, [setTabFields])
 
   return (
     <>
@@ -24,7 +24,7 @@ const Tab1: React.FC<Props> = ({ formRef, setTabFields }) => {
           label="申請人ID"
           readonly
           fieldProps={{
-            value: formRef.current?.getFieldValue('basic.clientId'),
+            value: formRef.current?.getFieldValue('basic.clientId')
           }}
         />
         <ProFormText
@@ -32,7 +32,7 @@ const Tab1: React.FC<Props> = ({ formRef, setTabFields }) => {
           label="申請人姓名"
           readonly
           fieldProps={{
-            value: formRef.current?.getFieldValue('basic.names'),
+            value: formRef.current?.getFieldValue('basic.names')
           }}
         />
       </MliFormRow>
@@ -47,7 +47,7 @@ const Tab1: React.FC<Props> = ({ formRef, setTabFields }) => {
         rules={[{ required: true, message: '此欄位為必填' }]}
       />
     </>
-  );
-};
+  )
+}
 
-export default Tab1;
+export default Tab1

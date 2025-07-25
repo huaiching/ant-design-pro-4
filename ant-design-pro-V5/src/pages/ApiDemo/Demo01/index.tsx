@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from 'react';
 import { callActionApi, callDataApi } from '../store/apiCaller';
 
 const MyForm: React.FC = () => {
-    const formRef = useRef<ProFormInstance>(undefined)
+    const formRef = useRef<ProFormInstance>()
 
     useEffect(() => {
         console.log('env: ', process)

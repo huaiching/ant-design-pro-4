@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid'
 const MyForm: React.FC = () => {
   const momentTW = require('moment-taiwan');
   const [loading, setLoading] = useState<boolean>(false)
-  const formRef = useRef<ProFormInstance>(undefined)
+  const formRef = useRef<ProFormInstance>()
   // 可編輯的明細資料序號
   const [editableKeys, setEditableKeys] = useState<React.Key[]>([])
 

@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import OptionReceiveNo from "./components/optionRecevieNo";
 
 const MyForm: React.FC = () => {
-  const formRef = useRef<ProFormInstance>(undefined)
+  const formRef = useRef<ProFormInstance>()
   const [showModal, setShowModal] = useState(false)     // modal 開關
   const [receiveEdit, setReceiveEdit] = useState(true)  // 受理號碼查詢 開關
 

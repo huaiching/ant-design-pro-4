@@ -7,7 +7,7 @@ import { FooterToolbar } from '@ant-design/pro-layout';
 import MliFormRow from '@/common/components/form/MliFormRow';
 
 const InsurancePolicyCard: React.FC = () => {
-  const formRef = useRef<ProFormInstance>(undefined)
+  const formRef = useRef<ProFormInstance>()
   const [poEdit, setPoEdit] = useState<Boolean>(false)
 
   useEffect(()=>{

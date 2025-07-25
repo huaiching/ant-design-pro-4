@@ -5,8 +5,8 @@ import { ProFormInstance } from '@ant-design/pro-form';
 import { Space } from 'antd';
 
 const ProTableDemo: React.FC = () => {
-  const formRef = useRef<ProFormInstance>(undefined)
-  const actionRef = useRef<ActionType>(undefined)
+  const formRef = useRef<ProFormInstance>()
+  const actionRef = useRef<ActionType>()
   const momentTW = require('moment-taiwan');
 
   const genderInd = [

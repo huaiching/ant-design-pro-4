@@ -1,23 +1,22 @@
 import React from 'react';
-import type { ProFormInstance } from '@ant-design/pro-form';
+import { ProFormInstance } from '@ant-design/pro-form';
 import ProCard from '@ant-design/pro-card';
-import type { RefObject } from 'react';
 
-type Props = {
-  formRef: RefObject<ProFormInstance | undefined>;
-};
+interface Tab1Props {
+  formRef: React.RefObject<ProFormInstance>;
+}
 
-const Tab1: React.FC<Props> = ({ formRef }) => {
+const Tab1: React.FC<Tab1Props> = ({ formRef }) => {
   return (
     <ProCard
-      title="分頁1"
-      headerBordered      // 有分隔線
-      collapsible         // 有摺疊
-      defaultCollapsed    // 預設折疊
+        title="分頁1"
+        headerBordered      // 有 分隔線
+        collapsible         // 有 摺疊
+        defaultCollapsed    // 預設 折疊
     >
-      <h3>分頁1</h3>
+       <h3>分頁1</h3>
     </ProCard>
-  );
+  )
 };
 
 export default Tab1;

@@ -29,7 +29,8 @@
     "test": "jest",
     "test:coverage": "npm run jest -- --coverage",
     "test:update": "npm run jest -- -u",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc --noEmit",
+    "clean": "rimraf node_modules yarn.lock"
   },
   "browserslist": [
     "defaults"
@@ -45,6 +46,7 @@
     "moment-taiwan": "^0.0.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "rimraf": "^6.0.1",
     "uuid": "^11.1.0",
     "xlsx": "^0.18.5"
   },
@@ -60,8 +62,8 @@
     "@types/jest": "^30.0.0",
     "@types/lodash": "^4.17.10",
     "@types/node": "^24.0.10",
-    "@types/react": "^19.1.5",
-    "@types/react-dom": "^19.1.5",
+    "@types/react": "18.2.7",
+    "@types/react-dom": "18.2.4",
     "@types/react-helmet": "^6.1.11",
     "@umijs/max": "^4.3.24",
     "cross-env": "^7.0.3",
@@ -73,7 +75,7 @@
     "lint-staged": "^16.1.2",
     "mockjs": "^1.1.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.3",
+    "typescript": "4.9.5",
     "umi-presets-pro": "^2.0.3",
     "umi-serve": "^1.9.11"
   },

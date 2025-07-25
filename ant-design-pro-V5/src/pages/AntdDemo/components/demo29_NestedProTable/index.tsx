@@ -88,8 +88,8 @@ const coverageColumns: ProColumns<coData>[] = [
 ];
 
 export default () => {
-  const formRef = useRef<ProFormInstance>(undefined)    // 表單參照，讀取/寫入資料
-  const actionRef = useRef<ActionType>(undefined)       // 表格操作引用（如 reload）
+  const formRef = useRef<ProFormInstance>()    // 表單參照，讀取/寫入資料
+  const actionRef = useRef<ActionType>()       // 表格操作引用（如 reload）
   const [dataSource, setDataSource] = useState<PoData[]>([]);  // 主表資料
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]); // 勾選中的保單 key
 

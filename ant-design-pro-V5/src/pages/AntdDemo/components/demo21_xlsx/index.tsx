@@ -1,5 +1,5 @@
 import MliFormRow from '@/common/components/form/MliFormRow'
-import ProForm, { ProFormInstance, ProFormUploadButton, ProFormUploadDragger } from "@ant-design/pro-form"
+import ProForm, { ProFormInstance, ProFormUploadButton } from "@ant-design/pro-form"
 import { FooterToolbar } from "@ant-design/pro-layout"
 import { Button } from "antd"
 import { useRef, useState } from "react"
@@ -7,7 +7,7 @@ import { downloadXlsx } from './store/downloadXlsx'
 import { uploadXlsx } from './store/uploadXlsx'
 
 const Xlsx: React.FC = () => {
-  const formRef = useRef<ProFormInstance>(undefined)
+  const formRef = useRef<ProFormInstance>()
   const [uploadData, setUploadData] = useState<any[] | null>(null);
 
   // 控制送出後之動作
@@ -41,7 +41,7 @@ const Xlsx: React.FC = () => {
       submitter={submitterRender()}
     >
       <MliFormRow>
-        <ProFormUploadDragger
+        <ProFormUploadButton
           name="file"
           label="上傳文件"
           title="上傳"

@@ -38,9 +38,9 @@ export const fetchTableData = async (
 
   const startIndex = (current - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  
-  // 模擬等待 3 秒
-  await new Promise((resolve) => setTimeout(resolve, 300));
+
+  // 模擬等待 30 秒
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   return {
     data: filteredData.slice(startIndex, endIndex),

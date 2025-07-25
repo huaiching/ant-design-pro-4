@@ -1,13 +1,13 @@
-import React, { RefObject, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { ProFormInstance, ProFormText } from '@ant-design/pro-form'
 import MliFormRow from '@/common/components/form/MliFormRow'
 
-type Props = {
-  formRef: React.RefObject<ProFormInstance | undefined>;
-  setTabFields: (tabKey: string, fields: [string, string][]) => void;
-};
+interface Tab1Props {
+  formRef: React.RefObject<ProFormInstance>;
+  setTabFields: (tabKey: string, fields: string[][]) => void;
+}
 
-const Tab3: React.FC<Props> = ({ formRef, setTabFields }) => {
+const Tab3: React.FC<Tab1Props> = ({ formRef, setTabFields }) => {
   useEffect(() => {
     // 註冊這個 tab 的欄位定義
     setTabFields('tab3', [

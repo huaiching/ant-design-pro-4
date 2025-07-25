@@ -5,7 +5,7 @@ import { Button, message, Space } from 'antd';
 import React, { useRef, useState } from 'react';
 
 const MyForm: React.FC = () => {
-  const formRef = useRef<ProFormInstance>(undefined)
+  const formRef = useRef<ProFormInstance>()
   // 管理 ModelForm 的開關狀態
   const [visible, setVisible] = useState(false);
 
