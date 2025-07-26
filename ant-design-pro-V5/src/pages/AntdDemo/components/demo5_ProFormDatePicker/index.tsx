@@ -6,14 +6,7 @@ import MliFormRow from '@/common/components/form/MliFormRow';
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
-  // 要使用民國年轉換程式，要先設定這個方法
-  const momentTW = require('moment-taiwan')
-  useEffect(()=>{
-    const stringData = momentTW().format('YYYY-MM-DD')
-    formRef.current?.setFieldsValue({
-      chkDate: stringData
-    })
-  },[])
+  
   // 控制送出後之動作
   const submitterRender = () => {
     return {
@@ -24,15 +17,7 @@ const MyForm: React.FC = () => {
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
-                  // 日期轉換為民國年
-                  const chkDate = momentTW(formRef.current?.getFieldValue('chkDate'), 'YYYY-MM-DD').format('tYY/MM/DD')
-                  const chkDateYYMM = momentTW(formRef.current?.getFieldValue('chkDateYYMM'), 'YYYY-MM-DD').format('tYY/MM')
-                  const chkDateRangeStart = momentTW(formRef.current?.getFieldValue('chkDateRange')[0], 'YYYY-MM-DD').format('tYY/MM/DD')
-                  const chkDateRangeEnd = momentTW(formRef.current?.getFieldValue('chkDateRange')[1], 'YYYY-MM-DD').format('tYY/MM/DD')
-                  console.log('chkDate', chkDate)
-                  console.log('chkDateYYMM', chkDateYYMM)
-                  console.log('chkDateRangeStart', chkDateRangeStart)
-                  console.log('chkDateRangeEnd', chkDateRangeEnd)
+                  console.log('formRef', formRef.current?.getFieldsValue())
                   message.success('表單提交成功！');
                 })
               }}
@@ -72,7 +57,7 @@ const MyForm: React.FC = () => {
               { required: true, message: '日期為必填項' },
             ]}
             fieldProps={{
-              format: (data: any) => momentTW(data).format('tYY/MM/DD'),
+              format: 'YYYY/MM/DD',
               inputReadOnly: false
             }}
           />
@@ -84,7 +69,7 @@ const MyForm: React.FC = () => {
               { required: true, message: '日期為必填項' },
             ]}
             fieldProps={{
-              format: (data: any) => momentTW(data).format('tYY/MM'),
+              format: 'YYYY/MM',
             }}
           />
           <ProFormDateRangePicker
@@ -94,7 +79,7 @@ const MyForm: React.FC = () => {
               { required: true, message: '日期為必填項' },
             ]}
             fieldProps={{
-              format: (data: any) => momentTW(data).format('tYY/MM/DD'),
+              format: 'YYYY/MM/DD',
             }}
           />
         </MliFormRow>

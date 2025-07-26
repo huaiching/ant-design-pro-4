@@ -7,7 +7,6 @@ import { EditableProTable, ProColumns } from '@ant-design/pro-table';
 import { v4 as uuidv4 } from 'uuid'
 
 const MyForm: React.FC = () => {
-  const momentTW = require('moment-taiwan');
   const [loading, setLoading] = useState<boolean>(false)
   const formRef = useRef<ProFormInstance>()
   // 可編輯的明細資料序號
@@ -58,7 +57,6 @@ const MyForm: React.FC = () => {
                   const newData = editableData.map((data: any)=>{
                     return {
                       ...data,
-                      birthday: momentTW(data.birthday, 'YYYY-MM-DD').format('tYY/MM/DD')
                     }
                   })
                   console.log('editableData',newData)
@@ -134,7 +132,7 @@ const MyForm: React.FC = () => {
       dataIndex: 'birthday',
       valueType: 'date',
       fieldProps: {
-        format: (data: any) => momentTW(data).format('tYY/MM/DD'),
+        format: 'YYYY/MM/DD',
       },
     },
   ];

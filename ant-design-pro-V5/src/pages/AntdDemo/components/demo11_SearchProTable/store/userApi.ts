@@ -17,7 +17,7 @@ const mockData: TableItem[] = Array.from({ length: 500 }, (_, index) => ({
   gender: '男',
 }));
 
-export const fetchTableData = async (
+export const fetchAllData = async (
   params: { name?: string; age?: number; current?: number; pageSize?: number; birthday?: string }
 ): Promise<{ data: TableItem[]; total: number }> => {
   const { name, age, birthday, current = 1, pageSize = 10 } = params;
@@ -39,8 +39,8 @@ export const fetchTableData = async (
   const startIndex = (current - 1) * pageSize;
   const endIndex = startIndex + pageSize;
 
-  // 模擬等待 30 秒
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  // 模擬等待 1 秒
+  await new Promise((resolve) => setTimeout(resolve, 100));
 
   return {
     data: filteredData.slice(startIndex, endIndex),

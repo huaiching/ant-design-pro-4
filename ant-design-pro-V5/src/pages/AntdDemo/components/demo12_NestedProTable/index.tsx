@@ -1,93 +1,32 @@
+/**
+ * 非搜尋的 ProTable
+ * 數據資料 透過 api 取得後，直接放到 dataSource 中
+ */
+
 import React, { useEffect, useRef, useState } from 'react';
 import { ProForm, ProTable } from '@ant-design/pro-components';
 import type { ProColumns, ActionType, ProFormInstance } from '@ant-design/pro-components';
 import { Button, message } from 'antd';
-import type { FormInstance } from 'antd';
-import { DownloadOutlined } from '@ant-design/icons';
-
-// 保障項目資料型別
-type coData = {
-  key: string;
-  coverageNo: string;
-  planCode: string;
-  rateScale: string;
-  coStsCode: string;
-  coIssueDate: string;
-};
-
-// 保單資料型別
-type PoData = {
-  key: string;
-  policyNo: string;
-  poStsCode: string;
-  poIssueDate: string;
-  coList?: coData[]; // 子資料：保障清單
-};
-
-// 模擬 API：一次取得所有保單與保障資料
-const fetchAllData = async (): Promise<PoData[]> => {
-  await new Promise((res) => setTimeout(res, 300)); // 模擬延遲
-  return [
-    {
-      key: '1',
-      policyNo: 'P20250716001',
-      poStsCode: '有效',
-      poIssueDate: '2025-01-01',
-      coList: [
-        {
-          key: '1-1',
-          coverageNo: 'C001',
-          planCode: 'A1',
-          rateScale: '01',
-          coStsCode: '有效',
-          coIssueDate: '2025-01-01',
-        },
-        {
-          key: '1-2',
-          coverageNo: 'C002',
-          planCode: 'B2',
-          rateScale: '02',
-          coStsCode: '失效',
-          coIssueDate: '2025-03-01',
-        },
-      ],
-    },
-    {
-      key: '2',
-      policyNo: 'P20250716002',
-      poStsCode: '失效',
-      poIssueDate: '2024-12-20',
-      coList: [
-        {
-          key: '2-1',
-          coverageNo: 'C003',
-          planCode: 'C3',
-          rateScale: '01',
-          coStsCode: '有效',
-          coIssueDate: '2024-12-20',
-        },
-      ],
-    },
-  ];
-};
+import * as poApi from './store/poApi';
+import { PoData, coData } from './store/poApi';
 
 // 主表格欄位（保單）
 const policyColumns: ProColumns<PoData>[] = [
-  { title: '保單號碼', dataIndex: 'policyNo' },
-  { title: '保單狀態', dataIndex: 'poStsCode' },
-  { title: '保單生效日', dataIndex: 'poIssueDate', valueType: 'date' },
+  { title: '保單號碼', dataIndex: 'policyNo', valueType: 'text', },
+  { title: '保單狀態', dataIndex: 'poStsCode', valueType: 'text', },
+  { title: '保單生效日', dataIndex: 'poIssueDate', valueType: 'date', },
 ];
 
 // 子表格欄位（保障清單）
 const coverageColumns: ProColumns<coData>[] = [
-  { title: '保障序號', dataIndex: 'coverageNo' },
-  { title: '險種代碼', dataIndex: 'planCode' },
-  { title: '險種版數', dataIndex: 'rateScale' },
-  { title: '保障狀態', dataIndex: 'coStsCode' },
-  { title: '保障生效日', dataIndex: 'coIssueDate', valueType: 'date' },
+  { title: '保障序號', dataIndex: 'coverageNo', valueType: 'text', },
+  { title: '險種代碼', dataIndex: 'planCode', valueType: 'text', },
+  { title: '險種版數', dataIndex: 'rateScale', valueType: 'text', },
+  { title: '保障狀態', dataIndex: 'coStsCode', valueType: 'text', },
+  { title: '保障生效日', dataIndex: 'coIssueDate', valueType: 'date', },
 ];
 
-export default () => {
+const Demo12_NestedProTable: React.FC = () => {
   const formRef = useRef<ProFormInstance>()    // 表單參照，讀取/寫入資料
   const actionRef = useRef<ActionType>()       // 表格操作引用（如 reload）
   const [dataSource, setDataSource] = useState<PoData[]>([]);  // 主表資料
@@ -95,7 +34,7 @@ export default () => {
 
   // ✅ 頁面初始化：取得資料並設定到 form 與畫面
   useEffect(() => {
-    fetchAllData().then((data) => {
+    poApi.fetchAllData().then((data) => {
       setDataSource(data);                                 // 給 table 顯示
       formRef.current?.setFieldsValue({ policies: data }); // 存入 form 中
     });
@@ -140,17 +79,27 @@ export default () => {
           ),
         }}
         headerTitle="保單清單"
+        /** ✅ 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
+        tableAlertRender={() => (
+          <Button
+            type="link"
+            onClick={handleExport}
+          >
+            導出數據(console）
+          </Button>
+        )}
         toolBarRender={() => [
           <Button
             key="export"
-            icon={<DownloadOutlined />}
             onClick={handleExport}
             disabled={selectedRowKeys.length === 0} // 沒選資料就停用按鈕
           >
-            導出勾選（console）
+            導出數據（console）
           </Button>,
         ]}
       />
     </ProForm>
   );
 };
+
+export default Demo12_NestedProTable;
