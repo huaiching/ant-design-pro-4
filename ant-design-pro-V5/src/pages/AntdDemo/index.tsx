@@ -125,8 +125,8 @@ const AsstManagement: React.FC = () => {
     },
     {
       authCode: '13',
-      key: 'ShowProTable',
-      title: '顯示表格',
+      key: 'ShowRowProTable',
+      title: '選取行顯示明細的表格',
       component: <Demo13/>
     },
     {
@@ -247,9 +247,7 @@ const AsstManagement: React.FC = () => {
   
   return (
     <PageContainer title={pageTitle}>
-      <Tabs
-        type="card"
-      >
+      <Tabs type='card' size='large'>
         {tabs.map((item) => (
           <TabPane tab={item.title} key={item.key}>
             {item.component}
