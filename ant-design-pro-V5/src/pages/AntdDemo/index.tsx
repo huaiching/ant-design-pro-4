@@ -12,25 +12,26 @@ import Demo9 from './components/demo9_ProFormCheckbox'
 import Demo10 from './components/demo10_ProFormUploadButton'
 import Demo11 from './components/demo11_SearchProTable'
 import Demo12 from './components/demo12_NestedProTable'
-import Demo13 from './components/demo13_EditableMliTable'
-import Demo14 from './components/demo14_ModalForm'
-import Demo15 from './components/demo15_DrawerForm'
-import Demo16 from './components/demo16_ProCard'
-import Demo17 from './components/demo17_StepsForm'
-import Demo18 from './components/demo18_Notification'
-import Demo19 from './components/demo19_Modal'
-import Demo20 from './components/demo20_List'
-import Demo21 from './components/demo21_PageContainer'
-import Demo22 from './components/demo22_xlsx'
-import Demo23 from './components/demo23_test'
-import Demo24 from './components/demo24_test_StepsForm'
-import Demo25 from './components/demo25_tab'
-import Demo26 from './components/demo26_ProFormGroup'
-import Demo27 from './components/demo27_AutoComplete'
-import Demo28 from './components/demo28_ProFormList'
-import Demo29 from './components/demo29_BackTop'
-import Demo30 from './components/demo30_Descriptions'
-import Demo31 from './components/demo31_Navigate'
+import Demo13 from './components/demo13_ShowRowProTable'
+import Demo14 from './components/demo14_EditableMliTable'
+import Demo15 from './components/demo15_ModalForm'
+import Demo16 from './components/demo16_DrawerForm'
+import Demo17 from './components/demo17_ProCard'
+import Demo18 from './components/demo18_StepsForm'
+import Demo19 from './components/demo19_Notification'
+import Demo20 from './components/demo20_Modal'
+import Demo21 from './components/demo21_List'
+import Demo22 from './components/demo22_PageContainer'
+import Demo23 from './components/demo23_xlsx'
+import Demo24 from './components/demo24_SearchReceiveNo'
+import Demo25 from './components/demo25_test_StepsForm'
+import Demo26 from './components/demo26_tab'
+import Demo27 from './components/demo27_ProFormGroup'
+import Demo28 from './components/demo28_AutoComplete'
+import Demo29 from './components/demo29_ProFormList'
+import Demo30 from './components/demo30_BackTop'
+import Demo31 from './components/demo31_Descriptions'
+import Demo32 from './components/demo32_Navigate'
 import { PageContainer } from '@ant-design/pro-components'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
@@ -124,117 +125,123 @@ const AsstManagement: React.FC = () => {
     },
     {
       authCode: '13',
-      key: 'EditableMliTable',
-      title: '可編輯表格',
+      key: 'ShowProTable',
+      title: '顯示表格',
       component: <Demo13/>
     },
     {
       authCode: '14',
-      key: 'ModalForm',
-      title: '浮層表單(彈窗式)',
+      key: 'EditableMliTable',
+      title: '可編輯表格',
       component: <Demo14/>
     },
     {
       authCode: '15',
-      key: 'DrawerForm',
-      title: '浮層表單(抽屜式)',
+      key: 'ModalForm',
+      title: '浮層表單(彈窗式)',
       component: <Demo15/>
     },
     {
       authCode: '16',
-      key: 'ProCard',
-      title: '卡片',
+      key: 'DrawerForm',
+      title: '浮層表單(抽屜式)',
       component: <Demo16/>
     },
     {
       authCode: '17',
-      key: 'StepsForm',
-      title: '分布表單',
+      key: 'ProCard',
+      title: '卡片',
       component: <Demo17/>
     },
     {
       authCode: '18',
-      key: 'Notification',
-      title: '通知提醒框',
+      key: 'StepsForm',
+      title: '分布表單',
       component: <Demo18/>
     },
     {
       authCode: '19',
-      key: 'Modal',
-      title: '對話框 (確認訊息)',
+      key: 'Notification',
+      title: '通知提醒框',
       component: <Demo19/>
     },
     {
       authCode: '20',
-      key: 'List',
-      title: '列表',
+      key: 'Modal',
+      title: '對話框 (確認訊息)',
       component: <Demo20/>
     },
     {
       authCode: '21',
-      key: 'PageContainer',
-      title: '頁面容器 與 下拉選單',
+      key: 'List',
+      title: '列表',
       component: <Demo21/>
     },
     {
       authCode: '22',
-      key: 'Xlsx',
-      title: 'xlsx 前端excel的匯入匯出',
+      key: 'PageContainer',
+      title: '頁面容器 與 下拉選單',
       component: <Demo22/>
     },
     {
       authCode: '23',
-      key: 'Test',
-      title: '進階應用測試',
+      key: 'Xlsx',
+      title: 'xlsx 前端excel的匯入匯出',
       component: <Demo23/>
     },
     {
       authCode: '24',
-      key: 'StepsFormTest',
-      title: '分布表單模組化測試',
+      key: 'SearchReceiveNo',
+      title: '受理號碼查詢',
       component: <Demo24/>
     },
     {
       authCode: '25',
-      key: 'Tab',
-      title: '表單 Tab',
+      key: 'StepsFormTest',
+      title: '分布表單模組化測試',
       component: <Demo25/>
     },
     {
       authCode: '26',
-      key: 'ProFormGroup',
-      title: 'ProFormGroup',
+      key: 'Tab',
+      title: '表單 Tab',
       component: <Demo26/>
     },
     {
       authCode: '27',
-      key: 'AutoComplete',
-      title: '自動填入',
+      key: 'ProFormGroup',
+      title: 'ProFormGroup',
       component: <Demo27/>
     },
     {
       authCode: '28',
-      key: 'ProFormList',
-      title: 'ProFormList',
+      key: 'AutoComplete',
+      title: '自動填入',
       component: <Demo28/>
     },
     {
       authCode: '29',
-      key: 'BackTop',
-      title: 'BackTop',
+      key: 'ProFormList',
+      title: 'ProFormList',
       component: <Demo29/>
     },
     {
       authCode: '30',
-      key: 'Descriptions',
-      title: '描述列表',
+      key: 'BackTop',
+      title: 'BackTop',
       component: <Demo30/>
     },
     {
       authCode: '31',
+      key: 'Descriptions',
+      title: '描述列表',
+      component: <Demo31/>
+    },
+    {
+      authCode: '32',
       key: 'Navigate',
       title: '頁面跳轉',
-      component: <Demo31/>
+      component: <Demo32/>
     },
   ]
   
