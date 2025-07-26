@@ -60,6 +60,7 @@ const MyStepsForm: React.FC = () => {
   return (
     <StepsForm
       containerStyle={{ width: '100%' }}
+      stepsRender={() => null}              // 隱藏步驟條
       onCurrentChange={(current)=>{         // 每個步驟完成會觸發的事件，current = 步驟數 (0 ~)
         const msg = '完成 步驟 ' + current
         message.info(msg)
