@@ -30,6 +30,7 @@ import Demo27 from './components/demo27_AutoComplete'
 import Demo28 from './components/demo28_ProFormList'
 import Demo29 from './components/demo29_BackTop'
 import Demo30 from './components/demo30_Descriptions'
+import Demo31 from './components/demo31_Navigate'
 import { PageContainer } from '@ant-design/pro-components'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
@@ -228,7 +229,13 @@ const AsstManagement: React.FC = () => {
       key: 'Descriptions',
       title: '描述列表',
       component: <Demo30/>
-    }
+    },
+    {
+      authCode: '31',
+      key: 'Navigate',
+      title: '頁面跳轉',
+      component: <Demo31/>
+    },
   ]
   
   return (

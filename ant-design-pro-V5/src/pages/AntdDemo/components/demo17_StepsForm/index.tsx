@@ -57,6 +57,12 @@ const MyStepsForm: React.FC = () => {
     }
   }
 
+  const stepsArray = [
+    { title: '客戶基本資料', name: 'step1', formRef: formRef1, component: Step1 },
+    { title: '客戶住址', name: 'step2', formRef: formRef2, component: Step2 },
+    { title: '客戶電話', name: 'step3', formRef: formRef3, component: Step3 },
+  ]
+
   return (
     <StepsForm
       containerStyle={{ width: '100%' }}
@@ -68,32 +74,18 @@ const MyStepsForm: React.FC = () => {
       onFinish={onFinish}                   // 最後提交會觸發的事件
       submitter={submitter()}               // StepsForm 這裡進行 步驟切換 的選項設定
     >
-      <StepsForm.StepForm
-        grid
-        title="輸入客戶基本資料"
-        name='step1'
-        formRef={formRef1}
-      >
-        <Step1/>
-      </StepsForm.StepForm>
-
-      <StepsForm.StepForm
-        grid
-        title="輸入客戶住址"
-        name='step2'
-        formRef={formRef2}
-      >
-        <Step2/>
-      </StepsForm.StepForm>
-
-      <StepsForm.StepForm
-        grid
-        title="輸入客戶電話"
-        name='step3'
-        formRef={formRef3}
-      >
-        <Step3/>
-      </StepsForm.StepForm>
+      {/* 動態生成每個步驟的內容 */}
+      {stepsArray.map((step) => (
+        <StepsForm.StepForm
+          grid                              // 使用網格布局
+          key={step.name}                   // 每個步驟的唯一 key
+          name={step.name}                  // 步驟名稱（用於識別）
+          title={step.title}                // 步驟標題
+          formRef={step.formRef}            // 步驟對應的表單參考
+        >
+          {React.createElement(step.component)}  {/* 動態載入對應的表單組件 */}
+        </StepsForm.StepForm>
+      ))}
     </StepsForm>
   );
 };
