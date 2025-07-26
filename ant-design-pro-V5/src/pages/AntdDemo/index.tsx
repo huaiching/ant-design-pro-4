@@ -29,6 +29,7 @@ import Demo26 from './components/demo26_ProFormGroup'
 import Demo27 from './components/demo27_AutoComplete'
 import Demo28 from './components/demo28_ProFormList'
 import Demo29 from './components/demo29_BackTop'
+import Demo30 from './components/demo30_Descriptions'
 import { PageContainer } from '@ant-design/pro-components'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
@@ -221,6 +222,12 @@ const AsstManagement: React.FC = () => {
       key: 'BackTop',
       title: 'BackTop',
       component: <Demo29/>
+    },
+    {
+      authCode: '30',
+      key: 'Descriptions',
+      title: '描述列表',
+      component: <Demo30/>
     }
   ]
   

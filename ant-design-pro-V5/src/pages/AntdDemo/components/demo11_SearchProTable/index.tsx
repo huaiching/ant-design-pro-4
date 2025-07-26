@@ -13,6 +13,7 @@ import * as userApi from './store/userApi';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import { ProFormInstance } from '@ant-design/pro-form';
 import { Space } from 'antd';
+import dayjs from 'dayjs';
 
 const ProTableDemo: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -75,10 +76,24 @@ const ProTableDemo: React.FC = () => {
         options: genderInd
       },
     },
+    // {
+    //   title: '生日',
+    //   dataIndex: 'birthday',
+    //   valueType: 'date',
+    // },
     {
       title: '生日',
       dataIndex: 'birthday',
       valueType: 'date',
+      fieldProps: {
+        format: 'YYYY/MM/DD', // 查詢欄位格式（西元）
+      },
+      render: (_, record) => {
+        if (!record.birthday) return '-';
+        const date = dayjs(record.birthday);
+        const rocYear = (date.year() - 1911).toString().padStart(3, '0');
+        return `${rocYear}/${date.format('MM/DD')}`;
+      },
     },
   ];
 
