@@ -92,15 +92,25 @@ const TabbedFormPage: React.FC = () => {
         }}
         styles={{
           body: {
-            padding: 12            // 卡片內容區域內邊距12px，讓內容不緊貼邊緣
+            padding: 12              // 卡片內容區域內邊距12px，讓內容不緊貼邊緣
           }
         }}
         tabList={tabs.map(({ key, label }) => ({ key, tab: label }))} // 卡片標籤頁配置，key和標籤文字
         activeTabKey={activeTab}                                      // 目前激活的標籤key，用以控制內容顯示
         onTabChange={handleTabChange}                                 // 標籤切換時呼叫的函式，切換activeTab狀態
       >
-        <div style={{ maxHeight: 400, overflowY: 'auto', padding: 8 }}>
+        <div id='tabContent' style={{ maxHeight: 800, overflowY: 'auto', padding: 8 }}>
           {tabs.find((tab) => tab.key === activeTab)?.children}
+          
+      <BackTop
+        target={() => document.getElementById('tabContent') || window}
+        visibilityHeight={100}
+        style={{
+          position: 'fixed',
+          right: 60,
+          bottom: 100,
+        }}
+      />
         </div>
       </Card>
 
@@ -108,7 +118,6 @@ const TabbedFormPage: React.FC = () => {
         <Button type="primary" onClick={handleFinish}>提交</Button>
       </FooterToolbar>
 
-      <BackTop visibilityHeight={100} />
     </ProForm>
   );
 }
