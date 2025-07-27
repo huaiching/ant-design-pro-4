@@ -1,8 +1,6 @@
-// TabbedFormPage/index.tsx
 import React, { useRef, useState } from 'react';
 import {
   FooterToolbar,
-  ProCard,
   ProForm,
   ProFormInstance,
 } from '@ant-design/pro-components';
