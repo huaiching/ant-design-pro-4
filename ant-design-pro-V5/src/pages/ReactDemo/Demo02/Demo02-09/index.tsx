@@ -1,5 +1,5 @@
-import { PageContainer } from '@ant-design/pro-layout';
-import React from 'react';
+import { PageContainer } from '@ant-design/pro-layout'
+import React from 'react'
 
 const VDOM: React.FC = () => {
     // 範例: if
@@ -12,11 +12,11 @@ const VDOM: React.FC = () => {
     }
     
     // 範例: 三元表達式
-    const age = 18;
+    const age = 18
     const data2 = (age>=18 ? '成年' : '未成年')
 
     // 範例: for 
-    const data3 = [];
+    const data3 = []
     for (let i = 1 ; i < 5 ; i++) {
         data3.push(<li>{i}</li>)
     }

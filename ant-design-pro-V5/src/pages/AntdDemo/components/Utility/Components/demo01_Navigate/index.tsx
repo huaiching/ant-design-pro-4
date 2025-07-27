@@ -1,9 +1,9 @@
-import React from 'react';
-import { Button, Space, message } from 'antd';
-import { useNavigate } from '@umijs/max';
+import React from 'react'
+import { Button, Space, message } from 'antd'
+import { useNavigate } from '@umijs/max'
 
 const Navigate: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <div>
@@ -33,7 +33,7 @@ const Navigate: React.FC = () => {
         </Button>
       </Space>
     </div>
-  );
-};
+  )
+}
 
-export default Navigate;
+export default Navigate

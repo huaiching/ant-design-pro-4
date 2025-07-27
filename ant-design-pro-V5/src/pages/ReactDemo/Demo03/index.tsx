@@ -1,7 +1,7 @@
-import { PageContainer } from '@ant-design/pro-layout';
-import React from 'react';
-import { Button, Space } from "antd";
-import { useState } from "react";
+import { PageContainer } from '@ant-design/pro-layout'
+import React from 'react'
+import { Button, Space } from "antd"
+import { useState } from "react"
 
 const VDOM: React.FC = () => {
     // 宣告

@@ -1,13 +1,13 @@
-import React from 'react';
-import { ProForm, ProFormText, ProFormDatePicker, ProCard } from '@ant-design/pro-components';
-import { Button, Space } from 'antd';
-import MliFormRow from '@/common/components/form/MliFormRow';
+import React from 'react'
+import { ProForm, ProFormText, ProFormDatePicker, ProCard } from '@ant-design/pro-components'
+import { Button, Space } from 'antd'
+import MliFormRow from '@/common/components/form/MliFormRow'
 
 interface EditableDetailFormProps {
-  mode: 'create' | 'edit';
-  initialValues?: any;
-  onSubmit: (values: any) => void;
-  onCancel?: () => void;
+  mode: 'create' | 'edit'
+  initialValues?: any
+  onSubmit: (values: any) => void
+  onCancel?: () => void
 }
 
 const EditableDetailForm: React.FC<EditableDetailFormProps> = ({
@@ -16,8 +16,8 @@ const EditableDetailForm: React.FC<EditableDetailFormProps> = ({
   onSubmit,
   onCancel,
 }) => {
-  const readOnly = mode === 'edit';
-  const title = mode === 'edit' ? '編輯保單' : '新增保單';
+  const readOnly = mode === 'edit'
+  const title = mode === 'edit' ? '編輯保單' : '新增保單'
 
   return (
     <ProCard title={title}>
@@ -31,7 +31,7 @@ const EditableDetailForm: React.FC<EditableDetailFormProps> = ({
                 {React.cloneElement(dom[1], { children: '存檔' })} {/* dom[1] 是提交按鈕 */}
                 <Button onClick={onCancel}>取消</Button>
               </Space>
-            );
+            )
           },
         }}
         onFinish={onSubmit}
@@ -51,7 +51,7 @@ const EditableDetailForm: React.FC<EditableDetailFormProps> = ({
         </MliFormRow>
       </ProForm>
     </ProCard>
-  );
-};
+  )
+}
 
-export default EditableDetailForm;
+export default EditableDetailForm

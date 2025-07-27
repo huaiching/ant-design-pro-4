@@ -1,16 +1,16 @@
-import React from 'react';
-import { Card, Descriptions, DescriptionsProps } from 'antd';
-import { ProCard, ProFormInstance } from '@ant-design/pro-components';
+import React from 'react'
+import { Card, Descriptions, DescriptionsProps } from 'antd'
+import { ProCard, ProFormInstance } from '@ant-design/pro-components'
 
 interface Props {
-  formRef: React.RefObject<ProFormInstance | undefined>;
+  formRef: React.RefObject<ProFormInstance | undefined>
 }
 
 const infoData = {
   userName: '王小明',
   userId: 'T0001',
   address: '台北市內湖區石潭路58號1樓'
-};
+}
 
 const InfoForm: React.FC<Props> = ({ formRef }) => {
   
@@ -33,7 +33,7 @@ const InfoForm: React.FC<Props> = ({ formRef }) => {
       children: infoData.address,
       span: 2,
     },
-  ];
+  ]
 
   return (
     <Descriptions
@@ -45,4 +45,4 @@ const InfoForm: React.FC<Props> = ({ formRef }) => {
   )
 }
 
-export default InfoForm;
+export default InfoForm

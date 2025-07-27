@@ -8,12 +8,12 @@
  *    3. total  : 數據筆數
  */
 
-import React, { useRef } from 'react';
-import * as userApi from './store/userApi';
-import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
-import { ProFormInstance } from '@ant-design/pro-form';
-import { Space } from 'antd';
-import dayjs from 'dayjs';
+import React, { useRef } from 'react'
+import * as userApi from './store/userApi'
+import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table'
+import { ProFormInstance } from '@ant-design/pro-form'
+import { Space } from 'antd'
+import dayjs from 'dayjs'
 
 const ProTableDemo: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -89,22 +89,22 @@ const ProTableDemo: React.FC = () => {
         format: 'YYYY/MM/DD', // 查詢欄位格式（西元）
       },
       render: (_, record) => {
-        if (!record.birthday) return '-';
-        const date = dayjs(record.birthday);
-        const rocYear = (date.year() - 1911).toString().padStart(3, '0');
-        return `${rocYear}/${date.format('MM/DD')}`;
+        if (!record.birthday) return '-'
+        const date = dayjs(record.birthday)
+        const rocYear = (date.year() - 1911).toString().padStart(3, '0')
+        return `${rocYear}/${date.format('MM/DD')}`
       },
     },
-  ];
+  ]
 
   // 數據請求函式
   const requestData = async (params: any) => {
-    const response = await userApi.fetchAllData(params);
+    const response = await userApi.fetchAllData(params)
     return {
       data: response.data,
       success: true,
       total: response.total,
-    };
+    }
   }
 
   return (
@@ -147,12 +147,12 @@ const ProTableDemo: React.FC = () => {
         return (
           <Space size={16}>
             <a onClick={() => {
-              console.log(selectedRowKeys, selectedRows);
+              console.log(selectedRowKeys, selectedRows)
             }}>導出數據</a>
           </Space>
-        );
+        )
       }}
     />
-  );
-};
-export default ProTableDemo;
+  )
+}
+export default ProTableDemo

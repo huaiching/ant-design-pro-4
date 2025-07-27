@@ -1,10 +1,10 @@
-import ProCard from '@ant-design/pro-card';
-import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
-import { Button, message, Segmented, Space } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
-import { editOption } from './store/editOption';
-import { FooterToolbar } from '@ant-design/pro-layout';
-import MliFormRow from '@/common/components/form/MliFormRow';
+import ProCard from '@ant-design/pro-card'
+import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
+import { Button, message, Segmented, Space } from 'antd'
+import React, { useEffect, useRef, useState } from 'react'
+import { editOption } from './store/editOption'
+import { FooterToolbar } from '@ant-design/pro-layout'
+import MliFormRow from '@/common/components/form/MliFormRow'
 
 const InsurancePolicyCard: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -27,7 +27,7 @@ const InsurancePolicyCard: React.FC = () => {
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
-                  message.success('表單提交成功！');
+                  message.success('表單提交成功！')
                   console.log('formRef', formRef.current?.getFieldsValue())
                 })
               }}
@@ -38,7 +38,7 @@ const InsurancePolicyCard: React.FC = () => {
             <Button
               onClick={async () => {
                   // 取消按鈕 點擊後 要進行的 API 操作
-                  message.warning('取消作業');
+                  message.warning('取消作業')
               }}
             >
               取消
@@ -67,7 +67,7 @@ const InsurancePolicyCard: React.FC = () => {
           <Segmented
             options={editOption}        // 分頁控制器的內容設定 (預設選擇第一個)
             onChange={(value) => {      // 切換事件：value=切換後的數值
-              setPoEdit(value === 'edit');
+              setPoEdit(value === 'edit')
             }}
           />
         }
@@ -86,7 +86,7 @@ const InsurancePolicyCard: React.FC = () => {
         </MliFormRow>
       </ProCard>
     </ProForm>
-  );
-};
+  )
+}
 
-export default InsurancePolicyCard;
+export default InsurancePolicyCard

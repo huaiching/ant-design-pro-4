@@ -1,26 +1,26 @@
 
 // 保障項目資料型別
 export type coData = {
-  key: string;
-  coverageNo: string;
-  planCode: string;
-  rateScale: string;
-  coStsCode: string;
-  coIssueDate: string;
-};
+  key: string
+  coverageNo: string
+  planCode: string
+  rateScale: string
+  coStsCode: string
+  coIssueDate: string
+}
 
 // 保單資料型別
 export type PoData = {
-  key: string;
-  policyNo: string;
-  poStsCode: string;  
-  poIssueDate: string;
-  coList?: coData[]; // 子資料：保障清單
-};
+  key: string
+  policyNo: string
+  poStsCode: string  
+  poIssueDate: string
+  coList?: coData[] // 子資料：保障清單
+}
 
 
 export const fetchAllData = async (): Promise<PoData[]> => {
-  await new Promise((res) => setTimeout(res, 100)); // 模擬延遲
+  await new Promise((res) => setTimeout(res, 100)) // 模擬延遲
   return [
     {
       key: '1',
@@ -62,5 +62,5 @@ export const fetchAllData = async (): Promise<PoData[]> => {
         },
       ],
     },
-  ];
-};
+  ]
+}

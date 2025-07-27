@@ -1,5 +1,5 @@
-import { PageContainer } from '@ant-design/pro-layout';
-import React from 'react';
+import { PageContainer } from '@ant-design/pro-layout'
+import React from 'react'
 
 const VDOM: React.FC = () => {
     const user = {
@@ -16,7 +16,7 @@ const VDOM: React.FC = () => {
         <h1>傳統字串： {msg1}</h1>
         <h1>樣板字串： {msg2}</h1>
       </PageContainer>
-    );
+    )
 }
 
 export default VDOM

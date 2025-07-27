@@ -1,8 +1,8 @@
-import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
-import { PageContainer } from '@ant-design/pro-layout';
-import { Button } from 'antd';
-import React, { useRef } from 'react';
-import { callDownloadApi } from '../store/apiCaller';
+import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
+import { PageContainer } from '@ant-design/pro-layout'
+import { Button } from 'antd'
+import React, { useRef } from 'react'
+import { callDownloadApi } from '../store/apiCaller'
 
 const MyForm: React.FC = () => {
     const formRef = useRef<ProFormInstance>()
@@ -30,6 +30,6 @@ const MyForm: React.FC = () => {
           </ProForm>
       </PageContainer>
     )
-};
+}
 
-export default MyForm;
+export default MyForm

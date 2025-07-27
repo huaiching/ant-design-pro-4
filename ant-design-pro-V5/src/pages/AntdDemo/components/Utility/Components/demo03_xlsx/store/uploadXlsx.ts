@@ -22,11 +22,11 @@ export const uploadXlsx = (files: File): Promise<any[]> => {
         // 取得 EXCEL 工作表的名稱 (這裡取得第一個工作表 0~)
         const workName = workbook.SheetNames[0]
         // 讀取 EXCEL 工作表數據 (參數為 要讀取的工作表名稱)
-        const workSheet = workbook.Sheets[workName];
+        const workSheet = workbook.Sheets[workName]
         // 將 讀取的 EXCEL 數據 轉換為 JSON 格式資料
         const uploadData = xlsx.utils.sheet_to_json(workSheet, {
           header: ['clientId','names','age']
-        });
+        })
         // 排除 標題資料
         const output = uploadData.filter((data: any)=> data.clientId != '客戶證號')
         resolve(output)

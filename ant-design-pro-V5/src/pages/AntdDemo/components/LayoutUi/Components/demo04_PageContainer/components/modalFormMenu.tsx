@@ -1,8 +1,8 @@
 
-import MliFormRow from '@/common/components/form/MliFormRow';
-import { ModalForm, ProFormInstance, ProFormText } from '@ant-design/pro-form';
-import { Button } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
+import MliFormRow from '@/common/components/form/MliFormRow'
+import { ModalForm, ProFormInstance, ProFormText } from '@ant-design/pro-form'
+import { Button } from 'antd'
+import React, { useEffect, useRef, useState } from 'react'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -12,7 +12,7 @@ const MyForm: React.FC = () => {
     })
   },[])
   // 管理 ModelForm 的開關狀態
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false)
 
 
   return (
@@ -38,6 +38,6 @@ const MyForm: React.FC = () => {
       </ModalForm>
     </>
   )
-};
+}
 
-export default MyForm;
+export default MyForm

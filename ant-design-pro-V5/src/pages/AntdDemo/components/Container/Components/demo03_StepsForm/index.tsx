@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react';
-import { Button, message, Space } from 'antd';
-import { ProFormInstance, StepsForm } from '@ant-design/pro-form';
+import React, { useEffect, useRef } from 'react'
+import { Button, message, Space } from 'antd'
+import { ProFormInstance, StepsForm } from '@ant-design/pro-form'
 import Step1 from './components/step1'
 import Step2 from './components/step2'
 import Step3 from './components/step3'
-import { FooterToolbar } from '@ant-design/pro-layout';
+import { FooterToolbar } from '@ant-design/pro-layout'
 
 const MyStepsForm: React.FC = () => {
   const formRef1 = useRef<ProFormInstance>()
@@ -87,7 +87,7 @@ const MyStepsForm: React.FC = () => {
         </StepsForm.StepForm>
       ))}
     </StepsForm>
-  );
-};
+  )
+}
 
-export default MyStepsForm;
+export default MyStepsForm

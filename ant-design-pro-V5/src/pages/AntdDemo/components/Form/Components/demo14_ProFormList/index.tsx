@@ -1,23 +1,23 @@
-import React, { useState, useRef } from 'react';
-import { ProForm, ProFormText, ProFormSelect, ProFormDigit, ProFormList, ProFormInstance } from '@ant-design/pro-form';
-import { Button, message, Typography } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import ProCard from '@ant-design/pro-card';
-import MliFormRow from '@/common/components/form/MliFormRow';
-import { FooterToolbar } from '@ant-design/pro-layout';
+import React, { useState, useRef } from 'react'
+import { ProForm, ProFormText, ProFormSelect, ProFormDigit, ProFormList, ProFormInstance } from '@ant-design/pro-form'
+import { Button, message, Typography } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
+import ProCard from '@ant-design/pro-card'
+import MliFormRow from '@/common/components/form/MliFormRow'
+import { FooterToolbar } from '@ant-design/pro-layout'
 
-const { Text } = Typography;
+const { Text } = Typography
 
 const MyForm: React.FC = () => {
-  const formRef = useRef<ProFormInstance>(null);
-  const [benfCount, setBenfCount] = useState(0);
+  const formRef = useRef<ProFormInstance>(null)
+  const [benfCount, setBenfCount] = useState(0)
 
   // 定義關係選項
   const relationshipOptions = [
     { label: '生存受益人', value: 'L' },
     { label: '滿期受益人', value: 'M' },
     { label: '身故受益人', value: 'D' },
-  ];
+  ]
 
   // 表單提交處理
   // 控制送出後之動作
@@ -30,8 +30,8 @@ const MyForm: React.FC = () => {
             onClick={async () => {
               formRef.current?.validateFields().then(values => {
                 // 確認按鈕 點擊後 要進行的 API 操作
-                console.log('提交的表單數據:', formRef.current?.getFieldsValue());
-                message.success('表單提交成功！');
+                console.log('提交的表單數據:', formRef.current?.getFieldsValue())
+                message.success('表單提交成功！')
               })
             }}
             key="save"
@@ -41,7 +41,7 @@ const MyForm: React.FC = () => {
           <Button
             onClick={async () => {
               // 取消按鈕 點擊後 要進行的 API 操作
-              message.warning('取消作業');
+              message.warning('取消作業')
             }}
           >
             取消
@@ -52,8 +52,8 @@ const MyForm: React.FC = () => {
   }
 
   const calcBenfCount = () => {
-    const benfList = formRef.current?.getFieldValue('benfList') || [];
-    setBenfCount(benfList.length);
+    const benfList = formRef.current?.getFieldValue('benfList') || []
+    setBenfCount(benfList.length)
   }
 
   return (
@@ -64,7 +64,7 @@ const MyForm: React.FC = () => {
         formRef={formRef}
         layout="vertical"
         onValuesChange={() => {
-          calcBenfCount();
+          calcBenfCount()
         }}
         submitter={submitterRender()}
       >
@@ -136,7 +136,7 @@ const MyForm: React.FC = () => {
         </ProFormList>
       </ProForm>
     </>
-  );
-};
+  )
+}
 
-export default MyForm;
+export default MyForm

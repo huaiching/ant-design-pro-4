@@ -1,8 +1,8 @@
-import React from 'react';
-import { ProFormText, ProFormInstance } from '@ant-design/pro-components';
+import React from 'react'
+import { ProFormText, ProFormInstance } from '@ant-design/pro-components'
 
 interface Props {
-  formRef: React.RefObject<ProFormInstance | undefined>;
+  formRef: React.RefObject<ProFormInstance | undefined>
 }
 
 const TabContent1: React.FC<Props> = ({ formRef }) => {
@@ -12,7 +12,7 @@ const TabContent1: React.FC<Props> = ({ formRef }) => {
       <ProFormText name="tab1.phone" label="電話" rules={[{ required: true }]} />
       <div style={{ height: '1000px' }}>長內容區域...</div>
     </>
-  );
-};
+  )
+}
 
-export default TabContent1;
+export default TabContent1

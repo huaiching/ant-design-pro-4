@@ -1,8 +1,8 @@
-import React from 'react';
-import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-form';
-import { BackTop, Typography } from 'antd';
-import MliFormRow from '@/common/components/form/MliFormRow';
-import ProCard from '@ant-design/pro-card';
+import React from 'react'
+import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-form'
+import { BackTop, Typography } from 'antd'
+import MliFormRow from '@/common/components/form/MliFormRow'
+import ProCard from '@ant-design/pro-card'
 
 const MyForm: React.FC = () => {
   return (
@@ -38,7 +38,7 @@ const MyForm: React.FC = () => {
         </ProCard>
       </ProForm>
     </>
-  );
-};
+  )
+}
 
-export default MyForm;
+export default MyForm

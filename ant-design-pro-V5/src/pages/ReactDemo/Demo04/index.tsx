@@ -1,6 +1,6 @@
-import { PageContainer } from '@ant-design/pro-layout';
-import React from 'react';
-import SubDom from './components/subDom';
+import { PageContainer } from '@ant-design/pro-layout'
+import React from 'react'
+import SubDom from './components/subDom'
 
 const VDOM: React.FC = () => {
     // 要傳遞的數據

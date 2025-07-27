@@ -1,8 +1,8 @@
-import MliFormRow from '@/common/components/form/MliFormRow';
-import ProForm, { ProFormDigit, ProFormInstance, ProFormMoney, ProFormText } from '@ant-design/pro-form';
-import { FooterToolbar } from '@ant-design/pro-layout';
-import { Button, message, Select, Typography } from 'antd';
-import React, { useRef } from 'react';
+import MliFormRow from '@/common/components/form/MliFormRow'
+import ProForm, { ProFormDigit, ProFormInstance, ProFormMoney, ProFormText } from '@ant-design/pro-form'
+import { FooterToolbar } from '@ant-design/pro-layout'
+import { Button, message, Select, Typography } from 'antd'
+import React, { useRef } from 'react'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -17,7 +17,7 @@ const MyForm: React.FC = () => {
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
-                  message.success('表單提交成功！');
+                  message.success('表單提交成功！')
                 })
               }}
               key="save"
@@ -27,7 +27,7 @@ const MyForm: React.FC = () => {
             <Button
               onClick={async () => {
                   // 取消按鈕 點擊後 要進行的 API 操作
-                  message.warning('取消作業');
+                  message.warning('取消作業')
               }}
             >
               取消
@@ -42,7 +42,7 @@ const MyForm: React.FC = () => {
       <Select.Option value="TWD"> 新台幣 </Select.Option>
       <Select.Option value="USD"> 美元 </Select.Option>
     </Select>
-  );
+  )
 
   return (
     <>
@@ -81,6 +81,6 @@ const MyForm: React.FC = () => {
       </ProForm>
     </>
   )
-};
+}
 
-export default MyForm;
+export default MyForm

@@ -1,7 +1,7 @@
-import { useUserGlobalContext } from '../store/useUserContext';
+import { useUserGlobalContext } from '../store/useUserContext'
 
 const Component = () => {
-    const { user } = useUserGlobalContext();
+    const { user } = useUserGlobalContext()
     return (
         <>
             <h2>姓名：{user.name}</h2>

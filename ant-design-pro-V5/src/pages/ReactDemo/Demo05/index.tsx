@@ -1,6 +1,6 @@
-import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Row, Space } from 'antd';
-import React, { useReducer } from 'react';
+import { PageContainer } from '@ant-design/pro-layout'
+import { Button, Row, Space } from 'antd'
+import React, { useReducer } from 'react'
 
 const MyComponent: React.FC = () => {
   /**
@@ -73,7 +73,7 @@ const MyComponent: React.FC = () => {
         </Space>
       </Row>
     </PageContainer>
-  );
-};
+  )
+}
 
-export default MyComponent;
+export default MyComponent

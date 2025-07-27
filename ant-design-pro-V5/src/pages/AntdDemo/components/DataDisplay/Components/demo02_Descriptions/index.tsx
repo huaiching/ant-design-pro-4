@@ -1,14 +1,14 @@
-import React from 'react';
-import { Descriptions, Card, DescriptionsProps } from 'antd';
-import dayjs from 'dayjs';
-import { ProCard } from '@ant-design/pro-components';
+import React from 'react'
+import { Descriptions, Card, DescriptionsProps } from 'antd'
+import dayjs from 'dayjs'
+import { ProCard } from '@ant-design/pro-components'
 
 // 民國年格式化
 const formatROC = (dateStr: string) => {
-  const date = dayjs(dateStr);
-  const rocYear = (date.year() - 1911).toString().padStart(3, '0');
-  return `${rocYear}/${date.format('MM/DD')}`;
-};
+  const date = dayjs(dateStr)
+  const rocYear = (date.year() - 1911).toString().padStart(3, '0')
+  return `${rocYear}/${date.format('MM/DD')}`
+}
 
 // 模擬資料
 const userInfo = {
@@ -17,7 +17,7 @@ const userInfo = {
   age: 28,
   birthday: '2024-01-10',
   address: '台北市內湖區石潭路58號6樓',
-};
+}
 
 // 使用 DescriptionsProps['items'] 定義欄位
 const items: DescriptionsProps['items'] = [
@@ -51,7 +51,7 @@ const items: DescriptionsProps['items'] = [
     children: userInfo.address,
     span: 2,
   },
-];
+]
 
 const DescriptionPage: React.FC = () => {
   return (
@@ -77,7 +77,7 @@ const DescriptionPage: React.FC = () => {
         />
         </ProCard>
     </>
-  );
-};
+  )
+}
 
-export default DescriptionPage;
+export default DescriptionPage

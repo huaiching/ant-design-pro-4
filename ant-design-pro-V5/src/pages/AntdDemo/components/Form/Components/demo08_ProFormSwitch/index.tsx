@@ -1,7 +1,7 @@
 
-import React, { useRef } from 'react';
-import ProForm, { ProFormInstance, ProFormSwitch } from '@ant-design/pro-form';
-import MliFormRow from '@/common/components/form/MliFormRow';
+import React, { useRef } from 'react'
+import ProForm, { ProFormInstance, ProFormSwitch } from '@ant-design/pro-form'
+import MliFormRow from '@/common/components/form/MliFormRow'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -27,7 +27,7 @@ const MyForm: React.FC = () => {
         </MliFormRow>
       </ProForm>
     </>
-  );
-};
+  )
+}
 
-export default MyForm;
+export default MyForm

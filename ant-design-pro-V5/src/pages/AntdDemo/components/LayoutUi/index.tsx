@@ -51,7 +51,7 @@ const AsstManagement: React.FC = () => {
         </TabPane>
       ))}
     </Tabs>
-  );
+  )
 }
 
 export default AsstManagement

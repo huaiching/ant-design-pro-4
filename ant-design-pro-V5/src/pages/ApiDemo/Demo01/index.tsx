@@ -1,8 +1,8 @@
-import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
-import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Space } from 'antd';
-import React, { useEffect, useRef } from 'react';
-import { callActionApi, callDataApi } from '../store/apiCaller';
+import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
+import { PageContainer } from '@ant-design/pro-layout'
+import { Button, Space } from 'antd'
+import React, { useEffect, useRef } from 'react'
+import { callActionApi, callDataApi } from '../store/apiCaller'
 
 const MyForm: React.FC = () => {
     const formRef = useRef<ProFormInstance>()
@@ -77,6 +77,6 @@ const MyForm: React.FC = () => {
             </div> */}
         </PageContainer>
     )
-};
+}
 
-export default MyForm;
+export default MyForm

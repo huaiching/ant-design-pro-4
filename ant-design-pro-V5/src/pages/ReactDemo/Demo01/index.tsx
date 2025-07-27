@@ -1,5 +1,5 @@
-import { PageContainer } from '@ant-design/pro-layout';
-import React from 'react';
+import { PageContainer } from '@ant-design/pro-layout'
+import React from 'react'
 // 開頭 進行 元件的載入
 
 // 頁面檔 其實就是一個函式，return 出去的就是要渲染的 html 元件
@@ -12,4 +12,4 @@ const myExample: React.FC = () => {
     )
 }
 
-export default myExample;
+export default myExample

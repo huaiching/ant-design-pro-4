@@ -17,7 +17,7 @@ const Demo: React.FC =() => {
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
-                  message.success('表單提交成功！');
+                  message.success('表單提交成功！')
                 })
               }}
               key="save"
@@ -27,7 +27,7 @@ const Demo: React.FC =() => {
             <Button
               onClick={async () => {
                   // 取消按鈕 點擊後 要進行的 API 操作
-                  message.warning('取消作業');
+                  message.warning('取消作業')
               }}
             >
               取消

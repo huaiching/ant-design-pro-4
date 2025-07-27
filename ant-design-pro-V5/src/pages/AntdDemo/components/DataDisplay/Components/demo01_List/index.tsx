@@ -1,6 +1,6 @@
-import React from 'react';
-import { List } from 'antd';
-import ProCard from '@ant-design/pro-card';
+import React from 'react'
+import { List } from 'antd'
+import ProCard from '@ant-design/pro-card'
 
 const App: React.FC = () => {
   const data = [
@@ -24,7 +24,7 @@ const App: React.FC = () => {
       nbErrDesc: '需填寫「實支實付型商品特別提醒事項聲明書」',
       severity: '0',
     },
-  ];
+  ]
 
   return (
     <ProCard title='核保訊息'>
@@ -48,4 +48,4 @@ const App: React.FC = () => {
     </ProCard>
   )
 }
-export default App;
+export default App

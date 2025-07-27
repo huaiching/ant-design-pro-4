@@ -1,13 +1,13 @@
 
-import MliFormRow from '@/common/components/form/MliFormRow';
-import { ModalForm, ProFormInstance, ProFormText } from '@ant-design/pro-form';
-import { Button, message, Space } from 'antd';
-import React, { useRef, useState } from 'react';
+import MliFormRow from '@/common/components/form/MliFormRow'
+import { ModalForm, ProFormInstance, ProFormText } from '@ant-design/pro-form'
+import { Button, message, Space } from 'antd'
+import React, { useRef, useState } from 'react'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
   // 管理 ModelForm 的開關狀態
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false)
 
   // 控制送出後之動作
   const submitterRender = () => {
@@ -19,7 +19,7 @@ const MyForm: React.FC = () => {
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
-                  message.success('表單提交成功！');
+                  message.success('表單提交成功！')
                 })
               }}
               key="save"
@@ -29,8 +29,8 @@ const MyForm: React.FC = () => {
             <Button
               onClick={async () => {
                   // 取消按鈕 點擊後 要進行的 API 操作
-                  message.warning('取消作業');
-                  setVisible(false); // 提交後關閉彈窗
+                  message.warning('取消作業')
+                  setVisible(false) // 提交後關閉彈窗
               }}
             >
               取消
@@ -78,6 +78,6 @@ const MyForm: React.FC = () => {
       </ModalForm>
     </>
   )
-};
+}
 
-export default MyForm;
+export default MyForm

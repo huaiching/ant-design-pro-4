@@ -1,7 +1,7 @@
-import MliFormRow from '@/common/components/form/MliFormRow';
-import ProForm, { ProFormText } from '@ant-design/pro-form';
-import { Typography } from 'antd';
-import React from 'react';
+import MliFormRow from '@/common/components/form/MliFormRow'
+import ProForm, { ProFormText } from '@ant-design/pro-form'
+import { Typography } from 'antd'
+import React from 'react'
 
 const MyForm: React.FC = () => {
 
@@ -68,6 +68,6 @@ const MyForm: React.FC = () => {
       </ProForm>
     </>
   )
-};
+}
 
-export default MyForm;
+export default MyForm

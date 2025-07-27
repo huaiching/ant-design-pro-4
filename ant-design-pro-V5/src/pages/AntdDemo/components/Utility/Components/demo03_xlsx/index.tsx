@@ -8,7 +8,7 @@ import { uploadXlsx } from './store/uploadXlsx'
 
 const Xlsx: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
-  const [uploadData, setUploadData] = useState<any[] | null>(null);
+  const [uploadData, setUploadData] = useState<any[] | null>(null)
 
   // 控制送出後之動作
   const submitterRender = () => {

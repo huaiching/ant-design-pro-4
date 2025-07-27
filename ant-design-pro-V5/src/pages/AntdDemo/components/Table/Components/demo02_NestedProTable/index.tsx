@@ -3,19 +3,19 @@
  * 數據資料 透過 api 取得後，直接放到 dataSource 中
  */
 
-import React, { useEffect, useRef, useState } from 'react';
-import { ProForm, ProTable } from '@ant-design/pro-components';
-import type { ProColumns, ActionType, ProFormInstance } from '@ant-design/pro-components';
-import { Button, message } from 'antd';
-import * as poApi from './store/poApi';
-import { PoData, coData } from './store/poApi';
+import React, { useEffect, useRef, useState } from 'react'
+import { ProForm, ProTable } from '@ant-design/pro-components'
+import type { ProColumns, ActionType, ProFormInstance } from '@ant-design/pro-components'
+import { Button, message } from 'antd'
+import * as poApi from './store/poApi'
+import { PoData, coData } from './store/poApi'
 
 // 主表格欄位（保單）
 const policyColumns: ProColumns<PoData>[] = [
   { title: '保單號碼', dataIndex: 'policyNo', valueType: 'text', },
   { title: '保單狀態', dataIndex: 'poStsCode', valueType: 'text', },
   { title: '保單生效日', dataIndex: 'poIssueDate', valueType: 'date', },
-];
+]
 
 // 子表格欄位（保障清單）
 const coverageColumns: ProColumns<coData>[] = [
@@ -24,29 +24,29 @@ const coverageColumns: ProColumns<coData>[] = [
   { title: '險種版數', dataIndex: 'rateScale', valueType: 'text', },
   { title: '保障狀態', dataIndex: 'coStsCode', valueType: 'text', },
   { title: '保障生效日', dataIndex: 'coIssueDate', valueType: 'date', },
-];
+]
 
 const Demo12_NestedProTable: React.FC = () => {
   const formRef = useRef<ProFormInstance>()    // 表單參照，讀取/寫入資料
   const actionRef = useRef<ActionType>()       // 表格操作引用（如 reload）
-  const [dataSource, setDataSource] = useState<PoData[]>([]);  // 主表資料
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]); // 勾選中的保單 key
+  const [dataSource, setDataSource] = useState<PoData[]>([])  // 主表資料
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]) // 勾選中的保單 key
 
   // ✅ 頁面初始化：取得資料並設定到 form 與畫面
   useEffect(() => {
     poApi.fetchAllData().then((data) => {
-      setDataSource(data);                                 // 給 table 顯示
-      formRef.current?.setFieldsValue({ policies: data }); // 存入 form 中
-    });
-  }, []);
+      setDataSource(data)                                 // 給 table 顯示
+      formRef.current?.setFieldsValue({ policies: data }) // 存入 form 中
+    })
+  }, [])
 
   // ✅ 導出按鈕事件：從 formRef 中取得 policies，再過濾出勾選的
   const handleExport = () => {
-    const allData: PoData[] = formRef.current?.getFieldValue('policies') || [];
-    const selectedData = allData.filter((item) => selectedRowKeys.includes(item.key));
-    console.log('✅ 勾選導出資料：', selectedData);
-    message.success(`已導出 ${selectedData.length} 筆資料到 console`);
-  };
+    const allData: PoData[] = formRef.current?.getFieldValue('policies') || []
+    const selectedData = allData.filter((item) => selectedRowKeys.includes(item.key))
+    console.log('✅ 勾選導出資料：', selectedData)
+    message.success(`已導出 ${selectedData.length} 筆資料到 console`)
+  }
 
   return (
     <ProForm
@@ -99,7 +99,7 @@ const Demo12_NestedProTable: React.FC = () => {
         ]}
       />
     </ProForm>
-  );
-};
+  )
+}
 
-export default Demo12_NestedProTable;
+export default Demo12_NestedProTable

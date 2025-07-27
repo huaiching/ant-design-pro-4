@@ -1,7 +1,7 @@
-import MliFormRow from '@/common/components/form/MliFormRow';
-import ProCard from "@ant-design/pro-card";
-import { ProFormText } from "@ant-design/pro-form";
-import React from "react";
+import MliFormRow from '@/common/components/form/MliFormRow'
+import ProCard from "@ant-design/pro-card"
+import { ProFormText } from "@ant-design/pro-form"
+import React from "react"
 
 const Step1: React.FC = (formRef) => {
   return (

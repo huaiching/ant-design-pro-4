@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { useUserGlobalContext } from '../store/useUserContext';
-import { Button, Input, Space } from 'antd';
+import React, { useState } from 'react'
+import { useUserGlobalContext } from '../store/useUserContext'
+import { Button, Input, Space } from 'antd'
 
 const Profile: React.FC = () => {
-  const { user, updateUser } = useUserGlobalContext();
-  const [newUser, setNewUser] = useState(user);
+  const { user, updateUser } = useUserGlobalContext()
+  const [newUser, setNewUser] = useState(user)
 
   const handleUpdate = () => {
-    updateUser(newUser);
-  };
+    updateUser(newUser)
+  }
 
   return (
     <Space>
@@ -32,7 +32,7 @@ const Profile: React.FC = () => {
       />
       <Button onClick={handleUpdate}>Update</Button>
     </Space>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

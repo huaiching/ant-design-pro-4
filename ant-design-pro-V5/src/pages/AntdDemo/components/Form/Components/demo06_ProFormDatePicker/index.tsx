@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import ProForm, { ProFormDatePicker, ProFormDateRangePicker, ProFormInstance } from '@ant-design/pro-form';
-import { FooterToolbar } from '@ant-design/pro-layout';
-import { Button, message } from 'antd';
-import MliFormRow from '@/common/components/form/MliFormRow';
+import React, { useEffect, useRef } from 'react'
+import ProForm, { ProFormDatePicker, ProFormDateRangePicker, ProFormInstance } from '@ant-design/pro-form'
+import { FooterToolbar } from '@ant-design/pro-layout'
+import { Button, message } from 'antd'
+import MliFormRow from '@/common/components/form/MliFormRow'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -18,7 +18,7 @@ const MyForm: React.FC = () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
                   console.log('formRef', formRef.current?.getFieldsValue())
-                  message.success('表單提交成功！');
+                  message.success('表單提交成功！')
                 })
               }}
               key="save"
@@ -28,7 +28,7 @@ const MyForm: React.FC = () => {
             <Button
               onClick={async () => {
                   // 取消按鈕 點擊後 要進行的 API 操作
-                  message.warning('取消作業');
+                  message.warning('取消作業')
               }}
             >
               取消
@@ -85,6 +85,6 @@ const MyForm: React.FC = () => {
         </MliFormRow>
       </ProForm>
     </>
-  );
-};
-export default MyForm;
+  )
+}
+export default MyForm

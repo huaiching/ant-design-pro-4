@@ -1,16 +1,16 @@
-import { PageContainer } from '@ant-design/pro-layout';
-import React from 'react';
+import { PageContainer } from '@ant-design/pro-layout'
+import React from 'react'
 
 const VDOM: React.FC = () => {
     // 函式宣告: 使用 剩餘函數
     function sum(...numbers: number[]): number {
-        let f_sum = 0;
+        let f_sum = 0
         numbers.forEach((number) => {
-            f_sum += number;
-        });
-        return f_sum;
+            f_sum += number
+        })
+        return f_sum
     }
-    const f_value_1 = sum(1,2,3,4,5);
+    const f_value_1 = sum(1,2,3,4,5)
     // 箭頭函式
     const diff = (x: number, y: number): number => {
         return x-y

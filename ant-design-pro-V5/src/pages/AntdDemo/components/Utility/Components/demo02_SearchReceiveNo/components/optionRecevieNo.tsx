@@ -1,6 +1,6 @@
-import { ModalForm } from "@ant-design/pro-form";
-import ProTable, { ProColumns } from "@ant-design/pro-table";
-import { Button } from "antd";
+import { ModalForm } from "@ant-design/pro-form"
+import ProTable, { ProColumns } from "@ant-design/pro-table"
+import { Button } from "antd"
 import { fetchData } from '../store/apdtApi'
 
 const OptionReceiveNo =  (props: any) => {
@@ -23,7 +23,7 @@ const OptionReceiveNo =  (props: any) => {
       dataIndex: 'poChgReceDate',
       valueType: 'text',
     },
-  ];
+  ]
 
   return (
     <ModalForm
@@ -43,12 +43,12 @@ const OptionReceiveNo =  (props: any) => {
           search={false}            // 關閉查詢框
           options={false}           // 關閉功能框
           request={async ()=>{      // 模擬透過 api 取得 受理資料
-              const response = await fetchData();
+              const response = await fetchData()
               return {
                 data: response.data,
                 success: true,
                 total: response.total,
-              };
+              }
           }}   // 數據請求函式
           pagination={{             // 開啟分頁選擇 + 限制 每頁 5 筆
             showQuickJumper: true,
@@ -70,7 +70,7 @@ const OptionReceiveNo =  (props: any) => {
                 }}>
                   確定
                 </Button>
-              );
+              )
           }}
         />
     </ModalForm>

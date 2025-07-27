@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { ProTable, ProColumns } from '@ant-design/pro-components';
-import { Card, Descriptions } from 'antd';
+import React, { useState } from 'react'
+import { ProTable, ProColumns } from '@ant-design/pro-components'
+import { Card, Descriptions } from 'antd'
 
 /** 假資料 */
 const mockData: PolicyRecord[] = [
@@ -28,25 +28,25 @@ const mockData: PolicyRecord[] = [
     phone: '0922333444',
     eMail: 'meili@example.com',
   },
-];
+]
 
 /** 資料結構定義 */
 type PolicyRecord = {
-  policyNo: string;
-  poStsCode: string;
-  basicPlanCode: string;
-  basicRateScale: string;
-  poIssueDate?: string;
-  o1Name?: string;
-  i1Name?: string;
-  address?: string;
-  phone?: string;
-  eMail?: string;
-};
+  policyNo: string
+  poStsCode: string
+  basicPlanCode: string
+  basicRateScale: string
+  poIssueDate?: string
+  o1Name?: string
+  i1Name?: string
+  address?: string
+  phone?: string
+  eMail?: string
+}
 
 const PolicyTable: React.FC = () => {
   // 儲存選取的資料
-  const [selectedRow, setSelectedRow] = useState<PolicyRecord>();
+  const [selectedRow, setSelectedRow] = useState<PolicyRecord>()
 
   /** 表格欄位定義 */
   const columns: ProColumns<PolicyRecord>[] = [
@@ -70,7 +70,7 @@ const PolicyTable: React.FC = () => {
       dataIndex: 'basicRateScale',
       key: 'basicRateScale',
     },
-  ];
+  ]
 
   /** Descriptions 的欄位項目定義 */
   const descriptionItems = [
@@ -124,7 +124,7 @@ const PolicyTable: React.FC = () => {
             label: 'E-mail',
             children: selectedRow?.eMail,
           },
-        ];
+        ]
 
   return (
     <div>
@@ -156,7 +156,7 @@ const PolicyTable: React.FC = () => {
         </Card>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default PolicyTable;
+export default PolicyTable

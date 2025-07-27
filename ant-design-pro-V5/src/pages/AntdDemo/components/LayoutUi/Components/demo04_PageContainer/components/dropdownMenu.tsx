@@ -1,17 +1,17 @@
-import { Menu } from 'antd';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Menu } from 'antd'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const DropdownMenu: React.FC =() => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const menuClick = (info: any) => {
     if (info.key === '1') {
-      navigate('?activeKey=ProFormText');         // 修改網址
+      navigate('?activeKey=ProFormText')         // 修改網址
       window.open(window.location.href, '_blank') // 頁面跳轉 (開新視窗)
     }
     if (info.key === '2') {
-      navigate('?activeKey=ProFormSelect');
+      navigate('?activeKey=ProFormSelect')
       window.open(window.location.href, '_blank')
     }
   }

@@ -1,15 +1,15 @@
-import { PageContainer } from '@ant-design/pro-layout';
-import React from 'react';
+import { PageContainer } from '@ant-design/pro-layout'
+import React from 'react'
 
 const VDOM: React.FC = () => {
     /* 介面 interface */
     interface Person {
-        readonly id: number;
+        readonly id: number
     }
     interface Person {
-        name: string;
-        age: number;
-        sex?: string;
+        name: string
+        age: number
+        sex?: string
     }
     // 案例
     const ray: Person = {
@@ -18,7 +18,7 @@ const VDOM: React.FC = () => {
         age: 20,
         sex: "男",
     }
-    console.log("ray", ray);
+    console.log("ray", ray)
             
     return (
         <PageContainer> 

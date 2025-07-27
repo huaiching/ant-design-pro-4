@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, message, Modal } from 'antd';
+import React from 'react'
+import { Button, message, Modal } from 'antd'
 
 const App: React.FC = () => {
   const data = [
@@ -14,7 +14,7 @@ const App: React.FC = () => {
     // 將 訊息集合 轉換為 html標籤
     const description = msgList.map((msg) => (
       <p>{msg}</p>
-    ));
+    ))
     // 顯示 對話框
     Modal.confirm({                    // confirm | warning | info | error
       title: '標題文字',                // 標題文字
@@ -38,7 +38,7 @@ const App: React.FC = () => {
         顯示確認訊息
       </Button>
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App

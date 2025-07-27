@@ -1,9 +1,9 @@
-import ProForm, { ProFormInstance } from '@ant-design/pro-form';
-import { FooterToolbar } from '@ant-design/pro-layout';
-import { Button, message, Spin } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
-import { fetchTableData } from './store/userApi';
-import { EditableProTable, ProColumns } from '@ant-design/pro-table';
+import ProForm, { ProFormInstance } from '@ant-design/pro-form'
+import { FooterToolbar } from '@ant-design/pro-layout'
+import { Button, message, Spin } from 'antd'
+import React, { useEffect, useRef, useState } from 'react'
+import { fetchTableData } from './store/userApi'
+import { EditableProTable, ProColumns } from '@ant-design/pro-table'
 import { v4 as uuidv4 } from 'uuid'
 
 const MyForm: React.FC = () => {
@@ -60,7 +60,7 @@ const MyForm: React.FC = () => {
                     }
                   })
                   console.log('editableData',newData)
-                  message.success('表單提交成功！');
+                  message.success('表單提交成功！')
                 })
               }}
               key="save"
@@ -70,7 +70,7 @@ const MyForm: React.FC = () => {
             <Button
               onClick={async () => {
                   // 取消按鈕 點擊後 要進行的 API 操作
-                  message.warning('取消作業');
+                  message.warning('取消作業')
               }}
             >
               取消
@@ -135,7 +135,7 @@ const MyForm: React.FC = () => {
         format: 'YYYY/MM/DD',
       },
     },
-  ];
+  ]
 
   return (
     <>
@@ -177,6 +177,6 @@ const MyForm: React.FC = () => {
       </ProForm>
     </>
   )
-};
+}
 
-export default MyForm;
+export default MyForm
