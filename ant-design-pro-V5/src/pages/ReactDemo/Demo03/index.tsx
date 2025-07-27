@@ -1,7 +1,7 @@
 import { PageContainer } from '@ant-design/pro-layout'
 import React from 'react'
-import { Button, Space } from "antd"
-import { useState } from "react"
+import { Button, Space } from 'antd'
+import { useState } from 'react'
 
 const VDOM: React.FC = () => {
     // 宣告
@@ -17,7 +17,7 @@ const VDOM: React.FC = () => {
     return (
         <PageContainer>
             <Space>
-                <Button type="primary" onClick={chgWeather}>改變天氣</Button>
+                <Button type='primary' onClick={chgWeather}>改變天氣</Button>
                 <h3>今天天氣很{isHotDesc}</h3>
             </Space>
         </PageContainer>

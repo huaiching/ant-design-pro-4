@@ -14,14 +14,14 @@ const MyForm: React.FC = () => {
       render: () => (
         <FooterToolbar>
           <Button
-            type="primary"
+            type='primary'
             onClick={async () => {
               formRef.current?.validateFields().then(values => {
                 // 確認按鈕 點擊後 要進行的 API 操作
                 message.success('表單提交成功！')
               })
             }}
-            key="save"
+            key='save'
           >
             確認
           </Button>
@@ -68,34 +68,34 @@ const MyForm: React.FC = () => {
       <Typography.Title level={3}>ProFormText</Typography.Title>
       <ProForm
         grid
-        layout="vertical"
+        layout='vertical'
         formRef={formRef}
         submitter={submitterRender()}
       >
         <MliFormRow>
           <MliFormCol colSize={2}>
-            <ProFormGroup title="地址資訊" titleStyle={{ fontWeight: 'normal' }}>
+            <ProFormGroup title='地址資訊' titleStyle={{ fontWeight: 'normal' }}>
               <ProFormSelect
                 name='county'
-                placeholder="請選擇縣市"
+                placeholder='請選擇縣市'
                 rules={[{ required: true, message: '請選擇縣市' }]}
-                width="sm"
+                width='sm'
                 colProps={{ span: 8 }}
                 options={countyOptions}
                 showSearch
               />
               <ProFormText
                 name='district'
-                placeholder="請輸入區"
+                placeholder='請輸入區'
                 rules={[{ required: true, message: '請輸入區' }]}
-                width="sm"
+                width='sm'
                 colProps={{ span: 8 }}
               />
               <ProFormText
                 name='road'
-                placeholder="請輸入路段"
+                placeholder='請輸入路段'
                 rules={[{ required: true, message: '請輸入路段' }]}
-                width="md"
+                width='md'
                 colProps={{ span: 8 }}
               />
             </ProFormGroup>

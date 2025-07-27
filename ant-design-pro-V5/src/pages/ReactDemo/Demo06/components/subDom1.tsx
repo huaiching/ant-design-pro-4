@@ -13,20 +13,20 @@ const Profile: React.FC = () => {
   return (
     <Space>
       <Input
-        type="text"
-        placeholder="姓名"
+        type='text'
+        placeholder='姓名'
         value={newUser.name}
         onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
       />
       <Input
-        type="number"
-        placeholder="年齡"
+        type='number'
+        placeholder='年齡'
         value={newUser.age}
         onChange={(e) => setNewUser({ ...newUser, age: Number(e.target.value) })}
       />
       <Input
-        type="text"
-        placeholder="性別"
+        type='text'
+        placeholder='性別'
         value={newUser.gender}
         onChange={(e) => setNewUser({ ...newUser, gender: e.target.value })}
       />

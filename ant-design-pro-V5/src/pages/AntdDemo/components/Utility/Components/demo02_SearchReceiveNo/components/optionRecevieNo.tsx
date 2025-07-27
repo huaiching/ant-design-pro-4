@@ -1,6 +1,6 @@
-import { ModalForm } from "@ant-design/pro-form"
-import ProTable, { ProColumns } from "@ant-design/pro-table"
-import { Button } from "antd"
+import { ModalForm } from '@ant-design/pro-form'
+import ProTable, { ProColumns } from '@ant-design/pro-table'
+import { Button } from 'antd'
 import { fetchData } from '../store/apdtApi'
 
 const OptionReceiveNo =  (props: any) => {
@@ -27,7 +27,7 @@ const OptionReceiveNo =  (props: any) => {
 
   return (
     <ModalForm
-      layout="vertical"
+      layout='vertical'
       onVisibleChange={setShowModal}
       visible={showModal}
       modalProps={{
@@ -37,9 +37,9 @@ const OptionReceiveNo =  (props: any) => {
       submitter={false}
     >
         <ProTable
-          name="testTable"
+          name='testTable'
           columns={columns}
-          rowKey="poChgReceNo"      // 設定 資料唯一值 欄位
+          rowKey='poChgReceNo'      // 設定 資料唯一值 欄位
           search={false}            // 關閉查詢框
           options={false}           // 關閉功能框
           request={async ()=>{      // 模擬透過 api 取得 受理資料

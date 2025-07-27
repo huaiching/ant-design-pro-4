@@ -48,7 +48,7 @@ const MyForm: React.FC = () => {
       render: () => (
         <FooterToolbar>
             <Button
-              type="primary"
+              type='primary'
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
@@ -63,7 +63,7 @@ const MyForm: React.FC = () => {
                   message.success('表單提交成功！')
                 })
               }}
-              key="save"
+              key='save'
             >
               確認
             </Button>
@@ -142,16 +142,16 @@ const MyForm: React.FC = () => {
       <h1>EditableProTable</h1>
       <ProForm
         grid
-        layout="vertical"
+        layout='vertical'
         formRef={formRef}
         submitter={submitterRender()}
       >
         <Spin spinning={loading}>
           <EditableProTable
-            name="editTable"
+            name='editTable'
             columns={columns}
-            rowKey="id"
-            headerTitle="編輯表格 模擬 API 取得資料"
+            rowKey='id'
+            headerTitle='編輯表格 模擬 API 取得資料'
             form={{
               ignoreRules: false,
             }}

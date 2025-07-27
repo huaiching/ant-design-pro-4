@@ -1,8 +1,8 @@
 import MliFormRow from '@/common/components/form/MliFormRow'
-import ProForm, { ProFormInstance, ProFormUploadButton } from "@ant-design/pro-form"
-import { FooterToolbar } from "@ant-design/pro-layout"
-import { Button } from "antd"
-import { useRef, useState } from "react"
+import ProForm, { ProFormInstance, ProFormUploadButton } from '@ant-design/pro-form'
+import { FooterToolbar } from '@ant-design/pro-layout'
+import { Button } from 'antd'
+import { useRef, useState } from 'react'
 import { downloadXlsx } from './store/downloadXlsx'
 import { uploadXlsx } from './store/uploadXlsx'
 
@@ -16,7 +16,7 @@ const Xlsx: React.FC = () => {
       render: () => (
         <FooterToolbar>
             <Button
-              type="primary"
+              type='primary'
               onClick={()=>{
                 formRef.current?.validateFields().then(async values => {
                   const file = formRef.current?.getFieldsValue().file[0]
@@ -24,7 +24,7 @@ const Xlsx: React.FC = () => {
                   setUploadData(data)
                 })
               }}
-              key="chk"
+              key='chk'
             >
               解析 (匯入+解析)
             </Button>
@@ -42,9 +42,9 @@ const Xlsx: React.FC = () => {
     >
       <MliFormRow>
         <ProFormUploadButton
-          name="file"
-          label="上傳文件"
-          title="上傳"
+          name='file'
+          label='上傳文件'
+          title='上傳'
           fieldProps={{
             maxCount: 1,
             listType: 'picture-card'

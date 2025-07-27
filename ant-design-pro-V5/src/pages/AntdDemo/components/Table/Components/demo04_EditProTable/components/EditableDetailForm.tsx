@@ -35,19 +35,19 @@ const EditableDetailForm: React.FC<EditableDetailFormProps> = ({
           },
         }}
         onFinish={onSubmit}
-        layout="vertical"
+        layout='vertical'
       >
         <MliFormRow>
-          <ProFormText name="policyNo" label="保單號碼" disabled={readOnly} />
-          <ProFormText name="poStsCode" label="保單狀態" />
-          <ProFormText name="basicPlanCode" label="主約險種代碼" />
-          <ProFormText name="basicRateScale" label="主約險種版數" />
-          <ProFormDatePicker name="poIssueDate" label="保單生效日" />
-          <ProFormText name="o1Name" label="要保人姓名" />
-          <ProFormText name="i1Name" label="被保人姓名" />
-          <ProFormText name="address" label="通訊地址" />
-          <ProFormText name="phone" label="行動電話" />
-          <ProFormText name="eMail" label="E-mail" />
+          <ProFormText name='policyNo' label='保單號碼' disabled={readOnly} />
+          <ProFormText name='poStsCode' label='保單狀態' />
+          <ProFormText name='basicPlanCode' label='主約險種代碼' />
+          <ProFormText name='basicRateScale' label='主約險種版數' />
+          <ProFormDatePicker name='poIssueDate' label='保單生效日' />
+          <ProFormText name='o1Name' label='要保人姓名' />
+          <ProFormText name='i1Name' label='被保人姓名' />
+          <ProFormText name='address' label='通訊地址' />
+          <ProFormText name='phone' label='行動電話' />
+          <ProFormText name='eMail' label='E-mail' />
         </MliFormRow>
       </ProForm>
     </ProCard>

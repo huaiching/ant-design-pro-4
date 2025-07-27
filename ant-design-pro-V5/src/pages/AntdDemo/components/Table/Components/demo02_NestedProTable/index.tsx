@@ -52,10 +52,10 @@ const Demo12_NestedProTable: React.FC = () => {
     <ProForm
       formRef={formRef}       // 表單參考對象（可透過 get/set 取值）
       submitter={false}       // 不顯示提交按鈕
-      layout="vertical"       // 垂直排列表單項目
+      layout='vertical'       // 垂直排列表單項目
     >
       <ProTable<PoData>
-        rowKey="key"                 // 每筆唯一 key
+        rowKey='key'                 // 每筆唯一 key
         actionRef={actionRef}        // 表格操作參考
         columns={policyColumns}      // 表格欄位
         dataSource={dataSource}      // 表格資料
@@ -69,7 +69,7 @@ const Demo12_NestedProTable: React.FC = () => {
           expandedRowRender: (record) => (
             // ✅ 子表格：使用 ProTable 顯示該保單的保障資料
             <ProTable<coData>
-              rowKey="key"                    // 每筆保障資料的唯一 key
+              rowKey='key'                    // 每筆保障資料的唯一 key
               columns={coverageColumns}       // 子表格欄位（保障序號、險種代碼等）
               dataSource={record.coList}      // 子表格的資料來源為該筆保單的 coList
               pagination={false}              // 子表格不使用分頁，直接列出所有保障
@@ -78,11 +78,11 @@ const Demo12_NestedProTable: React.FC = () => {
             />
           ),
         }}
-        headerTitle="保單清單"
+        headerTitle='保單清單'
         /** ✅ 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
         tableAlertRender={() => (
           <Button
-            type="link"
+            type='link'
             onClick={handleExport}
           >
             導出數據(console）
@@ -90,7 +90,7 @@ const Demo12_NestedProTable: React.FC = () => {
         )}
         toolBarRender={() => [
           <Button
-            key="export"
+            key='export'
             onClick={handleExport}
             disabled={selectedRowKeys.length === 0} // 沒選資料就停用按鈕
           >

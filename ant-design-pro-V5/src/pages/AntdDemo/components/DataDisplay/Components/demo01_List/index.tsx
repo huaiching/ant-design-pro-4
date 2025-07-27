@@ -29,7 +29,7 @@ const App: React.FC = () => {
   return (
     <ProCard title='核保訊息'>
       <List
-        itemLayout="horizontal"   // 布局:  horizontal (水平) (預設) | vertical (垂直)
+        itemLayout='horizontal'   // 布局:  horizontal (水平) (預設) | vertical (垂直)
         dataSource={data}         // 資料來源
         pagination ={{            // 開啟分頁設定
           position: 'bottom',      // 分頁切換位置: top | bottom

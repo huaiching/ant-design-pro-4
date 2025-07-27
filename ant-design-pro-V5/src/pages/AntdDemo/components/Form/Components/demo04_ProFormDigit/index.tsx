@@ -13,14 +13,14 @@ const MyForm: React.FC = () => {
       render: () => (
         <FooterToolbar>
             <Button
-              type="primary"
+              type='primary'
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
                   message.success('表單提交成功！')
                 })
               }}
-              key="save"
+              key='save'
             >
               確認
             </Button>
@@ -38,9 +38,9 @@ const MyForm: React.FC = () => {
   }
 
   const selectBefore = (
-    <Select defaultValue="TWD">
-      <Select.Option value="TWD"> 新台幣 </Select.Option>
-      <Select.Option value="USD"> 美元 </Select.Option>
+    <Select defaultValue='TWD'>
+      <Select.Option value='TWD'> 新台幣 </Select.Option>
+      <Select.Option value='USD'> 美元 </Select.Option>
     </Select>
   )
 
@@ -49,16 +49,16 @@ const MyForm: React.FC = () => {
       <Typography.Title level={3}>ProFormDigit</Typography.Title>
       <ProForm
         grid
-        layout="vertical"
+        layout='vertical'
         formRef={formRef}
         submitter={submitterRender()}
       >
         <MliFormRow>
           <ProFormDigit
-            name="amt"
-            label="工本費"
-            tooltip="這是收據的工本費"
-            placeholder="請輸入工本費"
+            name='amt'
+            label='工本費'
+            tooltip='這是收據的工本費'
+            placeholder='請輸入工本費'
             fieldProps={{
               max: 100,
               min: 0,

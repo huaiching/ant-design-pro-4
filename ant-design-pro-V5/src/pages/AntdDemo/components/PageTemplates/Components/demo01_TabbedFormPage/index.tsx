@@ -1,23 +1,23 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react'
 import {
   FooterToolbar,
   ProForm,
   ProFormInstance,
-} from '@ant-design/pro-components';
-import { Card, Tabs, Button, message, BackTop } from 'antd';
-import type { TabsProps } from 'antd';
-import InfoForm from './Components/InfoForm';
-import TabContent1 from './Components/TabContent1';
-import TabContent2 from './Components/TabContent2';
+} from '@ant-design/pro-components'
+import { Card, Tabs, Button, message, BackTop } from 'antd'
+import type { TabsProps } from 'antd'
+import InfoForm from './Components/InfoForm'
+import TabContent1 from './Components/TabContent1'
+import TabContent2 from './Components/TabContent2'
 
 const TabbedFormPage: React.FC = () => {
-  const formRef = useRef<ProFormInstance>();
-  const [activeTab, setActiveTab] = useState('tab1');
+  const formRef = useRef<ProFormInstance>()
+  const [activeTab, setActiveTab] = useState('tab1')
 
   const [tabStatus, setTabStatus] = useState<Record<string, 'pending' | 'valid'>>({
     tab1: 'pending',
     tab2: 'pending',
-  });
+  })
 
   const tabs: TabsProps['items'] = [
     {
@@ -30,48 +30,48 @@ const TabbedFormPage: React.FC = () => {
       label: '其他資訊',
       children: <TabContent2 formRef={formRef} />,
     },
-  ];
+  ]
 
   const handleTabChange = async (key: string) => {
-    const valid = await formRef.current?.validateFields();
+    const valid = await formRef.current?.validateFields()
     if (valid) {
       setTabStatus((prev) => ({
         ...prev,
         [activeTab]: 'valid',
-      }));
-      setActiveTab(key);
+      }))
+      setActiveTab(key)
     } else {
-      message.error('請先完成目前頁籤的欄位');
+      message.error('請先完成目前頁籤的欄位')
     }
-  };
+  }
 
   const handleFinish = async () => {
-    const valid = await formRef.current?.validateFields();
+    const valid = await formRef.current?.validateFields()
     if (valid) {
       const updatedStatus: Record<string, 'pending' | 'valid'> = {
         ...tabStatus,
         [activeTab]: 'valid',
-      };
-      setTabStatus(updatedStatus);
+      }
+      setTabStatus(updatedStatus)
 
-      const allValid = Object.entries(updatedStatus).every(([, status]) => status === 'valid');
+      const allValid = Object.entries(updatedStatus).every(([, status]) => status === 'valid')
       if (allValid) {
-        const values = formRef.current?.getFieldsValue();
-        console.log('✅ 當前表單資料:', values);
-        message.success('送出成功');
+        const values = formRef.current?.getFieldsValue()
+        console.log('✅ 當前表單資料:', values)
+        message.success('送出成功')
       } else {
-        message.error('尚有未完成的頁籤，請逐一檢查');
+        message.error('尚有未完成的頁籤，請逐一檢查')
       }
     } else {
-      message.error('請先完成目前頁籤的欄位');
+      message.error('請先完成目前頁籤的欄位')
     }
-  };
+  }
 
   return (
     <ProForm
       formRef={formRef}
       submitter={false}
-      layout="vertical"
+      layout='vertical'
       style={{ padding: 16 }}
     >
       <InfoForm formRef={formRef} />
@@ -113,11 +113,11 @@ const TabbedFormPage: React.FC = () => {
       </Card>
 
       <FooterToolbar>
-        <Button type="primary" onClick={handleFinish}>提交</Button>
+        <Button type='primary' onClick={handleFinish}>提交</Button>
       </FooterToolbar>
 
     </ProForm>
-  );
+  )
 }
 
-export default TabbedFormPage;
+export default TabbedFormPage

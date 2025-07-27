@@ -10,23 +10,23 @@ const MyForm: React.FC = () => {
       <Typography.Title level={3}>MliFormRow</Typography.Title>
       <ProForm
         grid
-        layout="vertical"
+        layout='vertical'
         // formRef={formRef}
         submitter={false}
       >
         <MliFormRow gutter={[2, 2]} align='bottom' justify='start'>
           <MliFormRow gutter={[2, 2]} align='bottom' justify='start'>
             <ProFormText
-              name="failed1_1"
+              name='failed1_1'
               colSize={1}
-              initialValue="1"
+              initialValue='1'
               allowClear={false}
             />
             {[2, 3, 4].map(i => (
               <ProFormText
                 name={`failed1_${i}`}
                 colSize={1}
-                initialValue="1"
+                initialValue='1'
                 allowClear={false}
               />
             ))}
@@ -34,7 +34,7 @@ const MyForm: React.FC = () => {
 
           <MliFormRow gutter={[2, 2]} align='bottom' justify='start'>
             <ProFormText
-              name="failed2_1"
+              name='failed2_1'
               colSize={1 / 2}
               initialValue='1/2'
               allowClear={false}
@@ -50,7 +50,7 @@ const MyForm: React.FC = () => {
           </MliFormRow>
           <MliFormRow gutter={[2, 2]} align='bottom' justify='start'>
             <ProFormText
-              name="failed3_1"
+              name='failed3_1'
               colSize={1 / 3}
               initialValue='1/3'
               allowClear={false}

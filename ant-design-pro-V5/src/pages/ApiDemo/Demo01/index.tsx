@@ -15,18 +15,18 @@ const MyForm: React.FC = () => {
     const clntSave = () => {
         callActionApi('POST', 'http://localhost:8080/clnt/save', 
             {
-                clientId: formRef.current?.getFieldValue("clientId"),
-                names: formRef.current?.getFieldValue("names"),
-                birthDate: formRef.current?.getFieldValue("birthDate"),
-                sex: formRef.current?.getFieldValue("sex"),
+                clientId: formRef.current?.getFieldValue('clientId'),
+                names: formRef.current?.getFieldValue('names'),
+                birthDate: formRef.current?.getFieldValue('birthDate'),
+                sex: formRef.current?.getFieldValue('sex'),
             })
     }
     const clntDelete = () => {
-        const url = 'http://localhost:8080/clnt/deleteById?clientId=' + formRef.current?.getFieldValue("clientId")
+        const url = 'http://localhost:8080/clnt/deleteById?clientId=' + formRef.current?.getFieldValue('clientId')
         callActionApi('DELETE', url)
     }
     const clntQuery = () => {
-        const url = 'http://localhost:8080/clnt/findById?clientId=' + formRef.current?.getFieldValue("clientId")
+        const url = 'http://localhost:8080/clnt/findById?clientId=' + formRef.current?.getFieldValue('clientId')
         callDataApi('GET', url)
         .then((data) => {
             formRef.current?.setFieldsValue({
@@ -42,7 +42,7 @@ const MyForm: React.FC = () => {
         <PageContainer>
             <ProForm
                 grid
-                layout="vertical"
+                layout='vertical'
                 formRef={formRef}
                 submitter={false}
             >
@@ -52,24 +52,24 @@ const MyForm: React.FC = () => {
                     <Button type='primary' onClick={async () => {clntQuery()}}>clnt 資料查詢</Button>
                 </Space>
                 <ProFormText
-                    name="clientId"
-                    label="客戶證號"
-                    placeholder="請輸入客戶證號"
+                    name='clientId'
+                    label='客戶證號'
+                    placeholder='請輸入客戶證號'
                 />
                 <ProFormText
-                    name="names"
-                    label="姓名"
-                    placeholder="請輸入姓名"
+                    name='names'
+                    label='姓名'
+                    placeholder='請輸入姓名'
                 />
                 <ProFormText
-                    name="birthDate"
-                    label="出生日期"
-                    placeholder="請輸入出生日期"
+                    name='birthDate'
+                    label='出生日期'
+                    placeholder='請輸入出生日期'
                 />
                 <ProFormText
-                    name="sex"
-                    label="性別"
-                    placeholder="請輸入性別"
+                    name='sex'
+                    label='性別'
+                    placeholder='請輸入性別'
                 />
             </ProForm>
             {/* <div>

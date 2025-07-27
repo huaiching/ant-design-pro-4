@@ -17,8 +17,8 @@ const MyForm: React.FC = () => {
       >
         <MliFormRow>
           <ProFormSwitch
-            name="status"
-            label="啟用狀態"
+            name='status'
+            label='啟用狀態'
             fieldProps={{
                 checkedChildren: '開啟',
                 unCheckedChildren: '關閉',

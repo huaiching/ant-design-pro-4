@@ -1,4 +1,4 @@
-import { message } from "antd"
+import { message } from 'antd'
 
 
 /**
@@ -24,9 +24,9 @@ export const callActionApi = (method: 'GET' | 'POST' | 'DELETE', fetchUrl: strin
   fetch(fetchUrl, options)
     .then(response => {
         if (response.status === 200) {
-            message.success("存檔成功")
+            message.success('存檔成功')
         } else {
-            message.error("存檔失敗")
+            message.error('存檔失敗')
         }
     }) 
     .catch((error) => {
@@ -105,9 +105,9 @@ export const callDownloadApi = (method: 'GET' | 'POST' | 'DELETE', fetchUrl: str
       let filename = 'download.' + fileType // 預設檔名
       // 如果有 Content-Disposition，嘗試解析檔名
       if (disposition && disposition.includes('attachment')) {
-        const filenameMatch = disposition.match(/filename[^=\n]*=((['"]).*?\2|[^\n]*)/)
+        const filenameMatch = disposition.match(/filename[^=\n]*=((['']).*?\2|[^\n]*)/)
         if (filenameMatch && filenameMatch[1]) {
-          filename = filenameMatch[1].replace(/['"]/g, '')
+          filename = filenameMatch[1].replace(/['']/g, '')
           filename = decodeURIComponent(filename) // 解碼 URL 編碼
         }
       }

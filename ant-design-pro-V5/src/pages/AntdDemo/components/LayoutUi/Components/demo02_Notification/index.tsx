@@ -26,7 +26,7 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <Button type="primary" onClick={() => openNotificationWithMultipleLines(data)}>
+      <Button type='primary' onClick={() => openNotificationWithMultipleLines(data)}>
         顯示通知訊息
       </Button>
     </div>

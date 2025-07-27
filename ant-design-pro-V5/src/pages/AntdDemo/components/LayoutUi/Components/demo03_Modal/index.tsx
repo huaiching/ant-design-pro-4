@@ -34,7 +34,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Button type="primary" onClick={()=>openModal(data)}>
+      <Button type='primary' onClick={()=>openModal(data)}>
         顯示確認訊息
       </Button>
     </>

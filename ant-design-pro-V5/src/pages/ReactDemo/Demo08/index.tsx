@@ -7,11 +7,11 @@ const MyComponent: React.FC = () => {
   // useRef 的型態 根據 綁定元件 來使用，這裡因為是使用 Inupt，所以要用 InputRef 作為型態
   const inputRef = useRef<InputRef>(null)
   // 設定 姓名變數
-  const [userName, setUserName] = useState<string>("")
+  const [userName, setUserName] = useState<string>('')
   // 設定 姓名改變事件
   const chgUserName = () => {
     const refValue = inputRef.current?.input?.value
-    const name = refValue !== undefined ? refValue : ""
+    const name = refValue !== undefined ? refValue : ''
     setUserName(name)
   }
 

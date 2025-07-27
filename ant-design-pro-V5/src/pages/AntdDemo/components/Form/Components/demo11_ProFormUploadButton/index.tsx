@@ -14,14 +14,14 @@ const MyForm: React.FC = () => {
       render: () => (
         <FooterToolbar>
             <Button
-              type="primary"
+              type='primary'
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
                   message.success('表單提交成功！')
                 })
               }}
-              key="save"
+              key='save'
             >
               確認
             </Button>
@@ -49,9 +49,9 @@ const MyForm: React.FC = () => {
       >
         <MliFormRow>
           <ProFormUploadButton
-            name="file"
-            label="上傳文件"
-            title="上傳"
+            name='file'
+            label='上傳文件'
+            title='上傳'
             fieldProps={{
               maxCount: 1,       // 最多只能上傳一個文件
             }}

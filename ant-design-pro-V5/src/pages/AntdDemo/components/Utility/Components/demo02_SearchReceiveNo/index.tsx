@@ -1,9 +1,9 @@
-import MliFormRow from '@/common/components/form/MliFormRow';
-import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form';
-import { FooterToolbar } from '@ant-design/pro-layout';
-import { Button, message, Typography } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
-import OptionReceiveNo from "./components/optionRecevieNo";
+import MliFormRow from '@/common/components/form/MliFormRow'
+import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
+import { FooterToolbar } from '@ant-design/pro-layout'
+import { Button, message, Typography } from 'antd'
+import React, { useEffect, useRef, useState } from 'react'
+import OptionReceiveNo from './components/optionRecevieNo'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -25,21 +25,21 @@ const MyForm: React.FC = () => {
       render: () => (
         <FooterToolbar>
             <Button
-              type="primary"
+              type='primary'
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
-                  message.success('表單提交成功！');
+                  message.success('表單提交成功！')
                 })
               }}
-              key="save"
+              key='save'
             >
               確認
             </Button>
             <Button
               onClick={async () => {
                   // 取消按鈕 點擊後 要進行的 API 操作
-                  message.warning('取消作業');
+                  message.warning('取消作業')
               }}
             >
               取消
@@ -54,15 +54,15 @@ const MyForm: React.FC = () => {
       <Typography.Title level={3}>進階應用測試</Typography.Title>
       <ProForm
         grid
-        layout="vertical"
+        layout='vertical'
         formRef={formRef}
         submitter={submitterRender()}
       >
         <MliFormRow>
           <ProFormText
-            name="receiveNo"
-            label="受理號碼"
-            placeholder="請輸入受理號碼"
+            name='receiveNo'
+            label='受理號碼'
+            placeholder='請輸入受理號碼'
             disabled
             rules={[
               {
@@ -81,6 +81,6 @@ const MyForm: React.FC = () => {
       </ProForm>
     </>
   )
-};
+}
 
-export default MyForm;
+export default MyForm

@@ -37,7 +37,7 @@ const InfoForm: React.FC<Props> = ({ formRef }) => {
 
   return (
     <Descriptions
-        // title="基本資料"     // 整體區塊標題
+        // title='基本資料'     // 整體區塊標題
         column={2}          // 一列顯示兩個欄位
         items={items}       // 欄位資料來源
         layout='horizontal' // 排列方式: horizontal.水平(預設) / vertical.垂直

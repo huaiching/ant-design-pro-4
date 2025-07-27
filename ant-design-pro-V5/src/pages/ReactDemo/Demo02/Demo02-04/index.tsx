@@ -14,11 +14,11 @@ const VDOM: React.FC = () => {
     // 案例
     const ray: Person = {
         id: 2,
-        name: "ray",
+        name: 'ray',
         age: 20,
-        sex: "男",
+        sex: '男',
     }
-    console.log("ray", ray)
+    console.log('ray', ray)
             
     return (
         <PageContainer> 

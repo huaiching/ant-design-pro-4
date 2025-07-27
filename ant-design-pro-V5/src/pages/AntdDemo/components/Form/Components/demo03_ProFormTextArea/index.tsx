@@ -1,8 +1,8 @@
 import MliFormRow from '@/common/components/form/MliFormRow'
-import ProForm, { ProFormInstance, ProFormTextArea } from "@ant-design/pro-form"
-import { FooterToolbar } from "@ant-design/pro-layout"
-import { Button, message, Typography } from "antd"
-import { useRef } from "react"
+import ProForm, { ProFormInstance, ProFormTextArea } from '@ant-design/pro-form'
+import { FooterToolbar } from '@ant-design/pro-layout'
+import { Button, message, Typography } from 'antd'
+import { useRef } from 'react'
 
 const Demo: React.FC =() => {
   const formRef = useRef<ProFormInstance>()
@@ -13,14 +13,14 @@ const Demo: React.FC =() => {
       render: () => (
         <FooterToolbar>
             <Button
-              type="primary"
+              type='primary'
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
                   message.success('表單提交成功！')
                 })
               }}
-              key="save"
+              key='save'
             >
               確認
             </Button>
@@ -48,9 +48,9 @@ const Demo: React.FC =() => {
       >
         <MliFormRow>
           <ProFormTextArea
-              name="description"
-              label="列管原因"
-              placeholder="請輸入列管原因"
+              name='description'
+              label='列管原因'
+              placeholder='請輸入列管原因'
               colSize={2}
               fieldProps={{   // 參數設定
                 rows: 4, // 設置文本框顯示的行數

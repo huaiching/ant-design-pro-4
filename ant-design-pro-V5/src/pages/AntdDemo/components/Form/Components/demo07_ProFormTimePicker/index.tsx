@@ -14,14 +14,14 @@ const MyForm: React.FC = () => {
       render: () => (
         <FooterToolbar>
             <Button
-              type="primary"
+              type='primary'
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
                   message.success('表單提交成功！')
                 })
               }}
-              key="save"
+              key='save'
             >
               確認
             </Button>
@@ -49,9 +49,9 @@ const MyForm: React.FC = () => {
       >
         <MliFormRow>
           <ProFormTimePicker
-            name="time"
-            label="選擇時間"
-            placeholder="請選擇時間"
+            name='time'
+            label='選擇時間'
+            placeholder='請選擇時間'
             rules={[
               { required: true, message: '時間為必填項' },
             ]}

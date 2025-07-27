@@ -25,7 +25,7 @@ export const downloadXlsx = () => {
   // excel 物件宣告
   const workbook = xlsx.utils.book_new()
   // 設定 分頁 並 載入 資料內容
-  xlsx.utils.book_append_sheet(workbook, worksheet, "空白範例")
+  xlsx.utils.book_append_sheet(workbook, worksheet, '空白範例')
   // 產出文件
   xlsx.writeFile(workbook, 'xlsx_example.xlsx')
 }

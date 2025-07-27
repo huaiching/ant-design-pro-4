@@ -130,7 +130,7 @@ const PolicyTable: React.FC = () => {
     <div>
       {/* 顯示保單主列表 */}
       <ProTable<PolicyRecord>
-        rowKey="policyNo"     // 唯一鍵
+        rowKey='policyNo'     // 唯一鍵
         columns={columns}     // 表格欄位
         dataSource={mockData} // 數據實體
         search={false}        // 關閉搜尋功能
@@ -147,7 +147,7 @@ const PolicyTable: React.FC = () => {
 
       {/* 明細區塊，點擊列後才顯示 */}
       {selectedRow && (
-        <Card title="保單詳細資料" style={{ marginTop: 24 }}>
+        <Card title='保單詳細資料' style={{ marginTop: 24 }}>
           <Descriptions 
             column={3} 
             // bordered 

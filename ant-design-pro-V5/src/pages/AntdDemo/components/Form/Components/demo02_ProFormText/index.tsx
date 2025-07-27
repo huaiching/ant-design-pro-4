@@ -14,14 +14,14 @@ const MyForm: React.FC = () => {
       render: () => (
         <FooterToolbar>
             <Button
-              type="primary"
+              type='primary'
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
                   message.success('表單提交成功！')
                 })
               }}
-              key="save"
+              key='save'
             >
               確認
             </Button>
@@ -41,7 +41,7 @@ const MyForm: React.FC = () => {
   const vaildatorEmail = (rule: any, value: any) => {
     const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     if (!re.test(value)) {
-      return Promise.reject("不符合規範!!")
+      return Promise.reject('不符合規範!!')
     }
     return Promise.resolve()
   }
@@ -51,16 +51,16 @@ const MyForm: React.FC = () => {
       <Typography.Title level={3}>ProFormText</Typography.Title>
       <ProForm
         grid
-        layout="vertical"
+        layout='vertical'
         formRef={formRef}
         submitter={submitterRender()}
       >
         <MliFormRow>
           <ProFormText
-            name="email"
-            label="電子郵件"
-            tooltip="這是用戶電子郵件"
-            placeholder="請輸入電子郵件"
+            name='email'
+            label='電子郵件'
+            tooltip='這是用戶電子郵件'
+            placeholder='請輸入電子郵件'
             colSize={1}
             rules={[
               {

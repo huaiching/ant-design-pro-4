@@ -85,12 +85,12 @@ const ShowPolicyTable: React.FC = () => {
       render: () => (
         <FooterToolbar>
           <Button
-            type="primary"
+            type='primary'
             onClick={async () => {
               console.log('formRef', formRef.current?.getFieldValue('policyTable'))
               message.success('表單提交成功！')
             }}
-            key="save"
+            key='save'
           >
             確認
           </Button>
@@ -110,7 +110,7 @@ const ShowPolicyTable: React.FC = () => {
   return (
     <ProForm
       grid
-      layout="vertical"
+      layout='vertical'
       formRef={formRef}
       submitter={submitterRender()}
     >
@@ -119,7 +119,7 @@ const ShowPolicyTable: React.FC = () => {
           columns={columns}
           dataSource={dataSource}
           actionRef={actionRef}
-          rowKey="policyNo"
+          rowKey='policyNo'
           search={false}
           pagination={false}
           rowClassName={(record) =>
@@ -134,7 +134,7 @@ const ShowPolicyTable: React.FC = () => {
           toolbar={{
             title: '保單清單',
             actions: [
-              <Button key="new" type="primary"
+              <Button key='new' type='primary'
                 onClick={() => {
                   setEditableRow({} as Policy)
                   setFormMode('create')

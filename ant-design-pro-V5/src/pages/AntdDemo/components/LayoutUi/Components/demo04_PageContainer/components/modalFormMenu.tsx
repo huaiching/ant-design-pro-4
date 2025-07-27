@@ -22,7 +22,7 @@ const MyForm: React.FC = () => {
       </Button>
       <ModalForm
         grid
-        layout="vertical"
+        layout='vertical'
         formRef={formRef}
         onVisibleChange={setVisible}
         visible={visible}
@@ -30,8 +30,8 @@ const MyForm: React.FC = () => {
       >
         <MliFormRow>
           <ProFormText
-            name="username"
-            label="用戶名稱"
+            name='username'
+            label='用戶名稱'
             readonly
           />
         </MliFormRow>

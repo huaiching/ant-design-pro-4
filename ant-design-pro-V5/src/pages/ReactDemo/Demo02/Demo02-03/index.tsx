@@ -12,19 +12,19 @@ const VDOM: React.FC = () => {
     }
     // 產品A: 無選填屬性 amt
     const f_data1: Book = {
-        name: "輕鬆學習 TypeScript",
+        name: '輕鬆學習 TypeScript',
         pages: 150,
         id: 1
     }
-    console.log("產品A", f_data1)
+    console.log('產品A', f_data1)
     // 產品B: 有選填屬性 amt
     const f_data2: Book = {
-        name: "React 真簡單",
+        name: 'React 真簡單',
         pages: 280,
         amt: 1500,
         id: 2
     }
-    console.log("產品B", f_data2)
+    console.log('產品B', f_data2)
     
     return (
         <PageContainer> 

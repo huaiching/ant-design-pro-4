@@ -56,9 +56,9 @@ const items: DescriptionsProps['items'] = [
 const DescriptionPage: React.FC = () => {
   return (
     <>
-        <ProCard title="個人資料明細 (無邊框)" ghost>
+        <ProCard title='個人資料明細 (無邊框)' ghost>
         <Descriptions
-            title="基本資料"  // 整體區塊標題
+            title='基本資料'  // 整體區塊標題
             column={2}         // 一列顯示兩個欄位
             items={items}      // 欄位資料來源
             layout='horizontal' // 排列方式: horizontal.水平(預設) / vertical.垂直
@@ -67,9 +67,9 @@ const DescriptionPage: React.FC = () => {
 
         <br/>
 
-        <ProCard title="個人資料明細 (有邊框)" ghost>
+        <ProCard title='個人資料明細 (有邊框)' ghost>
         <Descriptions
-            title="基本資料"  // 整體區塊標題
+            title='基本資料'  // 整體區塊標題
             bordered           // 顯示邊框
             column={2}         // 一列顯示的欄位數量
             items={items}      // 欄位資料來源

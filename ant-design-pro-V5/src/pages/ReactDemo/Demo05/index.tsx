@@ -15,19 +15,19 @@ const MyComponent: React.FC = () => {
     // 根據 操作類型(action.type) 來判斷要執行的改變公式
     switch (action.type) {
       // 類型台北: 會進行數量的加減
-      case "taipei":
+      case 'taipei':
         return {
           ...state,
           taipei: state.taipei + action.value
         }
       // 類型台中: 會進行數量的加減
-      case "taichung":
+      case 'taichung':
         return {
           ...state,
           taichung: state.taichung + action.value
         }
       // 類型高雄: 會進行數量的加減
-      case "kaohsiung":
+      case 'kaohsiung':
         return {
           ...state,
           kaohsiung: state.kaohsiung + action.value
@@ -54,22 +54,22 @@ const MyComponent: React.FC = () => {
       <Row>
         <Space>
           <h3>台北報名人數: {cityState.taipei}</h3>
-          <Button onClick={() => cityDispatch({type: "taipei", value: 1})}>+ 1</Button>
-          <Button onClick={() => cityDispatch({type: "taipei", value: -1})}>- 1</Button>
+          <Button onClick={() => cityDispatch({type: 'taipei', value: 1})}>+ 1</Button>
+          <Button onClick={() => cityDispatch({type: 'taipei', value: -1})}>- 1</Button>
         </Space>
       </Row>
       <Row>
         <Space>
           <h3>台中報名人數: {cityState.taichung}</h3>
-          <Button onClick={() => cityDispatch({type: "taichung", value: 1})}>+ 1</Button>
-          <Button onClick={() => cityDispatch({type: "taichung", value: -1})}>- 1</Button>
+          <Button onClick={() => cityDispatch({type: 'taichung', value: 1})}>+ 1</Button>
+          <Button onClick={() => cityDispatch({type: 'taichung', value: -1})}>- 1</Button>
         </Space>
       </Row>
       <Row>
         <Space>
           <h3>高雄報名人數: {cityState.kaohsiung}</h3>
-          <Button onClick={() => cityDispatch({type: "kaohsiung", value: 1})}>+ 1</Button>
-          <Button onClick={() => cityDispatch({type: "kaohsiung", value: -1})}>- 1</Button>
+          <Button onClick={() => cityDispatch({type: 'kaohsiung', value: 1})}>+ 1</Button>
+          <Button onClick={() => cityDispatch({type: 'kaohsiung', value: -1})}>- 1</Button>
         </Space>
       </Row>
     </PageContainer>

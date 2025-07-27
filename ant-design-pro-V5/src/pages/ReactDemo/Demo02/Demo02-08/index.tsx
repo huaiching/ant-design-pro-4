@@ -17,12 +17,12 @@ const VDOM: React.FC = () => {
     type Phone = Software & Hardware
     // 產品: iPhone 15
     const f_data: Phone = {
-        system: "ios",
-        version: "17.0",
-        RAM: "16GB",
-        CPU:"A16"
+        system: 'ios',
+        version: '17.0',
+        RAM: '16GB',
+        CPU:'A16'
     }
-    console.log("iPhone 15", f_data)
+    console.log('iPhone 15', f_data)
     
 
     return (

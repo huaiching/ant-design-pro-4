@@ -26,7 +26,7 @@ const MyForm: React.FC = () => {
       render: () => (
         <FooterToolbar>
           <Button
-            type="primary"
+            type='primary'
             onClick={async () => {
               formRef.current?.validateFields().then(values => {
                 // 確認按鈕 點擊後 要進行的 API 操作
@@ -34,7 +34,7 @@ const MyForm: React.FC = () => {
                 message.success('表單提交成功！')
               })
             }}
-            key="save"
+            key='save'
           >
             確認
           </Button>
@@ -62,7 +62,7 @@ const MyForm: React.FC = () => {
       <ProForm
         grid
         formRef={formRef}
-        layout="vertical"
+        layout='vertical'
         onValuesChange={() => {
           calcBenfCount()
         }}
@@ -71,7 +71,7 @@ const MyForm: React.FC = () => {
         <Text >目前受益人數量：{benfCount}</Text>
 
         <ProFormList
-          name="benfList"
+          name='benfList'
           creatorButtonProps={{
             creatorButtonText: '新增受益人',
             icon: <PlusOutlined />,
@@ -89,39 +89,39 @@ const MyForm: React.FC = () => {
             >
               <MliFormRow gutter={[8, 2]} align='bottom' justify='start'>
                 <ProFormSelect
-                  name="relation"
+                  name='relation'
                   label='關係'
                   options={relationshipOptions}
-                  placeholder=" "
+                  placeholder=' '
                   colSize={1 / 2}
                   rules={[{ required: true, message: '請選擇關係' }]}
                 />
                 <ProFormText
-                  name="clientId"
+                  name='clientId'
                   label='受益人證號'
-                  placeholder=" "
+                  placeholder=' '
                   colSize={1 / 2}
                   rules={[{ required: true, message: '請輸入證號' }]}
                 />
                 <ProFormText
-                  name="name"
+                  name='name'
                   label='姓名'
-                  placeholder=" "
+                  placeholder=' '
                   colSize={1 / 2}
                   rules={[{ required: true, message: '請輸入姓名' }]}
                 />
                 <ProFormDigit
-                  name="position"
+                  name='position'
                   label='順位'
-                  placeholder=" "
+                  placeholder=' '
                   min={1}
                   colSize={1 / 2}
                   rules={[{ required: true, message: '請輸入順位' }]}
                 />
                 <ProFormDigit
-                  name="percentage"
+                  name='percentage'
                   label='比例'
-                  placeholder=" "
+                  placeholder=' '
                   min={0}
                   max={100}
                   colSize={1 / 2}

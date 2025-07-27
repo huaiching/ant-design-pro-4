@@ -17,8 +17,8 @@ const MyForm: React.FC = () => {
       >
         <MliFormRow>
           <ProFormCheckbox.Group
-            name="hobbies"
-            label="選擇興趣"
+            name='hobbies'
+            label='選擇興趣'
             options={[
               { label: '讀書', value: 'reading' },
               { label: '旅行', value: 'travelling' },

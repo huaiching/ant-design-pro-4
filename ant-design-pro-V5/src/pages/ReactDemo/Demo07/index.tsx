@@ -1,5 +1,5 @@
-import { PageContainer } from "@ant-design/pro-layout"
-import React, { useEffect, useState } from "react"
+import { PageContainer } from '@ant-design/pro-layout'
+import React, { useEffect, useState } from 'react'
 
 // 頁面顯示計時器，顯示頁面停留了幾秒
 const VDOM: React.FC = () => {

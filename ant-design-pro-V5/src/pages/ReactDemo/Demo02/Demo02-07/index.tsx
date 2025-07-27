@@ -17,16 +17,16 @@ const VDOM: React.FC = () => {
     type Product = Book | PC
     // 第一種產品，內容 = 書
     const f_data1: Product = {
-        name: "輕鬆學習 TypeScript",
+        name: '輕鬆學習 TypeScript',
         pages: 150,
     }
-    console.log("第一種產品", f_data1)
+    console.log('第一種產品', f_data1)
     // 第二種產品
     const f_data2: Product = {
-        RAM: "64GB",
-        CPU: "i9",
+        RAM: '64GB',
+        CPU: 'i9',
     }
-    console.log("第二種產品", f_data2)
+    console.log('第二種產品', f_data2)
 
     
     return (

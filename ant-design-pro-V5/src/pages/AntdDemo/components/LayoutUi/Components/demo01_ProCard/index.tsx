@@ -23,7 +23,7 @@ const InsurancePolicyCard: React.FC = () => {
       render: () => (
         <FooterToolbar>
             <Button
-              type="primary"
+              type='primary'
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
@@ -31,7 +31,7 @@ const InsurancePolicyCard: React.FC = () => {
                   console.log('formRef', formRef.current?.getFieldsValue())
                 })
               }}
-              key="save"
+              key='save'
             >
               確認
             </Button>
@@ -51,12 +51,12 @@ const InsurancePolicyCard: React.FC = () => {
   return (
     <ProForm
       grid
-      layout="vertical"
+      layout='vertical'
       formRef={formRef}
       submitter={submitterRender()}
     >
       <ProCard
-        title="保單資訊"
+        title='保單資訊'
         type='default'
         size='default'
         headerBordered      // 有 分隔線
@@ -74,13 +74,13 @@ const InsurancePolicyCard: React.FC = () => {
       >
         <MliFormRow>
           <ProFormText
-            name="policyNo"
-            label="保單號碼"
+            name='policyNo'
+            label='保單號碼'
             readonly={!poEdit}
           />
           <ProFormText
-            name="poStsCode"
-            label="保單狀態"
+            name='poStsCode'
+            label='保單狀態'
             readonly={!poEdit}
           />
         </MliFormRow>

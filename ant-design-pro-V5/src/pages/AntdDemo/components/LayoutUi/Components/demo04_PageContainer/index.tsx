@@ -5,7 +5,7 @@ import { FooterToolbar, PageContainer } from '@ant-design/pro-layout'
 import { Button, Dropdown, message } from 'antd'
 import React, { useRef } from 'react'
 import DropdownMenu from './components/dropdownMenu'
-import ModalFormMenu from "./components/modalFormMenu"
+import ModalFormMenu from './components/modalFormMenu'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -16,14 +16,14 @@ const MyForm: React.FC = () => {
       render: () => (
         <FooterToolbar>
             <Button
-              type="primary"
+              type='primary'
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
                   message.success('表單提交成功！')
                 })
               }}
-              key="save"
+              key='save'
             >
               確認
             </Button>
@@ -61,16 +61,16 @@ const MyForm: React.FC = () => {
     >
       <ProForm
         grid
-        layout="vertical"
+        layout='vertical'
         formRef={formRef}
         submitter={submitterRender()}
       >
         <MliFormRow>
           <ProFormText
-            name="email"
-            label="電子郵件"
-            tooltip="這是用戶電子郵件"
-            placeholder="請輸入電子郵件"
+            name='email'
+            label='電子郵件'
+            tooltip='這是用戶電子郵件'
+            placeholder='請輸入電子郵件'
             rules={[
               {
                   required: true,

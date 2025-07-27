@@ -14,14 +14,14 @@ const MyForm: React.FC = () => {
       render: () => (
         <FooterToolbar>
           <Button
-            type="primary"
+            type='primary'
             onClick={async () => {
               formRef.current?.validateFields().then(values => {
                 // 確認按鈕 點擊後 要進行的 API 操作
                 message.success('表單提交成功！')
               })
             }}
-            key="save"
+            key='save'
           >
             確認
           </Button>
@@ -68,7 +68,7 @@ const MyForm: React.FC = () => {
       <Typography.Title level={3}>AutoComplete</Typography.Title>
       <ProForm
         grid
-        layout="vertical"
+        layout='vertical'
         formRef={formRef}
         submitter={submitterRender()}
       >
@@ -76,11 +76,11 @@ const MyForm: React.FC = () => {
           <MliFormCol colSize={2}>
             <ProFormItem
               name='county'
-              label="縣市"
+              label='縣市'
               rules={[{ required: true, message: '請輸入縣市' }]}
             >
               <AutoComplete
-                placeholder="請輸入縣市"
+                placeholder='請輸入縣市'
                 options={countyOptions}
                 allowClear
                 filterOption={(inputValue, option) =>

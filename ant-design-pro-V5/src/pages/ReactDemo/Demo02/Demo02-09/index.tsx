@@ -4,11 +4,11 @@ import React from 'react'
 const VDOM: React.FC = () => {
     // 範例: if
     const sex = '1'
-    let data1 = ""
+    let data1 = ''
     if (sex === '1') {
-        data1 = "男"
+        data1 = '男'
     } else {
-        data1 = "女"
+        data1 = '女'
     }
     
     // 範例: 三元表達式

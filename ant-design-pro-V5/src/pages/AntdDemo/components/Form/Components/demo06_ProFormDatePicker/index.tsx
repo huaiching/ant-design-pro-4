@@ -13,7 +13,7 @@ const MyForm: React.FC = () => {
       render: () => (
         <FooterToolbar>
             <Button
-              type="primary"
+              type='primary'
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
@@ -21,7 +21,7 @@ const MyForm: React.FC = () => {
                   message.success('表單提交成功！')
                 })
               }}
-              key="save"
+              key='save'
             >
               確認
             </Button>
@@ -50,9 +50,9 @@ const MyForm: React.FC = () => {
       >
         <MliFormRow>
           <ProFormDatePicker
-            name="chkDate"
-            label="選擇日期"
-            placeholder="請選擇日期"
+            name='chkDate'
+            label='選擇日期'
+            placeholder='請選擇日期'
             rules={[
               { required: true, message: '日期為必填項' },
             ]}
@@ -62,9 +62,9 @@ const MyForm: React.FC = () => {
             }}
           />
           <ProFormDatePicker.Month
-            name="chkDateYYMM"
-            label="選擇月份"
-            placeholder="請選擇月份"
+            name='chkDateYYMM'
+            label='選擇月份'
+            placeholder='請選擇月份'
             rules={[
               { required: true, message: '日期為必填項' },
             ]}
@@ -73,8 +73,8 @@ const MyForm: React.FC = () => {
             }}
           />
           <ProFormDateRangePicker
-            name="chkDateRange"
-            label="選擇日期區間"
+            name='chkDateRange'
+            label='選擇日期區間'
             rules={[
               { required: true, message: '日期為必填項' },
             ]}

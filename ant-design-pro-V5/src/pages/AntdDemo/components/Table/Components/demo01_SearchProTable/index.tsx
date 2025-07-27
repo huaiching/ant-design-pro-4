@@ -109,20 +109,20 @@ const ProTableDemo: React.FC = () => {
 
   return (
     <ProTable
-      name="testTable"
+      name='testTable'
       columns={columns}
       formRef={formRef}       // 查詢框 的 欄位變數
       actionRef={actionRef}   // 表格控制的變數實體
       request={requestData}   // 數據請求函式
       manualRequest={true}    // 手動請求數據
-      rowKey="id"             // 設定 資料唯一值 欄位
+      rowKey='id'             // 設定 資料唯一值 欄位
       search={{
         labelWidth: 'auto',
       }}
       form={{
         ignoreRules: false,
       }}
-      headerTitle="模擬 API 表格"
+      headerTitle='模擬 API 表格'
       toolBarRender={() => [
         <div>toolBarRender</div>
       ]}

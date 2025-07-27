@@ -8,7 +8,7 @@ const VDOM: React.FC = () => {
       city: '台北'
     }
   
-    const msg1 = "我是 " + user.name + "，今年 " + user.age + " 歲，住在 " + user.city + " 。"
+    const msg1 = '我是 ' + user.name + '，今年 ' + user.age + ' 歲，住在 ' + user.city + ' 。'
     const msg2 = `我是 ${user.name}，今年 ${user.age} 歲，住在 ${user.city} 。`
   
     return (

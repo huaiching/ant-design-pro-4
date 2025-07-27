@@ -8,8 +8,8 @@ interface Props {
 const TabContent1: React.FC<Props> = ({ formRef }) => {
   return (
     <>
-      <ProFormText name="tab1.address" label="地址" rules={[{ required: true }]} />
-      <ProFormText name="tab1.phone" label="電話" rules={[{ required: true }]} />
+      <ProFormText name='tab1.address' label='地址' rules={[{ required: true }]} />
+      <ProFormText name='tab1.phone' label='電話' rules={[{ required: true }]} />
       <div style={{ height: '1000px' }}>長內容區域...</div>
     </>
   )

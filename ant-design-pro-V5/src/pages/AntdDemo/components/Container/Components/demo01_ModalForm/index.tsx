@@ -15,14 +15,14 @@ const MyForm: React.FC = () => {
       render: () => (
         <Space>
             <Button
-              type="primary"
+              type='primary'
               onClick={async () => {
                 formRef.current?.validateFields().then(values => {
                   // 確認按鈕 點擊後 要進行的 API 操作
                   message.success('表單提交成功！')
                 })
               }}
-              key="save"
+              key='save'
             >
               確認
             </Button>
@@ -43,12 +43,12 @@ const MyForm: React.FC = () => {
   return (
     <>
       <h1>ModalForm</h1>
-      <Button type="primary" onClick={() => setVisible(true)}>
+      <Button type='primary' onClick={() => setVisible(true)}>
         打開表單
       </Button>
       <ModalForm
         grid
-        layout="vertical"
+        layout='vertical'
         formRef={formRef}
         onVisibleChange={setVisible}
         visible={visible}
@@ -59,10 +59,10 @@ const MyForm: React.FC = () => {
       >
         <MliFormRow>
           <ProFormText
-            name="username"
-            label="用戶名稱"
-            tooltip="這是用戶名稱"
-            placeholder="請輸入用戶名稱"
+            name='username'
+            label='用戶名稱'
+            tooltip='這是用戶名稱'
+            placeholder='請輸入用戶名稱'
             colSize={1}
             rules={[
               {

@@ -17,8 +17,8 @@ const MyForm: React.FC = () => {
       >
         <MliFormRow>
           <ProFormRadio.Group
-            name="gender"
-            label="選擇性別"
+            name='gender'
+            label='選擇性別'
             options={[
               { label: '男性', value: 'male' },
               { label: '女性', value: 'female' },
