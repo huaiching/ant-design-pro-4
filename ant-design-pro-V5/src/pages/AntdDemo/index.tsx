@@ -1,38 +1,10 @@
 import React from 'react'
-import Demo0 from './components/demo0_MliFormRow'
-import Demo1 from './components/demo1_ProFormText'
-import Demo2 from './components/demo2_ProFormTextArea'
-import Demo3 from './components/demo3_ProFormDigit'
-import Demo4 from './components/demo4_ProFormSelect'
-import Demo5 from './components/demo5_ProFormDatePicker'
-import Demo6 from './components/demo6_ProFormTimePicker'
-import Demo7 from './components/demo7_ProFormSwitch'
-import Demo8 from './components/demo8_ProFormRadio'
-import Demo9 from './components/demo9_ProFormCheckbox'
-import Demo10 from './components/demo10_ProFormUploadButton'
-import Demo11 from './components/demo11_SearchProTable'
-import Demo12 from './components/demo12_NestedProTable'
-import Demo13 from './components/demo13_ShowRowProTable'
-import Demo14 from './components/demo14_EditProTable'
-import Demo15 from './components/demo15_EditableProTable'
-import Demo16 from './components/demo16_ModalForm'
-import Demo17 from './components/demo17_DrawerForm'
-import Demo18 from './components/demo18_ProCard'
-import Demo19 from './components/demo19_StepsForm'
-import Demo20 from './components/demo20_Notification'
-import Demo21 from './components/demo21_Modal'
-import Demo22 from './components/demo22_List'
-import Demo23 from './components/demo23_PageContainer'
-import Demo24 from './components/demo24_xlsx'
-import Demo25 from './components/demo25_SearchReceiveNo'
-import Demo26 from './components/demo26_test_StepsForm'
-import Demo27 from './components/demo27_tab'
-import Demo28 from './components/demo28_ProFormGroup'
-import Demo29 from './components/demo29_AutoComplete'
-import Demo30 from './components/demo30_ProFormList'
-import Demo31 from './components/demo31_BackTop'
-import Demo32 from './components/demo32_Descriptions'
-import Demo33 from './components/demo33_Navigate'
+import Demo01 from './Components/Form'
+import Demo02 from './Components/Container'
+import Demo03 from './Components/Table'
+import Demo04 from './Components/LayoutUi'
+import Demo05 from './Components/DataDisplay'
+import Demo06 from './Components/Utility'
 import { PageContainer } from '@ant-design/pro-components'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
@@ -46,209 +18,34 @@ const AsstManagement: React.FC = () => {
   //主頁主要設定處
   const tabs = [
     {
-      authCode: '0',
-      key: 'MliFormRow',
-      title: '布局',
-      component: <Demo0/>
-    },
-    {
       authCode: '1',
-      key: 'ProFormText',
-      title: '單行文本輸入',
-      // disabled: true,
-      component: <Demo1/>
+      title: '表單輸入元件(Form)',
+      component: <Demo01/>
     },
     {
       authCode: '2',
-      key: 'ProFormTextArea',
-      title: '多行文本輸入',
-      component: <Demo2/>
+      title: '表單容器(Container)',
+      component: <Demo02/>
     },
     {
       authCode: '3',
-      key: 'ProFormDigit',
-      title: '數字輸入',
-      component: <Demo3/>
+      title: '表格(Table)',
+      component: <Demo03/>
     },
     {
       authCode: '4',
-      key: 'ProFormSelect',
-      title: '下拉選擇框',
-      component: <Demo4/>
+      title: '佈局與視覺元件(LayoutUi)',
+      component: <Demo04/>
     },
     {
       authCode: '5',
-      key: 'ProFormDatePicker',
-      title: '日期選擇',
-      component: <Demo5/>
+      title: '資料顯示元件(DataDisplay)',
+      component: <Demo05/>
     },
     {
       authCode: '6',
-      key: 'ProFormTimePicker',
-      title: '時間選擇',
-      component: <Demo6/>
-    },
-    {
-      authCode: '7',
-      key: 'ProFormSwitch',
-      title: '開關控件',
-      component: <Demo7/>
-    },
-    {
-      authCode: '8',
-      key: 'ProFormRadio',
-      title: '單選框',
-      component: <Demo8/>
-    },
-    {
-      authCode: '9',
-      key: 'ProFormCheckbox',
-      title: '多選框',
-      component: <Demo9/>
-    },
-    {
-      authCode: '10',
-      key: 'ProFormUploadButton',
-      title: '文件上傳',
-      component: <Demo10/>
-    },
-    {
-      authCode: '11',
-      key: 'SearchProTable',
-      title: '查詢表格',
-      component: <Demo11/>
-    },
-    {
-      authCode: '12',
-      key: 'NestedProTable',
-      title: '嵌套表格',
-      component: <Demo12/>
-    },
-    {
-      authCode: '13',
-      key: 'ShowRowProTable',
-      title: '選取行顯示明細的表格',
-      component: <Demo13/>
-    },
-    {
-      authCode: '14',
-      key: 'EditProTable',
-      title: '另開的編輯表格',
-      component: <Demo14/>
-    },
-    {
-      authCode: '15',
-      key: 'EditableProTable',
-      title: '可編輯表格',
-      component: <Demo15/>
-    },
-    {
-      authCode: '16',
-      key: 'ModalForm',
-      title: '浮層表單(彈窗式)',
-      component: <Demo16/>
-    },
-    {
-      authCode: '17',
-      key: 'DrawerForm',
-      title: '浮層表單(抽屜式)',
-      component: <Demo17/>
-    },
-    {
-      authCode: '18',
-      key: 'ProCard',
-      title: '卡片',
-      component: <Demo18/>
-    },
-    {
-      authCode: '19',
-      key: 'StepsForm',
-      title: '分布表單',
-      component: <Demo19/>
-    },
-    {
-      authCode: '20',
-      key: 'Notification',
-      title: '通知提醒框',
-      component: <Demo20/>
-    },
-    {
-      authCode: '21',
-      key: 'Modal',
-      title: '對話框 (確認訊息)',
-      component: <Demo21/>
-    },
-    {
-      authCode: '22',
-      key: 'List',
-      title: '列表',
-      component: <Demo22/>
-    },
-    {
-      authCode: '23',
-      key: 'PageContainer',
-      title: '頁面容器 與 下拉選單',
-      component: <Demo23/>
-    },
-    {
-      authCode: '24',
-      key: 'Xlsx',
-      title: 'xlsx 前端excel的匯入匯出',
-      component: <Demo24/>
-    },
-    {
-      authCode: '25',
-      key: 'SearchReceiveNo',
-      title: '受理號碼查詢',
-      component: <Demo25/>
-    },
-    {
-      authCode: '26',
-      key: 'StepsFormTest',
-      title: '分布表單模組化測試',
-      component: <Demo26/>
-    },
-    {
-      authCode: '27',
-      key: 'Tab',
-      title: '表單 Tab',
-      component: <Demo27/>
-    },
-    {
-      authCode: '28',
-      key: 'ProFormGroup',
-      title: 'ProFormGroup',
-      component: <Demo28/>
-    },
-    {
-      authCode: '29',
-      key: 'AutoComplete',
-      title: '自動填入',
-      component: <Demo29/>
-    },
-    {
-      authCode: '30',
-      key: 'ProFormList',
-      title: 'ProFormList',
-      component: <Demo30/>
-    },
-    {
-      authCode: '31',
-      key: 'BackTop',
-      title: 'BackTop',
-      component: <Demo31/>
-    },
-    {
-      authCode: '32',
-      key: 'Descriptions',
-      title: '描述列表',
-      component: <Demo32/>
-    },
-    {
-      authCode: '33',
-      key: 'Navigate',
-      title: '頁面跳轉',
-      component: <Demo33/>
+      title: '工具類與整合範例(Utility)',
+      component: <Demo06/>
     },
   ]
   
@@ -256,7 +53,7 @@ const AsstManagement: React.FC = () => {
     <PageContainer title={pageTitle}>
       <Tabs type='card' size='large'>
         {tabs.map((item) => (
-          <TabPane tab={item.title} key={item.key}>
+          <TabPane tab={item.title} key={item.authCode}>
             {item.component}
           </TabPane>
         ))}
