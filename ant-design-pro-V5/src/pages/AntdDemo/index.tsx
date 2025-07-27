@@ -5,6 +5,8 @@ import Demo03 from './Components/Table'
 import Demo04 from './Components/LayoutUi'
 import Demo05 from './Components/DataDisplay'
 import Demo06 from './Components/Utility'
+// import Demo07 from './Components/Test'
+import Demo07 from './Components/PageTemplates'
 import { PageContainer } from '@ant-design/pro-components'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
@@ -46,6 +48,11 @@ const AsstManagement: React.FC = () => {
       authCode: '6',
       title: '工具類與整合範例(Utility)',
       component: <Demo06/>
+    },
+    {
+      authCode: '7',
+      title: '頁面樣板(PageTemplates)',
+      component: <Demo07/>
     },
   ]
   
