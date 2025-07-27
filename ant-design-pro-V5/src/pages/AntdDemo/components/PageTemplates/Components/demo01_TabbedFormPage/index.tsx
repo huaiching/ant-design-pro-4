@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   FooterToolbar,
   ProForm,
@@ -12,8 +12,9 @@ import TabContent2 from './Components/TabContent2'
 
 const TabbedFormPage: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
+  // 目前的 tab 標籤
   const [activeTab, setActiveTab] = useState('tab1')
-
+  // tab 狀態: pending=未完成 / valid=完成
   const [tabStatus, setTabStatus] = useState<Record<string, 'pending' | 'valid'>>({
     tab1: 'pending',
     tab2: 'pending',
@@ -32,6 +33,12 @@ const TabbedFormPage: React.FC = () => {
     },
   ]
 
+  // tab 切換 回滾到頂部: 透過監聽 tab 標籤來達成目的
+  useEffect(() => {
+    document.getElementById('tabContent')?.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [activeTab])
+
+  // tab 切換事件
   const handleTabChange = async (key: string) => {
     const valid = await formRef.current?.validateFields()
     if (valid) {
@@ -45,6 +52,7 @@ const TabbedFormPage: React.FC = () => {
     }
   }
 
+  // 提交事件
   const handleFinish = async () => {
     const valid = await formRef.current?.validateFields()
     if (valid) {
