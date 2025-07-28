@@ -111,11 +111,17 @@ const MyForm: React.FC = () => {
           { required: true, message: '請輸入名稱！' }
         ],
       },
+      fieldProps: {
+        allowClear: false,
+      }
     },
     {
       title: '年齡',
       dataIndex: 'age',
       valueType: 'digit',
+      fieldProps: {
+        allowClear: false,
+      }
     },
     {
       title: '性別',
@@ -123,7 +129,8 @@ const MyForm: React.FC = () => {
       valueType: 'select',
       fieldProps: {
         placeholder: '請選擇性別',
-        options: genderInd
+        options: genderInd,
+        allowClear: false,
       },
     },
     {
@@ -132,6 +139,7 @@ const MyForm: React.FC = () => {
       valueType: 'date',
       fieldProps: {
         format: 'YYYY/MM/DD',
+        allowClear: false,
       },
     },
   ]
@@ -144,7 +152,6 @@ const MyForm: React.FC = () => {
         layout='vertical'
         formRef={formRef}
         submitter={submitterRender()}
-        style={{ width: '100%' }}
       >
         <Spin spinning={loading}>
           <EditableProTable
@@ -152,9 +159,6 @@ const MyForm: React.FC = () => {
             columns={columns}
             rowKey='id'
             headerTitle='編輯表格 模擬 API 取得資料'
-            form={{
-              ignoreRules: false,
-            }}
             // 新增按鈕
             recordCreatorProps={{
               newRecordType: 'dataSource',

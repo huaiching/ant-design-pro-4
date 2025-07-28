@@ -71,22 +71,34 @@ const MyForm: React.FC = () => {
       dataIndex: 'policyNo',
       valueType: 'text',
       editable: false, // 不可編輯
+      fieldProps: {
+        allowClear: false,
+      }
     },
     {
       title: '保單狀態',
       dataIndex: 'poStsCode',
       valueType: 'text',
+      fieldProps: {
+        allowClear: false,
+      }
     },
     {
       title: '主約險種',
       dataIndex: 'planCode',
       valueType: 'text',
+      fieldProps: {
+        allowClear: false,
+      }
     },
     {
       title: '批註',
       dataIndex: 'node',
       valueType: 'text',
       editable: false,
+      fieldProps: {
+        allowClear: false,
+      },
       render: (value, record) => {
         // 根據值顯示不同顏色的 Tag
         return record.node === 'Y' ? (
@@ -176,7 +188,6 @@ const MyForm: React.FC = () => {
         layout="vertical"
         formRef={formRef}
         submitter={submitterRender()} // 自訂底部 submit 區塊
-        style={{ width: '100%' }}
       >
         <Spin spinning={loading}>
           <EditableProTable
