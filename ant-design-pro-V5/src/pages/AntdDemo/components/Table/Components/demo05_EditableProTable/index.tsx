@@ -119,7 +119,7 @@ const MyForm: React.FC = () => {
       valueType: 'digit',
     },
     {
-      title: '性别',
+      title: '性別',
       dataIndex: 'gender',
       valueType: 'select',
       fieldProps: {
@@ -145,6 +145,7 @@ const MyForm: React.FC = () => {
         layout='vertical'
         formRef={formRef}
         submitter={submitterRender()}
+        style={{ width: '100%' }}
       >
         <Spin spinning={loading}>
           <EditableProTable
