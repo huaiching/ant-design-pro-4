@@ -4,7 +4,6 @@ import { Button, message, Spin } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { fetchTableData } from './store/userApi'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
-import { v4 as uuidv4 } from 'uuid'
 
 const MyForm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -160,7 +159,7 @@ const MyForm: React.FC = () => {
             recordCreatorProps={{
               newRecordType: 'dataSource',
               record: () => ({
-                id: uuidv4()
+                id: Math.random()
               }),
               creatorButtonText: '新增資料'
             }}
