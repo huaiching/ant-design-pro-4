@@ -168,7 +168,7 @@ const MyForm: React.FC = () => {
 
     // 建立新資料列
     const newItem = {
-      id: Math.random(),
+      id: (Math.random() * 1000000).toFixed(0),
       policyNo: policyNoInput,
       poStsCode: '',
       planCode: '',
