@@ -163,7 +163,7 @@ const MyForm: React.FC = () => {
             recordCreatorProps={{
               newRecordType: 'dataSource',
               record: () => ({
-                id: Math.random()
+                id: (Math.random() * 1000000).toFixed(0)
               }),
               creatorButtonText: '新增資料'
             }}
