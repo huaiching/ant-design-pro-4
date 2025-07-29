@@ -20,26 +20,22 @@ const MyForm: React.FC = () => {
       formRef.current?.setFieldsValue({
         editTable: request.data
       })
-      // 資料開啟可編輯
-      request.data.map((data)=>{
-        if(data.id != undefined) editableKeys.push(data.id)
-      })
-      setEditableKeys(editableKeys)
+      // 設定目前資料列的 id 為可編輯
+      const ids = request.data.map((item) => item.id)
+      setEditableKeys(ids)
     })
     .finally(()=>{
       setLoading(false)
     })
   },[])
-  // 每次畫面刷新，都要重新進行可編輯設定，避免設定跑掉
-  useEffect(()=>{
-    const editTable = formRef.current?.getFieldValue('editTable')
-    if (editTable != undefined) {
-      editTable.map((data: any)=>{
-        if(data.id != undefined) editableKeys.push(data.id)
-      })
-      setEditableKeys(editableKeys)
-    }
+
+  // // 每次畫面刷新，都要重新進行可編輯設定，避免設定跑掉
+  useEffect(() => {
+    const editTable = formRef.current?.getFieldValue('editTable') || []
+    const ids = editTable.map((item: any) => item.id)
+    setEditableKeys(ids)
   })
+  
 
   // 控制送出後之動作
   const submitterRender = () => {

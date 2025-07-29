@@ -62,7 +62,7 @@ const MyForm: React.FC = () => {
     const editTable = formRef.current?.getFieldValue('editTable') || []
     const ids = editTable.map((item: any) => item.id)
     setEditableKeys(ids)
-  }, [])
+  })
 
   // 表格欄位設定
   const columns: ProColumns<any>[] = [
