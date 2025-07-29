@@ -26,7 +26,11 @@ const AsstManagement: React.FC = () => {
   ]
   
   return (
-    <Tabs type='card'>
+      <Tabs 
+        type='card'
+        animated    // 啟用切換動畫
+        destroyOnHidden   // 隱藏時銷毀 DOM
+      >
       {tabs.map((item) => (
         <TabPane tab={item.title} key={item.authCode}>
           {item.component}

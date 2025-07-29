@@ -81,6 +81,9 @@ const AsstManagement: React.FC = () => {
     <PageContainer title={pageTitle}>
       <Tabs 
         type='card' size='large' 
+        animated    // 啟用切換動畫
+        destroyOnHidden   // 隱藏時銷毀 DOM
+        // 將 key 值 載入網址列
         activeKey={currentActiveKey}
         onChange={(key: string) => {
           navigate({
