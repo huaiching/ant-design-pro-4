@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Demo01 from './Components/Form'
 import Demo02 from './Components/Container'
 import Demo03 from './Components/Table'
@@ -69,6 +69,13 @@ const AsstManagement: React.FC = () => {
   
   // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
   const currentActiveKey = searchParams.get('activeKey') || tabs[0].key;
+  
+  // 首次載入頁面 key 值加載
+  useEffect(() => {
+    navigate({
+      search: `?activeKey=${currentActiveKey}`,
+    });
+  }, [])
   
   return (
     <PageContainer title={pageTitle}>
