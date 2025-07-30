@@ -5,6 +5,7 @@ import Demo03 from './Components/demo03_ShowRowProTable'
 import Demo04 from './Components/demo04_EditProTable'
 import Demo05 from './Components/demo05_EditableProTable'
 import Demo06 from './Components/demo06_InputEditableProTable'
+import Demo07 from './Components/demo07_InputPreviewProTable'
 import { PageContainer } from '@ant-design/pro-components'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
@@ -46,6 +47,11 @@ const AsstManagement: React.FC = () => {
       authCode: '6',
       title: '手動新增的可編輯表格(InputEditableProTable)',
       component: <Demo06/>
+    },
+    {
+      authCode: '7',
+      title: '輸入資料顯示於表格(InputPreviewProTable)',
+      component: <Demo07/>
     },
   ]
   

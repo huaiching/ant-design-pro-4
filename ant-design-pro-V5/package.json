@@ -43,11 +43,10 @@
     "antd-style": "^3.7.0",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
-    "moment-taiwan": "^0.0.4",
+    "mobx": "^6.13.7",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rimraf": "^6.0.1",
-    "uuid": "^11.1.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
