@@ -3,10 +3,10 @@
  * 數據資料 透過 api 取得後，直接放到 dataSource 中
  */
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useMemo } from 'react'
 import { ProForm, ProTable } from '@ant-design/pro-components'
 import type { ProColumns, ActionType, ProFormInstance } from '@ant-design/pro-components'
-import { Button, message } from 'antd'
+import { Button, message, Input } from 'antd'
 import * as poApi from './store/poApi'
 import { PoData, coData } from './store/poApi'
 
@@ -26,11 +26,12 @@ const coverageColumns: ProColumns<coData>[] = [
   { title: '保障生效日', dataIndex: 'coIssueDate', valueType: 'date', },
 ]
 
-const Demo12_NestedProTable: React.FC = () => {
+const NestedProTable: React.FC = () => {
   const formRef = useRef<ProFormInstance>()    // 表單參照，讀取/寫入資料
   const actionRef = useRef<ActionType>()       // 表格操作引用（如 reload）
   const [dataSource, setDataSource] = useState<PoData[]>([])  // 主表資料
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]) // 勾選中的保單 key
+  const [searchText, setSearchText] = useState('')             // 快速搜尋輸入文字狀態
 
   // ✅ 頁面初始化：取得資料並設定到 form 與畫面
   useEffect(() => {
@@ -39,6 +40,19 @@ const Demo12_NestedProTable: React.FC = () => {
       formRef.current?.setFieldsValue({ policies: data }) // 存入 form 中
     })
   }, [])
+
+  // 利用 useMemo 篩選 dataSource ，依 searchText 過濾資料，避免每次渲染都重複計算
+  const filteredData = useMemo(() => {
+    if (!searchText) return dataSource
+    // 將 搜尋文字 轉為 小寫
+    const lowerSearch = searchText.toLowerCase()
+    // 過濾資料，將原始資料 轉為小寫 後 進行比較
+    return dataSource.filter((item) =>
+      item.policyNo?.toLowerCase().includes(lowerSearch) ||
+      item.poStsCode?.toLowerCase().includes(lowerSearch) ||
+      item.poIssueDate?.toString().toLowerCase().includes(lowerSearch)
+    )
+  }, [searchText, dataSource])
 
   // ✅ 導出按鈕事件：從 formRef 中取得 policies，再過濾出勾選的
   const handleExport = () => {
@@ -54,11 +68,20 @@ const Demo12_NestedProTable: React.FC = () => {
       submitter={false}       // 不顯示提交按鈕
       layout='vertical'       // 垂直排列表單項目
     >
+      {/* 快速搜尋輸入框：輸入即時更新 searchText 狀態 */}
+      <Input.Search
+        placeholder="快速搜尋保單號碼、狀態或日期"
+        allowClear
+        onChange={(e) => setSearchText(e.target.value)}
+        style={{ marginBottom: 16, maxWidth: 360 }}
+        value={searchText}
+      />
+
       <ProTable<PoData>
         rowKey='key'                 // 每筆唯一 key
         actionRef={actionRef}        // 表格操作參考
         columns={policyColumns}      // 表格欄位
-        dataSource={dataSource}      // 表格資料
+        dataSource={filteredData}    // 傳入篩選後的資料，實現快速搜尋功能
         search={false}               // 關閉搜尋欄
         pagination={false}           // 關閉分頁
         rowSelection={{              // ✅ 開啟勾選功能
@@ -85,7 +108,7 @@ const Demo12_NestedProTable: React.FC = () => {
             type='link'
             onClick={handleExport}
           >
-            導出數據(console）
+            導出數據(console)
           </Button>
         )}
         toolBarRender={() => [
@@ -94,7 +117,7 @@ const Demo12_NestedProTable: React.FC = () => {
             onClick={handleExport}
             disabled={selectedRowKeys.length === 0} // 沒選資料就停用按鈕
           >
-            導出數據（console）
+            導出數據(console)
           </Button>,
         ]}
       />
@@ -102,4 +125,4 @@ const Demo12_NestedProTable: React.FC = () => {
   )
 }
 
-export default Demo12_NestedProTable
+export default NestedProTable
