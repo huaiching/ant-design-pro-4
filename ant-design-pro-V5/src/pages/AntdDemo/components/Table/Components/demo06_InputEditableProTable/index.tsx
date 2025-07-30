@@ -57,13 +57,6 @@ const MyForm: React.FC = () => {
       })
   }, [])
 
-  // 初始化或更新時，確保所有列皆可編輯
-  useEffect(() => {
-    const editTable = formRef.current?.getFieldValue('editTable') || []
-    const ids = editTable.map((item: any) => item.id)
-    setEditableKeys(ids)
-  })
-
   // 表格欄位設定
   const columns: ProColumns<any>[] = [
     {

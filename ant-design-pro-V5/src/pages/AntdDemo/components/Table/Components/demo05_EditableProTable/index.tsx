@@ -12,64 +12,56 @@ const MyForm: React.FC = () => {
   const [editableKeys, setEditableKeys] = useState<React.Key[]>([])
 
   // 模擬 API 取得表格資料
-  useEffect(()=>{
+  useEffect(() => {
     setLoading(true)
     fetchTableData({})
-    .then((request)=>{
-      // 資料寫入 formRef
-      formRef.current?.setFieldsValue({
-        editTable: request.data
+      .then((request) => {
+        // 資料寫入 formRef
+        formRef.current?.setFieldsValue({
+          editTable: request.data
+        })
+        // 設定目前資料列的 id 為可編輯
+        const ids = request.data.map((item) => item.id)
+        setEditableKeys(ids)
       })
-      // 設定目前資料列的 id 為可編輯
-      const ids = request.data.map((item) => item.id)
-      setEditableKeys(ids)
-    })
-    .finally(()=>{
-      setLoading(false)
-    })
-  },[])
-
-  // // 每次畫面刷新，都要重新進行可編輯設定，避免設定跑掉
-  useEffect(() => {
-    const editTable = formRef.current?.getFieldValue('editTable') || []
-    const ids = editTable.map((item: any) => item.id)
-    setEditableKeys(ids)
-  })
-  
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [])
 
   // 控制送出後之動作
   const submitterRender = () => {
     return {
       render: () => (
         <FooterToolbar>
-            <Button
-              type='primary'
-              onClick={async () => {
-                formRef.current?.validateFields().then(values => {
-                  // 確認按鈕 點擊後 要進行的 API 操作
-                  // 日期轉換為民國年
-                  const editableData = formRef.current?.getFieldValue('editTable')
-                  const newData = editableData.map((data: any)=>{
-                    return {
-                      ...data,
-                    }
-                  })
-                  console.log('editableData',newData)
-                  message.success('表單提交成功！')
+          <Button
+            type='primary'
+            onClick={async () => {
+              formRef.current?.validateFields().then(values => {
+                // 確認按鈕 點擊後 要進行的 API 操作
+                // 日期轉換為民國年
+                const editableData = formRef.current?.getFieldValue('editTable')
+                const newData = editableData.map((data: any) => {
+                  return {
+                    ...data,
+                  }
                 })
-              }}
-              key='save'
-            >
-              確認
-            </Button>
-            <Button
-              onClick={async () => {
-                  // 取消按鈕 點擊後 要進行的 API 操作
-                  message.warning('取消作業')
-              }}
-            >
-              取消
-            </Button>
+                console.log('editableData', newData)
+                message.success('表單提交成功！')
+              })
+            }}
+            key='save'
+          >
+            確認
+          </Button>
+          <Button
+            onClick={async () => {
+              // 取消按鈕 點擊後 要進行的 API 操作
+              message.warning('取消作業')
+            }}
+          >
+            取消
+          </Button>
         </FooterToolbar>
       )
     }
@@ -136,6 +128,41 @@ const MyForm: React.FC = () => {
       fieldProps: {
         format: 'YYYY/MM/DD',
         allowClear: false,
+      },
+    },
+    {
+      title: '類型（Radio）',
+      dataIndex: 'radio',
+      valueType: 'radio',
+      valueEnum: {
+        A: { text: 'A 類' },
+        B: { text: 'B 類' },
+      },
+    },
+    {
+      title: '選擇（Radio Button）',
+      dataIndex: 'radioButton',
+      valueType: 'radioButton',
+      valueEnum: {
+        left: { text: '左' },
+        right: { text: '右' },
+      },
+    },
+    {
+      title: '是否啟用（Switch）',
+      dataIndex: 'switch',
+      valueType: 'switch',
+      fieldProps: {
+        checkedChildren: '是',
+        unCheckedChildren: '否',
+      },
+    },
+    {
+      title: '同意條款（Checkbox）',
+      dataIndex: 'checkbox',
+      valueType: 'checkbox',
+      valueEnum: {
+        Y: '我已閱讀並同意',
       },
     },
   ]
