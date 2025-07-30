@@ -134,7 +134,7 @@ const MyForm: React.FC = () => {
       title: '類型（Radio）',
       dataIndex: 'radio',
       valueType: 'radio',
-      valueEnum: {
+      valueEnum: {            // radio: "A"
         A: { text: 'A 類' },
         B: { text: 'B 類' },
       },
@@ -143,7 +143,7 @@ const MyForm: React.FC = () => {
       title: '選擇（Radio Button）',
       dataIndex: 'radioButton',
       valueType: 'radioButton',
-      valueEnum: {
+      valueEnum: {            // radioButton: "left"
         left: { text: '左' },
         right: { text: '右' },
       },
@@ -152,7 +152,7 @@ const MyForm: React.FC = () => {
       title: '是否啟用（Switch）',
       dataIndex: 'switch',
       valueType: 'switch',
-      fieldProps: {
+      fieldProps: {             // switch: true
         checkedChildren: '是',
         unCheckedChildren: '否',
       },
@@ -161,7 +161,7 @@ const MyForm: React.FC = () => {
       title: '同意條款（Checkbox）',
       dataIndex: 'checkbox',
       valueType: 'checkbox',
-      valueEnum: {
+      valueEnum: {              // checkbox: ['Y']
         Y: '我已閱讀並同意',
       },
     },
