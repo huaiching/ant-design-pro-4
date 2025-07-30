@@ -1,11 +1,12 @@
 import React from 'react'
-import Demo01 from './Components/demo01_SearchProTable'
-import Demo02 from './Components/demo02_NestedProTable'
-import Demo03 from './Components/demo03_ShowRowProTable'
-import Demo04 from './Components/demo04_EditProTable'
-import Demo05 from './Components/demo05_EditableProTable'
-import Demo06 from './Components/demo06_InputEditableProTable'
-import Demo07 from './Components/demo07_InputPreviewProTable'
+import Demo01 from './Components/demo01_ProTable'
+import Demo02 from './Components/demo02_SearchProTable'
+import Demo03 from './Components/demo03_NestedProTable'
+import Demo04 from './Components/demo04_ShowRowProTable'
+import Demo05 from './Components/demo05_EditProTable'
+import Demo06 from './Components/demo06_EditableProTable'
+import Demo07 from './Components/demo07_InputEditableProTable'
+import Demo08 from './Components/demo08_InputPreviewProTable'
 import { PageContainer } from '@ant-design/pro-components'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
@@ -20,38 +21,43 @@ const AsstManagement: React.FC = () => {
   const tabs = [
     {
       authCode: '1',
-      title: '查詢表格(SearchProTable)',
+      title: '表格(ProTable)',
       component: <Demo01/>
     },
     {
       authCode: '2',
-      title: '嵌套表格(NestedProTable)',
+      title: '查詢表格(SearchProTable)',
       component: <Demo02/>
     },
     {
       authCode: '3',
-      title: '選取行顯示明細的表格(ShowRowProTable)',
+      title: '嵌套表格(NestedProTable)',
       component: <Demo03/>
     },
     {
       authCode: '4',
-      title: '另開的編輯表格(EditProTable)',
+      title: '選取行顯示明細的表格(ShowRowProTable)',
       component: <Demo04/>
     },
     {
       authCode: '5',
-      title: '可編輯表格(EditableProTable)',
+      title: '另開的編輯表格(EditProTable)',
       component: <Demo05/>
     },
     {
       authCode: '6',
-      title: '手動新增的可編輯表格(InputEditableProTable)',
+      title: '可編輯表格(EditableProTable)',
       component: <Demo06/>
     },
     {
       authCode: '7',
-      title: '輸入資料顯示於表格(InputPreviewProTable)',
+      title: '手動新增的可編輯表格(InputEditableProTable)',
       component: <Demo07/>
+    },
+    {
+      authCode: '8',
+      title: '輸入資料顯示於表格(InputPreviewProTable)',
+      component: <Demo08/>
     },
   ]
   
