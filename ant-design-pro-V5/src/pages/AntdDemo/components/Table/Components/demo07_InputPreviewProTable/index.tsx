@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { AutoComplete, Button, Space, message, Popconfirm } from 'antd'
+import React, { useRef, useState } from 'react'
+import { AutoComplete, Button, Space, message, Popconfirm, Typography } from 'antd'
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
-import { ProTable, ProColumns } from '@ant-design/pro-components'
+import { ProTable, ProColumns, ProForm, ProFormInstance, FooterToolbar } from '@ant-design/pro-components'
 import MliFormRow from '@/common/components/form/MliFormRow'
 import MliFormCol from '@/common/components/form/MliFormCol'
 
@@ -58,13 +58,13 @@ const InputPreviewProTable: React.FC = () => {
   // ProTable 欄位定義
   const columns: ProColumns<{ code: string; text: string }>[] = [
     {
-      title: '操作', 
+      title: '操作',
       valueType: 'option',
-      width: 20, 
+      width: 20,
       render: (_, record) => [
         <Popconfirm
           key="delete"
-          title="確認刪除？" 
+          title="確認刪除？"
           onConfirm={() => handleDelete(record.code)}
         >
           <Button icon={<DeleteOutlined />} danger type="link" />
@@ -72,7 +72,7 @@ const InputPreviewProTable: React.FC = () => {
       ],
     },
     {
-      title: '代碼', 
+      title: '代碼',
       dataIndex: 'code',
       valueType: 'text'
     },
@@ -84,10 +84,10 @@ const InputPreviewProTable: React.FC = () => {
   ]
 
   return (
-    <MliFormRow>
-      <MliFormCol colSize={1.5}>
+    <>
+      <MliFormRow>
         {/* 輸入區：輸入 + 新增按鈕 */}
-        <Space style={{ marginBottom: 16 }}>
+        <ProForm.Item label="症狀" name="symptom" colSize={1.5} layout='vertical'>
           <AutoComplete
             style={{ width: 240 }}     // 寬度設定
             options={autoOptions}      // 自動完成選項
@@ -97,28 +97,47 @@ const InputPreviewProTable: React.FC = () => {
             // 自訂過濾邏輯（忽略大小寫）
             filterOption={(inputValue, option) =>
               !!option && option.value.toLowerCase().includes(inputValue.toLowerCase())
-            } 
+            }
           />
-          <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
-            新增
-          </Button>
-        </Space>
+          <Button shape='default' icon={<PlusOutlined />} onClick={handleAdd} />
 
-        {/* 顯示區：使用 ProTable 顯示已選項目 */}
-        {selectedOptions.length > 0 && (
-          <ProTable
-            headerTitle="輸入結果"        // 表格標題
-            search={false}               // 不顯示搜尋欄
-            options={false}              // 不顯示設定按鈕
-            pagination={false}           // 不顯示分頁
-            toolBarRender={false}        // 不顯示工具欄
-            dataSource={selectedOptions} // 表格資料來源
-            columns={columns}            // 欄位定義
-            rowKey="code"                // 唯一鍵
-          />
-        )}
-      </MliFormCol>
-    </MliFormRow>
+          {/* 顯示區：使用 ProTable 顯示已選項目 */}
+          {selectedOptions.length > 0 && (
+            <ProTable
+              headerTitle="輸入結果"        // 表格標題
+              search={false}               // 不顯示搜尋欄
+              options={false}              // 不顯示設定按鈕
+              pagination={false}           // 不顯示分頁
+              toolBarRender={false}        // 不顯示工具欄
+              dataSource={selectedOptions} // 表格資料來源
+              columns={columns}            // 欄位定義
+              rowKey="code"                // 唯一鍵
+            />
+          )}
+        </ProForm.Item>
+      </MliFormRow>
+
+      <FooterToolbar>
+        <Button
+          type='primary'
+          onClick={async () => {
+            console.info('selectedOptions', selectedOptions)
+            message.success('表單提交成功！')
+          }}
+          key='save'
+        >
+          確認
+        </Button>
+        <Button
+          onClick={async () => {
+            // 取消按鈕 點擊後 要進行的 API 操作
+            message.warning('取消作業')
+          }}
+        >
+          取消
+        </Button>
+      </FooterToolbar>
+    </>
   )
 }
 
