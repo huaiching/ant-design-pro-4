@@ -14,7 +14,7 @@ const optionsData = [
   { code: 'E05', text: '流鼻水' }
 ]
 
-const SamplePage: React.FC = () => {
+const InputPreviewProTable: React.FC = () => {
   // 使用者輸入框的值
   const [inputValue, setInputValue] = useState('')
 
@@ -122,4 +122,4 @@ const SamplePage: React.FC = () => {
   )
 }
 
-export default SamplePage
+export default InputPreviewProTable
