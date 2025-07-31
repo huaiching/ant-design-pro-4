@@ -2,6 +2,7 @@
 import React from 'react'
 import { ProFormText } from '@ant-design/pro-components'
 import formStore from '../Mobx/FormStore'
+import { observer } from 'mobx-react'
 
 const TabContent1: React.FC = () => {
   const formRef = formStore.getFormRef
@@ -15,4 +16,4 @@ const TabContent1: React.FC = () => {
   )
 }
 
-export default TabContent1
+export default observer(TabContent1)

@@ -10,6 +10,7 @@ import InfoForm from './Components/InfoForm'
 import TabContent1 from './Components/TabContent1'
 import TabContent2 from './Components/TabContent2'
 import formStore from './Mobx/FormStore'
+import { observer } from 'mobx-react'
 
 const TabbedFormPage: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -136,4 +137,4 @@ useEffect(() => {
   )
 }
 
-export default TabbedFormPage
+export default observer(TabbedFormPage)

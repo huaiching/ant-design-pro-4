@@ -1,6 +1,7 @@
 import React from 'react'
 import { Descriptions, DescriptionsProps } from 'antd'
 import formStore from '../Mobx/FormStore'
+import { observer } from 'mobx-react'
 
 const infoData = {
   userName: '',
@@ -42,4 +43,4 @@ const InfoForm: React.FC = () => {
   )
 }
 
-export default InfoForm
+export default observer(InfoForm)
