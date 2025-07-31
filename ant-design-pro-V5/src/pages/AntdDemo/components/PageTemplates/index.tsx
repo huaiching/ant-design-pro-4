@@ -1,5 +1,6 @@
 import React from 'react'
 import Demo01 from './Components/demo01_TabbedFormPage'
+import Demo02 from './Components/demo02_TabbedFormPageByMobx'
 import { PageContainer } from '@ant-design/pro-components'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
@@ -15,6 +16,11 @@ const AsstManagement: React.FC = () => {
     {
       authCode: '1',
       title: '樣板 1(TabbedFormPage)',
+      component: <Demo01/>
+    },
+    {
+      authCode: '',
+      title: '樣板 2 使用 mobx 管理(TabbedFormPageByMobx)',
       component: <Demo01/>
     },
   ]

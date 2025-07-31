@@ -12,11 +12,11 @@ const MobXDocs: React.FC = () => {
 
         <Divider />
 
-        <Title level={3}>1. 建立 Models 資料夾與 Store</Title>
+        <Title level={3}>1. 建立 Mobx 資料夾與 Store</Title>
         <List
           size="small"
           dataSource={[
-            '1. 在 */Models 建立 userStore.ts',
+            '1. 在 */Mobx 建立 userStore.ts',
             '2. 定義 TypeScript 型別 UserInfo',
             '3. 建立 UserStore 類別，包含：',
             '　- user 屬性（observable）',

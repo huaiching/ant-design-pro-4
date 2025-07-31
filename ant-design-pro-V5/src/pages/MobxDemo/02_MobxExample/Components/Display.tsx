@@ -1,7 +1,9 @@
-// src/pages/user/Display.tsx
+/**
+ * 從 mobx 全域變數 讀取 使用者資訊，將資料 展示出來
+ */
 import React, { useEffect } from 'react'
 import { Card, Descriptions, message } from 'antd'
-import userStore from '../Models/userStore'
+import userStore from '../Mobx/userStore'
 import { observer } from 'mobx-react'
 
 const Display: React.FC = () => {
