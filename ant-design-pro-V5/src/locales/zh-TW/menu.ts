@@ -74,4 +74,8 @@ export default {
   'menu.apiDemo': 'api 呼叫範例',
   'menu.apiDemo.demo01': '一般呼叫',
   'menu.apiDemo.demo02': '下載檔案',
+  
+  'menu.mobXDemo': 'Mobx 使用範例',
+  'menu.mobXDemo.demo01': '使用說明',
+  'menu.mobXDemo.demo02': '使用範例',
 };

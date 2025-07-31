@@ -190,8 +190,30 @@ export default [
         component: './ApiDemo/Demo02',
       },
     ]
-
   },
+
+  // Mobx 使用範例
+  {
+    name: 'mobXDemo',  // 路由名稱
+    icon: 'ApiFilled',  // Ant Design 圖標
+    path: '/mobXDemo',  // 路徑
+    routes: [  // 嵌套路由
+      {
+        // 頁面文件基本結構示例
+        name: 'demo01',
+        path: 'demo01',  // 相對路徑，實際為 /reactDemo/demo01
+        component: './MobxDemo/01_MobxDocs',
+      },
+      {
+        // 頁面文件基本結構示例
+        name: 'demo02',
+        path: 'demo02',  // 相對路徑，實際為 /reactDemo/demo01
+        component: './MobxDemo/02_MobxExample',
+      },
+    ]
+    // component: './MobxDemo',
+  },
+
   {
     path: '/',
     redirect: '/welcome',
