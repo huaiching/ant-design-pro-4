@@ -68,15 +68,6 @@ const NestedProTable: React.FC = () => {
       submitter={false}       // 不顯示提交按鈕
       layout='vertical'       // 垂直排列表單項目
     >
-      {/* 快速搜尋輸入框：輸入即時更新 searchText 狀態 */}
-      <Input.Search
-        placeholder="快速搜尋保單號碼、狀態或日期"
-        allowClear
-        onChange={(e) => setSearchText(e.target.value)}
-        style={{ marginBottom: 16, maxWidth: 360 }}
-        value={searchText}
-      />
-
       <ProTable<PoData>
         rowKey='key'                 // 每筆唯一 key
         actionRef={actionRef}        // 表格操作參考
@@ -112,13 +103,13 @@ const NestedProTable: React.FC = () => {
           </Button>
         )}
         toolBarRender={() => [
-          <Button
-            key='export'
-            onClick={handleExport}
-            disabled={selectedRowKeys.length === 0} // 沒選資料就停用按鈕
-          >
-            導出數據(console)
-          </Button>,
+          <Input
+            key='search'
+            placeholder="快速搜尋"
+            allowClear
+            onChange={(e) => setSearchText(e.target.value)}
+            value={searchText}
+          />
         ]}
       />
     </ProForm>

@@ -58,15 +58,6 @@ const NestedProTable: React.FC = () => {
       submitter={false}       // 不顯示提交按鈕
       layout='vertical'       // 垂直排列表單項目
     >
-      {/* 快速搜尋輸入框：輸入即時更新 searchText 狀態 */}
-      <Input.Search
-        placeholder="快速搜尋保單號碼、狀態或日期"
-        allowClear
-        onChange={(e) => setSearchText(e.target.value)}
-        style={{ marginBottom: 16, maxWidth: 360 }}
-        value={searchText}
-      />
-
       <ProTable
         rowKey='key'                 // 每筆唯一 key
         actionRef={actionRef}        // 表格操作參考
@@ -79,6 +70,15 @@ const NestedProTable: React.FC = () => {
           selectedRowKeys,
           onChange: (keys) => setSelectedRowKeys(keys),
         }}
+        toolBarRender={() => [
+          <Input
+            key='search'
+            placeholder="快速搜尋"
+            allowClear
+            onChange={(e) => setSearchText(e.target.value)}
+            value={searchText}
+          />
+        ]}
         headerTitle='保單清單'
         /** ✅ 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
         tableAlertRender={() => (

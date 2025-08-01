@@ -194,24 +194,29 @@ export default [
 
   // Mobx 使用範例
   {
-    name: 'mobXDemo',  // 路由名稱
-    icon: 'ApiFilled',  // Ant Design 圖標
-    path: '/mobXDemo',  // 路徑
-    routes: [  // 嵌套路由
+    name: 'mobXDemo',  
+    icon: 'ApiFilled',  
+    path: '/mobXDemo',  
+    routes: [ 
       {
-        // 頁面文件基本結構示例
+        // 使用說明
         name: 'demo01',
-        path: 'demo01',  // 相對路徑，實際為 /reactDemo/demo01
+        path: 'demo01',
         component: './MobxDemo/01_MobxDocs',
       },
       {
-        // 頁面文件基本結構示例
+        //   'menu.mobXDemo.demo02': '使用範例',
         name: 'demo02',
-        path: 'demo02',  // 相對路徑，實際為 /reactDemo/demo01
+        path: 'demo02',
         component: './MobxDemo/02_MobxExample',
       },
+      {
+        // formRef 使用範例
+        name: 'demo03',
+        path: 'demo03',
+        component: './MobxDemo/03_TabbedFormPageByMobx',
+      },
     ]
-    // component: './MobxDemo',
   },
 
   {
