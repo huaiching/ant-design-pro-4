@@ -1,3 +1,7 @@
+/**
+ * 下拉選單的選項設定
+ */
+
 import { makeAutoObservable, observable, runInAction } from 'mobx'
 
 class OptionsStore {

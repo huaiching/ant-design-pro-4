@@ -210,12 +210,6 @@ export default [
         path: 'demo02',
         component: './MobxDemo/02_MobxExample',
       },
-      {
-        // formRef 使用範例
-        name: 'demo03',
-        path: 'demo03',
-        component: './MobxDemo/03_TabbedFormPageByMobx',
-      },
     ]
   },
 

@@ -1,3 +1,7 @@
+/**
+ * info 區域變數設定
+ */
+
 import { makeAutoObservable } from 'mobx'
 
 // 使用者資訊型別

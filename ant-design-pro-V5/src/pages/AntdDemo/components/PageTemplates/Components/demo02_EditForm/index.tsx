@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Steps, Card, message, Modal } from 'antd'
-import { PageContainer, FooterToolbar } from '@ant-design/pro-components'
 import Step1Form from './Components/Step1'
 import Step2Form from './Components/Step2'
-import basicStore from './Mobx/basicStore'
 import optionsStore from './Mobx/optionStore'
+import { observer } from 'mobx-react'
 
-const ChangeFormIndex: React.FC = () => {
+const EditForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0)
 
   // 載入 option
@@ -35,4 +33,4 @@ const ChangeFormIndex: React.FC = () => {
   )
 }
 
-export default ChangeFormIndex
+export default observer(EditForm)
