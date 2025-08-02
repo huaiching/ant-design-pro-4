@@ -5,6 +5,8 @@ import basicStore from '../Mobx/basicStore'
 import { FooterToolbar, ProForm, ProFormDatePicker, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-components'
 import dayjs from 'dayjs'
 import MliFormRow from '@/common/components/form/MliFormRow'
+import optionsStore from '../Mobx/optionStore'
+import { log } from 'console'
 
 interface Props {
   handleStep: (step: number) => void
@@ -12,6 +14,7 @@ interface Props {
 
 const Step1Form: React.FC<Props> = ({ handleStep }) => {
   const formRef = useRef<ProFormInstance>()
+  const chgTypeOption = optionsStore.getOptions('chgType')
 
   useEffect(() => {
     // 資料初始化
@@ -24,7 +27,7 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
       receiveDate: data.receiveDate ? dayjs(data.receiveDate) : undefined,
       chgDate: data.chgDate ? dayjs(data.chgDate) : undefined,
     }
-    console.info('values', values)
+    // console.info('values', values)
     formRef.current?.setFieldsValue(values)
   });
 
@@ -96,11 +99,7 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
           name="chgType"
           label="變更選項"
           colSize={2/3}
-          options={[
-            { label: '0 首期契變', value: '0' },
-            { label: '1 一般契變', value: '1' },
-            { label: '2 復效', value: '2' },
-          ]}
+          options={chgTypeOption}
           rules={[{ required: true }]}
         />
       </MliFormRow>
