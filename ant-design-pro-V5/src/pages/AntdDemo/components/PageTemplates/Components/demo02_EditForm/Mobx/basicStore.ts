@@ -1,5 +1,5 @@
 /**
- * info 區域變數設定
+ * info 變數設定
  */
 
 import { makeAutoObservable } from 'mobx'

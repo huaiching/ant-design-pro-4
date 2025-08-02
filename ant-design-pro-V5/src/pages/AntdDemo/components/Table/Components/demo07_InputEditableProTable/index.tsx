@@ -1,6 +1,6 @@
 import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { Button, Input, message, Spin, Tag, Space } from 'antd'
+import { Button, Input, message, Spin, Tag } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
 

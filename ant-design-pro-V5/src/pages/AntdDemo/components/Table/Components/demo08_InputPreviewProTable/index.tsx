@@ -1,9 +1,8 @@
-import React, { useRef, useState } from 'react'
-import { AutoComplete, Button, Space, message, Popconfirm, Typography } from 'antd'
+import React, { useState } from 'react'
+import { AutoComplete, Button, message, Popconfirm } from 'antd'
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
-import { ProTable, ProColumns, ProForm, ProFormInstance, FooterToolbar } from '@ant-design/pro-components'
+import { ProTable, ProColumns, ProForm, FooterToolbar } from '@ant-design/pro-components'
 import MliFormRow from '@/common/components/form/MliFormRow'
-import MliFormCol from '@/common/components/form/MliFormCol'
 
 // 可選資料列表（代碼 + 文字）
 const optionsData = [

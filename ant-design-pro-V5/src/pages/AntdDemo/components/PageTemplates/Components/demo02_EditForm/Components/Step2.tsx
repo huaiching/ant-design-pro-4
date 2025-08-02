@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Descriptions, Button, Modal, message, TabsProps, BackTop, Card } from 'antd'
-import { ProForm, ProFormText, FooterToolbar, ProFormInstance } from '@ant-design/pro-components'
+import { Button, message, TabsProps, BackTop, Card } from 'antd'
+import { ProForm, FooterToolbar, ProFormInstance } from '@ant-design/pro-components'
 import { observer } from 'mobx-react'
 import basicStore from '../Mobx/basicStore'
 import InfoForm from './Components/InfoForm'
 import TabContent1 from './Components/TabContent1'
 import TabContent2 from './Components/TabContent2'
+import TabContent3 from './Components/TabContent3'
 import { log } from 'console'
+import poTableStore from '../Mobx/poTableStore'
 
 interface Props {
     handleStep: (step: number) => void
@@ -35,6 +37,11 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
       key: 'tab2',
       label: '其他資訊',
       children: <TabContent2 />,
+    },
+    {
+      key: 'tab3',
+      label: '表格資料',
+      children: <TabContent3 />,
     },
   ]
   // tab 切換 回滾到頂部: 透過監聽 tab 標籤來達成目的
@@ -71,6 +78,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
         log('basicData',basicData)
         log('tab1',formRef.current?.getFieldValue('tab1'))
         log('tab2',formRef.current?.getFieldValue('tab2'))
+        log('tab3',poTableStore.getPoTableList)
         message.success('送出成功')
       } else {
         message.error('尚有未完成的頁籤，請逐一檢查')
