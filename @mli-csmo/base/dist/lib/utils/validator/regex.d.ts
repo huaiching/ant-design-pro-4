@@ -1,0 +1,9 @@
+export declare const REG_POINT_ZH_EN: RegExp;
+export declare const REG_PHONE: RegExp;
+export declare const REG_LANDLINE: RegExp;
+export declare const REG_MAIL: RegExp;
+export declare const REG_LETTER_OR_NUM: RegExp;
+export declare const REG_POS_AND_NEG_NUM: RegExp;
+export declare const REG_NEG_NUM: RegExp;
+export declare const REG_NEG_NUM_OR_ZERO: RegExp;
+export declare const REG_NUM_OR_ZERO: RegExp;

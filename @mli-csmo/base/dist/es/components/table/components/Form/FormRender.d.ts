@@ -1,0 +1,31 @@
+import { BaseQueryFilterProps, ProFormInstance, ProFormProps } from '@ant-design/pro-form';
+import { ProSchemaComponentTypes } from '@ant-design/pro-utils';
+import type { FormItemProps } from 'antd';
+import type { Callbacks } from 'rc-field-form/es/interface';
+import React from 'react';
+import type { ActionType, ProColumns, ProTableProps } from '../../typing';
+export type SearchConfig = BaseQueryFilterProps & {
+    filterType?: 'query' | 'light';
+};
+export type TableFormItem<T, U = any> = {
+    moduleName: string;
+    collapsed: boolean;
+    setNeedCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
+    onValuesChange?: Callbacks['onValuesChange'];
+    onInit?: (value: T, originValue?: T) => void;
+    onSubmit?: (value: T, firstLoad: boolean) => void;
+    onReset?: (value: T) => void;
+    form?: Omit<ProFormProps, 'form'>;
+    type?: ProSchemaComponentTypes;
+    dateFormatter?: ProTableProps<T, U, any>['dateFormatter'];
+    search?: false | SearchConfig;
+    columns: ProColumns<U, any>[];
+    formRef: React.MutableRefObject<ProFormInstance | undefined>;
+    submitButtonLoading?: boolean;
+    manualRequest?: boolean;
+    bordered?: boolean;
+    action: React.MutableRefObject<ActionType | undefined>;
+    ghost?: boolean;
+} & Omit<FormItemProps, 'children' | 'onReset'>;
+declare const FormRender: <T, U = any>({ onSubmit, formRef, dateFormatter, type, columns, action, ghost, manualRequest, onReset, submitButtonLoading, search: searchConfig, form: formConfig, bordered, moduleName, collapsed, setNeedCollapsed, onValuesChange, onInit }: TableFormItem<T, U>) => import("react/jsx-runtime").JSX.Element;
+export default FormRender;

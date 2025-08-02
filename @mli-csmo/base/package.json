@@ -1,0 +1,67 @@
+{
+  "name": "@mli-csmo/base",
+  "version": "1.2.2",
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.js",
+  "typings": "dist/es/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "father build",
+    "check-types": "tsc --noemit",
+    "npmPublish": "npm publish",
+    "prepare": "npm run build",
+    "release-major": "npm run build && npm run check-types && release major",
+    "release-minor": "npm run build && npm run check-types && release minor",
+    "release-patch": "npm run build && npm run check-types && release patch",
+    "watch": "father build --watch"
+  },
+  "devDependencies": {
+    "@ant-design/icons": "^4.8.3",
+    "@ant-design/pro-cli": "^3.3.0",
+    "@ant-design/pro-components": "^2.7.19",
+    "@types/lodash": "^4.17.10",
+    "antd": "^5.21.2",
+    "antd-style": "^3.7.0",
+    "dayjs": "^1.11.13",
+    "lodash": "^4.17.0",
+    "omit.js": "^1.0.0",
+    "react-intl": "^3.12.1",
+    "react-quill": "^2.0.0",
+    "storybook": "^8.4.7",
+    "taiwan-id-validator": "^1.5.0",
+    "xlsx": "^0.18.5"
+  },
+  "peerDependencies": {
+    "antd": ">=5 <6",
+    "antd-style": ">=3 <4",
+    "react": ">=17 <19"
+  },
+  "peerDependenciesMeta": {
+    "antd": {
+      "optional": true
+    },
+    "antd-style": {
+      "optional": true
+    },
+    "dayjs": {
+      "optional": true
+    },
+    "lodash": {
+      "optional": true
+    },
+    "omit.js": {
+      "optional": true
+    },
+    "react-intl": {
+      "optional": true
+    },
+    "react-quill": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
