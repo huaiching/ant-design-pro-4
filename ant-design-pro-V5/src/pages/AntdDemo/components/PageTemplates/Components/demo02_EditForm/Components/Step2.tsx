@@ -71,8 +71,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
         const values = formRef.current?.getFieldsValue()
         log('basicData',basicData)
         log('tab1',formRef.current?.getFieldValue('tab1'))
-        log('tab2',formRef.current?.getFieldValue('tab2'))
-        log('tab3',poTableStore.getPoTableList)
+        log('tab2',poTableStore.getPoTableList)
         message.success('送出成功')
       } else {
         message.error('尚有未完成的頁籤，請逐一檢查')
