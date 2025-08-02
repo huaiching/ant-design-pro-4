@@ -6,7 +6,6 @@ import basicStore from '../Mobx/basicStore'
 import InfoForm from './Components/InfoForm'
 import TabContent1 from './Components/TabContent1'
 import TabContent2 from './Components/TabContent2'
-import TabContent3 from './Components/TabContent3'
 import { log } from 'console'
 import poTableStore from '../Mobx/poTableStore'
 
@@ -35,13 +34,8 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
     },
     {
       key: 'tab2',
-      label: '其他資訊',
-      children: <TabContent2 />,
-    },
-    {
-      key: 'tab3',
       label: '表格資料',
-      children: <TabContent3 />,
+      children: <TabContent2 />,
     },
   ]
   // tab 切換 回滾到頂部: 透過監聽 tab 標籤來達成目的
