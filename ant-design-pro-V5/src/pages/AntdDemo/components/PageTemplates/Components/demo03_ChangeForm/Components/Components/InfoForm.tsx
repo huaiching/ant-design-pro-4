@@ -56,7 +56,7 @@ const InfoForm: React.FC = () => {
         items={items}       // 欄位資料來源
         layout='horizontal' // 排列方式: horizontal.水平(預設) / vertical.垂直
         size='small'        // 行距
-        bordered            // 顯示邊框
+        // bordered            // 顯示邊框
     />    
   )
 }
