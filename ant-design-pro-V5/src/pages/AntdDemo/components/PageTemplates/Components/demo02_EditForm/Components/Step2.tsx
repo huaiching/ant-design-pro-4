@@ -3,9 +3,9 @@
  * 變數透過 mobx 設定 可以減少透過 props 傳遞的麻煩
  */
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, message, TabsProps, BackTop, Card } from 'antd'
-import { ProForm, FooterToolbar, ProFormInstance } from '@ant-design/pro-components'
+import { ProForm, FooterToolbar } from '@ant-design/pro-components'
 import { observer } from 'mobx-react'
 import basicStore from '../Mobx/basicStore'
 import InfoForm from './Components/InfoForm'
@@ -17,7 +17,7 @@ import formRefStore from '../Mobx/formRefStore'
 import tabRefStore from '../Mobx/tabRefStore'
 
 interface Props {
-    handleStep: (step: number) => void
+  handleStep: (step: number) => void
 }
 
 const Step2Form: React.FC<Props> = ({ handleStep }) => {
@@ -45,6 +45,9 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
       children: <TabContent2 />,
     },
   ]
+  // 設定 第一個tab 與 最後一個tab
+  const firstTab = tabs[0].key
+  const lastTab = tabs[tabs.length - 1].key
   // tab 切換 回滾到頂部: 透過監聽 tab 標籤來達成目的
   useEffect(() => {
     document.getElementById('tabContent')?.scrollTo({ top: 0, behavior: 'smooth' })
@@ -62,6 +65,22 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
       message.error('請先完成目前頁籤的欄位')
     }
   }
+  // 上一頁 切換事件
+  const handlePrevious = () => {
+    const currentIndex = tabs.findIndex(tab => tab.key === activeTab)
+    if (currentIndex > 0) {
+      const prevKey = tabs[currentIndex - 1].key
+      handleTabChange(prevKey)
+    }
+  }
+  // 下一頁 切換事件
+  const handleNext = () => {
+    const currentIndex = tabs.findIndex(tab => tab.key === activeTab)
+    if (currentIndex < tabs.length - 1) {
+      const nextKey = tabs[currentIndex + 1].key
+      handleTabChange(nextKey)
+    }
+  }
 
   // 提交事件
   const handleSubmit = async () => {
@@ -75,10 +94,10 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
 
       const allValid = Object.entries(updatedStatus).every(([, status]) => status === 'valid')
       if (allValid) {
-        const values = formRef.current?.getFieldsValue()
-        log('basicData',basicData)
-        log('tab1',formRef.current?.getFieldValue('tab1'))
-        log('tab2',poTableStore.getPoTableList)
+        // const values = formRef.current?.getFieldsValue()
+        log('basicData', basicData)
+        log('tab1', formRef.current?.getFieldValue('tab1'))
+        log('tab2', poTableStore.getPoTableList)
         message.success('送出成功')
       } else {
         message.error('尚有未完成的頁籤，請逐一檢查')
@@ -89,13 +108,13 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
   }
 
   return (
-      <ProForm
-        formRef={formRef}
-        submitter={false}
-        layout='vertical'
-        style={{ padding: 16 }}
-      >
-      <InfoForm/>
+    <ProForm
+      formRef={formRef}
+      submitter={false}
+      layout='vertical'
+      style={{ padding: 16 }}
+    >
+      <InfoForm />
 
       <Card
         style={{
@@ -134,6 +153,8 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
       </Card>
 
       <FooterToolbar>
+        <Button onClick={handlePrevious} disabled={activeTab === firstTab} >上一頁</Button>
+        <Button onClick={handleNext} disabled={activeTab === lastTab} >下一頁</Button>
         <Button type="primary" onClick={handleSubmit}>完成</Button>
         <Button danger onClick={() => handleStep(0)}>取消</Button>
       </FooterToolbar>
