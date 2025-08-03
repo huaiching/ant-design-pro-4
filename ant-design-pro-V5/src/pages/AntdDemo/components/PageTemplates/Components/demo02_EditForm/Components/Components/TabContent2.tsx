@@ -4,18 +4,35 @@
  * 透過 mobx 來設定資料 可以免除 無手動同步資料時 跨頁資料消失的問題
  */
 
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ProTable, ActionType, ProColumns, ProCard, FooterToolbar } from '@ant-design/pro-components'
 import { Button, message } from 'antd'
 import EditableDetailForm from './Components/EditableDetailForm'
 import { observer } from 'mobx-react'
 import poTableStore, { PoTable } from '../../Mobx/poTableStore'
+import formRefStore from '../../Mobx/formRefStore'
+import tabRefStore from '../../Mobx/tabRefStore'
 
 const TabContent2: React.FC = () => {
+  const formRef = formRefStore.getFormRef
   const actionRef = useRef<ActionType>() // 表格操作參考（非必要但可用於刷新）
   const [formMode, setFormMode] = useState<'create' | 'edit'>('create') // 控制新增或編輯模式
   const [editableRow, setEditableRow] = useState<PoTable | undefined>() // 目前正在編輯的資料列
 
+  useEffect(() => {
+    // 註冊 tab1 的切換前事件，做表單驗證
+    tabRefStore.setTabLeaveFn('tab2', async () => {
+      message.info('Tab2 切換')
+      const valid = await formRef.current?.validateFields()
+      if (valid) {
+        return true
+      } else {
+        message.error('Tab2 欄位未完成')
+        return false
+      }
+    })
+  }, [])
+  
   // 定義表格欄位
   const columns: ProColumns<PoTable>[] = [
     { title: '保單號碼', dataIndex: 'policyNo', valueType: 'text' },

@@ -14,6 +14,7 @@ import TabContent2 from './Components/TabContent2'
 import { log } from 'console'
 import poTableStore from '../Mobx/poTableStore'
 import formRefStore from '../Mobx/formRefStore'
+import tabRefStore from '../Mobx/tabRefStore'
 
 interface Props {
     handleStep: (step: number) => void
@@ -50,7 +51,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
   }, [activeTab])
   // tab 切換事件
   const handleTabChange = async (key: string) => {
-    const valid = await formRef.current?.validateFields()
+    const valid = await tabRefStore.runTabLeaveFn(activeTab)
     if (valid) {
       setTabStatus((prev) => ({
         ...prev,
@@ -64,7 +65,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
 
   // 提交事件
   const handleSubmit = async () => {
-    const valid = await formRef.current?.validateFields()
+    const valid = await tabRefStore.runTabLeaveFn(activeTab)
     if (valid) {
       const updatedStatus: Record<string, 'pending' | 'valid'> = {
         ...tabStatus,

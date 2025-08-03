@@ -4,13 +4,29 @@
  * 如果 僅需要塞值，可以不用將 formRef 引入
  */
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ProFormText } from '@ant-design/pro-components'
 import { observer } from 'mobx-react'
 import formRefStore from '../../Mobx/formRefStore'
+import { message } from 'antd'
+import tabRefStore from '../../Mobx/tabRefStore'
 
 const TabContent1: React.FC = () => {
-  // const formRef = formRefStore.getFormRef
+  const formRef = formRefStore.getFormRef
+
+  useEffect(() => {
+    // 註冊 tab1 的切換前事件，做表單驗證
+    tabRefStore.setTabLeaveFn('tab1', async () => {
+      message.info('Tab1 切換')
+      const valid = await formRef.current?.validateFields()
+      if (valid) {
+        return true
+      } else {
+        message.error('Tab1 欄位未完成')
+        return false
+      }
+    })
+  }, [])
 
   return (
     <>
