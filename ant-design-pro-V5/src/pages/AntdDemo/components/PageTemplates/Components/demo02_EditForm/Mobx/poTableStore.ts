@@ -1,3 +1,7 @@
+/**
+ * tab2 的 ProTable 資料變數
+ */
+
 import { makeAutoObservable } from 'mobx'
 
 // 定義保單資料型別

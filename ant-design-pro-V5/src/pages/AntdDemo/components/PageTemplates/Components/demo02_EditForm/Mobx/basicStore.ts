@@ -1,5 +1,5 @@
 /**
- * info 變數設定
+ * 第一頁 與 第二頁 info 的 資料變數
  */
 
 import { makeAutoObservable } from 'mobx'

@@ -1,25 +1,22 @@
-/**
- * 給 ProFrom 使用的 formRef 設定
- */
-
+// src/Mobx/formStore.ts
 import { makeAutoObservable } from 'mobx'
-import type { ProFormInstance } from '@ant-design/pro-components'
+import { ProFormInstance } from '@ant-design/pro-components'
 
-class FormRefStore {
-  formInstance: ProFormInstance | null = null
+class FormStore {
+  formRef: React.MutableRefObject<ProFormInstance<any> | undefined> = { current: undefined }
 
   constructor() {
     makeAutoObservable(this)
   }
 
-  setFormRef(instance: ProFormInstance | null) {
-    this.formInstance = instance
+  setFormRef(ref: ProFormInstance<any>) {
+    this.formRef.current = ref
   }
 
   get getFormRef() {
-    return this.formInstance
+    return this.formRef
   }
 }
 
-const formRefStore = new FormRefStore()
-export default formRefStore
+const formStore = new FormStore()
+export default formStore

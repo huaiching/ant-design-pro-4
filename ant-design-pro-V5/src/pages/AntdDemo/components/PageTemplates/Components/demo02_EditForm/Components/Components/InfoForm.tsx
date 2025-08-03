@@ -1,3 +1,8 @@
+/**
+ * info 顯示基本資料 的頁面
+ * 所有資料 透過 mobx 的 basicStore 取得 (於 第一頁 設定)
+ */
+
 import React from 'react'
 import { Descriptions, DescriptionsProps } from 'antd'
 import { observer } from 'mobx-react'

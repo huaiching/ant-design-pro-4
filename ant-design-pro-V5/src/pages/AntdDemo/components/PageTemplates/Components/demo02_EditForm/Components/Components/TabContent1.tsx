@@ -1,4 +1,9 @@
-// TabContent1.tsx
+/**
+ * 第一個頁簽 - 示範 ProForm 輸入資料
+ * 如果需要使用 formRef 的函式，可以透過 formRefStore.getFormRef 取得變數
+ * 如果 僅需要塞值，可以不用將 formRef 引入
+ */
+
 import React from 'react'
 import { ProFormText } from '@ant-design/pro-components'
 import { observer } from 'mobx-react'

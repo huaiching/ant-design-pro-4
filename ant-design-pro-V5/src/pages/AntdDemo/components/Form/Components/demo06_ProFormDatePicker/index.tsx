@@ -36,8 +36,7 @@ const MyForm: React.FC = () => {
         </FooterToolbar>
       )
     }
-  }
-
+  }     
 
   return (
     <>

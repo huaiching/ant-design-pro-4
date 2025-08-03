@@ -1,3 +1,8 @@
+/**
+ * 第一頁 基本資料輸入
+ * 變數透過 mobx 管理，可以減少資料傳遞的麻煩
+ */
+
 import React, { useEffect, useRef } from 'react'
 import { Button } from 'antd'
 import { observer } from 'mobx-react'
@@ -6,7 +11,6 @@ import { FooterToolbar, ProForm, ProFormDatePicker, ProFormInstance, ProFormSele
 import dayjs from 'dayjs'
 import MliFormRow from '@/common/components/form/MliFormRow'
 import optionsStore from '../Mobx/optionStore'
-import { log } from 'console'
 
 interface Props {
   handleStep: (step: number) => void

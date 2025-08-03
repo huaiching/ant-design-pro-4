@@ -1,3 +1,8 @@
+/**
+ * 第二頁 編輯資料頁面
+ * 變數透過 mobx 設定 可以減少透過 props 傳遞的麻煩
+ */
+
 import React, { useEffect, useRef, useState } from 'react'
 import { Button, message, TabsProps, BackTop, Card } from 'antd'
 import { ProForm, FooterToolbar, ProFormInstance } from '@ant-design/pro-components'
@@ -8,13 +13,14 @@ import TabContent1 from './Components/TabContent1'
 import TabContent2 from './Components/TabContent2'
 import { log } from 'console'
 import poTableStore from '../Mobx/poTableStore'
+import formRefStore from '../Mobx/formRefStore'
 
 interface Props {
     handleStep: (step: number) => void
 }
 
 const Step2Form: React.FC<Props> = ({ handleStep }) => {
-  const formRef = useRef<ProFormInstance>()
+  const formRef = formRefStore.getFormRef
   const basicData = basicStore.getBasic
 
   // TAB 資料設定 // 

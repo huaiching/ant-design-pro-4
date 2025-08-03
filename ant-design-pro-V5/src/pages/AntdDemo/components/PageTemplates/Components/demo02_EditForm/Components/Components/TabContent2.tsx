@@ -1,3 +1,9 @@
+/**
+ * 第二個頁簽 - 示範 ProTable 的 資料處理
+ * 因為 ProTable 的資料 不會跟 formRef 進行綁定
+ * 透過 mobx 來設定資料 可以免除 無手動同步資料時 跨頁資料消失的問題
+ */
+
 import React, { useRef, useState } from 'react'
 import { ProTable, ActionType, ProColumns, ProCard, FooterToolbar } from '@ant-design/pro-components'
 import { Button, message } from 'antd'
@@ -32,33 +38,6 @@ const TabContent2: React.FC = () => {
     // 關閉編輯表單
     setEditableRow(undefined)
   }
-
-  // 自訂送出區域（底部工具列）
-  const submitterRender = () => ({
-    render: () => (
-      <FooterToolbar>
-        <Button
-          type='primary'
-          onClick={() => {
-            // 可以從 MobX store 拿資料提交
-            console.log('儲存資料', poTableStore.getPoTableList)
-            message.success('表單提交成功！')
-          }}
-          key='save'
-        >
-          確認
-        </Button>
-        <Button
-          onClick={() => {
-            // 執行取消操作
-            message.warning('取消作業')
-          }}
-        >
-          取消
-        </Button>
-      </FooterToolbar>
-    )
-  })
 
   return (
     <ProCard ghost>
