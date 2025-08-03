@@ -26,6 +26,10 @@ const TabContent1: React.FC = () => {
         return false
       }
     })
+    // 👉 註冊進入頁籤事件
+    tabRefStore.setTabEnterFn('tab1', () => {
+      message.info('進入 Tab1')
+    })
   }, [])
 
   return (

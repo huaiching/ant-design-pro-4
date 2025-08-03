@@ -31,8 +31,12 @@ const TabContent2: React.FC = () => {
         return false
       }
     })
+    // 👉 註冊進入頁籤事件
+    tabRefStore.setTabEnterFn('tab2', () => {
+      message.info('進入 Tab2')
+    })
   }, [])
-  
+
   // 定義表格欄位
   const columns: ProColumns<PoTable>[] = [
     { title: '保單號碼', dataIndex: 'policyNo', valueType: 'text' },

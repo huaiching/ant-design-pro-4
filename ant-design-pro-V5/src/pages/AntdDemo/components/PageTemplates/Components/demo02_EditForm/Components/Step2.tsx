@@ -33,7 +33,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
     tab2: 'pending',
   })
   // 設定 tab 頁面
-  const tabs: TabsProps['items'] = [
+  let tabs: TabsProps['items'] = [
     {
       key: 'tab1',
       label: '聯絡資訊',
@@ -45,6 +45,9 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
       children: <TabContent2 />,
     },
   ]
+  // tab 頁面權限控制範例
+  // const userPermissions = ['tab1'] // 只有 tab1 有權限，tab2 沒有
+  // tabs = tabs.filter(tab => userPermissions.includes(tab.key))  // 根據權限過濾 tab
   // 設定 第一個tab 與 最後一個tab
   const firstTab = tabs[0].key
   const lastTab = tabs[tabs.length - 1].key
@@ -52,6 +55,10 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
   useEffect(() => {
     document.getElementById('tabContent')?.scrollTo({ top: 0, behavior: 'smooth' })
   }, [activeTab])
+  // 自動觸發初始頁籤的進入事件
+  useEffect(() => {
+    tabRefStore.runTabEnterFn(activeTab)
+  }, [])
   // tab 切換事件
   const handleTabChange = async (key: string) => {
     const valid = await tabRefStore.runTabLeaveFn(activeTab)
@@ -61,6 +68,10 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
         [activeTab]: 'valid',
       }))
       setActiveTab(key)
+      // 👉 新增呼叫進入事件
+      setTimeout(() => {
+        tabRefStore.runTabEnterFn(key)
+      }, 0) // setTimeout 避免和狀態更新衝突
     } else {
       message.error('請先完成目前頁籤的欄位')
     }
