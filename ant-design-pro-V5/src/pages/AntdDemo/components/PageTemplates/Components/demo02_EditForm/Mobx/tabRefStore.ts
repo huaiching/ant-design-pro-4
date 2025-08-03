@@ -1,6 +1,9 @@
 /**
  * TabRefStore - 管理頁面中的 tab 切換事件（如離開前檢查）用的 MobX 儲存庫。
  * 允許各個頁籤子元件註冊「離開前處理函式」，供父元件在切換頁籤時統一調用。
+ * 使用方式:
+ * 1. 各頁簽 於 useEffect 中 透過 setTabLeaveFn 註冊事件
+ * 2. 父元件 於 切換事件中 透過 await tabRefStore.runTabLeaveFn(key) 觸發檢核
  */
 
 import { makeAutoObservable } from 'mobx'
