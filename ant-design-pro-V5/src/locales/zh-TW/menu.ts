@@ -79,4 +79,12 @@ export default {
   'menu.mobXDemo.demo01': '使用說明',
   'menu.mobXDemo.demo02': '使用範例',
   'menu.mobXDemo.demo03': 'formRef 使用範例',
+
+  "common.input.requiredMessage": "{columnName} 為必填欄位",
+  "common.input.placeholder": "請輸入{columnName}",
+  "common.date": "TTT/MM/DD",
+  "common.month": "TTT/MM",
+  "common.year": "TTT",
+  "user.columns.birthday": "生日"
+
 };

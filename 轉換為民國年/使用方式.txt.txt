@@ -1,0 +1,3 @@
+1. 將 utils 放在 src 底下
+2. 於要使用民國年的頁面中
+   import '@/utils/minguoDatePicker'

@@ -3,6 +3,7 @@ import ProForm, { ProFormDatePicker, ProFormDateRangePicker, ProFormInstance } f
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, message } from 'antd'
 import MliFormRow from '@/common/components/form/MliFormRow'
+import '@/utils/minguoDatePicker'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -48,6 +49,12 @@ const MyForm: React.FC = () => {
         submitter={submitterRender()}
       >
         <MliFormRow>
+          {/* {false &&
+          <MliFormDatePicker
+            name='chkDate'
+            label='選擇日期'
+            placeholder='請選擇日期'
+          />} */}
           <ProFormDatePicker
             name='chkDate'
             label='選擇日期'
@@ -56,7 +63,7 @@ const MyForm: React.FC = () => {
               { required: true, message: '日期為必填項' },
             ]}
             fieldProps={{
-              format: 'YYYY/MM/DD',
+              format: 'TTT/MM/DD',
               inputReadOnly: false
             }}
           />
@@ -68,7 +75,7 @@ const MyForm: React.FC = () => {
               { required: true, message: '日期為必填項' },
             ]}
             fieldProps={{
-              format: 'YYYY/MM',
+              format: 'TTT/MM',
             }}
           />
           <ProFormDateRangePicker
@@ -78,7 +85,7 @@ const MyForm: React.FC = () => {
               { required: true, message: '日期為必填項' },
             ]}
             fieldProps={{
-              format: 'YYYY/MM/DD',
+              format: 'TTT/MM/DD',
             }}
           />
         </MliFormRow>
