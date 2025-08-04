@@ -49,12 +49,6 @@ const MyForm: React.FC = () => {
         submitter={submitterRender()}
       >
         <MliFormRow>
-          {/* {false &&
-          <MliFormDatePicker
-            name='chkDate'
-            label='選擇日期'
-            placeholder='請選擇日期'
-          />} */}
           <ProFormDatePicker
             name='chkDate'
             label='選擇日期'

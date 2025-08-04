@@ -1,0 +1,13 @@
+1. 將 utils 放在 src 底下
+2. 於要使用民國年的頁面中
+   import '@/utils/minguoDatePicker'
+3. 使用 TTT 即可顯示 民國年
+   範例：
+          <ProFormDatePicker
+            name='chkDate'
+            label='選擇日期'
+            placeholder='請選擇日期'
+            fieldProps={{
+              format: 'TTT/MM/DD'
+            }}
+          />
