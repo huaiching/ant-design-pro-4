@@ -3,7 +3,6 @@ import ProForm, { ProFormDatePicker, ProFormDateRangePicker, ProFormInstance } f
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, message } from 'antd'
 import MliFormRow from '@/common/components/form/MliFormRow'
-import '@/utils/minguoDatePicker'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()

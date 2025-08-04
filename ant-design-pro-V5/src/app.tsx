@@ -16,6 +16,7 @@ import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
 import '@ant-design/v5-patch-for-react-19';
 import MliLogo from '@/assets/logo.png'
+import '@/utils/minguoDatePicker'
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';

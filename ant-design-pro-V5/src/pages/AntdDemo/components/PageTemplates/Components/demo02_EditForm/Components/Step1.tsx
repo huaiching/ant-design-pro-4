@@ -82,7 +82,7 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
             { required: true, message: '日期為必填項' },
           ]}
           fieldProps={{
-            format: 'YYYY/MM/DD',
+            format: 'TTT/MM/DD',
             style: { width: '100%' }
           }}
         />
@@ -95,7 +95,7 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
             { required: true, message: '日期為必填項' },
           ]}
           fieldProps={{
-            format: 'YYYY/MM/DD',
+            format: 'TTT/MM/DD',
             style: { width: '100%' }
           }}
         />

@@ -1,5 +1,5 @@
 1. 將 utils 放在 src 底下
-2. 於要使用民國年的頁面中
+2. 於 app.tsx 引入
    import '@/utils/minguoDatePicker'
 3. 使用 TTT 即可顯示 民國年
    範例：
