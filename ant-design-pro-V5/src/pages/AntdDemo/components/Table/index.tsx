@@ -8,6 +8,7 @@ import Demo06 from './Components/demo06_EditableProTable'
 import Demo07 from './Components/demo07_InputEditableProTable'
 import Demo08 from './Components/demo08_InputPreviewProTable'
 import Demo09 from './Components/demo09_NestedEditableProTable'
+import Demo10 from './Components/demo10_DragSortTable'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
@@ -61,11 +62,17 @@ const AsstManagement: React.FC = () => {
       title: '嵌套可編輯表格(NestedEditableProTable)',
       component: <Demo09/>
     },
+    {
+      authCode: '10',
+      title: '拖動排序表格(DragSortTable)',
+      component: <Demo10/>
+    },
   ]
   
   return (
       <Tabs 
         type='card'
+        tabPosition='left'
         animated    // 啟用切換動畫
         destroyOnHidden   // 隱藏時銷毀 DOM
       >
