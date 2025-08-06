@@ -7,15 +7,12 @@ import Demo05 from './Components/demo05_EditProTable'
 import Demo06 from './Components/demo06_EditableProTable'
 import Demo07 from './Components/demo07_InputEditableProTable'
 import Demo08 from './Components/demo08_InputPreviewProTable'
-import { PageContainer } from '@ant-design/pro-components'
+import Demo09 from './Components/demo09_NestedEditableProTable'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
 //asstManagement 主功能名稱
 const AsstManagement: React.FC = () => {
-  //主功能9000代碼
-  const pageTitle = '表格(Table)'
-
   //設定tabs 頁面元件
   //主頁主要設定處
   const tabs = [
@@ -58,6 +55,11 @@ const AsstManagement: React.FC = () => {
       authCode: '8',
       title: '輸入資料顯示於表格(InputPreviewProTable)',
       component: <Demo08/>
+    },
+    {
+      authCode: '9',
+      title: '嵌套可編輯表格(NestedEditableProTable)',
+      component: <Demo09/>
     },
   ]
   
