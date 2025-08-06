@@ -9,12 +9,16 @@ import type { ProColumns, ActionType, ProFormInstance } from '@ant-design/pro-co
 import { Button, message, Input } from 'antd'
 import * as poApi from './store/poApi'
 import { PoData, coData } from './store/poApi'
+import dayjs from 'dayjs'
 
 // 主表格欄位（保單）
 const policyColumns: ProColumns<PoData>[] = [
   { title: '保單號碼', dataIndex: 'policyNo', valueType: 'text', },
   { title: '保單狀態', dataIndex: 'poStsCode', valueType: 'text', },
-  { title: '保單生效日', dataIndex: 'poIssueDate', valueType: 'date', },
+  { title: '保單生效日', dataIndex: 'poIssueDate', valueType: 'date',
+      fieldProps: {
+        format: 'TTT/MM/DD',
+      }, },
 ]
 
 // 子表格欄位（保障清單）
@@ -23,7 +27,10 @@ const coverageColumns: ProColumns<coData>[] = [
   { title: '險種代碼', dataIndex: 'planCode', valueType: 'text', },
   { title: '險種版數', dataIndex: 'rateScale', valueType: 'text', },
   { title: '保障狀態', dataIndex: 'coStsCode', valueType: 'text', },
-  { title: '保障生效日', dataIndex: 'coIssueDate', valueType: 'date', },
+  { title: '保障生效日', dataIndex: 'coIssueDate', valueType: 'date',
+      fieldProps: {
+        format: 'TTT/MM/DD',
+      }, },
 ]
 
 const NestedProTable: React.FC = () => {
@@ -35,9 +42,20 @@ const NestedProTable: React.FC = () => {
 
   // ✅ 頁面初始化：取得資料並設定到 form 與畫面
   useEffect(() => {
-    poApi.fetchAllData().then((data) => {
-      setDataSource(data)                                 // 給 table 顯示
-      formRef.current?.setFieldsValue({ policies: data }) // 存入 form 中
+    poApi.fetchAllData().then((data: any[]) => {
+      // 日期格式轉換
+      const chgData = data.map((po: any) => ({
+        ...po,
+        poIssueDate: dayjs(po.poIssueDate, 'TTT/MM/DD'),
+        coList: po.coList.map((co: any) => ({
+          ...co,
+          coIssueDate: dayjs(co.coIssueDate, 'TTT/MM/DD'),
+        }))
+      }))
+      // 給 table 顯示
+      setDataSource(chgData)
+      // 存入 form 中
+      formRef.current?.setFieldsValue({ policies: chgData }) 
     })
   }, [])
 
@@ -68,7 +86,7 @@ const NestedProTable: React.FC = () => {
       submitter={false}       // 不顯示提交按鈕
       layout='vertical'       // 垂直排列表單項目
     >
-      <ProTable<PoData>
+      <ProTable
         rowKey='key'                 // 每筆唯一 key
         actionRef={actionRef}        // 表格操作參考
         columns={policyColumns}      // 表格欄位
@@ -82,7 +100,7 @@ const NestedProTable: React.FC = () => {
         expandable={{                // ✅ 展開子表格
           expandedRowRender: (record) => (
             // ✅ 子表格：使用 ProTable 顯示該保單的保障資料
-            <ProTable<coData>
+            <ProTable
               rowKey='key'                    // 每筆保障資料的唯一 key
               columns={coverageColumns}       // 子表格欄位（保障序號、險種代碼等）
               dataSource={record.coList}      // 子表格的資料來源為該筆保單的 coList

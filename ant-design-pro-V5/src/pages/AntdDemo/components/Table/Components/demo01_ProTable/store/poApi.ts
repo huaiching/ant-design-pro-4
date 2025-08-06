@@ -5,13 +5,13 @@ export const fetchAllData = async (): Promise<any[]> => {
       key: '1',
       policyNo: 'P20250716001',
       poStsCode: '有效',
-      poIssueDate: '2025-01-01',
+      poIssueDate: '114/01/01',
     },
     {
       key: '2',
       policyNo: 'P20250716002',
       poStsCode: '失效',
-      poIssueDate: '2024-12-20',
+      poIssueDate: '113/12/21',
     },
   ]
 }

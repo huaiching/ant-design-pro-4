@@ -8,12 +8,18 @@ import { ProForm, ProTable } from '@ant-design/pro-components'
 import type { ProColumns, ActionType, ProFormInstance } from '@ant-design/pro-components'
 import { Button, message, Input } from 'antd'
 import * as poApi from './store/poApi'
+import dayjs from 'dayjs'
 
 // 主表格欄位（保單）
 const policyColumns: any[] = [
   { title: '保單號碼', dataIndex: 'policyNo', valueType: 'text', },
   { title: '保單狀態', dataIndex: 'poStsCode', valueType: 'text', },
-  { title: '保單生效日', dataIndex: 'poIssueDate', valueType: 'date', },
+  {
+    title: '保單生效日', dataIndex: 'poIssueDate', valueType: 'date',
+    fieldProps: {
+      format: 'TTT/MM/DD',
+    },
+  },
 ]
 
 const NestedProTable: React.FC = () => {
@@ -26,8 +32,15 @@ const NestedProTable: React.FC = () => {
   // ✅ 頁面初始化：取得資料並設定到 form 與畫面
   useEffect(() => {
     poApi.fetchAllData().then((data) => {
-      setDataSource(data)                                 // 給 table 顯示
-      formRef.current?.setFieldsValue({ policies: data }) // 存入 form 中
+      // 日期格式轉換
+      const chgData = data.map(e => ({
+        ...e,
+        poIssueDate: dayjs(e.poIssueDate, 'TTT/MM/DD'),
+      }))
+      // 給 table 顯示
+      setDataSource(chgData)
+      // 存入 form 中
+      formRef.current?.setFieldsValue({ policies: chgData }) 
     })
   }, [])
 

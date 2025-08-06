@@ -4,23 +4,23 @@ export interface TableItem {
   name: string
   age: number
   address: string
-  birthday: string // 新增生日欄位
-  gender: string
+  birthDate: string // 新增生日欄位
+  sex: string
 }
 
-const mockData: TableItem[] = Array.from({ length: 500 }, (_, index) => ({
+const mockData: TableItem[] = Array.from({ length: 100 }, (_, index) => ({
   id: index + 1,
   name: `User ${index + 1}`,
   age: 20 + (index % 10),
   address: `Address ${index + 1}`,
-  birthday: `199${index % 10}-0${(index % 12) + 1}-15`, // 模擬生日
-  gender: '男',
+  birthDate: `114/0${(index % 12) + 1}/15`, // 模擬生日
+  sex: '男',
 }))
 
 export const fetchAllData = async (
-  params: { name?: string; age?: number; current?: number; pageSize?: number; birthday?: string }
+  params: { name?: string; age?: number; current?: number; pageSize?: number; birthDate?: string }
 ): Promise<{ data: TableItem[]; total: number }> => {
-  const { name, age, birthday, current = 1, pageSize = 10 } = params
+  const { name, age, birthDate, current = 1, pageSize = 10 } = params
 
   let filteredData = mockData
 
@@ -32,8 +32,8 @@ export const fetchAllData = async (
     filteredData = filteredData.filter((item) => item.age === age)
   }
 
-  if (birthday) {
-    filteredData = filteredData.filter((item) => item.birthday === birthday)
+  if (birthDate) {
+    filteredData = filteredData.filter((item) => item.birthDate === birthDate)
   }
 
   const startIndex = (current - 1) * pageSize

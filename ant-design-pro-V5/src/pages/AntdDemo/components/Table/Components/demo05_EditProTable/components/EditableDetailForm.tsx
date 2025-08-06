@@ -2,6 +2,7 @@ import React from 'react'
 import { ProForm, ProFormText, ProFormDatePicker, ProCard } from '@ant-design/pro-components'
 import { Button, Space } from 'antd'
 import MliFormRow from '@/common/components/form/MliFormRow'
+import { format } from 'path'
 
 interface EditableDetailFormProps {
   mode: 'create' | 'edit'
@@ -42,7 +43,10 @@ const EditableDetailForm: React.FC<EditableDetailFormProps> = ({
           <ProFormText name='poStsCode' label='保單狀態' />
           <ProFormText name='basicPlanCode' label='主約險種代碼' />
           <ProFormText name='basicRateScale' label='主約險種版數' />
-          <ProFormDatePicker name='poIssueDate' label='保單生效日' />
+          <ProFormDatePicker name='poIssueDate' label='保單生效日'
+           fieldProps={{
+            format: 'TTT/MM/DD'
+           }} />
           <ProFormText name='o1Name' label='要保人姓名' />
           <ProFormText name='i1Name' label='被保人姓名' />
           <ProFormText name='address' label='通訊地址' />

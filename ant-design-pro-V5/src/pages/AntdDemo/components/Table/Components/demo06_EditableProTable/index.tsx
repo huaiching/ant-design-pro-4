@@ -2,8 +2,8 @@ import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, message, Spin } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
-import { fetchTableData } from './store/userApi'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
+import dayjs from 'dayjs'
 
 const MyForm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -13,20 +13,34 @@ const MyForm: React.FC = () => {
 
   // 模擬 API 取得表格資料
   useEffect(() => {
-    setLoading(true)
-    fetchTableData({})
-      .then((request) => {
-        // 資料寫入 formRef
-        formRef.current?.setFieldsValue({
-          editTable: request.data
-        })
-        // 設定目前資料列的 id 為可編輯
-        const ids = request.data.map((item) => item.id)
-        setEditableKeys(ids)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+    const resData = [
+      {
+        id: 1,
+        name: '測試人員 A',
+        age: 25,
+        birthDate: '089/01/10',
+        sex: '1'
+      },
+      {
+        id: 2,
+        name: '測試人員 B',
+        age: 10,
+        birthDate: '104/01/10',
+        sex: '2'
+      }
+    ]
+    // 日期格式轉換
+    const chgData = resData.map(data => ({
+      ...data,
+      birthDate: dayjs(data.birthDate, 'TTT/MM/DD'),
+    }))
+
+    formRef.current?.setFieldsValue({
+      editTable: chgData
+    })
+    // 設定目前資料列的 id 為可編輯
+    const ids = chgData.map((item) => item.id)
+    setEditableKeys(ids)
   }, [])
 
   // 控制送出後之動作
@@ -113,7 +127,7 @@ const MyForm: React.FC = () => {
     },
     {
       title: '性別',
-      dataIndex: 'gender',
+      dataIndex: 'sex',
       valueType: 'select',
       fieldProps: {
         placeholder: '請選擇性別',
@@ -123,10 +137,10 @@ const MyForm: React.FC = () => {
     },
     {
       title: '生日',
-      dataIndex: 'birthday',
+      dataIndex: 'birthDate',
       valueType: 'date',
       fieldProps: {
-        format: 'YYYY/MM/DD',
+        format: 'TTT/MM/DD',
         allowClear: false,
       },
     },

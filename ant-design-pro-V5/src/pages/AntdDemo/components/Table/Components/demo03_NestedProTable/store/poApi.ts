@@ -26,7 +26,7 @@ export const fetchAllData = async (): Promise<PoData[]> => {
       key: '1',
       policyNo: 'P20250716001',
       poStsCode: '有效',
-      poIssueDate: '2025-01-01',
+      poIssueDate: '114/01/01',
       coList: [
         {
           key: '1-1',
@@ -34,7 +34,7 @@ export const fetchAllData = async (): Promise<PoData[]> => {
           planCode: 'A1',
           rateScale: '01',
           coStsCode: '有效',
-          coIssueDate: '2025-01-01',
+          coIssueDate: '114/01/01',
         },
         {
           key: '1-2',
@@ -42,7 +42,7 @@ export const fetchAllData = async (): Promise<PoData[]> => {
           planCode: 'B2',
           rateScale: '02',
           coStsCode: '失效',
-          coIssueDate: '2025-03-01',
+          coIssueDate: '114/03/01',
         },
       ],
     },
@@ -50,7 +50,7 @@ export const fetchAllData = async (): Promise<PoData[]> => {
       key: '2',
       policyNo: 'P20250716002',
       poStsCode: '失效',
-      poIssueDate: '2024-12-20',
+      poIssueDate: '113/12/20',
       coList: [
         {
           key: '2-1',
@@ -58,7 +58,7 @@ export const fetchAllData = async (): Promise<PoData[]> => {
           planCode: 'C3',
           rateScale: '01',
           coStsCode: '有效',
-          coIssueDate: '2024-12-20',
+          coIssueDate: '113/12/20',
         },
       ],
     },

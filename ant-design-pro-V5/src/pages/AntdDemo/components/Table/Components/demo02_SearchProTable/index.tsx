@@ -69,43 +69,22 @@ const ProTableDemo: React.FC = () => {
     },
     {
       title: '性別',
-      dataIndex: 'gender',
+      dataIndex: 'sex',
       valueType: 'select',
       fieldProps: {
         placeholder: '請選擇性別',
         options: genderInd
       },
     },
-    // {
-    //   title: '生日',
-    //   dataIndex: 'birthday',
-    //   valueType: 'date',
-    // },
     {
       title: '生日',
-      dataIndex: 'birthday',
+      dataIndex: 'birthDate',
       valueType: 'date',
       fieldProps: {
-        format: 'YYYY/MM/DD', // 查詢欄位格式（西元）
-      },
-      render: (_, record) => {
-        if (!record.birthday) return '-'
-        const date = dayjs(record.birthday)
-        const rocYear = (date.year() - 1911).toString().padStart(3, '0')
-        return `${rocYear}/${date.format('MM/DD')}`
+        format: 'TTT/MM/DD', // 查詢欄位格式（西元）
       },
     },
   ]
-
-  // 數據請求函式
-  const requestData = async (params: any) => {
-    const response = await userApi.fetchAllData(params)
-    return {
-      data: response.data,
-      success: true,
-      total: response.total,
-    }
-  }
 
   return (
     <ProTable
@@ -113,7 +92,19 @@ const ProTableDemo: React.FC = () => {
       columns={columns}
       formRef={formRef}       // 查詢框 的 欄位變數
       actionRef={actionRef}   // 表格控制的變數實體
-      request={requestData}   // 數據請求函式
+      request={async (params) => {
+        const res = await userApi.fetchAllData(params)
+        // 日期格式轉換
+        const chgData = res.data.map(e => ({
+          ...e,
+          birthDate: dayjs(e.birthDate, 'TTT/MM/DD'),
+        }))
+        return {
+          data: chgData,
+          success: true,
+          total: chgData.length
+        }
+      }}   // 數據請求函式
       manualRequest={true}    // 手動請求數據
       rowKey='id'             // 設定 資料唯一值 欄位
       search={{
