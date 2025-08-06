@@ -1,3 +1,4 @@
+// 引入所需元件與函式庫
 import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, Card, message, Spin } from 'antd'
@@ -5,14 +6,21 @@ import React, { useEffect, useRef, useState } from 'react'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
 import dayjs from 'dayjs'
 
+// 主元件定義
 const NestedEditableProTable: React.FC = () => {
+  // 狀態管理：載入中
   const [loading, setLoading] = useState<boolean>(false)
+
+  // 表單參考，用來取得或設定表單資料
   const formRef = useRef<ProFormInstance>()
 
+  // 外層保單表格可編輯列的 key 值
   const [editableKeys, setEditableKeys] = useState<React.Key[]>([])
+
+  // 內層保障子表格的每一個保單對應的可編輯 key 值
   const [coEditableKeys, setCoEditableKeys] = useState<Record<string, React.Key[]>>({})
 
-  // 模擬 API 取得表格資料
+  // 模擬 API 載入資料
   useEffect(() => {
     const data = [
       {
@@ -64,7 +72,8 @@ const NestedEditableProTable: React.FC = () => {
         ]
       }
     ]
-    // 日期格式轉換
+
+    // 將字串日期轉換為 dayjs 物件以供 ProForm 處理
     const chgData = data.map(po => ({
       ...po,
       poIssueDate: dayjs(po.poIssueDate, 'TTT/MM/DD'),
@@ -73,19 +82,23 @@ const NestedEditableProTable: React.FC = () => {
         coIssueDate: dayjs(co.coIssueDate, 'TTT/MM/DD'),
       }))
     }))
-    // 資料設定
+
+    // 設定表單初始值
     formRef.current?.setFieldsValue({ editTable: chgData })
-    // 可編輯資料設定
-    setEditableKeys(data.map(item => item.id)); // 初始化外層表格的 editableKeys
-    setCoEditableKeys(                           // 初始化內層表格的 editableKeys
+
+    // 初始化保單可編輯列
+    setEditableKeys(data.map(item => item.id))
+
+    // 初始化每張保單對應的保障項目可編輯列
+    setCoEditableKeys(
       data.reduce((acc, item) => ({
         ...acc,
         [item.id]: item.coList?.map(co => co.id) || [],
       }), {})
-    );
-
+    )
   }, [])
 
+  // 表單底部的提交按鈕渲染函式
   const submitterRender = () => {
     return {
       render: () => (
@@ -94,6 +107,7 @@ const NestedEditableProTable: React.FC = () => {
             type='primary'
             onClick={async () => {
               try {
+                // 驗證整個表單
                 await formRef.current?.validateFields()
                 const editableData = formRef.current?.getFieldValue('editTable')
                 console.log('提交資料：', editableData)
@@ -118,6 +132,7 @@ const NestedEditableProTable: React.FC = () => {
     }
   }
 
+  // 外層保單表格的欄位定義
   const poColumns: ProColumns<any>[] = [
     {
       title: '操作',
@@ -145,6 +160,7 @@ const NestedEditableProTable: React.FC = () => {
     },
   ]
 
+  // 內層保障項目表格的欄位定義
   const coColumns: ProColumns<any>[] = [
     {
       title: '操作',
@@ -178,7 +194,7 @@ const NestedEditableProTable: React.FC = () => {
       valueType: 'date',
       fieldProps: {
         format: 'TTT/MM/DD',
-        style: { width: '100%' }, // 設定輸入框寬度為 100%
+        style: { width: '100%' },
       },
     },
   ]
@@ -197,6 +213,7 @@ const NestedEditableProTable: React.FC = () => {
               name='editTable'
               columns={poColumns}
               rowKey='id'
+              // 新增按鈕
               recordCreatorProps={{
                 newRecordType: 'dataSource',
                 record: () => ({
@@ -204,18 +221,22 @@ const NestedEditableProTable: React.FC = () => {
                 }),
                 creatorButtonText: '新增保單'
               }}
+              // 編輯設定
               editable={{
                 type: 'multiple',
                 editableKeys: editableKeys,
+                // 更新對應保單的保單可編輯列
                 onChange: setEditableKeys,
                 actionRender: (row, config, defaultDoms) => [defaultDoms.delete],
               }}
+              // 子表格（保障清單）展開設定
               expandable={{
                 expandedRowRender: (record) => (
                   <EditableProTable
                     rowKey='id'
                     columns={coColumns}
                     value={record.coList}
+                    // 新增按鈕
                     recordCreatorProps={{
                       newRecordType: 'dataSource',
                       record: () => ({
@@ -223,9 +244,11 @@ const NestedEditableProTable: React.FC = () => {
                       }),
                       creatorButtonText: '新增保障',
                     }}
+                    // 編輯設定
                     editable={{
                       type: 'multiple',
                       editableKeys: coEditableKeys[record.id] || [],
+                      // 更新對應保單的保障可編輯列
                       onChange: (keys) => {
                         setCoEditableKeys((prev) => ({
                           ...prev,
