@@ -191,54 +191,54 @@ const NestedEditableProTable: React.FC = () => {
         formRef={formRef}
         submitter={submitterRender()}
       >
-        <Card style={{width: '100%'}}>
-        <Spin spinning={loading}>
-          <EditableProTable
-            name='editTable'
-            columns={poColumns}
-            rowKey='id'
-            recordCreatorProps={{
-              newRecordType: 'dataSource',
-              record: () => ({
-                id: (Math.random() * 1000000).toFixed(0)
-              }),
-              creatorButtonText: '新增保單'
-            }}
-            editable={{
-              type: 'multiple',
-              editableKeys: editableKeys,
-              onChange: setEditableKeys,
-              actionRender: (row, config, defaultDoms) => [defaultDoms.delete],
-            }}
-            expandable={{
-              expandedRowRender: (record) => (
-                <EditableProTable
-                  rowKey='id'
-                  columns={coColumns}
-                  value={record.coList}
-                  recordCreatorProps={{
-                    newRecordType: 'dataSource',
-                    record: () => ({
-                      id: (Math.random() * 1000000).toFixed(0)
-                    }),
-                    creatorButtonText: '新增保障',
-                  }}
-                  editable={{
-                    type: 'multiple',
-                    editableKeys: coEditableKeys[record.id] || [],
-                    onChange: (keys) => {
-                      setCoEditableKeys((prev) => ({
-                        ...prev,
-                        [record.id]: keys,
-                      }))
-                    },
-                    actionRender: (row, config, defaultDoms) => [defaultDoms.delete],
-                  }}
-                />
-              ),
-            }}
-          />
-        </Spin>
+        <Card style={{ width: '100%' }}>
+          <Spin spinning={loading}>
+            <EditableProTable
+              name='editTable'
+              columns={poColumns}
+              rowKey='id'
+              recordCreatorProps={{
+                newRecordType: 'dataSource',
+                record: () => ({
+                  id: (Math.random() * 1000000).toFixed(0)
+                }),
+                creatorButtonText: '新增保單'
+              }}
+              editable={{
+                type: 'multiple',
+                editableKeys: editableKeys,
+                onChange: setEditableKeys,
+                actionRender: (row, config, defaultDoms) => [defaultDoms.delete],
+              }}
+              expandable={{
+                expandedRowRender: (record) => (
+                  <EditableProTable
+                    rowKey='id'
+                    columns={coColumns}
+                    value={record.coList}
+                    recordCreatorProps={{
+                      newRecordType: 'dataSource',
+                      record: () => ({
+                        id: (Math.random() * 1000000).toFixed(0)
+                      }),
+                      creatorButtonText: '新增保障',
+                    }}
+                    editable={{
+                      type: 'multiple',
+                      editableKeys: coEditableKeys[record.id] || [],
+                      onChange: (keys) => {
+                        setCoEditableKeys((prev) => ({
+                          ...prev,
+                          [record.id]: keys,
+                        }))
+                      },
+                      actionRender: (row, config, defaultDoms) => [defaultDoms.delete],
+                    }}
+                  />
+                ),
+              }}
+            />
+          </Spin>
         </Card>
       </ProForm>
     </>

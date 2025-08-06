@@ -1,6 +1,6 @@
 import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { Button, message, Spin } from 'antd'
+import { Button, Card, message, Spin } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
 import dayjs from 'dayjs'
@@ -190,31 +190,33 @@ const MyForm: React.FC = () => {
         formRef={formRef}
         submitter={submitterRender()}
       >
-        <Spin spinning={loading}>
-          <EditableProTable
-            name='editTable'
-            columns={columns}
-            rowKey='id'
-            headerTitle='編輯表格 模擬 API 取得資料'
-            // 新增按鈕
-            recordCreatorProps={{
-              newRecordType: 'dataSource',
-              record: () => ({
-                id: (Math.random() * 1000000).toFixed(0)
-              }),
-              creatorButtonText: '新增資料'
-            }}
-            // 編輯設定
-            editable={{
-              type: 'multiple',
-              editableKeys: editableKeys,
-              actionRender: (row, config, defaultDoms) => {
-                return [defaultDoms.delete]
-              },
-              onChange: setEditableKeys
-            }}
-          />
-        </Spin>
+        <Card style={{ width: '100%' }}>
+          <Spin spinning={loading}>
+            <EditableProTable
+              name='editTable'
+              columns={columns}
+              rowKey='id'
+              headerTitle='編輯表格 模擬 API 取得資料'
+              // 新增按鈕
+              recordCreatorProps={{
+                newRecordType: 'dataSource',
+                record: () => ({
+                  id: (Math.random() * 1000000).toFixed(0)
+                }),
+                creatorButtonText: '新增資料'
+              }}
+              // 編輯設定
+              editable={{
+                type: 'multiple',
+                editableKeys: editableKeys,
+                actionRender: (row, config, defaultDoms) => {
+                  return [defaultDoms.delete]
+                },
+                onChange: setEditableKeys
+              }}
+            />
+          </Spin>
+        </Card>
       </ProForm>
     </>
   )

@@ -1,6 +1,6 @@
 import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { Button, Input, message, Spin, Tag } from 'antd'
+import { Button, Card, Input, message, Spin, Tag } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
 
@@ -175,44 +175,45 @@ const MyForm: React.FC = () => {
 
   return (
     <>
-      <h2>InputEditableProTable</h2>
       <ProForm
         grid
         layout="vertical"
         formRef={formRef}
         submitter={submitterRender()} // 自訂底部 submit 區塊
       >
-        <Spin spinning={loading}>
-          <EditableProTable
-            name="editTable" // 綁定表單欄位
-            columns={columns}
-            rowKey="id"
-            headerTitle="保單編輯清單"
-            // 工具列：保單號碼輸入框 + 自訂新增按鈕
-            toolBarRender={() => [
-              <Input
-                key="input"
-                placeholder="請輸入保單號碼"
-                value={policyNoInput}
-                onChange={(e) => setPolicyNoInput(e.target.value)}
-                style={{ width: 200 }}
-              />,
-              <Button key="add" type="primary" onClick={handleAddRow}>
-                新增空白資料
-              </Button>,
-            ]}
-            recordCreatorProps={false} // 關閉內建新增功能，改用自訂按鈕
-            editable={{
-              type: 'multiple', // 多筆可同時編輯
-              editableKeys: editableKeys,
-              actionRender: (row, config, defaultDoms) => {
-                // 自訂操作列：僅保留刪除功能
-                return [defaultDoms.delete]
-              },
-              onChange: setEditableKeys,
-            }}
-          />
-        </Spin>
+        <Card style={{ width: '100%' }}>
+          <Spin spinning={loading}>
+            <EditableProTable
+              name="editTable" // 綁定表單欄位
+              columns={columns}
+              rowKey="id"
+              headerTitle="保單編輯清單"
+              // 工具列：保單號碼輸入框 + 自訂新增按鈕
+              toolBarRender={() => [
+                <Input
+                  key="input"
+                  placeholder="請輸入保單號碼"
+                  value={policyNoInput}
+                  onChange={(e) => setPolicyNoInput(e.target.value)}
+                  style={{ width: 200 }}
+                />,
+                <Button key="add" type="primary" onClick={handleAddRow}>
+                  新增空白資料
+                </Button>,
+              ]}
+              recordCreatorProps={false} // 關閉內建新增功能，改用自訂按鈕
+              editable={{
+                type: 'multiple', // 多筆可同時編輯
+                editableKeys: editableKeys,
+                actionRender: (row, config, defaultDoms) => {
+                  // 自訂操作列：僅保留刪除功能
+                  return [defaultDoms.delete]
+                },
+                onChange: setEditableKeys,
+              }}
+            />
+          </Spin>
+        </Card>
       </ProForm>
     </>
   )
