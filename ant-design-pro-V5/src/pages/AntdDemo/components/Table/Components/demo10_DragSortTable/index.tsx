@@ -85,7 +85,7 @@ const DragSortTableExample: React.FC = () => {
       submitter={submitterRender()}
     >
       <DragSortTable
-        headerTitle="拖拽排序(默认把手)"      // 表格標題
+        headerTitle="拖拽排序"                 // 表格標題
         columns={columns}                     // 表格欄位
         rowKey="key"                          // 每筆資料的唯一識別欄位
         search={false}                        // 關閉搜尋欄
@@ -96,7 +96,7 @@ const DragSortTableExample: React.FC = () => {
         onDragSortEnd={(
           beforeIndex: number,  // 拖曳前的 index
           afterIndex: number,   // 拖曳後的 index
-          newDataSource: any, // 排序後的資料陣列
+          newDataSource: any,   // 排序後的資料陣列
         ) => {
           console.log('排序后的数据', newDataSource)
           setDataSource(newDataSource) // 更新資料狀態
