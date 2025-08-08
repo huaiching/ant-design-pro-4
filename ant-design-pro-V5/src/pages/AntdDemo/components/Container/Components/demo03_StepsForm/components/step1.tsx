@@ -1,8 +1,9 @@
-import MliFormRow from '@/common/components/form/MliFormRow'
+import { MliFormRow } from '@/common'
 import ProCard from '@ant-design/pro-card'
 import { ProFormText } from '@ant-design/pro-form'
 import React from 'react'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Step1: React.FC = (formRef) => {
   return (
     <ProCard title='客戶基本資料'>
@@ -13,8 +14,8 @@ const Step1: React.FC = (formRef) => {
           rules={[
             {
               required: true,
-              message: '必填項',
-            },
+              message: '必填項'
+            }
           ]}
         />
         <ProFormText
@@ -23,8 +24,8 @@ const Step1: React.FC = (formRef) => {
           rules={[
             {
               required: true,
-              message: '必填項',
-            },
+              message: '必填項'
+            }
           ]}
         />
       </MliFormRow>

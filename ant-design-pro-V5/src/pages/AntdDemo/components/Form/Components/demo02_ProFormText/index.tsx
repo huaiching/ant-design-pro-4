@@ -1,5 +1,4 @@
-// import MliFormRow from '@/common/components/form/MliFormRow'
-import MliFormRow from '@/common/components/form/MliFormRow'
+import { MliFormRow } from '@/common'
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, message, Typography } from 'antd'
@@ -16,7 +15,7 @@ const MyForm: React.FC = () => {
             <Button
               type='primary'
               onClick={async () => {
-                formRef.current?.validateFields().then(values => {
+                formRef.current?.validateFields().then(() => {
                   // 確認按鈕 點擊後 要進行的 API 操作
                   message.success('表單提交成功！')
                 })
@@ -65,14 +64,14 @@ const MyForm: React.FC = () => {
             rules={[
               {
                   required: true,
-                  message: '必填',
+                  message: '必填'
               },
               {
                 validator: vaildatorEmail
-              },
+              }
             ]}
             fieldProps={{
-                maxLength: 72,
+                maxLength: 72
             }}
           />
         </MliFormRow>

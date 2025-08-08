@@ -1,19 +1,19 @@
 import ProCard from '@ant-design/pro-card'
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
-import { Button, message, Segmented, Space } from 'antd'
+import { Button, message, Segmented } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { editOption } from './store/editOption'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import MliFormRow from '@/common/components/form/MliFormRow'
+import { MliFormRow } from '@/common'
 
 const InsurancePolicyCard: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
-  const [poEdit, setPoEdit] = useState<Boolean>(false)
+  const [poEdit, setPoEdit] = useState<boolean>(false)
 
   useEffect(()=>{
       formRef.current?.setFieldsValue({
           policyNo: '1234567890',
-          poStsCode: '42',
+          poStsCode: '42'
       })
   },[])
 
@@ -25,10 +25,10 @@ const InsurancePolicyCard: React.FC = () => {
             <Button
               type='primary'
               onClick={async () => {
-                formRef.current?.validateFields().then(values => {
+                formRef.current?.validateFields().then(() => {
                   // 確認按鈕 點擊後 要進行的 API 操作
                   message.success('表單提交成功！')
-                  console.log('formRef', formRef.current?.getFieldsValue())
+                  console.info('formRef', formRef.current?.getFieldsValue())
                 })
               }}
               key='save'

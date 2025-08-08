@@ -1,7 +1,7 @@
 
 import React, { useRef } from 'react'
 import ProForm, { ProFormInstance, ProFormSwitch } from '@ant-design/pro-form'
-import MliFormRow from '@/common/components/form/MliFormRow'
+import { MliFormRow } from '@/common'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -21,7 +21,7 @@ const MyForm: React.FC = () => {
             label='啟用狀態'
             fieldProps={{
                 checkedChildren: '開啟',
-                unCheckedChildren: '關閉',
+                unCheckedChildren: '關閉'
             }}
           />
         </MliFormRow>

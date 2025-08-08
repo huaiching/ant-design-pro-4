@@ -4,7 +4,8 @@ import Demo02 from './Components/demo02_ProFormText'
 import Demo03 from './Components/demo03_ProFormTextArea'
 import Demo04 from './Components/demo04_ProFormDigit'
 import Demo05 from './Components/demo05_ProFormSelect'
-import Demo06 from './Components/demo06_ProFormDatePicker'
+import Demo06_1 from './Components/demo06_1_MliFormDatePicker'
+import Demo06_2 from './Components/demo06_2_ProFormDatePicker'
 import Demo07 from './Components/demo07_ProFormTimePicker'
 import Demo08 from './Components/demo08_ProFormSwitch'
 import Demo09 from './Components/demo09_ProFormRadio'
@@ -13,14 +14,11 @@ import Demo11 from './Components/demo11_ProFormUploadButton'
 import Demo12 from './Components/demo12_ProFormGroup'
 import Demo13 from './Components/demo13_AutoComplete'
 import Demo14 from './Components/demo14_ProFormList'
-import { PageContainer } from '@ant-design/pro-components'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
 //asstManagement 主功能名稱
 const AsstManagement: React.FC = () => {
-  //主功能9000代碼
-  const pageTitle = '表單輸入元件(Form)'
 
   //設定tabs 頁面元件
   //主頁主要設定處
@@ -51,9 +49,14 @@ const AsstManagement: React.FC = () => {
       component: <Demo05/>
     },
     {
-      authCode: '6',
+      authCode: '6.1',
+      title: '日期選擇(MliFormDatePicker)',
+      component: <Demo06_1/>
+    },
+    {
+      authCode: '6.2',
       title: '日期選擇(ProFormDatePicker)',
-      component: <Demo06/>
+      component: <Demo06_2/>
     },
     {
       authCode: '7',
@@ -94,14 +97,14 @@ const AsstManagement: React.FC = () => {
       authCode: '14',
       title: '結構清單(ProFormList)',
       component: <Demo14/>
-    },
+    }
   ]
-  
+
   return (
-      <Tabs 
+      <Tabs
         type='card'
         tabPosition='left'
-        animated    // 啟用切換動畫
+        // animated    // 啟用切換動畫
         destroyOnHidden   // 隱藏時銷毀 DOM
       >
     {tabs.map((item) => (

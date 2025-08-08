@@ -1,4 +1,4 @@
-/** 
+/**
  * 查詢 ProTable
  * 1. formRef 保存 搜尋框的變數
  * 2. request 呼叫 api 取得 數據，搭配 manualRequest={true} 來 關閉自動請求數據
@@ -37,16 +37,16 @@ const ProTableDemo: React.FC = () => {
       dataIndex: 'option',
       valueType: 'option',
       render: (dom, entity) => [
-        <a onClick={() => {
-          console.log('dom', dom)
-          console.log('entity', entity)
+        <a key='a' onClick={() => {
+          console.info('dom', dom)
+          console.info('entity', entity)
         }}>明細</a>
       ]
     },
     {
       title: '姓名',
       dataIndex: 'name',
-      valueType: 'text',
+      valueType: 'text'
       // formItemProps: {
       //   rules: [
       //     { required: true, message: '請輸入名稱！' }
@@ -65,7 +65,7 @@ const ProTableDemo: React.FC = () => {
       dataIndex: 'address',
       valueType: 'text',
       search: false,
-      sorter: '2',
+      sorter: '2'
     },
     {
       title: '性別',
@@ -74,16 +74,16 @@ const ProTableDemo: React.FC = () => {
       fieldProps: {
         placeholder: '請選擇性別',
         options: genderInd
-      },
+      }
     },
     {
       title: '生日',
       dataIndex: 'birthDate',
       valueType: 'date',
       fieldProps: {
-        format: 'TTT/MM/DD', // 查詢欄位格式（西元）
-      },
-    },
+        format: 'TTT/MM/DD'
+      }
+    }
   ]
 
   return (
@@ -97,7 +97,7 @@ const ProTableDemo: React.FC = () => {
         // 日期格式轉換
         const chgData = res.data.map(e => ({
           ...e,
-          birthDate: dayjs(e.birthDate, 'TTT/MM/DD'),
+          birthDate: dayjs(e.birthDate, 'TTT/MM/DD')
         }))
         return {
           data: chgData,
@@ -108,37 +108,37 @@ const ProTableDemo: React.FC = () => {
       manualRequest={true}    // 手動請求數據
       rowKey='id'             // 設定 資料唯一值 欄位
       search={{
-        labelWidth: 'auto',
+        labelWidth: 'auto'
       }}
       form={{
-        ignoreRules: false,
+        ignoreRules: false
       }}
       headerTitle='模擬 API 表格'
       toolBarRender={() => [
-        <div>toolBarRender</div>
+        <div key='d'>toolBarRender</div>
       ]}
       options={{
         density: true,    // 密度
         fullScreen: true, // 全螢幕
         reload: true,     // 刷新
         setting: true,    // 列設置
-        search: true,     // 搜尋欄
+        search: true      // 搜尋欄
       }}
       pagination={{
         showQuickJumper: true
       }}
       rowSelection={{
         selections: true,
-        type: 'checkbox',
+        type: 'checkbox'
       }}
       tableAlertRender={({
         selectedRowKeys, // 選取行的key
-        selectedRows,    // 選取行的資料
+        selectedRows     // 選取行的資料
       }) => {
         return (
           <Space size={16}>
             <a onClick={() => {
-              console.log(selectedRowKeys, selectedRows)
+              console.info(selectedRowKeys, selectedRows)
             }}>導出數據</a>
           </Space>
         )

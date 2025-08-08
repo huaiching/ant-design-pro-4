@@ -3,8 +3,8 @@ import { ProForm, ProFormText, ProFormSelect, ProFormDigit, ProFormList, ProForm
 import { Button, message, Typography } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import ProCard from '@ant-design/pro-card'
-import MliFormRow from '@/common/components/form/MliFormRow'
 import { FooterToolbar } from '@ant-design/pro-layout'
+import { MliFormRow } from '@/common'
 
 const { Text } = Typography
 
@@ -16,7 +16,7 @@ const MyForm: React.FC = () => {
   const relationshipOptions = [
     { label: '生存受益人', value: 'L' },
     { label: '滿期受益人', value: 'M' },
-    { label: '身故受益人', value: 'D' },
+    { label: '身故受益人', value: 'D' }
   ]
 
   // 表單提交處理
@@ -28,9 +28,9 @@ const MyForm: React.FC = () => {
           <Button
             type='primary'
             onClick={async () => {
-              formRef.current?.validateFields().then(values => {
+              formRef.current?.validateFields().then(() => {
                 // 確認按鈕 點擊後 要進行的 API 操作
-                console.log('提交的表單數據:', formRef.current?.getFieldsValue())
+                console.info('提交的表單數據:', formRef.current?.getFieldsValue())
                 message.success('表單提交成功！')
               })
             }}
@@ -76,13 +76,13 @@ const MyForm: React.FC = () => {
             creatorButtonText: '新增受益人',
             icon: <PlusOutlined />,
             type: 'dashed',
-            style: { width: '100%' },
+            style: { width: '100%' }
           }}
           copyIconProps={false} // 禁用「複製此行」按鈕
           // deleteIconProps={false} // 禁用默認的「刪除此行」按鈕
           alwaysShowItemLabel      // 總是顯示項目標籤
         >
-          {(field, index, action) => (
+          {(field, index) => (
             <ProCard
               ghost
               title={`受益人 ${index + 1}`}
@@ -127,7 +127,7 @@ const MyForm: React.FC = () => {
                   colSize={1 / 2}
                   rules={[
                     { required: true, message: '請輸入比例' },
-                    { type: 'number', min: 0, max: 100, message: '比例必須在0-100之間' },
+                    { type: 'number', min: 0, max: 100, message: '比例必須在0-100之間' }
                   ]}
                 />
               </MliFormRow>

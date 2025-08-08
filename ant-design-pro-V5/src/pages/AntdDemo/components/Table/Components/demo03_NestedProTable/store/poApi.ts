@@ -13,14 +13,14 @@ export type coData = {
 export type PoData = {
   key: string
   policyNo: string
-  poStsCode: string  
+  poStsCode: string
   poIssueDate: string
   coList?: coData[] // 子資料：保障清單
 }
 
 
 export const fetchAllData = async (): Promise<PoData[]> => {
-  await new Promise((res) => setTimeout(res, 100)) // 模擬延遲
+  await new Promise((res) => {setTimeout(res, 100)}) // 模擬延遲
   return [
     {
       key: '1',
@@ -34,7 +34,7 @@ export const fetchAllData = async (): Promise<PoData[]> => {
           planCode: 'A1',
           rateScale: '01',
           coStsCode: '有效',
-          coIssueDate: '114/01/01',
+          coIssueDate: '114/01/01'
         },
         {
           key: '1-2',
@@ -42,9 +42,9 @@ export const fetchAllData = async (): Promise<PoData[]> => {
           planCode: 'B2',
           rateScale: '02',
           coStsCode: '失效',
-          coIssueDate: '114/03/01',
-        },
-      ],
+          coIssueDate: '114/03/01'
+        }
+      ]
     },
     {
       key: '2',
@@ -58,9 +58,9 @@ export const fetchAllData = async (): Promise<PoData[]> => {
           planCode: 'C3',
           rateScale: '01',
           coStsCode: '有效',
-          coIssueDate: '113/12/20',
-        },
-      ],
-    },
+          coIssueDate: '113/12/20'
+        }
+      ]
+    }
   ]
 }

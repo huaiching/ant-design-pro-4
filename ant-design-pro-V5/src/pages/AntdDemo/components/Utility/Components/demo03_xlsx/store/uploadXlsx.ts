@@ -28,7 +28,7 @@ export const uploadXlsx = (files: File): Promise<any[]> => {
           header: ['clientId','names','age']
         })
         // 排除 標題資料
-        const output = uploadData.filter((data: any)=> data.clientId != '客戶證號')
+        const output = uploadData.filter((data: any)=> data.clientId !== '客戶證號')
         resolve(output)
       }
       // 讀取上傳的文件

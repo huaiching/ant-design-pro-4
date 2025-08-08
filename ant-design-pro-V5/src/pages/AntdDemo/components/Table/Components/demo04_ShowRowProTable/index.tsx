@@ -14,7 +14,7 @@ const mockData: PolicyRecord[] = [
     i1Name: '李大華',
     address: '台北市信義區信義路100號',
     phone: '0912345678',
-    eMail: 'test@example.com',
+    eMail: 'test@example.com'
   },
   {
     policyNo: 'P987654321',
@@ -26,8 +26,8 @@ const mockData: PolicyRecord[] = [
     i1Name: '陳小美',
     address: '新北市板橋區中山路1段123號',
     phone: '0922333444',
-    eMail: 'meili@example.com',
-  },
+    eMail: 'meili@example.com'
+  }
 ]
 
 /** 資料結構定義 */
@@ -53,23 +53,23 @@ const PolicyTable: React.FC = () => {
     {
       title: '保單號碼',
       dataIndex: 'policyNo',
-      key: 'policyNo',
+      key: 'policyNo'
     },
     {
       title: '保單狀態',
       dataIndex: 'poStsCode',
-      key: 'poStsCode',
+      key: 'poStsCode'
     },
     {
       title: '主約險種代碼',
       dataIndex: 'basicPlanCode',
-      key: 'basicPlanCode',
+      key: 'basicPlanCode'
     },
     {
       title: '主約險種版數',
       dataIndex: 'basicRateScale',
-      key: 'basicRateScale',
-    },
+      key: 'basicRateScale'
+    }
   ]
 
   /** Descriptions 的欄位項目定義 */
@@ -77,53 +77,53 @@ const PolicyTable: React.FC = () => {
           {
             key: 'policyNo',
             label: '保單號碼',
-            children: selectedRow?.policyNo,
+            children: selectedRow?.policyNo
           },
           {
             key: 'poStsCode',
             label: '保單狀態',
-            children: selectedRow?.poStsCode,
+            children: selectedRow?.poStsCode
           },
           {
             key: 'basicPlanCode',
             label: '主約險種代碼',
-            children: selectedRow?.basicPlanCode,
+            children: selectedRow?.basicPlanCode
           },
           {
             key: 'basicRateScale',
             label: '主約險種版數',
-            children: selectedRow?.basicRateScale,
+            children: selectedRow?.basicRateScale
           },
           {
             key: 'poIssueDate',
             label: '保單生效日',
-            children: selectedRow?.poIssueDate,
+            children: selectedRow?.poIssueDate
           },
           {
             key: 'o1Name',
             label: '要保人姓名',
-            children: selectedRow?.o1Name,
+            children: selectedRow?.o1Name
           },
           {
             key: 'i1Name',
             label: '被保人姓名',
-            children: selectedRow?.i1Name,
+            children: selectedRow?.i1Name
           },
           {
             key: 'address',
             label: '通訊地址',
-            children: selectedRow?.address,
+            children: selectedRow?.address
           },
           {
             key: 'phone',
             label: '行動電話',
-            children: selectedRow?.phone,
+            children: selectedRow?.phone
           },
           {
             key: 'eMail',
             label: 'E-mail',
-            children: selectedRow?.eMail,
-          },
+            children: selectedRow?.eMail
+          }
         ]
 
   return (
@@ -136,8 +136,8 @@ const PolicyTable: React.FC = () => {
         search={false}        // 關閉搜尋功能
         pagination={false}    // 關閉分頁功能
         // 點擊行時的事件處理
-        onRow={(record) => ({ 
-          onClick: () => setSelectedRow(record),
+        onRow={(record) => ({
+          onClick: () => setSelectedRow(record)
         })}
         // 選中行 設定為 反白背景
         rowClassName={(record) =>
@@ -148,10 +148,10 @@ const PolicyTable: React.FC = () => {
       {/* 明細區塊，點擊列後才顯示 */}
       {selectedRow && (
         <Card title='保單詳細資料' style={{ marginTop: 24 }}>
-          <Descriptions 
-            column={3} 
-            // bordered 
-            items={descriptionItems} 
+          <Descriptions
+            column={3}
+            // bordered
+            items={descriptionItems}
           />
         </Card>
       )}

@@ -1,4 +1,4 @@
-import MliFormRow from '@/common/components/form/MliFormRow'
+import { MliFormRow } from '@/common'
 import ProForm, { ProFormText } from '@ant-design/pro-form'
 import { Typography } from 'antd'
 import React from 'react'
@@ -24,6 +24,7 @@ const MyForm: React.FC = () => {
             />
             {[2, 3, 4].map(i => (
               <ProFormText
+                key={`failed1_${i}`}
                 name={`failed1_${i}`}
                 colSize={1}
                 initialValue='1'
@@ -41,6 +42,7 @@ const MyForm: React.FC = () => {
             />
             {[2, 3, 4, 5, 6, 7, 8].map(i => (
               <ProFormText
+                key={`failed2_${i}`}
                 name={`failed2_${i}`}
                 colSize={1 / 2}
                 initialValue='1/2'
@@ -57,6 +59,7 @@ const MyForm: React.FC = () => {
             />
             {[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(i => (
               <ProFormText
+                key={`failed3_${i}`}
                 name={`failed3_${i}`}
                 colSize={1 / 3}
                 initialValue='1/3'

@@ -1,4 +1,3 @@
-import MliFormRow from '@/common/components/form/MliFormRow'
 import { DownOutlined } from '@ant-design/icons'
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar, PageContainer } from '@ant-design/pro-layout'
@@ -6,6 +5,7 @@ import { Button, Dropdown, message } from 'antd'
 import React, { useRef } from 'react'
 import DropdownMenu from './components/dropdownMenu'
 import ModalFormMenu from './components/modalFormMenu'
+import { MliFormRow } from '@/common'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -18,7 +18,7 @@ const MyForm: React.FC = () => {
             <Button
               type='primary'
               onClick={async () => {
-                formRef.current?.validateFields().then(values => {
+                formRef.current?.validateFields().then(() => {
                   // 確認按鈕 點擊後 要進行的 API 操作
                   message.success('表單提交成功！')
                 })
@@ -44,8 +44,9 @@ const MyForm: React.FC = () => {
     <PageContainer
       title='PageContainer & Dropdown'    // 標題
       extra={[
-          <ModalFormMenu/>,
+          <ModalFormMenu key='p1'/>,
           <Dropdown
+             key='p2'
             placement='bottom'            // 展開方向: 向下展開
             trigger={['hover']}           // 展開方式: 按下後展開
             destroyPopupOnHide={true}     // 關閉後銷毀，可避免 焦點停留在 下拉選單的 menu 上
@@ -74,8 +75,8 @@ const MyForm: React.FC = () => {
             rules={[
               {
                   required: true,
-                  message: '必填',
-              },
+                  message: '必填'
+              }
             ]}
           />
         </MliFormRow>

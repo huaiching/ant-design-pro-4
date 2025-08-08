@@ -6,13 +6,13 @@ const App: React.FC = () => {
     '錯誤內容',
     '第二行訊息',
     '第三行訊息',
-    '第四行訊息',
+    '第四行訊息'
   ]
 
   const openNotificationWithMultipleLines = (msgList: string[]) => {
     // 將 訊息集合 轉換為 html標籤
     const description = msgList.map((msg) => (
-      <p>{msg}</p>
+      <p key='msg'>{msg}</p>
     ))
     // 顯示 通知提醒框
     notification['error']({         // success / info / warning / error
@@ -20,7 +20,7 @@ const App: React.FC = () => {
       // description: '錯誤內容',    // 內文 單行直接給文字，多行可以用 html標籤
       description: description,
       duration: 0,                  // 幾秒後自動關閉，0=不自動關閉
-      placement: 'top',             // 顯示位置 'top' | 'topLeft' | 'topRight'(預設) | 'bottom' | 'bottomLeft' | 'bottomRight'
+      placement: 'top'              // 顯示位置 'top' | 'topLeft' | 'topRight'(預設) | 'bottom' | 'bottomLeft' | 'bottomRight'
     })
   }
 

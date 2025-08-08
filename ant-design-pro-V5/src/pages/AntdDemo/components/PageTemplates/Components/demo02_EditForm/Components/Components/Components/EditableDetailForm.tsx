@@ -1,7 +1,7 @@
 import React from 'react'
 import { ProForm, ProFormText, ProFormDatePicker, ProCard } from '@ant-design/pro-components'
 import { Button, Space } from 'antd'
-import MliFormRow from '@/common/components/form/MliFormRow'
+import { MliFormRow } from '@/common'
 
 interface EditableDetailFormProps {
   mode: 'create' | 'edit'
@@ -14,7 +14,7 @@ const EditableDetailForm: React.FC<EditableDetailFormProps> = ({
   mode,
   initialValues,
   onSubmit,
-  onCancel,
+  onCancel
 }) => {
   const readOnly = mode === 'edit'
   const title = mode === 'edit' ? '編輯保單' : '新增保單'
@@ -32,7 +32,7 @@ const EditableDetailForm: React.FC<EditableDetailFormProps> = ({
                 <Button onClick={onCancel}>取消</Button>
               </Space>
             )
-          },
+          }
         }}
         onFinish={onSubmit}
         layout='vertical'

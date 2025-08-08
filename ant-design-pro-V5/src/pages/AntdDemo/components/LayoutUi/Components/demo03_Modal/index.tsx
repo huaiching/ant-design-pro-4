@@ -6,14 +6,14 @@ const App: React.FC = () => {
     '請問是否要繼續？',
     '第二行訊息',
     '第三行訊息',
-    '第四行訊息',
+    '第四行訊息'
   ]
 
   // 對話框，可用於 顯示 確認訊息
   const openModal = (msgList: string[]) => {
     // 將 訊息集合 轉換為 html標籤
     const description = msgList.map((msg) => (
-      <p>{msg}</p>
+      <p key='msg'>{msg}</p>
     ))
     // 顯示 對話框
     Modal.confirm({                    // confirm | warning | info | error

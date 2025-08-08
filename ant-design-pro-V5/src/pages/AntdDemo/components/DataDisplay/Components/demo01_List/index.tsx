@@ -7,23 +7,23 @@ const App: React.FC = () => {
     {
       nbErrCode: 'VA14',
       nbErrDesc: '購買投資型保單須填委託結匯額度查詢暨結匯授權書',
-      severity: '0',
+      severity: '0'
     },
     {
       nbErrCode: 'PV76',
       nbErrDesc: '本保單無申請「投資標的停利機制及約定交易批註條款」',
-      severity: '0',
+      severity: '0'
     },
     {
       nbErrCode: 'UA53',
       nbErrDesc: '要保日晚於險種停售日',
-      severity: '0',
+      severity: '0'
     },
     {
       nbErrCode: 'P232',
       nbErrDesc: '需填寫「實支實付型商品特別提醒事項聲明書」',
-      severity: '0',
-    },
+      severity: '0'
+    }
   ]
 
   return (

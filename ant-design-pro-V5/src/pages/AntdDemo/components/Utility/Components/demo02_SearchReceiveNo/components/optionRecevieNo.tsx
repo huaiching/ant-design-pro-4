@@ -11,18 +11,18 @@ const OptionReceiveNo =  (props: any) => {
     {
       title: '受理號碼',
       dataIndex: 'poChgReceNo',
-      valueType: 'text',
+      valueType: 'text'
     },
     {
       title: '受理狀態',
       dataIndex: 'poChgStsCode',
-      valueType: 'text',
+      valueType: 'text'
     },
     {
       title: '受理日期',
       dataIndex: 'poChgReceDate',
-      valueType: 'text',
-    },
+      valueType: 'text'
+    }
   ]
 
   return (
@@ -32,7 +32,7 @@ const OptionReceiveNo =  (props: any) => {
       visible={showModal}
       modalProps={{
         closable: false,
-        destroyOnClose: true,
+        destroyOnClose: true
       }}
       submitter={false}
     >
@@ -47,19 +47,19 @@ const OptionReceiveNo =  (props: any) => {
               return {
                 data: response.data,
                 success: true,
-                total: response.total,
+                total: response.total
               }
           }}   // 數據請求函式
           pagination={{             // 開啟分頁選擇 + 限制 每頁 5 筆
             showQuickJumper: true,
-            pageSize: 5,
+            pageSize: 5
           }}
           rowSelection={{
             selections: true,
-            type: 'radio',
+            type: 'radio'
           }}
           tableAlertOptionRender={({
-              selectedRowKeys, // 選取行的key
+              selectedRowKeys     // 選取行的key
             }) => {
               return (
                 <Button type='link' onClick={()=>{

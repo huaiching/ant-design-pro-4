@@ -27,8 +27,8 @@ const initValue = [
     i1Name: '王小明',
     address: '台北市信義區',
     phone: '0912345678',
-    eMail: 'example@mail.com',
-  },
+    eMail: 'example@mail.com'
+  }
 ]
 
 const ShowPolicyTable: React.FC = () => {
@@ -59,7 +59,7 @@ const ShowPolicyTable: React.FC = () => {
     { title: '保單號碼', dataIndex: 'policyNo', valueType: 'text' },
     { title: '保單狀態', dataIndex: 'poStsCode', valueType: 'text' },
     { title: '主約險種代碼', dataIndex: 'basicPlanCode', valueType: 'text' },
-    { title: '主約險種版數', dataIndex: 'basicRateScale', valueType: 'text' },
+    { title: '主約險種版數', dataIndex: 'basicRateScale', valueType: 'text' }
   ]
 
   // 編輯區域 的 儲存按鈕事件
@@ -87,7 +87,7 @@ const ShowPolicyTable: React.FC = () => {
           <Button
             type='primary'
             onClick={async () => {
-              console.log('formRef', formRef.current?.getFieldValue('policyTable'))
+              console.info('formRef', formRef.current?.getFieldValue('policyTable'))
               message.success('表單提交成功！')
             }}
             key='save'
@@ -129,7 +129,7 @@ const ShowPolicyTable: React.FC = () => {
             onClick: () => {
               setEditableRow({ ...record })
               setFormMode('edit')
-            },
+            }
           })}
           toolbar={{
             title: '保單清單',
@@ -140,8 +140,8 @@ const ShowPolicyTable: React.FC = () => {
                   setFormMode('create')
                 }}>
                 新增
-              </Button>,
-            ],
+              </Button>
+            ]
           }}
         />
 

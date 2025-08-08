@@ -12,9 +12,9 @@ const EditForm: React.FC = () => {
     optionsStore.setOptions('chgType', [
             { label: '0 首期契變', value: '0' },
             { label: '1 一般契變', value: '1' },
-            { label: '2 復效', value: '2' },
+            { label: '2 復效', value: '2' }
           ])
-  }, []);
+  }, [])
 
   /**
    * 步驟跳轉

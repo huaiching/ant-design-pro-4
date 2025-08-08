@@ -24,26 +24,26 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
   const formRef = formRefStore.getFormRef
   const basicData = basicStore.getBasic
 
-  // TAB 資料設定 // 
+  // TAB 資料設定 //
   // 目前的 tab 標籤
   const [activeTab, setActiveTab] = useState('tab1')
   // tab 狀態: pending=未完成 / valid=完成
   const [tabStatus, setTabStatus] = useState<Record<string, 'pending' | 'valid'>>({
     tab1: 'pending',
-    tab2: 'pending',
+    tab2: 'pending'
   })
   // 設定 tab 頁面
   let tabs: TabsProps['items'] = [
     {
       key: 'tab1',
       label: '聯絡資訊',
-      children: <TabContent1 />,
+      children: <TabContent1 />
     },
     {
       key: 'tab2',
       label: '表格資料',
-      children: <TabContent2 />,
-    },
+      children: <TabContent2 />
+    }
   ]
   // tab 頁面權限控制範例
   // const userPermissions = ['tab1'] // 只有 tab1 有權限，tab2 沒有
@@ -65,7 +65,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
     if (valid) {
       setTabStatus((prev) => ({
         ...prev,
-        [activeTab]: 'valid',
+        [activeTab]: 'valid'
       }))
       setActiveTab(key)
       // 👉 新增呼叫進入事件
@@ -99,7 +99,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
     if (valid) {
       const updatedStatus: Record<string, 'pending' | 'valid'> = {
         ...tabStatus,
-        [activeTab]: 'valid',
+        [activeTab]: 'valid'
       }
       setTabStatus(updatedStatus)
 
@@ -137,7 +137,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
           boxShadow: 'none',         // 取消陰影，讓卡片外觀更扁平
           border: 'none',            // 移除卡片邊框
           marginLeft: -24,           // 往左負外距24px，抵銷外層容器通常的24px padding，讓卡片內容貼齊左側
-          marginRight: -24,          // 同理，若需要兩側貼齊，也往右負外距24px
+          marginRight: -24           // 同理，若需要兩側貼齊，也往右負外距24px
         }}
         styles={{
           body: {
@@ -157,7 +157,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
             style={{
               position: 'fixed',
               right: 60,
-              bottom: 100,
+              bottom: 100
             }}
           />
         </div>

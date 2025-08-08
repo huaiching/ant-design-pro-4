@@ -1,4 +1,5 @@
 import React from 'react'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Descriptions, Card, DescriptionsProps } from 'antd'
 import dayjs from 'dayjs'
 import { ProCard } from '@ant-design/pro-components'
@@ -16,7 +17,7 @@ const userInfo = {
   gender: '男',
   age: 28,
   birthday: '2024-01-10',
-  address: '台北市內湖區石潭路58號6樓',
+  address: '台北市內湖區石潭路58號6樓'
 }
 
 // 使用 DescriptionsProps['items'] 定義欄位
@@ -25,32 +26,32 @@ const items: DescriptionsProps['items'] = [
     key: 'name',
     label: '姓名',
     children: userInfo.name,
-    span: 1,
+    span: 1
   },
   {
     key: 'gender',
     label: '性別',
     children: userInfo.gender,
-    span: 1,
+    span: 1
   },
   {
     key: 'age',
     label: '年齡',
     children: userInfo.age,
-    span: 1,
+    span: 1
   },
   {
     key: 'birthday',
     label: '生日',
     children: formatROC(userInfo.birthday),
-    span: 1,
+    span: 1
   },
   {
     key: 'address',
     label: '地址',
     children: userInfo.address,
-    span: 2,
-  },
+    span: 2
+  }
 ]
 
 const DescriptionPage: React.FC = () => {

@@ -16,7 +16,7 @@ const DragSortTableExample: React.FC = () => {
       const chgData = data.map((e: any, index: number) => ({
         ...e,
         key: e.policyNo ?? index,                         // 每筆資料需有唯一 key，否則表格無法正常渲染
-        poIssueDate: dayjs(e.poIssueDate, 'TTT/MM/DD'),  // 將日期字串轉成 dayjs 物件
+        poIssueDate: dayjs(e.poIssueDate, 'TTT/MM/DD')   // 將日期字串轉成 dayjs 物件
       }))
       setDataSource(chgData)                              // 設定表格顯示資料
     })
@@ -26,26 +26,26 @@ const DragSortTableExample: React.FC = () => {
     {
       title: '排序',
       dataIndex: 'sort',
-      width: 60,
+      width: 60
     },
     {
       title: '保單號碼',
       dataIndex: 'policyNo',
-      valueType: 'text',
+      valueType: 'text'
     },
     {
       title: '保單狀態',
       dataIndex: 'poStsCode',
-      valueType: 'text',
+      valueType: 'text'
     },
     {
       title: '保單生效日',
       dataIndex: 'poIssueDate',
       valueType: 'date',
       fieldProps: {
-        format: 'TTT/MM/DD',
-      },
-    },
+        format: 'TTT/MM/DD'
+      }
+    }
   ]
 
   const submitterRender = () => {
@@ -56,7 +56,7 @@ const DragSortTableExample: React.FC = () => {
             type='primary'
             onClick={async () => {
               try {
-                console.log('✅ 表單內容：', dataSource)
+                console.info('✅ 表單內容：', dataSource)
                 message.success('表單提交成功！')
               } catch (err) {
                 message.error('請檢查表單錯誤')
@@ -96,9 +96,9 @@ const DragSortTableExample: React.FC = () => {
         onDragSortEnd={(
           beforeIndex: number,  // 拖曳前的 index
           afterIndex: number,   // 拖曳後的 index
-          newDataSource: any,   // 排序後的資料陣列
+          newDataSource: any    // 排序後的資料陣列
         ) => {
-          console.log('排序后的数据', newDataSource)
+          console.info('排序后的数据', newDataSource)
           setDataSource(newDataSource) // 更新資料狀態
           message.success('修改列表排序成功') // 顯示提示訊息
         }}

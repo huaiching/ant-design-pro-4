@@ -9,15 +9,15 @@ import Demo07 from './Components/PageTemplates'
 import { PageContainer } from '@ant-design/pro-components'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
-import { useNavigate, useSearchParams } from 'umi';
+import { useNavigate, useSearchParams } from 'umi'
 
 //asstManagement 主功能名稱
 const AsstManagement: React.FC = () => {
   //主功能9000代碼
   const pageTitle = '組件測試頁面'
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  
+
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
   //設定tabs 頁面元件
   //主頁主要設定處
@@ -63,31 +63,31 @@ const AsstManagement: React.FC = () => {
       key: 'PageTemplates',
       title: '頁面樣板(PageTemplates)',
       component: <Demo07/>
-    },
+    }
   ]
-  
+
   // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
-  const currentActiveKey = searchParams.get('activeKey') || tabs[0].key;
-  
+  const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
+
   // 首次載入頁面 key 值加載
   useEffect(() => {
     navigate({
-      search: `?activeKey=${currentActiveKey}`,
-    });
+      search: `?activeKey=${currentActiveKey}`
+    })
   }, [])
-  
+
   return (
     <PageContainer title={pageTitle}>
-      <Tabs 
-        type='card' size='large' 
+      <Tabs
+        type='line' size='large'
         animated    // 啟用切換動畫
         destroyOnHidden   // 隱藏時銷毀 DOM
         // 將 key 值 載入網址列
         activeKey={currentActiveKey}
         onChange={(key: string) => {
           navigate({
-            search: `?activeKey=${key}`,
-          });
+            search: `?activeKey=${key}`
+          })
         }}
       >
         {tabs.map((item) => (
@@ -97,7 +97,7 @@ const AsstManagement: React.FC = () => {
         ))}
       </Tabs>
     </PageContainer>
-  );
+  )
 }
 
 export default AsstManagement

@@ -20,13 +20,13 @@ class BasicStore {
         receiveNo: '',
         receiveDate: '',
         chgDate: '',
-        chgType: '',
+        chgType: ''
     }
 
     constructor() {
         makeAutoObservable(this)
     }
-    
+
     // 初始化（重置）使用者資料
     initBasic() {
         this.basic = {
@@ -34,7 +34,7 @@ class BasicStore {
             receiveNo: '',
             receiveDate: '',
             chgDate: '',
-            chgType: '',
+            chgType: ''
         }
     }
 

@@ -10,7 +10,7 @@ const titleData = [
   {
     clientId: '客戶證號',
     names: '姓名',
-    age: '年齡',
+    age: '年齡'
   }
 ]
 
@@ -20,7 +20,7 @@ export const downloadXlsx = () => {
   // 設定資料
   const worksheet = xlsx.utils.json_to_sheet(data, {
     header: title,      // 設定 title
-    skipHeader: true,   // 是否不顯示title: true=不顯示 / false:顯示 (預設)
+    skipHeader: true    // 是否不顯示title: true=不顯示 / false:顯示 (預設)
   })
   // excel 物件宣告
   const workbook = xlsx.utils.book_new()

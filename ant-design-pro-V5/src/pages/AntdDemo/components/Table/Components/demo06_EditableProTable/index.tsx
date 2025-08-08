@@ -6,6 +6,7 @@ import { EditableProTable, ProColumns } from '@ant-design/pro-table'
 import dayjs from 'dayjs'
 
 const MyForm: React.FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState<boolean>(false)
   const formRef = useRef<ProFormInstance>()
   // 可編輯的明細資料序號
@@ -32,7 +33,7 @@ const MyForm: React.FC = () => {
     // 日期格式轉換
     const chgData = resData.map(data => ({
       ...data,
-      birthDate: dayjs(data.birthDate, 'TTT/MM/DD'),
+      birthDate: dayjs(data.birthDate, 'TTT/MM/DD')
     }))
 
     formRef.current?.setFieldsValue({
@@ -51,16 +52,16 @@ const MyForm: React.FC = () => {
           <Button
             type='primary'
             onClick={async () => {
-              formRef.current?.validateFields().then(values => {
+              formRef.current?.validateFields().then(() => {
                 // 確認按鈕 點擊後 要進行的 API 操作
                 // 日期轉換為民國年
                 const editableData = formRef.current?.getFieldValue('editTable')
                 const newData = editableData.map((data: any) => {
                   return {
-                    ...data,
+                    ...data
                   }
                 })
-                console.log('editableData', newData)
+                console.info('editableData', newData)
                 message.success('表單提交成功！')
               })
             }}
@@ -103,7 +104,7 @@ const MyForm: React.FC = () => {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      width: 60,
+      width: 60
     },
     {
       title: '姓名',
@@ -111,10 +112,10 @@ const MyForm: React.FC = () => {
       formItemProps: {
         rules: [
           { required: true, message: '請輸入名稱！' }
-        ],
+        ]
       },
       fieldProps: {
-        allowClear: false,
+        allowClear: false
       }
     },
     {
@@ -122,7 +123,7 @@ const MyForm: React.FC = () => {
       dataIndex: 'age',
       valueType: 'digit',
       fieldProps: {
-        allowClear: false,
+        allowClear: false
       }
     },
     {
@@ -132,8 +133,8 @@ const MyForm: React.FC = () => {
       fieldProps: {
         placeholder: '請選擇性別',
         options: genderInd,
-        allowClear: false,
-      },
+        allowClear: false
+      }
     },
     {
       title: '生日',
@@ -141,8 +142,8 @@ const MyForm: React.FC = () => {
       valueType: 'date',
       fieldProps: {
         format: 'TTT/MM/DD',
-        allowClear: false,
-      },
+        allowClear: false
+      }
     },
     {
       title: '類型（Radio）',
@@ -150,8 +151,8 @@ const MyForm: React.FC = () => {
       valueType: 'radio',
       valueEnum: {            // radio: "A"
         A: { text: 'A 類' },
-        B: { text: 'B 類' },
-      },
+        B: { text: 'B 類' }
+      }
     },
     {
       title: '選擇（Radio Button）',
@@ -159,8 +160,8 @@ const MyForm: React.FC = () => {
       valueType: 'radioButton',
       valueEnum: {            // radioButton: "left"
         left: { text: '左' },
-        right: { text: '右' },
-      },
+        right: { text: '右' }
+      }
     },
     {
       title: '是否啟用（Switch）',
@@ -168,17 +169,17 @@ const MyForm: React.FC = () => {
       valueType: 'switch',
       fieldProps: {             // switch: true
         checkedChildren: '是',
-        unCheckedChildren: '否',
-      },
+        unCheckedChildren: '否'
+      }
     },
     {
       title: '同意條款（Checkbox）',
       dataIndex: 'checkbox',
       valueType: 'checkbox',
       valueEnum: {              // checkbox: ['Y']
-        Y: '我已閱讀並同意',
-      },
-    },
+        Y: '我已閱讀並同意'
+      }
+    }
   ]
 
   return (

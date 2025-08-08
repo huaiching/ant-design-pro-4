@@ -1,7 +1,6 @@
 import React from 'react'
-import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-form'
+import { ProForm, ProFormText } from '@ant-design/pro-form'
 import { BackTop, Typography } from 'antd'
-import MliFormRow from '@/common/components/form/MliFormRow'
 import ProCard from '@ant-design/pro-card'
 
 const MyForm: React.FC = () => {
@@ -17,7 +16,7 @@ const MyForm: React.FC = () => {
             overflowY: 'auto', // 垂直方向允許滾動
             position: 'relative', // 為了讓 BackTop 的 absolute 定位能以此為基準
             scrollBehavior: 'smooth', // 滾動時平滑過渡
-            width: '100%', // 寬度占滿父容器
+            width: '100%'  // 寬度占滿父容器
           }}
         >
           <ProFormText name='failed3_1' label='failed3_1' allowClear={false} />
@@ -32,7 +31,7 @@ const MyForm: React.FC = () => {
             style={{
               position: 'fixed',
               right: 60,
-              bottom: 100,
+              bottom: 100
             }}
           />
         </ProCard>

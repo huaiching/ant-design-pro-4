@@ -1,7 +1,7 @@
 
 import React, { useRef } from 'react'
 import ProForm, { ProFormInstance, ProFormRadio } from '@ant-design/pro-form'
-import MliFormRow from '@/common/components/form/MliFormRow'
+import { MliFormRow } from '@/common'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -21,13 +21,13 @@ const MyForm: React.FC = () => {
             label='選擇性別'
             options={[
               { label: '男性', value: 'male' },
-              { label: '女性', value: 'female' },
+              { label: '女性', value: 'female' }
             ]}
             rules={[
               { required: true, message: '請選擇性別' }
             ]}
             fieldProps={{
-              defaultValue: 'male',
+              defaultValue: 'male'
 
             }}
           />

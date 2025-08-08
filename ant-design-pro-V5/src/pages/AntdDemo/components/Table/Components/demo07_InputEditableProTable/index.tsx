@@ -13,16 +13,16 @@ const fetchTableData = async () => {
         policyNo: 'P0000001',
         poStsCode: '有效',
         planCode: 'A01',
-        node: 'N',
+        node: 'N'
       },
       {
         id: Math.random(),
         policyNo: 'P0000002',
         poStsCode: '有效',
         planCode: 'A01',
-        node: 'Y',
-      },
-    ],
+        node: 'Y'
+      }
+    ]
   }
 }
 
@@ -46,7 +46,7 @@ const MyForm: React.FC = () => {
       .then((res) => {
         // 將資料設定進表單欄位 editTable 中
         formRef.current?.setFieldsValue({
-          editTable: res.data,
+          editTable: res.data
         })
         // 設定目前資料列的 id 為可編輯
         const ids = res.data.map((item) => item.id)
@@ -65,7 +65,7 @@ const MyForm: React.FC = () => {
       valueType: 'text',
       editable: false, // 不可編輯
       fieldProps: {
-        allowClear: false,
+        allowClear: false
       }
     },
     {
@@ -73,7 +73,7 @@ const MyForm: React.FC = () => {
       dataIndex: 'poStsCode',
       valueType: 'text',
       fieldProps: {
-        allowClear: false,
+        allowClear: false
       }
     },
     {
@@ -81,7 +81,7 @@ const MyForm: React.FC = () => {
       dataIndex: 'planCode',
       valueType: 'text',
       fieldProps: {
-        allowClear: false,
+        allowClear: false
       }
     },
     {
@@ -90,7 +90,7 @@ const MyForm: React.FC = () => {
       valueType: 'text',
       editable: false,
       fieldProps: {
-        allowClear: false,
+        allowClear: false
       },
       render: (value, record) => {
         // 根據值顯示不同顏色的 Tag
@@ -105,14 +105,14 @@ const MyForm: React.FC = () => {
         ) : (
           <Tag color="default">N</Tag>
         )
-      },
+      }
     },
     {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      width: 60, // 編輯欄寬度
-    },
+      width: 60
+    }
   ]
 
   // 表單底部提交/取消區塊（自訂 FooterToolbar）
@@ -143,7 +143,7 @@ const MyForm: React.FC = () => {
           取消
         </Button>
       </FooterToolbar>
-    ),
+    )
   })
 
   // 自訂新增一筆空白資料（依據使用者輸入的保單號碼）
@@ -165,7 +165,7 @@ const MyForm: React.FC = () => {
       policyNo: policyNoInput,
       poStsCode: '',
       planCode: '',
-      node: 'N',
+      node: 'N'
     }
     const newData = [...existing, newItem]
     formRef.current?.setFieldsValue({ editTable: newData })
@@ -199,7 +199,7 @@ const MyForm: React.FC = () => {
                 />,
                 <Button key="add" type="primary" onClick={handleAddRow}>
                   新增空白資料
-                </Button>,
+                </Button>
               ]}
               recordCreatorProps={false} // 關閉內建新增功能，改用自訂按鈕
               editable={{
@@ -209,7 +209,7 @@ const MyForm: React.FC = () => {
                   // 自訂操作列：僅保留刪除功能
                   return [defaultDoms.delete]
                 },
-                onChange: setEditableKeys,
+                onChange: setEditableKeys
               }}
             />
           </Spin>

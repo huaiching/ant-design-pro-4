@@ -14,7 +14,7 @@ const mockData: TableItem[] = Array.from({ length: 100 }, (_, index) => ({
   age: 20 + (index % 10),
   address: `Address ${index + 1}`,
   birthDate: `114/0${(index % 12) + 1}/15`, // 模擬生日
-  sex: '男',
+  sex: '男'
 }))
 
 export const fetchAllData = async (
@@ -40,10 +40,10 @@ export const fetchAllData = async (
   const endIndex = startIndex + pageSize
 
   // 模擬等待 1 秒
-  await new Promise((resolve) => setTimeout(resolve, 100))
+  await new Promise((resolve) => {setTimeout(resolve, 100)})
 
   return {
     data: filteredData.slice(startIndex, endIndex),
-    total: filteredData.length,
+    total: filteredData.length
   }
 }

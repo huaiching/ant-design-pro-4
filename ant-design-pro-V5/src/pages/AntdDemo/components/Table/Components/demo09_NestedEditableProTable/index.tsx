@@ -9,6 +9,7 @@ import dayjs from 'dayjs'
 // 主元件定義
 const NestedEditableProTable: React.FC = () => {
   // 狀態管理：載入中
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState<boolean>(false)
 
   // 表單參考，用來取得或設定表單資料
@@ -79,7 +80,7 @@ const NestedEditableProTable: React.FC = () => {
       poIssueDate: dayjs(po.poIssueDate, 'TTT/MM/DD'),
       coList: po.coList.map(co => ({
         ...co,
-        coIssueDate: dayjs(co.coIssueDate, 'TTT/MM/DD'),
+        coIssueDate: dayjs(co.coIssueDate, 'TTT/MM/DD')
       }))
     }))
 
@@ -93,7 +94,7 @@ const NestedEditableProTable: React.FC = () => {
     setCoEditableKeys(
       data.reduce((acc, item) => ({
         ...acc,
-        [item.id]: item.coList?.map(co => co.id) || [],
+        [item.id]: item.coList?.map(co => co.id) || []
       }), {})
     )
   }, [])
@@ -110,7 +111,7 @@ const NestedEditableProTable: React.FC = () => {
                 // 驗證整個表單
                 await formRef.current?.validateFields()
                 const editableData = formRef.current?.getFieldValue('editTable')
-                console.log('提交資料：', editableData)
+                console.info('提交資料：', editableData)
                 message.success('表單提交成功！')
               } catch (err) {
                 message.error('請檢查表單錯誤')
@@ -138,26 +139,26 @@ const NestedEditableProTable: React.FC = () => {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      width: 60,
+      width: 60
     },
     {
       title: '保單號碼',
       dataIndex: 'policyNo',
-      valueType: 'text',
+      valueType: 'text'
     },
     {
       title: '保單狀態',
       dataIndex: 'poStsCode',
-      valueType: 'text',
+      valueType: 'text'
     },
     {
       title: '保單生效日',
       dataIndex: 'poIssueDate',
       valueType: 'date',
       fieldProps: {
-        format: 'TTT/MM/DD',
-      },
-    },
+        format: 'TTT/MM/DD'
+      }
+    }
   ]
 
   // 內層保障項目表格的欄位定義
@@ -166,27 +167,27 @@ const NestedEditableProTable: React.FC = () => {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      width: 60,
+      width: 60
     },
     {
       title: '保障序號',
       dataIndex: 'coverageNo',
-      valueType: 'text',
+      valueType: 'text'
     },
     {
       title: '險種代碼',
       dataIndex: 'planCode',
-      valueType: 'text',
+      valueType: 'text'
     },
     {
       title: '險種版數',
       dataIndex: 'rateScale',
-      valueType: 'text',
+      valueType: 'text'
     },
     {
       title: '保障狀態',
       dataIndex: 'coStsCode',
-      valueType: 'text',
+      valueType: 'text'
     },
     {
       title: '保障生效日',
@@ -194,9 +195,9 @@ const NestedEditableProTable: React.FC = () => {
       valueType: 'date',
       fieldProps: {
         format: 'TTT/MM/DD',
-        style: { width: '100%' },
-      },
-    },
+        style: { width: '100%' }
+      }
+    }
   ]
 
   return (
@@ -227,7 +228,7 @@ const NestedEditableProTable: React.FC = () => {
                 editableKeys: editableKeys,
                 // 更新對應保單的保單可編輯列
                 onChange: setEditableKeys,
-                actionRender: (row, config, defaultDoms) => [defaultDoms.delete],
+                actionRender: (row, config, defaultDoms) => [defaultDoms.delete]
               }}
               // 子表格（保障清單）展開設定
               expandable={{
@@ -242,7 +243,7 @@ const NestedEditableProTable: React.FC = () => {
                       record: () => ({
                         id: (Math.random() * 1000000).toFixed(0)
                       }),
-                      creatorButtonText: '新增保障',
+                      creatorButtonText: '新增保障'
                     }}
                     // 編輯設定
                     editable={{
@@ -252,13 +253,13 @@ const NestedEditableProTable: React.FC = () => {
                       onChange: (keys) => {
                         setCoEditableKeys((prev) => ({
                           ...prev,
-                          [record.id]: keys,
+                          [record.id]: keys
                         }))
                       },
-                      actionRender: (row, config, defaultDoms) => [defaultDoms.delete],
+                      actionRender: (row, config, defaultDoms) => [defaultDoms.delete]
                     }}
                   />
-                ),
+                )
               }}
             />
           </Spin>

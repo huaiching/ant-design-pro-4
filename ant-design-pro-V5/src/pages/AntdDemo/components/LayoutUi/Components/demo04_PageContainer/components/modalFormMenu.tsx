@@ -1,6 +1,5 @@
-
-import MliFormRow from '@/common/components/form/MliFormRow'
 import { ModalForm, ProFormInstance, ProFormText } from '@ant-design/pro-form'
+import { MliFormRow } from '@/common'
 import { Button } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 

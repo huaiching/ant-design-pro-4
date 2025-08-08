@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { AutoComplete, Button, message, Popconfirm } from 'antd'
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 import { ProTable, ProColumns, ProForm, FooterToolbar } from '@ant-design/pro-components'
-import MliFormRow from '@/common/components/form/MliFormRow'
+import { MliFormRow } from '@/common'
 
 // 可選資料列表（代碼 + 文字）
 const optionsData = [
@@ -51,7 +51,7 @@ const InputPreviewProTable: React.FC = () => {
   const autoOptions = optionsData
     .filter((item) => !selectedOptions.find((sel) => sel.code === item.code)) // 排除已選取的
     .map((item) => ({
-      value: `${item.code} ${item.text}`, // 顯示為 "代碼 文字"
+      value: `${item.code} ${item.text}`  // 顯示為 "代碼 文字"
     }))
 
   // ProTable 欄位定義
@@ -67,8 +67,8 @@ const InputPreviewProTable: React.FC = () => {
           onConfirm={() => handleDelete(record.code)}
         >
           <Button icon={<DeleteOutlined />} danger type="link" />
-        </Popconfirm>,
-      ],
+        </Popconfirm>
+      ]
     },
     {
       title: '代碼',
@@ -79,14 +79,14 @@ const InputPreviewProTable: React.FC = () => {
       title: '文字',
       dataIndex: 'text',
       valueType: 'text'
-    },
+    }
   ]
 
   return (
     <>
       <MliFormRow>
         {/* 輸入區：輸入 + 新增按鈕 */}
-        <ProForm.Item label="症狀" name="symptom" colSize={1.5} layout='vertical'>
+        <ProForm.Item label="症狀" name="symptom" layout='vertical'>
           <AutoComplete
             style={{ width: 240 }}     // 寬度設定
             options={autoOptions}      // 自動完成選項

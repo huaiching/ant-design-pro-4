@@ -1,7 +1,7 @@
 
 import React, { useRef } from 'react'
 import ProForm, { ProFormCheckbox, ProFormInstance } from '@ant-design/pro-form'
-import MliFormRow from '@/common/components/form/MliFormRow'
+import { MliFormRow } from '@/common'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -22,7 +22,7 @@ const MyForm: React.FC = () => {
             options={[
               { label: '讀書', value: 'reading' },
               { label: '旅行', value: 'travelling' },
-              { label: '運動', value: 'sports' },
+              { label: '運動', value: 'sports' }
             ]}
             rules={[
               { required: true, message: '請選擇至少一個興趣' }

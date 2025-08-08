@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react'
-import { ProTable, ActionType, ProColumns, ProCard, FooterToolbar } from '@ant-design/pro-components'
+import { ProTable, ActionType, ProColumns, ProCard } from '@ant-design/pro-components'
 import { Button, message } from 'antd'
 import EditableDetailForm from './Components/EditableDetailForm'
 import { observer } from 'mobx-react'
@@ -42,7 +42,7 @@ const TabContent2: React.FC = () => {
     { title: '保單號碼', dataIndex: 'policyNo', valueType: 'text' },
     { title: '保單狀態', dataIndex: 'poStsCode', valueType: 'text' },
     { title: '主約險種代碼', dataIndex: 'basicPlanCode', valueType: 'text' },
-    { title: '主約險種版數', dataIndex: 'basicRateScale', valueType: 'text' },
+    { title: '主約險種版數', dataIndex: 'basicRateScale', valueType: 'text' }
   ]
 
   // 儲存按鈕事件處理（新增或更新）
@@ -77,7 +77,7 @@ const TabContent2: React.FC = () => {
           onClick: () => {
             setEditableRow({ ...record })
             setFormMode('edit')
-          },
+          }
         })}
         toolbar={{
           title: '保單清單',
@@ -92,8 +92,8 @@ const TabContent2: React.FC = () => {
               }}
             >
               新增
-            </Button>,
-          ],
+            </Button>
+          ]
         }}
       />
 

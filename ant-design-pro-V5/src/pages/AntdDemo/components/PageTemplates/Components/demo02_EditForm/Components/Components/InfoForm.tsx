@@ -10,7 +10,7 @@ import basicStore from '../../Mobx/basicStore'
 
 const InfoForm: React.FC = () => {
   const basicData = basicStore.getBasic
-  
+
   const items: DescriptionsProps['items'] = [
     {
       key: 'policyNo',
@@ -18,7 +18,7 @@ const InfoForm: React.FC = () => {
       children: basicData.policyNo,
       // labelStyle: { minWidth: 120 },
       contentStyle: { minWidth: 100 },
-      span: 1,
+      span: 1
     },
     {
       key: 'receiveNo',
@@ -26,7 +26,7 @@ const InfoForm: React.FC = () => {
       children: basicData.receiveNo,
       // labelStyle: { minWidth: 120 },
       contentStyle: { minWidth: 100 },
-      span: 1,
+      span: 1
     },
     {
       key: 'receiveDate',
@@ -34,7 +34,7 @@ const InfoForm: React.FC = () => {
       children: basicData.receiveDate,
       // labelStyle: { minWidth: 120 },
       contentStyle: { minWidth: 100 },
-      span: 1,
+      span: 1
     },
     {
       key: 'chgDate',
@@ -42,7 +42,7 @@ const InfoForm: React.FC = () => {
       children: basicData.chgDate,
       // labelStyle: { minWidth: 120 },
       contentStyle: { minWidth: 100 },
-      span: 1,
+      span: 1
     },
     {
       key: 'chgType',
@@ -50,8 +50,8 @@ const InfoForm: React.FC = () => {
       children: basicData.chgType,
       // labelStyle: { minWidth: 120 },
       contentStyle: { minWidth: 100 },
-      span: 1,
-    },
+      span: 1
+    }
   ]
 
   return (
@@ -62,7 +62,7 @@ const InfoForm: React.FC = () => {
         layout='horizontal' // 排列方式: horizontal.水平(預設) / vertical.垂直
         size='small'        // 行距
         // bordered            // 顯示邊框
-    />    
+    />
   )
 }
 

@@ -1,10 +1,10 @@
 export const editOption: any[] = [
     {
         label: '唯讀',
-        value: 'readonly',
+        value: 'readonly'
     },
     {
         label: '編輯',
-        value: 'edit',
-    },
+        value: 'edit'
+    }
 ]

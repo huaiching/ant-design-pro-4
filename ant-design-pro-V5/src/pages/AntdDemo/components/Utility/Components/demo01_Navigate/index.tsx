@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Space, message } from 'antd'
+import { Button, Space } from 'antd'
 import { useNavigate } from '@umijs/max'
 
 const Navigate: React.FC = () => {
@@ -9,10 +9,10 @@ const Navigate: React.FC = () => {
     <div>
       <Space direction='vertical'>
         {/* 1. 回上一頁 */}
-        <Button 
-          type='primary' 
+        <Button
+          type='primary'
           onClick={() => navigate(-1)}
-        > 
+        >
           回上一頁
         </Button>
 

@@ -1,9 +1,9 @@
-import MliFormRow from '@/common/components/form/MliFormRow'
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, message, Typography } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import OptionReceiveNo from './components/optionRecevieNo'
+import { MliFormRow } from '@/common'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -27,7 +27,7 @@ const MyForm: React.FC = () => {
             <Button
               type='primary'
               onClick={async () => {
-                formRef.current?.validateFields().then(values => {
+                formRef.current?.validateFields().then(() => {
                   // 確認按鈕 點擊後 要進行的 API 操作
                   message.success('表單提交成功！')
                 })
@@ -67,13 +67,13 @@ const MyForm: React.FC = () => {
             rules={[
               {
                   required: true,
-                  message: '必填',
-              },
+                  message: '必填'
+              }
             ]}
             fieldProps={{       // 透過 後置圖標 設定 查詢按鈕
               suffix: (
                   <Button type='text' disabled={!receiveEdit} onClick={()=>setShowModal(true)}>查詢</Button>
-                ),
+                )
             }}
           />
             <OptionReceiveNo formRef={formRef} showModal={showModal} setShowModal={setShowModal} />

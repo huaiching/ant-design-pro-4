@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { Button, message, Space } from 'antd'
+import { Button, message } from 'antd'
 import { ProFormInstance, StepsForm } from '@ant-design/pro-form'
 import Step1 from './components/step1'
 import Step2 from './components/step2'
@@ -14,10 +14,10 @@ const MyStepsForm: React.FC = () => {
   useEffect(()=>{
     formRef1.current?.setFieldsValue({
       clientId: 'A123456789',
-      name: '測試員',
+      name: '測試員'
     })
     formRef2.current?.setFieldsValue({
-      address: '台北市內湖區石潭路58號1樓',
+      address: '台北市內湖區石潭路58號1樓'
     })
     formRef3.current?.setFieldsValue({
       phone: '0911222333'
@@ -26,10 +26,10 @@ const MyStepsForm: React.FC = () => {
 
   // onFinish 的內容範例
   const onFinish = async (value: any) => {
-      console.log('value',value)
-      console.log('formRef1',formRef1.current?.getFieldsValue())
-      console.log('formRef2',formRef2.current?.getFieldsValue())
-      console.log('formRef3',formRef3.current?.getFieldsValue())
+      console.info('value',value)
+      console.info('formRef1',formRef1.current?.getFieldsValue())
+      console.info('formRef2',formRef2.current?.getFieldsValue())
+      console.info('formRef3',formRef3.current?.getFieldsValue())
       message.success('提交成功')
     }
 
@@ -44,7 +44,7 @@ const MyStepsForm: React.FC = () => {
         const nextName = props.step === 2 ? '提交' : '下一步'
 
         return [
-          <FooterToolbar>
+          <FooterToolbar key='footer'>
             {previousShow &&
             <Button type='primary' onClick={()=> props.onPre?.()}
             >{previousName}</Button>}
@@ -53,14 +53,14 @@ const MyStepsForm: React.FC = () => {
             >{nextName}</Button>
           </FooterToolbar>
         ]
-      },
+      }
     }
   }
 
   const stepsArray = [
     { title: '客戶基本資料', name: 'step1', formRef: formRef1, component: Step1 },
     { title: '客戶住址', name: 'step2', formRef: formRef2, component: Step2 },
-    { title: '客戶電話', name: 'step3', formRef: formRef3, component: Step3 },
+    { title: '客戶電話', name: 'step3', formRef: formRef3, component: Step3 }
   ]
 
   return (

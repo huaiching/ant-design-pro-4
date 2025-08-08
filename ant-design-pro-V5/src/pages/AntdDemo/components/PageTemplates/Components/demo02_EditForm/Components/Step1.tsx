@@ -9,8 +9,8 @@ import { observer } from 'mobx-react'
 import basicStore from '../Mobx/basicStore'
 import { FooterToolbar, ProForm, ProFormDatePicker, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-components'
 import dayjs from 'dayjs'
-import MliFormRow from '@/common/components/form/MliFormRow'
 import optionsStore from '../Mobx/optionStore'
+import { MliFormRow } from '@/common'
 
 interface Props {
   handleStep: (step: number) => void
@@ -29,11 +29,11 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
     const values = {
       ...data,
       receiveDate: data.receiveDate ? dayjs(data.receiveDate) : undefined,
-      chgDate: data.chgDate ? dayjs(data.chgDate) : undefined,
+      chgDate: data.chgDate ? dayjs(data.chgDate) : undefined
     }
     // console.info('values', values)
     formRef.current?.setFieldsValue(values)
-  });
+  })
 
   const handleSubmit = async () => {
     const values = await formRef.current?.validateFields()
@@ -42,7 +42,7 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
     const parsedValues = {
       ...values,
       receiveDate: values.receiveDate.format('YYYY/MM/DD'),
-      chgDate: values.chgDate.format('YYYY/MM/DD'),
+      chgDate: values.chgDate.format('YYYY/MM/DD')
     }
 
     basicStore.setBasic(parsedValues)
@@ -70,7 +70,7 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
               // 強制將值設為大寫
               const upperCaseValue = e.target.value.toUpperCase()
               formRef.current?.setFieldsValue({ receiveNo: upperCaseValue })
-            },
+            }
           }}
         />
         <ProFormDatePicker
@@ -79,10 +79,10 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
           placeholder=' '
           colSize={2/3}
           rules={[
-            { required: true, message: '日期為必填項' },
+            { required: true, message: '日期為必填項' }
           ]}
           fieldProps={{
-            format: 'TTT/MM/DD',
+            format: 'YYYY/MM/DD',
             style: { width: '100%' }
           }}
         />
@@ -92,10 +92,10 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
           placeholder=' '
           colSize={2/3}
           rules={[
-            { required: true, message: '日期為必填項' },
+            { required: true, message: '日期為必填項' }
           ]}
           fieldProps={{
-            format: 'TTT/MM/DD',
+            format: 'YYYY/MM/DD',
             style: { width: '100%' }
           }}
         />

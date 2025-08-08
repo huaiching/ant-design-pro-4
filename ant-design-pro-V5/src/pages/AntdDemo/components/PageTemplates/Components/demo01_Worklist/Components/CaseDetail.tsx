@@ -1,40 +1,41 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { ProColumns, ProTable } from '@ant-design/pro-components';
-import { Button, Input, message } from 'antd';
-import { ToolOutlined } from '@ant-design/icons';
+import React, { useEffect, useMemo, useState } from 'react'
+import { ProColumns, ProTable } from '@ant-design/pro-components'
+import { Button, Input, message } from 'antd'
+import { ToolOutlined } from '@ant-design/icons'
 
 interface Props {
-  caseType: string;
+  caseType: string
 }
 
 // 模擬資料產生函式，移除不必要的 key 欄位
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const generateDetails = (type: string) =>
   Array.from({ length: 5 }, (_, i) => ({
     policyNo: `PL${10000 + i}`,
     receiveNo: `RC${20000 + i}`,           // 唯一識別碼
     receiveDate: `114/08/${10 + i}`,
     ownerName: `王小明 ${i}`,
-    accessUser: `處理人 ${i}`,
-  }));
+    accessUser: `處理人 ${i}`
+  }))
 
 const CaseDetail: React.FC<Props> = ({ caseType }) => {
-  const [data, setData] = useState<any[]>([]); // 初始化為空陣列
+  const [data, setData] = useState<any[]>([]) // 初始化為空陣列
 
   useEffect(() => {
     const fetchData = () => {
-      const details = generateDetails(caseType);
-      setData(details);
-    };
+      const details = generateDetails(caseType)
+      setData(details)
+    }
 
-    fetchData(); // 初始化資料
-    const interval = setInterval(fetchData, 60000); // 每 60 秒刷新
-    return () => clearInterval(interval);
-  }, [caseType]);
+    fetchData() // 初始化資料
+    const interval = setInterval(fetchData, 60000) // 每 60 秒刷新
+    return () => clearInterval(interval)
+  }, [caseType])
 
-  
+
   const [searchText, setSearchText] = useState('')             // 快速搜尋輸入文字狀態
   // 利用 useMemo 篩選 data ，依 searchText 過濾資料，避免每次渲染都重複計算
-  const filteredData = useMemo(() => {
+  useMemo(() => {
     if (!searchText) return data
     // 將 搜尋文字 轉為 小寫
     const lowerSearch = searchText.toLowerCase()
@@ -47,7 +48,7 @@ const CaseDetail: React.FC<Props> = ({ caseType }) => {
       item.accessUser?.toLowerCase().includes(lowerSearch)
     )
   }, [searchText, data])
-  
+
 
   const columns: ProColumns[] = [
     {
@@ -82,12 +83,12 @@ const CaseDetail: React.FC<Props> = ({ caseType }) => {
         <Button
           icon={<ToolOutlined />}
           onClick={() => {
-            message.info(`處理此案件(${record.receiveNo})`);
+            message.info(`處理此案件(${record.receiveNo})`)
           }}
         />
-      ),
-    },
-  ];
+      )
+    }
+  ]
 
   return (
     <ProTable
@@ -109,7 +110,7 @@ const CaseDetail: React.FC<Props> = ({ caseType }) => {
         />
       ]}
     />
-  );
-};
+  )
+}
 
-export default CaseDetail;
+export default CaseDetail

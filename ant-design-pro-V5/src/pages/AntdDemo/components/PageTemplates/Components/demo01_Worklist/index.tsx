@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Row, Col } from 'antd';
-import CaseList from './Components/CaseList';
-import CaseDetail from './Components/CaseDetail';
+import React, { useState } from 'react'
+import { Row, Col } from 'antd'
+import CaseList from './Components/CaseList'
+import CaseDetail from './Components/CaseDetail'
 
 const IndexPage: React.FC = () => {
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<string | null>(null)
 
   return (
     <Row gutter={16}>
@@ -17,7 +17,7 @@ const IndexPage: React.FC = () => {
         )}
       </Col>
     </Row>
-  );
-};
+  )
+}
 
-export default IndexPage;
+export default IndexPage

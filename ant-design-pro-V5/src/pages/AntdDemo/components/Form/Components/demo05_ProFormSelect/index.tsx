@@ -1,4 +1,4 @@
-import MliFormRow from '@/common/components/form/MliFormRow'
+import { MliFormRow } from '@/common'
 import ProForm, { ProFormInstance, ProFormSelect } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, message } from 'antd'
@@ -15,7 +15,7 @@ const Demo: React.FC =() => {
             <Button
               type='primary'
               onClick={async () => {
-                formRef.current?.validateFields().then(values => {
+                formRef.current?.validateFields().then(() => {
                   // 確認按鈕 點擊後 要進行的 API 操作
                   message.success('表單提交成功！')
                 })
@@ -55,7 +55,7 @@ const Demo: React.FC =() => {
             options={[
               { value: 'IT', label: '資訊部' },
               { value: 'HR', label: '人事部' },
-              { value: 'FIN', label: '財務部' },
+              { value: 'FIN', label: '財務部' }
             ]}
             rules={[
               { required: true, message: '部門為必填項' }
