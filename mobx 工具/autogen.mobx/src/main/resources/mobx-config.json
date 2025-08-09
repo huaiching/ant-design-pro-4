@@ -1,0 +1,29 @@
+[
+  {
+    "interfaceName": "TestInfo",
+    "fields": {
+      "name": "string",
+      "age": "number",
+      "email": "string",
+      "birthDate": "Date"
+    },
+    "comments": {
+      "name": "使用者名稱",
+      "age": "使用者年齡",
+      "email": "電子郵件",
+      "birthDate": "使用者生日"
+    }
+  },
+  {
+    "interfaceName": "ProductInfo",
+    "fields": {
+      "id": "number",
+      "title": "string",
+      "price": "number"
+    },
+    "comments": {
+      "title": "商品名稱",
+      "price": "商品價格"
+    }
+  }
+]
