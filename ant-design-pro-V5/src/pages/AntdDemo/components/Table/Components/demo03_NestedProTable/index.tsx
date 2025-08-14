@@ -10,11 +10,22 @@ import dayjs from 'dayjs'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as poApi from './store/poApi'
 import { PoData, coData } from './store/poApi'
+import './store/index.less'
 
 // 主表格欄位（保單）
 const policyColumns: ProColumns<PoData>[] = [
-  { title: '保單號碼', dataIndex: 'policyNo', valueType: 'text' },
-  { title: '保單狀態', dataIndex: 'poStsCode', valueType: 'text' },
+  {
+    title: '保單號碼',
+    dataIndex: 'policyNo',
+    valueType: 'text',
+    width: '15%'
+  },
+  {
+    title: '保單狀態',
+    dataIndex: 'poStsCode',
+    valueType: 'text',
+    width: '15%'
+  },
   {
     title: '保單生效日',
     dataIndex: 'poIssueDate',
@@ -41,12 +52,15 @@ const coverageColumns: ProColumns<coData>[] = [
   }
 ]
 
+const style = {}
+
 const NestedProTable: React.FC = () => {
   const formRef = useRef<ProFormInstance>() // 表單參照，讀取/寫入資料
   const actionRef = useRef<ActionType>() // 表格操作引用（如 reload）
   const [dataSource, setDataSource] = useState<PoData[]>([]) // 主表資料
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]) // 勾選中的保單 key
   const [searchText, setSearchText] = useState('') // 快速搜尋輸入文字狀態
+  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]) // 控制展開列
 
   // ✅ 頁面初始化：取得資料並設定到 form 與畫面
   useEffect(() => {
@@ -64,6 +78,8 @@ const NestedProTable: React.FC = () => {
       setDataSource(chgData)
       // 存入 form 中
       formRef.current?.setFieldsValue({ policies: chgData })
+      // 預設展開全部資料
+      setExpandedRowKeys(chgData.map((item) => item.key))
     })
   }, [])
 
@@ -102,6 +118,9 @@ const NestedProTable: React.FC = () => {
         dataSource={filteredData} // 傳入篩選後的資料，實現快速搜尋功能
         search={false} // 關閉搜尋欄
         pagination={false} // 關閉分頁
+        // rowClassName={'ant-table-row-selected'}  // 設定表格底色: 預設顏色
+        rowClassName={() => 'custom-selected-row'}  // 設定表格底色: 透過 CSS 設定
+
         rowSelection={{
           // ✅ 開啟勾選功能
           selectedRowKeys,
@@ -119,7 +138,9 @@ const NestedProTable: React.FC = () => {
               search={false} // 子表格關閉搜尋欄
               options={false} // 子表格關閉右上角設定選項
             />
-          )
+          ),
+          expandedRowKeys, // 用狀態控制展開
+          onExpandedRowsChange: (keys: any) => setExpandedRowKeys(keys) // 更新展開狀態
         }}
         headerTitle="保單清單"
         /** ✅ 使用 tableAlertRender 顯示勾選資料與導出按鈕 */

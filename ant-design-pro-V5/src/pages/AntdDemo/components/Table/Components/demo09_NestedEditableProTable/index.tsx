@@ -5,21 +5,21 @@ import { Button, Card, message, Spin } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
 import dayjs from 'dayjs'
+import './store/index.less'
 
 // 主元件定義
 const NestedEditableProTable: React.FC = () => {
   // 狀態管理：載入中
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState<boolean>(false)
-
   // 表單參考，用來取得或設定表單資料
   const formRef = useRef<ProFormInstance>()
-
   // 外層保單表格可編輯列的 key 值
   const [editableKeys, setEditableKeys] = useState<React.Key[]>([])
-
   // 內層保障子表格的每一個保單對應的可編輯 key 值
   const [coEditableKeys, setCoEditableKeys] = useState<Record<string, React.Key[]>>({})
+  // 控制展開列
+  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]) 
 
   // 模擬 API 載入資料
   useEffect(() => {
@@ -97,6 +97,8 @@ const NestedEditableProTable: React.FC = () => {
         [item.id]: item.coList?.map(co => co.id) || []
       }), {})
     )
+    // 預設展開全部資料
+    setExpandedRowKeys(chgData.map((item) => item.id))
   }, [])
 
   // 表單底部的提交按鈕渲染函式
@@ -214,6 +216,8 @@ const NestedEditableProTable: React.FC = () => {
               name='editTable'
               columns={poColumns}
               rowKey='id'
+              // rowClassName={'ant-table-row-selected'}  // 設定表格底色: 預設顏色
+              rowClassName={() => 'custom-selected-row'}  // 設定表格底色: 透過 CSS 設定
               // 新增按鈕
               recordCreatorProps={{
                 newRecordType: 'dataSource',
@@ -259,7 +263,9 @@ const NestedEditableProTable: React.FC = () => {
                       actionRender: (row, config, defaultDoms) => [defaultDoms.delete]
                     }}
                   />
-                )
+                ),
+                expandedRowKeys, // 用狀態控制展開
+                onExpandedRowsChange: (keys: any) => setExpandedRowKeys(keys) // 更新展開狀態
               }}
             />
           </Spin>
