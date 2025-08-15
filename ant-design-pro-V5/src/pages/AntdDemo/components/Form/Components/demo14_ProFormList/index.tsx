@@ -4,7 +4,7 @@ import { Button, message, Typography } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import ProCard from '@ant-design/pro-card'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { MliFormRow } from '@/common'
+import { MliFormRow } from '@mli-csmo/base'
 
 const { Text } = Typography
 
@@ -102,6 +102,19 @@ const MyForm: React.FC = () => {
                   placeholder=' '
                   colSize={1 / 2}
                   rules={[{ required: true, message: '請輸入證號' }]}
+                  fieldProps={{
+                    onBlur: () => {
+                      const currentClientId = formRef.current?.getFieldValue(['benfList', index, 'clientId'])
+                      if (currentClientId) {
+                        const benfList = formRef.current?.getFieldValue('benfList') || []
+                        benfList[index].name = `測試${index + 1}`
+
+                        formRef.current?.setFieldsValue({
+                          benfList: [...benfList],
+                        })
+                      }
+                    }
+                  }}
                 />
                 <ProFormText
                   name='name'
@@ -109,6 +122,7 @@ const MyForm: React.FC = () => {
                   placeholder=' '
                   colSize={1 / 2}
                   rules={[{ required: true, message: '請輸入姓名' }]}
+                  readonly
                 />
                 <ProFormDigit
                   name='position'
