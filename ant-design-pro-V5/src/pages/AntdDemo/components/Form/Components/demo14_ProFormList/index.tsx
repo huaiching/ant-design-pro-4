@@ -4,7 +4,7 @@ import { Button, message, Typography } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import ProCard from '@ant-design/pro-card'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { MliFormRow } from '@mli-csmo/base'
+import { MliFormRow } from '@/common'
 
 const { Text } = Typography
 
