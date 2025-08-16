@@ -27,8 +27,24 @@ const MyForm: React.FC = () => {
               { required: true, message: '請選擇性別' }
             ]}
             fieldProps={{
-              defaultValue: 'male'
+              defaultValue: 'male'   // 預設值
 
+            }}
+          />
+          <ProFormRadio.Group
+            name='status'
+            label='狀態'
+            options={[
+              { label: '啟用', value: 'enabled' },
+              { label: '停用', value: 'disabled' }
+            ]}
+            rules={[
+              { required: true, message: '請選擇狀態' }
+            ]}
+            fieldProps={{
+              defaultValue: 'disabled', // 預設值
+              optionType: 'button',     // 使用 按鈕樣式
+              buttonStyle: 'solid'      // 按鈕樣式 選中為 實心
             }}
           />
         </MliFormRow>
