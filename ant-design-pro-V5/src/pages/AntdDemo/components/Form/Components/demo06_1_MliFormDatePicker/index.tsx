@@ -8,7 +8,7 @@
 import React, { useRef } from 'react'
 import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { Button, message } from 'antd'
+import { Button, message, Typography } from 'antd'
 import { MliFormDatePicker, MliFormDateRangePicker, MliFormRow } from '@mli-csmo/base'
 
 const MyForm: React.FC = () => {
@@ -89,6 +89,11 @@ const MyForm: React.FC = () => {
             ]}
           />
         </MliFormRow>
+        <Typography.Text type='danger'>
+          1. 使用 MliFormDatePicker 會直接使用 民國年 (TTT/MM/DD)。 <br/>
+          2. 需要設定 moduleName 和 columnName，並且 欄位中文 要透過 國際化文件 取得 (moduleName.columns.columnName)。 <br/>
+          3. 月份 跟 年份 元件 透過 fieldProps.picker 設定，如：月份 為 fieldProps.picker: 'month'。 <br/>
+        </Typography.Text>
       </ProForm>
     </>
   )

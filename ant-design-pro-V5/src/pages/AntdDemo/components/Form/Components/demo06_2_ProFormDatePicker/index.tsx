@@ -84,7 +84,7 @@ const MyForm: React.FC = () => {
           />
         </MliFormRow>
         <Typography.Text type='danger'>
-          注意：日期格式 fieldProps.format 設定為 'TTT/MM/DD' (民國年)。
+          日期格式 fieldProps.format 設定為 'TTT/MM/DD' (民國年)。
         </Typography.Text>
       </ProForm>
     </>
