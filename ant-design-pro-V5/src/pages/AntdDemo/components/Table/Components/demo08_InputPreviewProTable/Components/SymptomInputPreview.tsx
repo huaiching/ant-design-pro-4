@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { AutoComplete, Button, message, Popconfirm } from 'antd'
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 import { ProTable, ProColumns, ProForm } from '@ant-design/pro-components'
-import { MliFormRow } from '@/common'
+import { MliFormRow } from '@mli-csmo/base'
 
 interface SymptomInputPreviewProps {
   // 可選的症狀清單資料（代碼 + 文字）

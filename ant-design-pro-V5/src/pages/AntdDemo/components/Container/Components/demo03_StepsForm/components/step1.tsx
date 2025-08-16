@@ -1,4 +1,4 @@
-import { MliFormRow } from '@/common'
+import { MliFormRow } from '@mli-csmo/base'
 import ProCard from '@ant-design/pro-card'
 import { ProFormText } from '@ant-design/pro-form'
 import React from 'react'

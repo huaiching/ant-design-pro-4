@@ -1,7 +1,7 @@
 import React from 'react'
 import { ProForm, ProFormText, ProFormDatePicker, ProCard } from '@ant-design/pro-components'
 import { Button, Space } from 'antd'
-import { MliFormRow } from '@/common'
+import { MliFormRow } from '@mli-csmo/base'
 
 interface EditableDetailFormProps {
   mode: 'create' | 'edit'

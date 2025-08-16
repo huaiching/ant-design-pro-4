@@ -9,7 +9,7 @@ import React, { useRef } from 'react'
 import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, message } from 'antd'
-import { MliFormDatePicker, MliFormDateRangePicker, MliFormRow } from '@/common'
+import { MliFormDatePicker, MliFormDateRangePicker, MliFormRow } from '@mli-csmo/base'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()

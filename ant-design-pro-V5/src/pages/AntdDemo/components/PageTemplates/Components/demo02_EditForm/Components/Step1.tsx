@@ -10,7 +10,7 @@ import basicStore from '../Mobx/basicStore'
 import { FooterToolbar, ProForm, ProFormDatePicker, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-components'
 import dayjs from 'dayjs'
 import optionsStore from '../Mobx/optionStore'
-import { MliFormRow } from '@/common'
+import { MliFormRow } from '@mli-csmo/base'
 
 interface Props {
   handleStep: (step: number) => void

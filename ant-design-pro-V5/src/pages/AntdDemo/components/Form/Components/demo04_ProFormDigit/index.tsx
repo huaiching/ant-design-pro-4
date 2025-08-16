@@ -1,4 +1,4 @@
-import { MliFormRow } from '@/common'
+import { MliFormRow } from '@mli-csmo/base'
 import ProForm, { ProFormDigit, ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, message, Select, Typography } from 'antd'

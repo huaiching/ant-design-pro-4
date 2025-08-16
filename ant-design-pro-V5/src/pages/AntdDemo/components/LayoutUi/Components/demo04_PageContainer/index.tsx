@@ -5,7 +5,7 @@ import { Button, Dropdown, message } from 'antd'
 import React, { useRef } from 'react'
 import DropdownMenu from './components/dropdownMenu'
 import ModalFormMenu from './components/modalFormMenu'
-import { MliFormRow } from '@/common'
+import { MliFormRow } from '@mli-csmo/base'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()

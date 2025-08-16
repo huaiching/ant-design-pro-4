@@ -171,4 +171,7 @@ export default defineConfig({
   esbuildMinifyIIFE: true,
   requestRecord: {},
   exportStatic: {},
+  alias: {
+    '@mli-csmo': join(__dirname, '../src/common'),
+  },
 });

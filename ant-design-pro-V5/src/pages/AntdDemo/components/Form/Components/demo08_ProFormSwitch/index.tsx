@@ -1,7 +1,7 @@
 
 import React, { useRef } from 'react'
 import ProForm, { ProFormInstance, ProFormSwitch } from '@ant-design/pro-form'
-import { MliFormRow } from '@/common'
+import { MliFormRow } from '@mli-csmo/base'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()

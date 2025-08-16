@@ -1,6 +1,6 @@
 import ProCard from '@ant-design/pro-card'
 import { ProFormText } from '@ant-design/pro-form'
-import { MliFormRow } from '@/common'
+import { MliFormRow } from '@mli-csmo/base'
 import React from 'react'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

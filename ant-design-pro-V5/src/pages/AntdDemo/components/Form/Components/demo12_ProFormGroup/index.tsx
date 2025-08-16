@@ -1,6 +1,6 @@
 import ProForm, { ProFormGroup, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { MliFormRow, MliFormCol } from '@/common'
+import { MliFormRow, MliFormCol } from '@mli-csmo/base'
 import { Button, message, Typography } from 'antd'
 import React, { useRef } from 'react'
 

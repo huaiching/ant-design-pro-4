@@ -4,7 +4,7 @@ import { Button } from 'antd'
 import { useRef, useState } from 'react'
 import { downloadXlsx } from './store/downloadXlsx'
 import { uploadXlsx } from './store/uploadXlsx'
-import { MliFormRow } from '@/common'
+import { MliFormRow } from '@mli-csmo/base'
 
 const Xlsx: React.FC = () => {
   const formRef = useRef<ProFormInstance>()

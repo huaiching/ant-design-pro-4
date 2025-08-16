@@ -4,7 +4,7 @@ import { Button, message, Segmented } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { editOption } from './store/editOption'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { MliFormRow } from '@/common'
+import { MliFormRow } from '@mli-csmo/base'
 
 const InsurancePolicyCard: React.FC = () => {
   const formRef = useRef<ProFormInstance>()

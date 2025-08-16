@@ -1,4 +1,4 @@
-import { MliFormRow } from '@/common'
+import { MliFormRow } from '@mli-csmo/base'
 import { ModalForm, ProFormInstance, ProFormText } from '@ant-design/pro-form'
 import { Button, message, Space } from 'antd'
 import React, { useRef, useState } from 'react'

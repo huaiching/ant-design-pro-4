@@ -3,7 +3,7 @@ import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, message, Typography } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import OptionReceiveNo from './components/optionRecevieNo'
-import { MliFormRow } from '@/common'
+import { MliFormRow } from '@mli-csmo/base'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
