@@ -12,7 +12,7 @@ import React, { useRef } from 'react'
 import * as userApi from './store/userApi'
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table'
 import { ProFormInstance } from '@ant-design/pro-form'
-import { Space } from 'antd'
+import { Space, Typography } from 'antd'
 import dayjs from 'dayjs'
 
 const ProTableDemo: React.FC = () => {
@@ -87,63 +87,76 @@ const ProTableDemo: React.FC = () => {
   ]
 
   return (
-    <ProTable
-      name='testTable'
-      columns={columns}
-      formRef={formRef}       // 查詢框 的 欄位變數
-      actionRef={actionRef}   // 表格控制的變數實體
-      request={async (params) => {
-        const res = await userApi.fetchAllData(params)
-        // 日期格式轉換
-        const chgData = res.data.map(e => ({
-          ...e,
-          birthDate: dayjs(e.birthDate, 'TTT/MM/DD')
-        }))
-        return {
-          data: chgData,
-          success: true,
-          total: chgData.length
-        }
-      }}   // 數據請求函式
-      manualRequest={true}    // 手動請求數據
-      rowKey='id'             // 設定 資料唯一值 欄位
-      search={{
-        labelWidth: 'auto'
-      }}
-      form={{
-        ignoreRules: false
-      }}
-      headerTitle='模擬 API 表格'
-      toolBarRender={() => [
-        <div key='d'>toolBarRender</div>
-      ]}
-      options={{
-        density: true,    // 密度
-        fullScreen: true, // 全螢幕
-        reload: true,     // 刷新
-        setting: true,    // 列設置
-        search: true      // 搜尋欄
-      }}
-      pagination={{
-        showQuickJumper: true
-      }}
-      rowSelection={{
-        selections: true,
-        type: 'checkbox'
-      }}
-      tableAlertRender={({
-        selectedRowKeys, // 選取行的key
-        selectedRows     // 選取行的資料
-      }) => {
-        return (
-          <Space size={16}>
-            <a onClick={() => {
-              console.info(selectedRowKeys, selectedRows)
-            }}>導出數據</a>
-          </Space>
-        )
-      }}
-    />
+    <>
+      <ProTable
+        name='testTable'
+        columns={columns}
+        formRef={formRef}       // 查詢框 的 欄位變數
+        actionRef={actionRef}   // 表格控制的變數實體
+        request={async (params) => {
+          const res = await userApi.fetchAllData(params)
+          // 日期格式轉換
+          const chgData = res.data.map(e => ({
+            ...e,
+            birthDate: dayjs(e.birthDate, 'TTT/MM/DD')
+          }))
+          return {
+            data: chgData,
+            success: true,
+            total: chgData.length
+          }
+        }}   // 數據請求函式
+        manualRequest={true}    // 手動請求數據
+        rowKey='id'             // 設定 資料唯一值 欄位
+        search={{
+          labelWidth: 'auto'
+        }}
+        form={{
+          ignoreRules: false
+        }}
+        headerTitle='模擬 API 表格'
+        toolBarRender={() => [
+          <div key='d'>toolBarRender</div>
+        ]}
+        options={{
+          density: true,    // 密度
+          fullScreen: true, // 全螢幕
+          reload: true,     // 刷新
+          setting: true,    // 列設置
+          search: true      // 搜尋欄
+        }}
+        pagination={{
+          showQuickJumper: true
+        }}
+        rowSelection={{
+          selections: true,
+          type: 'checkbox'
+        }}
+        tableAlertRender={({
+          selectedRowKeys, // 選取行的key
+          selectedRows     // 選取行的資料
+        }) => {
+          // 生日 轉換為 string
+          const exportData = selectedRows.map(row => ({
+            ...row,
+            birthDate: dayjs(row.birthDate).format('TTT/MM/DD') // 將日期轉為 string
+          }));
+
+          return (
+            <Space size={16}>
+              <a onClick={() => {
+                console.info(exportData); // 這裡的 birthDate 已是字串
+              }}>導出數據</a>
+            </Space>
+          );
+        }}
+      />
+      <Typography.Text type='danger'>
+        1. Date: 日期格式 fieldProps.format 設定為 'TTT/MM/DD' (民國年)。 <br />
+        2. 前端日期資料 (string) 要轉換為 dayjs 物件時，請使用 dayjs(XXX, 'TTT/MM/DD') 進行格式轉換。 <br />
+        3. 導出數據時，要使用 dayjs(XXX).format('TTT/MM/DD') 來將 日期 轉換為 string。
+      </Typography.Text>
+    </>
   )
 }
 export default ProTableDemo

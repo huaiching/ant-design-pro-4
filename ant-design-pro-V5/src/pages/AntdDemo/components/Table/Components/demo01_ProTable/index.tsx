@@ -5,7 +5,7 @@
 
 import type { ActionType, ProFormInstance } from '@ant-design/pro-components'
 import { ProForm, ProTable } from '@ant-design/pro-components'
-import { Button, Input, message } from 'antd'
+import { Button, Input, message, Typography } from 'antd'
 import dayjs from 'dayjs'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as poApi from './store/poApi'
@@ -104,6 +104,10 @@ const NestedProTable: React.FC = () => {
           </Button>
         )}
       />
+      <Typography.Text type='danger'>
+        1. Date: 日期格式 fieldProps.format 設定為 'TTT/MM/DD' (民國年)。 <br />
+        2. 前端日期資料 (string) 要轉換為 dayjs 物件時，請使用 dayjs(XXX, 'TTT/MM/DD') 進行格式轉換。 <br />
+      </Typography.Text>
     </ProForm>
   )
 }

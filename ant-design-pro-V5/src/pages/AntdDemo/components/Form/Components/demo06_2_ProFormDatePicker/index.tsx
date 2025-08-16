@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import ProForm, { ProFormDatePicker, ProFormDateRangePicker, ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { Button, message } from 'antd'
+import { Button, message, Typography } from 'antd'
 import { MliFormRow } from '@/common'
 import { log } from 'console'
 
@@ -83,6 +83,9 @@ const MyForm: React.FC = () => {
             }}
           />
         </MliFormRow>
+        <Typography.Text type='danger'>
+          注意：日期格式 fieldProps.format 設定為 'TTT/MM/DD' (民國年)。
+        </Typography.Text>
       </ProForm>
     </>
   )
