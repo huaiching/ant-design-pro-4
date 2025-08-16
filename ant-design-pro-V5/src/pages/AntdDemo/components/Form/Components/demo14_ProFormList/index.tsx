@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { ProForm, ProFormText, ProFormSelect, ProFormDigit, ProFormList, ProFormInstance } from '@ant-design/pro-form'
-import { Button, message, Typography } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
+import { Button, Divider, message, Typography } from 'antd'
+import { PlusOutlined, RestTwoTone } from '@ant-design/icons'
 import ProCard from '@ant-design/pro-card'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { MliFormRow } from '@/common'
@@ -75,17 +75,29 @@ const MyForm: React.FC = () => {
           creatorButtonProps={{
             creatorButtonText: '新增受益人',
             icon: <PlusOutlined />,
-            type: 'dashed',
+            type: 'primary',
             style: { width: '100%' }
           }}
           copyIconProps={false} // 禁用「複製此行」按鈕
           // deleteIconProps={false} // 禁用默認的「刪除此行」按鈕
+          deleteIconProps={{         // 自定義 默認的「刪除」按鈕樣式
+            tooltipText: '刪除',
+            Icon: RestTwoTone
+          }}
           alwaysShowItemLabel      // 總是顯示項目標籤
         >
-          {(field, index) => (
+          {/* field : 數值資料 */}
+          {/* index : 索引值，從 0 開始 */}
+          {/* action: 操作方法，add=新增 / remove=刪除 */}
+          {/* count : 總筆數 */}
+          {(field, index, action, count) => (
             <ProCard
               ghost
               title={`受益人 ${index + 1}`}
+              // 自定義「刪除」按鈕
+              extra={
+                <Button type="primary" danger onClick={() => action.remove(field.name)}>刪除</Button>
+              }
             >
               <MliFormRow gutter={[8, 2]} align='bottom' justify='start'>
                 <ProFormSelect
@@ -145,10 +157,12 @@ const MyForm: React.FC = () => {
                   ]}
                 />
               </MliFormRow>
+              {/* 設定分隔線，且 最後一筆不要出現分隔線 */}
+              {index < count - 1 && <hr/>}
             </ProCard>
           )}
         </ProFormList>
-      </ProForm>
+      </ProForm>  
     </>
   )
 }
