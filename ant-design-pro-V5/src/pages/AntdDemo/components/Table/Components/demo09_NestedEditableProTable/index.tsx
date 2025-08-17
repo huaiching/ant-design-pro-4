@@ -216,6 +216,10 @@ const NestedEditableProTable: React.FC = () => {
               name='editTable'
               columns={poColumns}
               rowKey='id'
+              scroll={{
+                x: 'max-content',
+                y: 600
+              }}
               // rowClassName={'ant-table-row-selected'}  // 設定表格底色: 預設顏色
               rowClassName={() => 'custom-selected-row'}  // 設定表格底色: 透過 CSS 設定
               // 新增按鈕

@@ -19,6 +19,7 @@ const MyForm: React.FC = () => {
           <ProFormRadio.Group
             name='gender'
             label='選擇性別'
+            // 選項清單: label=顯示文字, value=值
             options={[
               { label: '男性', value: 'male' },
               { label: '女性', value: 'female' }

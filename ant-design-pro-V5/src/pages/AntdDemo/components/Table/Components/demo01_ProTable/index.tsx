@@ -82,6 +82,11 @@ const NestedProTable: React.FC = () => {
         options={false} // 關閉選單
         search={false} // 關閉搜尋欄
         pagination={false} // 關閉分頁
+        // 捲動設定
+        scroll={{
+          x: 'max-content',
+          y: 600
+        }}
         rowSelection={{
           // ✅ 開啟勾選功能
           selectedRowKeys,

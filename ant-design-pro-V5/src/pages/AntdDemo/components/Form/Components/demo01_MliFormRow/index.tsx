@@ -68,6 +68,11 @@ const MyForm: React.FC = () => {
             ))}
           </MliFormRow>
         </MliFormRow>
+        <Typography.Text type='danger'>
+          align: 垂直對齊。<br />
+          justify: 水平對齊。<br />
+          gutter: 間距。<br />
+        </Typography.Text>
       </ProForm>
     </>
   )
