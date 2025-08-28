@@ -19,7 +19,7 @@ const NestedEditableProTable: React.FC = () => {
   // 內層保障子表格的每一個保單對應的可編輯 key 值
   const [coEditableKeys, setCoEditableKeys] = useState<Record<string, React.Key[]>>({})
   // 控制展開列
-  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]) 
+  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([])
 
   // 模擬 API 載入資料
   useEffect(() => {
@@ -240,36 +240,39 @@ const NestedEditableProTable: React.FC = () => {
               }}
               // 子表格（保障清單）展開設定
               expandable={{
-                expandedRowRender: (record) => (
-                  <EditableProTable
-                    rowKey='id'
-                    columns={coColumns}
-                    value={record.coList}
-                    // 新增按鈕
-                    recordCreatorProps={{
-                      newRecordType: 'dataSource',
-                      record: () => ({
-                        id: (Math.random() * 1000000).toFixed(0)
-                      }),
-                      creatorButtonText: '新增保障'
-                    }}
-                    // 編輯設定
-                    editable={{
-                      type: 'multiple',
-                      editableKeys: coEditableKeys[record.id] || [],
-                      // 更新對應保單的保障可編輯列
-                      onChange: (keys) => {
-                        setCoEditableKeys((prev) => ({
-                          ...prev,
-                          [record.id]: keys
-                        }))
-                      },
-                      actionRender: (row, config, defaultDoms) => [defaultDoms.delete]
-                    }}
-                  />
-                ),
-                expandedRowKeys, // 用狀態控制展開
-                onExpandedRowsChange: (keys: any) => setExpandedRowKeys(keys) // 更新展開狀態
+                expandedRowRender: (record, index) => {
+                  // 有些型別定義 index 可能是可選，保險起見再算一次
+                  const table = formRef.current?.getFieldValue('editTable') || [];
+                  const rowIndex =
+                    typeof index === 'number'
+                      ? index
+                      : table.findIndex((x: any) => x.id === record.id);
+
+                  return (
+                    <EditableProTable
+                      rowKey="id"
+                      columns={coColumns}
+                      // ✅ 用索引定位到當列的 coList
+                      name={['editTable', rowIndex, 'coList']}
+                      recordCreatorProps={{
+                        newRecordType: 'dataSource',
+                        record: () => ({
+                          id: (Math.random() * 1000000).toFixed(0),
+                        }),
+                        creatorButtonText: '新增保障',
+                      }}
+                      editable={{
+                        type: 'multiple',
+                        editableKeys: coEditableKeys[record.id] || [],
+                        onChange: (keys) =>
+                          setCoEditableKeys((prev) => ({ ...prev, [record.id]: keys })),
+                        actionRender: (row, config, defaultDoms) => [defaultDoms.delete],
+                      }}
+                    />
+                  );
+                },
+                expandedRowKeys,
+                onExpandedRowsChange: (keys: any) => setExpandedRowKeys(keys),
               }}
             />
           </Spin>
