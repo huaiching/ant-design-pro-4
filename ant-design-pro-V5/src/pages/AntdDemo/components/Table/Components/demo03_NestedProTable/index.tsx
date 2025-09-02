@@ -52,8 +52,6 @@ const coverageColumns: ProColumns<coData>[] = [
   }
 ]
 
-const style = {}
-
 const NestedProTable: React.FC = () => {
   const formRef = useRef<ProFormInstance>() // 表單參照，讀取/寫入資料
   const actionRef = useRef<ActionType>() // 表格操作引用（如 reload）
@@ -93,7 +91,8 @@ const NestedProTable: React.FC = () => {
       (item) =>
         item.policyNo?.toLowerCase().includes(lowerSearch) ||
         item.poStsCode?.toLowerCase().includes(lowerSearch) ||
-        item.poIssueDate?.toString().toLowerCase().includes(lowerSearch)
+        item.poIssueDate?.toString().toLowerCase().includes(lowerSearch) ||
+        item.coList?.some(co => co.planCode?.toLowerCase().includes(lowerSearch))
     )
   }, [searchText, dataSource])
 
