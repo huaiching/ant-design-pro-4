@@ -58,7 +58,24 @@ const MyForm: React.FC = () => {
             ]}
             fieldProps={{
               format: 'TTT/MM/DD',
-              inputReadOnly: false
+              inputReadOnly: false,
+              onBlur: (e: any) => {
+                // 只留下數字
+                let value = e.target?.value.replace(/\D/g, '')
+                // 規則轉換
+                if (value.length < 6) return null
+                if (value.length > 7) return null
+                if (value.length === 6) value = '0' + value
+                const dateStr = value.slice(0,3) + '/' + value.slice(3,5) + '/' + value.slice(5,7)
+                // 轉換為 日期格式
+                const date = dayjs(dateStr, 'TTT/MM/DD')
+                // 非日期格式 回傳空白
+                if (!date.isValid()) return null
+                // 更新資料
+                formRef.current?.setFieldsValue({
+                  chkDate: date
+                })
+              }
             }}
           />
           <ProFormDatePicker.Month
