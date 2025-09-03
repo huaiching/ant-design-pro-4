@@ -6,6 +6,7 @@ import { Input, Typography } from 'antd'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
+  // 使用 useState 來保存「其他」選項的輸入值
   const [otherValue, setOtherValue] = useState('')
 
   const options = [
