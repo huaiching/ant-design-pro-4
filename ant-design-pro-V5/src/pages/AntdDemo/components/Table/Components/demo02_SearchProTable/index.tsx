@@ -12,7 +12,7 @@ import React, { useRef } from 'react'
 import * as userApi from './store/userApi'
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table'
 import { ProFormInstance } from '@ant-design/pro-form'
-import { Space, Typography } from 'antd'
+import { List, Space, Typography } from 'antd'
 import dayjs from 'dayjs'
 
 const ProTableDemo: React.FC = () => {
@@ -151,11 +151,15 @@ const ProTableDemo: React.FC = () => {
           );
         }}
       />
-      <Typography.Text type='danger'>
-        1. Date: 日期格式 fieldProps.format 設定為 'TTT/MM/DD' (民國年)。 <br />
-        2. 前端日期資料 (string) 要轉換為 dayjs 物件時，請使用 dayjs(XXX, 'TTT/MM/DD') 進行格式轉換。 <br />
-        3. 導出數據時，要使用 dayjs(XXX).format('TTT/MM/DD') 來將 日期 轉換為 string。
-      </Typography.Text>
+      <List
+        size='small'
+        dataSource={[
+          '1. Date: 日期格式 fieldProps.format 設定為 \'TTT/MM/DD\' (民國年)。',
+          '2. 前端日期資料 (string) 要轉換為 dayjs 物件時，請使用 dayjs(XXX, \'TTT/MM/DD\') 進行格式轉換。',
+          '3. 導出數據時，要使用 dayjs(XXX).format(\'TTT/MM/DD\') 來將 日期 轉換為 string',
+        ]}
+        renderItem={item => <List.Item>{item}</List.Item>}
+      />
     </>
   )
 }

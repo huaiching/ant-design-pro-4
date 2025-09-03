@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import ProForm, { ProFormDatePicker, ProFormDateRangePicker, ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { Button, message, Typography } from 'antd'
+import { Button, List, message, Typography } from 'antd'
 import { MliFormRow } from '@mli-csmo/base'
 import { log } from 'console'
 import { parseRocDate, parseRocDateMonth } from '@/utils/rocDateUtils'
@@ -118,9 +118,15 @@ const MyForm: React.FC = () => {
             }}
           />
         </MliFormRow>
-        <Typography.Text type='danger'>
-          日期格式 fieldProps.format 設定為 'TTT/MM/DD' (民國年)。
-        </Typography.Text>
+        <List
+          size='small'
+          dataSource={[
+            '1. Date: 日期格式 fieldProps.format 設定為 \'TTT/MM/DD\' (民國年)。',
+            '2. 前端日期資料 (string) 要轉換為 dayjs 物件時，請使用 dayjs(XXX, \'TTT/MM/DD\') 進行格式轉換。',
+            '3. 導出數據時，要使用 dayjs(XXX).format(\'TTT/MM/DD\') 來將 日期 轉換為 string',
+          ]}
+          renderItem={item => <List.Item>{item}</List.Item>}
+        />
       </ProForm>
     </>
   )
