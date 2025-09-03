@@ -4,6 +4,7 @@ import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, message, Typography } from 'antd'
 import { MliFormRow } from '@mli-csmo/base'
 import { log } from 'console'
+import { parseRocDate, parseRocDateMonth } from '@/utils/rocDateUtils'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -13,27 +14,27 @@ const MyForm: React.FC = () => {
     return {
       render: () => (
         <FooterToolbar>
-            <Button
-              type='primary'
-              onClick={async () => {
-                formRef.current?.validateFields().then(() => {
-                  // 確認按鈕 點擊後 要進行的 API 操作
-                  log('formRef', formRef.current?.getFieldsValue())
-                  message.success('表單提交成功！')
-                })
-              }}
-              key='save'
-            >
-              確認
-            </Button>
-            <Button
-              onClick={async () => {
-                  // 取消按鈕 點擊後 要進行的 API 操作
-                  message.warning('取消作業')
-              }}
-            >
-              取消
-            </Button>
+          <Button
+            type='primary'
+            onClick={async () => {
+              formRef.current?.validateFields().then(() => {
+                // 確認按鈕 點擊後 要進行的 API 操作
+                log('formRef', formRef.current?.getFieldsValue())
+                message.success('表單提交成功！')
+              })
+            }}
+            key='save'
+          >
+            確認
+          </Button>
+          <Button
+            onClick={async () => {
+              // 取消按鈕 點擊後 要進行的 API 操作
+              message.warning('取消作業')
+            }}
+          >
+            取消
+          </Button>
         </FooterToolbar>
       )
     }
@@ -60,17 +61,8 @@ const MyForm: React.FC = () => {
               format: 'TTT/MM/DD',
               inputReadOnly: false,
               onBlur: (e: any) => {
-                // 只留下數字
-                let value = e.target?.value.replace(/\D/g, '')
-                // 規則轉換
-                if (value.length < 6) return null
-                if (value.length > 7) return null
-                if (value.length === 6) value = '0' + value
-                const dateStr = value.slice(0,3) + '/' + value.slice(3,5) + '/' + value.slice(5,7)
-                // 轉換為 日期格式
-                const date = dayjs(dateStr, 'TTT/MM/DD')
-                // 非日期格式 回傳空白
-                if (!date.isValid()) return null
+                // 日期格式化
+                const date = parseRocDate(e.target?.value)
                 // 更新資料
                 formRef.current?.setFieldsValue({
                   chkDate: date
@@ -86,7 +78,15 @@ const MyForm: React.FC = () => {
               { required: true, message: '日期為必填項' }
             ]}
             fieldProps={{
-              format: 'TTT/MM'
+              format: 'TTT/MM',
+              onBlur: (e: any) => {
+                // 日期格式化
+                const date = parseRocDateMonth(e.target?.value)
+                // 更新資料
+                formRef.current?.setFieldsValue({
+                  chkDateYYMM: date
+                })
+              }
             }}
           />
           <ProFormDateRangePicker
@@ -96,7 +96,25 @@ const MyForm: React.FC = () => {
               { required: true, message: '日期為必填項' }
             ]}
             fieldProps={{
-              format: 'TTT/MM/DD'
+              format: 'TTT/MM/DD',
+              onBlur: (e: any) => {
+                const root = e.target?.closest('.ant-picker-range')
+                if (!root) return
+
+                // 抓兩個 input 的原始字串
+                const inputs = root.querySelectorAll('input')
+                const startRaw = inputs?.[0]?.value ?? ''
+                const endRaw = inputs?.[1]?.value ?? ''
+
+                // 日期格式化
+                const start = parseRocDate(startRaw)
+                const end = parseRocDate(endRaw)
+
+                // 回寫到表單
+                formRef.current?.setFieldsValue({
+                  chkDateRange: [start, end]
+                })
+              }
             }}
           />
         </MliFormRow>

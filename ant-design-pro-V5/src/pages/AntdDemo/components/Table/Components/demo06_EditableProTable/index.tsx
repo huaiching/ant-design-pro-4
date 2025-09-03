@@ -4,6 +4,7 @@ import { Button, Card, message, Spin } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
 import dayjs from 'dayjs'
+import { parseRocDate } from '@/utils/rocDateUtils'
 
 const MyForm: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -140,10 +141,23 @@ const MyForm: React.FC = () => {
       title: '生日',
       dataIndex: 'birthDate',
       valueType: 'date',
-      fieldProps: {
+      fieldProps: (form, row) => ({
         format: 'TTT/MM/DD',
-        allowClear: false
-      }
+        onBlur: (e: any) => {
+          // 取得 欄位資料
+          const value = e.target?.value
+          // 取得 該行 index
+          let rowKey = row?.rowKey ? row.rowKey[1] : row?.rowKey
+          // 取得 table 資料
+          const tableData = formRef.current?.getFieldValue('editTable') || []
+          // 更新該行資料 並進行 日期格式化
+          const newData = tableData.map((item: any, index: number) =>
+            index === Number(rowKey) ? { ...item, birthDate: parseRocDate(value) } : item
+          )
+          // 資料更新
+          formRef.current?.setFieldsValue({ editTable: newData })
+        }
+      })
     },
     {
       title: '類型（Radio）',
@@ -213,7 +227,7 @@ const MyForm: React.FC = () => {
                 actionRender: (row, config, defaultDoms) => {
                   return [defaultDoms.delete]
                 },
-                onChange: setEditableKeys
+                onChange: setEditableKeys,
               }}
             />
           </Spin>

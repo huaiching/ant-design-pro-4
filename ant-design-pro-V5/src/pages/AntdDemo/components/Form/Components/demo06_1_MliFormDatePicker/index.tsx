@@ -10,6 +10,7 @@ import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, message, Typography } from 'antd'
 import { MliFormDatePicker, MliFormDateRangePicker, MliFormRow } from '@mli-csmo/base'
+import { parseRocDate, parseRocDateMonth } from '@/utils/rocDateUtils'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -19,27 +20,27 @@ const MyForm: React.FC = () => {
     return {
       render: () => (
         <FooterToolbar>
-            <Button
-              type='primary'
-              onClick={async () => {
-                formRef.current?.validateFields().then(() => {
-                  // 確認按鈕 點擊後 要進行的 API 操作
-                  console.info('formRef', formRef.current?.getFieldsValue())
-                  message.success('表單提交成功！')
-                })
-              }}
-              key='save'
-            >
-              確認
-            </Button>
-            <Button
-              onClick={async () => {
-                  // 取消按鈕 點擊後 要進行的 API 操作
-                  message.warning('取消作業')
-              }}
-            >
-              取消
-            </Button>
+          <Button
+            type='primary'
+            onClick={async () => {
+              formRef.current?.validateFields().then(() => {
+                // 確認按鈕 點擊後 要進行的 API 操作
+                console.info('formRef', formRef.current?.getFieldsValue())
+                message.success('表單提交成功！')
+              })
+            }}
+            key='save'
+          >
+            確認
+          </Button>
+          <Button
+            onClick={async () => {
+              // 取消按鈕 點擊後 要進行的 API 操作
+              message.warning('取消作業')
+            }}
+          >
+            取消
+          </Button>
         </FooterToolbar>
       )
     }
@@ -62,6 +63,16 @@ const MyForm: React.FC = () => {
             columnName='chkDate'
             // label='選擇日期'
             placeholder='請選擇日期'
+            fieldProps={{
+              onBlur: (e: any) => {
+                // 日期格式化
+                const date = parseRocDate(e.target?.value)
+                // 更新資料
+                formRef.current?.setFieldsValue({
+                  chkDate: date
+                })
+              }
+            }}
             rules={[
               { required: true, message: '日期為必填項' }
             ]}
@@ -76,7 +87,16 @@ const MyForm: React.FC = () => {
               { required: true, message: '日期為必填項' }
             ]}
             fieldProps={{
-              picker: 'month'
+              picker: 'month',
+              format: 'TTT/MM',
+              onBlur: (e: any) => {
+                // 日期格式化
+                const date = parseRocDateMonth(e.target?.value)
+                // 更新資料
+                formRef.current?.setFieldsValue({
+                  chkDateYYMM: date
+                })
+              }
             }}
           />
           <MliFormDateRangePicker
@@ -87,12 +107,32 @@ const MyForm: React.FC = () => {
             rules={[
               { required: true, message: '日期為必填項' }
             ]}
+            fieldProps={{
+              onBlur: (e: any) => {
+                const root = e.target?.closest('.ant-picker-range')
+                if (!root) return
+
+                // 抓兩個 input 的原始字串
+                const inputs = root.querySelectorAll('input')
+                const startRaw = inputs?.[0]?.value ?? ''
+                const endRaw = inputs?.[1]?.value ?? ''
+
+                // 日期格式化
+                const start = parseRocDate(startRaw)
+                const end = parseRocDate(endRaw)
+
+                // 回寫到表單
+                formRef.current?.setFieldsValue({
+                  chkDateRange: [start, end]
+                })
+              }
+            }}
           />
         </MliFormRow>
         <Typography.Text type='danger'>
-          1. 使用 MliFormDatePicker 會直接使用 民國年 (TTT/MM/DD)。 <br/>
-          2. 需要設定 moduleName 和 columnName，並且 欄位中文 要透過 國際化文件 取得 (moduleName.columns.columnName)。 <br/>
-          3. 月份 跟 年份 元件 透過 fieldProps.picker 設定，如：月份 為 fieldProps.picker: 'month'。 <br/>
+          1. 使用 MliFormDatePicker 會直接使用 民國年 (TTT/MM/DD)。 <br />
+          2. 需要設定 moduleName 和 columnName，並且 欄位中文 要透過 國際化文件 取得 (moduleName.columns.columnName)。 <br />
+          3. 月份 跟 年份 元件 透過 fieldProps.picker 設定，如：月份 為 fieldProps.picker: 'month'。 <br />
         </Typography.Text>
       </ProForm>
     </>
