@@ -27,6 +27,7 @@ const CaseFlow: React.FC = () => {
                   message.info(`點擊了 ${item.title} 卡片`);
                 }}
                 style={{
+                  width: 150,
                   textAlign: 'center',
                   borderRadius: 12,
                   backgroundColor: '#e6f7ff', // 淺藍底色
