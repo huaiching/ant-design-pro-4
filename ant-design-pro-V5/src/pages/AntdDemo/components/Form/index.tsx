@@ -14,6 +14,7 @@ import Demo11 from './Components/demo11_ProFormUploadButton'
 import Demo12 from './Components/demo12_ProFormGroup'
 import Demo13 from './Components/demo13_AutoComplete'
 import Demo14 from './Components/demo14_ProFormList'
+import Demo15 from './Components/demo15_CaseFolw'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
@@ -97,6 +98,11 @@ const AsstManagement: React.FC = () => {
       authCode: '14',
       title: '結構清單(ProFormList)',
       component: <Demo14/>
+    },
+    {
+      authCode: '15',
+      title: '案件流程(CaseFlow)',
+      component: <Demo15/>
     }
   ]
 
