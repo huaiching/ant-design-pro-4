@@ -1,7 +1,7 @@
 // src/pages/CaseFlow/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
-import { Card, Badge, Row, Col, Typography } from 'antd';
+import { Card, Badge, Row, Col, Typography, message } from 'antd';
 import { MliFormCol, MliFormRow } from '@/common/base';
 
 const { Title } = Typography;
@@ -23,6 +23,9 @@ const CaseFlow: React.FC = () => {
               <Card
                 title={<Title level={4}>{item.title}</Title>}
                 hoverable
+                onClick={() => {
+                  message.info(`點擊了 ${item.title} 卡片`);
+                }}
                 style={{
                   textAlign: 'center',
                   borderRadius: 12,
