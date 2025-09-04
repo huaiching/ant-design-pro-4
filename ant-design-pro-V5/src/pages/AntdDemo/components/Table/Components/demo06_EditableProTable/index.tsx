@@ -1,11 +1,10 @@
-import { parseRocDate } from '@/utils/rocDateUtils'
-import { DeleteOutlined } from '@ant-design/icons'
 import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { EditableProTable, ProColumns } from '@ant-design/pro-table'
-import { Button, Card, message, Popconfirm, Spin } from 'antd'
-import dayjs from 'dayjs'
+import { Button, Card, message, Spin } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
+import { EditableProTable, ProColumns } from '@ant-design/pro-table'
+import dayjs from 'dayjs'
+import { parseRocDate } from '@/utils/rocDateUtils'
 
 const MyForm: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,7 +32,7 @@ const MyForm: React.FC = () => {
       }
     ]
     // 日期格式轉換
-    const chgData = resData.map((data) => ({
+    const chgData = resData.map(data => ({
       ...data,
       birthDate: dayjs(data.birthDate, 'TTT/MM/DD')
     }))
@@ -52,7 +51,7 @@ const MyForm: React.FC = () => {
       render: () => (
         <FooterToolbar>
           <Button
-            type="primary"
+            type='primary'
             onClick={async () => {
               formRef.current?.validateFields().then(() => {
                 // 確認按鈕 點擊後 要進行的 API 操作
@@ -67,7 +66,7 @@ const MyForm: React.FC = () => {
                 message.success('表單提交成功！')
               })
             }}
-            key="save"
+            key='save'
           >
             確認
           </Button>
@@ -112,7 +111,9 @@ const MyForm: React.FC = () => {
       title: '姓名',
       dataIndex: 'name',
       formItemProps: {
-        rules: [{ required: true, message: '請輸入名稱！' }]
+        rules: [
+          { required: true, message: '請輸入名稱！' }
+        ]
       },
       fieldProps: {
         allowClear: false
@@ -162,8 +163,7 @@ const MyForm: React.FC = () => {
       title: '類型（Radio）',
       dataIndex: 'radio',
       valueType: 'radio',
-      valueEnum: {
-        // radio: "A"
+      valueEnum: {            // radio: "A"
         A: { text: 'A 類' },
         B: { text: 'B 類' }
       }
@@ -172,8 +172,7 @@ const MyForm: React.FC = () => {
       title: '選擇（Radio Button）',
       dataIndex: 'radioButton',
       valueType: 'radioButton',
-      valueEnum: {
-        // radioButton: "left"
+      valueEnum: {            // radioButton: "left"
         left: { text: '左' },
         right: { text: '右' }
       }
@@ -182,8 +181,7 @@ const MyForm: React.FC = () => {
       title: '是否啟用（Switch）',
       dataIndex: 'switch',
       valueType: 'switch',
-      fieldProps: {
-        // switch: true
+      fieldProps: {             // switch: true
         checkedChildren: '是',
         unCheckedChildren: '否'
       }
@@ -192,8 +190,7 @@ const MyForm: React.FC = () => {
       title: '同意條款（Checkbox）',
       dataIndex: 'checkbox',
       valueType: 'checkbox',
-      valueEnum: {
-        // checkbox: ['Y']
+      valueEnum: {              // checkbox: ['Y']
         Y: '我已閱讀並同意'
       }
     }
@@ -202,14 +199,19 @@ const MyForm: React.FC = () => {
   return (
     <>
       <h1>EditableProTable</h1>
-      <ProForm grid layout="vertical" formRef={formRef} submitter={submitterRender()}>
+      <ProForm
+        grid
+        layout='vertical'
+        formRef={formRef}
+        submitter={submitterRender()}
+      >
         <Card style={{ width: '100%' }}>
           <Spin spinning={loading}>
             <EditableProTable
-              name="editTable"
+              name='editTable'
               columns={columns}
-              rowKey="id"
-              headerTitle="編輯表格 模擬 API 取得資料"
+              rowKey='id'
+              headerTitle='編輯表格 模擬 API 取得資料'
               // 新增按鈕
               recordCreatorProps={{
                 newRecordType: 'dataSource',
@@ -222,25 +224,10 @@ const MyForm: React.FC = () => {
               editable={{
                 type: 'multiple',
                 editableKeys: editableKeys,
+                actionRender: (row, config, defaultDoms) => {
+                  return [defaultDoms.delete]
+                },
                 onChange: setEditableKeys,
-                actionRender: (row) => [
-                  <Popconfirm
-                    key="delete"
-                    title="確定刪除嗎？"
-                    onConfirm={() => {
-                      // 取得現有資料
-                      const currentData = formRef.current?.getFieldValue('editTable') || []
-                      // 過濾刪除該列
-                      const newData = currentData.filter((item: any) => item.id !== row.id)
-                      // 更新表單欄位資料
-                      formRef.current?.setFieldValue('editTable', newData)
-                      // 同步更新 editableKeys
-                      setEditableKeys(newData.map((item: any) => item.id))
-                    }}
-                  >
-                    <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: 16 }} />
-                  </Popconfirm>
-                ]
               }}
             />
           </Spin>
