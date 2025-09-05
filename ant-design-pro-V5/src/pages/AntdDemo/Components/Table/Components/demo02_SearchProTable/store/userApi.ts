@@ -43,7 +43,8 @@ export const fetchAllData = async (
   await new Promise((resolve) => {setTimeout(resolve, 100)})
 
   return {
-    data: filteredData.slice(startIndex, endIndex),
+    // data: filteredData.slice(startIndex, endIndex),
+    data: filteredData,
     total: filteredData.length
   }
 }

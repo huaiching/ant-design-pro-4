@@ -1,48 +1,49 @@
 /**
- * 查詢 ProTable
- * 1. formRef 保存 搜尋框的變數
- * 2. request 呼叫 api 取得 數據，搭配 manualRequest={true} 來 關閉自動請求數據
- *    return 的欄位
- *    1. data   : 數據實體
- *    2. success: 是否成功
- *    3. total  : 數據筆數
+ * 查詢型 ProTable
+ * 1. formRef 保存搜尋框的欄位變數
+ * 2. actionRef 控制表格操作，如 reload、reset 等
+ * 3. request 呼叫 API 取得數據，搭配 manualRequest={true} 關閉自動請求
+ *    request 回傳欄位：
+ *      - data   : 數據列表
+ *      - success: 是否成功
+ *      - total  : 數據總筆數
+ * 4. rowSelection 可選擇行，tableAlertRender 顯示勾選資料與導出
+ * 5. tableAlertOptionRender 顯示「取消勾選」按鈕
+ * 6. 日期格式統一使用 'TTT/MM/DD' (民國年)，前端 string 轉 dayjs，導出轉回 string
  */
 
 import { parseRocDate } from '@/utils/rocDateUtils'
 import { ProFormInstance } from '@ant-design/pro-form'
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table'
-import { List, Space } from 'antd'
+import { List, Space, Button, message } from 'antd'
 import dayjs from 'dayjs'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import * as userApi from './store/userApi'
 
 const ProTableDemo: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
   const actionRef = useRef<ActionType>()
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]) // 勾選資料 key
+  const [dataSource, setDataSource] = useState<any[]>([]) // 主表資料
 
+  // 性別選項
   const genderInd = [
     { label: '男', value: '1' },
     { label: '女', value: '2' }
   ]
 
+  // 表格欄位定義
   const columns: ProColumns<any>[] = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      valueType: 'digit',
-      search: false,
-      hideInTable: true
-    },
+    { title: 'ID', dataIndex: 'id', valueType: 'digit', search: false, hideInTable: true },
     {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      render: (dom, entity) => [
+      render: (_, entity) => [
         <a
-          key="a"
+          key="detail"
           onClick={() => {
-            console.info('dom', dom)
-            console.info('entity', entity)
+            console.info('點擊明細 - entity:', entity)
           }}
         >
           明細
@@ -52,35 +53,18 @@ const ProTableDemo: React.FC = () => {
     {
       title: '姓名',
       dataIndex: 'name',
-      valueType: 'text'
-      // formItemProps: {
-      //   rules: [
-      //     { required: true, message: '請輸入名稱！' }
-      //   ],
-      // },
-    },
-    {
-      title: '年齡',
-      dataIndex: 'age',
-      valueType: 'digit',
-      sorter: '1',
-      copyable: true
-    },
-    {
-      title: '地址',
-      dataIndex: 'address',
       valueType: 'text',
-      search: false,
-      sorter: '2'
+      formItemProps: {
+        rules: [{ required: true, message: '請輸入姓名！' }],
+      },
     },
+    { title: '年齡', dataIndex: 'age', valueType: 'digit', sorter: true, copyable: true },
+    { title: '地址', dataIndex: 'address', valueType: 'text', search: false, sorter: true },
     {
       title: '性別',
       dataIndex: 'sex',
       valueType: 'select',
-      fieldProps: {
-        placeholder: '請選擇性別',
-        options: genderInd
-      }
+      fieldProps: { placeholder: '請選擇性別', options: genderInd }
     },
     {
       title: '生日',
@@ -90,91 +74,103 @@ const ProTableDemo: React.FC = () => {
         format: 'TTT/MM/DD',
         onBlur: (e: any) => {
           if (e.target?.value) {
-            formRef.current?.setFieldValue('birthDate', parseRocDate(e.target?.value))
+            formRef.current?.setFieldValue('birthDate', parseRocDate(e.target.value))
           }
         }
       }
     }
   ]
 
+  // 導出按鈕事件：從 formRef 中取得 userTable，再過濾出勾選的
+  const handleExport = () => {
+    const selectedData = dataSource.filter((item) => selectedRowKeys.includes(item.id))
+    console.info('勾選導出資料：', selectedData)
+    message.success(`已導出 ${selectedData.length} 筆資料到 console`)
+    setSelectedRowKeys([]) // 清空勾選
+  }
+
+  // 取消按鈕事件
+  const handleCancel = () => {
+    setSelectedRowKeys([]) // 清空勾選
+    message.info('已清空勾選項目')
+  }
+
   return (
     <>
       <ProTable
-        name="testTable"
+        rowKey="id"
+        name="userTable"
+        headerTitle="模擬 API 表格"
         columns={columns}
-        formRef={formRef} // 查詢框 的 欄位變數
-        actionRef={actionRef} // 表格控制的變數實體
+        formRef={formRef}
+        actionRef={actionRef}
+        // 請求數據
         request={async (params) => {
           const res = await userApi.fetchAllData(params)
-          // 日期格式轉換
           const chgData = res.data.map((e) => ({
             ...e,
             birthDate: dayjs(e.birthDate, 'TTT/MM/DD')
           }))
-          return {
-            data: chgData,
-            success: true,
-            total: chgData.length
-          }
-        }} // 數據請求函式
-        manualRequest={true} // 手動請求數據
-        rowKey="id" // 設定 資料唯一值 欄位
-        search={{
-          labelWidth: 'auto'
+          setDataSource(chgData)
+          return { data: chgData, success: true, total: chgData.length }
         }}
-        form={{
-          ignoreRules: false
-        }}
-        headerTitle="模擬 API 表格"
-        toolBarRender={() => [<div key="d">toolBarRender</div>]}
+        // 手動請求
+        manualRequest={true}
+        // 搜尋表單佈局
+        search={{ labelWidth: 'auto' }}
+        // 查詢 不要忽略欄位驗證規則 (預設忽略)
+        // form={{ ignoreRules: false }}
+        // 工具欄
+        toolBarRender={() => [
+          <Button type='primary'>
+            工具欄
+          </Button>
+        ]}
+        // 表格配置
         options={{
-          density: true, // 密度
-          fullScreen: true, // 全螢幕
-          reload: true, // 刷新
-          setting: true, // 列設置
-          search: true // 搜尋欄
+          density: true,     // 列表密度
+          fullScreen: true,  // 全螢幕
+          reload: true,      // 重新載入
+          setting: true,     // 設定
         }}
+        // 分頁
         pagination={{
-          showQuickJumper: true
+          showQuickJumper: true,  // 快速跳轉頁數
+          pageSize: 5,            // 預設每頁筆數
+          pageSizeOptions: ['5', '10', '20', '50', '100']  // 每頁筆數選項
         }}
+        // 選擇行
         rowSelection={{
-          selections: true,
-          type: 'checkbox'
+          type: 'checkbox', // checkbox 選擇框(預設) / radio 單選框
+          selectedRowKeys,
+          onChange: (keys) => setSelectedRowKeys(keys),
+          selections: true
         }}
-        tableAlertRender={({
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          selectedRowKeys, // 選取行的key
-          selectedRows // 選取行的資料
-        }) => {
-          // 生日 轉換為 string
-          const exportData = selectedRows.map((row) => ({
-            ...row,
-            birthDate: dayjs(row.birthDate).format('TTT/MM/DD') // 將日期轉為 string
-          }))
-
-          return (
-            <Space size={16}>
-              <a
-                onClick={() => {
-                  console.info(exportData) // 這裡的 birthDate 已是字串
-                }}
-              >
-                導出數據
-              </a>
-            </Space>
-          )
-        }}
+        /** ✅ 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
+        tableAlertRender={() => (
+          <Button color="danger" variant="filled" onClick={handleExport}>
+            導出數據(console)
+          </Button>
+        )}
+        /** ✅ 使用 tableAlertOptionRender 顯示取消勾選資料 */
+        tableAlertOptionRender={() => (
+          <Button color="cyan" variant="filled" onClick={handleCancel}>
+            取消勾選
+          </Button>
+        )}
       />
+
       <List
         size="small"
         dataSource={[
           "1. Date: 日期格式 fieldProps.format 設定為 'TTT/MM/DD' (民國年)。",
           "2. 前端日期資料 (string) 要轉換為 dayjs 物件時，請使用 dayjs(XXX, 'TTT/MM/DD') 進行格式轉換。",
-          "3. 導出數據時，要使用 dayjs(XXX).format('TTT/MM/DD') 來將 日期 轉換為 string"
+          "3. 導出數據時，要使用 dayjs(XXX).format('TTT/MM/DD') 來將日期轉回字串。"
         ]}
         renderItem={(item) => <List.Item>{item}</List.Item>}
       />
     </>
   )
 }
+
 export default ProTableDemo

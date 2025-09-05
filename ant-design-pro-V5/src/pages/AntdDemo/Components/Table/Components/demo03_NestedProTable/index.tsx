@@ -96,10 +96,11 @@ const NestedProTable: React.FC = () => {
     )
   }, [searchText, dataSource])
 
-  // ✅ 導出按鈕事件：從 formRef 中取得 policies，再過濾出勾選的
+  // 導出按鈕事件：從 formRef 中取得 policies，再過濾出勾選的
   const handleExport = () => {
     const allData: PoData[] = formRef.current?.getFieldValue('policies') || []
     const selectedData = allData.filter((item) => selectedRowKeys.includes(item.key))
+    // 導出時，將日期轉回字串格式
     const exportData = selectedData.map(row => {
       const poIssueDate = dayjs(row.poIssueDate).format('TTT/MM/DD')
       const coList = row.coList?.map(co => ({
@@ -112,8 +113,15 @@ const NestedProTable: React.FC = () => {
         coList
       }
     });
-    console.info('✅ 勾選導出資料：', exportData)
+    console.info('勾選導出資料：', exportData)
     message.success(`已導出 ${exportData.length} 筆資料到 console`)
+    setSelectedRowKeys([]) // 清空勾選
+  }
+
+  // 取消按鈕事件
+  const handleCancel = () => {
+    setSelectedRowKeys([]) // 清空勾選
+    message.info('已清空勾選項目')
   }
 
   return (
@@ -156,8 +164,14 @@ const NestedProTable: React.FC = () => {
         headerTitle="保單清單"
         /** ✅ 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
         tableAlertRender={() => (
-          <Button type="link" onClick={handleExport}>
+          <Button color="danger" variant="filled" onClick={handleExport}>
             導出數據(console)
+          </Button>
+        )}
+        /** ✅ 使用 tableAlertOptionRender 顯示取消勾選資料 */
+        tableAlertOptionRender={() => (
+          <Button color="cyan" variant="filled" onClick={handleCancel}>
+            取消勾選
           </Button>
         )}
         toolBarRender={() => [
