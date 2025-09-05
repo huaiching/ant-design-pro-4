@@ -18,31 +18,35 @@ const cardOnClick = (title: string) => {
 
 const CaseFlow: React.FC = () => {
   return (
-    <MliFormRow>
-      {processList.map((item) => (
-        <MliFormCol colSize={1} key={item.key}>
-          <Card
-            hoverable
-            onClick={() => cardOnClick(item.title)}
-            style={{
-              textAlign: 'center',
-              borderRadius: 12,
-              backgroundColor: '#e6f7ff', // 淺藍底色
-              border: '1px solid #91d5ff', // 淺藍邊框
-            }}
-          >
-            <Typography.Title level={4}>{item.title}</Typography.Title>
-            <Badge
-              showZero
-              count={item.count}
+    <>
+      <MliFormRow>
+        {processList.map((item) => (
+          <MliFormCol colSize={1} key={item.key}>
+            <Card
+              hoverable
+              onClick={() => cardOnClick(item.title)}
               style={{
-                backgroundColor: item.count > 0 ? 'red' : 'blue'
+                textAlign: 'center',
+                borderRadius: 12,
+                backgroundColor: '#e6f7ff', // 淺藍底色
+                border: '1px solid #91d5ff', // 淺藍邊框
               }}
-            />
-          </Card>
-        </MliFormCol>
-      ))}
-    </MliFormRow>
+            >
+              <Badge
+                showZero
+                count={item.count}
+                offset={[10, 0]}
+                style={{
+                  backgroundColor: item.count > 0 ? 'red' : 'blue'
+                }}
+              >
+                <Typography.Title level={4}>{item.title}</Typography.Title>
+              </Badge>
+            </Card>
+          </MliFormCol>
+        ))}
+      </MliFormRow>
+    </>
   );
 };
 
