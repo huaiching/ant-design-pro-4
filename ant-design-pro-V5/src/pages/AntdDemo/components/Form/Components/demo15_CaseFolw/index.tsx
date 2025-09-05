@@ -2,7 +2,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Card, Badge, Row, Col, Typography, message } from 'antd';
-import { MliFormCol, MliFormRow } from '@/common/base';
+import { MliFormCol, MliFormRow } from '@mli-csmo/base';
 
 const { Title } = Typography;
 
