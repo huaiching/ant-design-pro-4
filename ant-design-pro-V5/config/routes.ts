@@ -170,6 +170,14 @@ export default [
     path: '/antdDemo',  // 路徑
     component: './AntdDemo',  // 組件路徑
   },
+  {
+    path: '/antdDemo/navigate',
+    component: './AntdDemo/Components/Utility/Components/demo01_Navigate/Components/Navigate',
+  },
+  {
+    path: '/antdDemo/sessionStorage',
+    component: './AntdDemo/Components/Utility/Components/demo01_Navigate/Components/SessionStorage',
+  },
 
   // api 呼叫範例
   {
@@ -212,7 +220,6 @@ export default [
       },
     ]
   },
-
   {
     path: '/',
     redirect: '/welcome',
