@@ -8,13 +8,13 @@
  *    3. total  : 數據筆數
  */
 
+import { parseRocDate } from '@/utils/rocDateUtils'
 import { ProFormInstance } from '@ant-design/pro-form'
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table'
 import { List, Space } from 'antd'
 import dayjs from 'dayjs'
 import React, { useRef } from 'react'
 import * as userApi from './store/userApi'
-import { parseRocDate } from '@/utils/rocDateUtils'
 
 const ProTableDemo: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -89,10 +89,9 @@ const ProTableDemo: React.FC = () => {
       fieldProps: {
         format: 'TTT/MM/DD',
         onBlur: (e: any) => {
-          // 日期格式化
-          const date = parseRocDate(e.target?.value)
-          // 更新資料
-          formRef.current?.setFieldValue('birthDate', date)
+          if (e.target?.value) {
+            formRef.current?.setFieldValue('birthDate', parseRocDate(e.target?.value))
+          }
         }
       }
     }
