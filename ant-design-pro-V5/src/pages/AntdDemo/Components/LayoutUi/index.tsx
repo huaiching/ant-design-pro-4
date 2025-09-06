@@ -4,6 +4,7 @@ import Demo02 from './Components/demo02_Notification'
 import Demo03 from './Components/demo03_Modal'
 import Demo04 from './Components/demo04_PageContainer'
 import Demo05 from './Components/demo05_BackTop'
+import Demo06 from './Components/demo06_Splitter'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
@@ -32,11 +33,16 @@ const AsstManagement: React.FC = () => {
       authCode: '4',
       title: '頁面容器 與 下拉選單(PageContainer)',
       component: <Demo04/>
+      },
+      {
+        authCode: '5',
+        title: '返回頂部(BackTop)',
+        component: <Demo05/>
     },
     {
-      authCode: '5',
-      title: '返回頂部(BackTop)',
-      component: <Demo05/>
+      authCode: '6',
+      title: '分割線(Splitter)',
+      component: <Demo06/>
     }
   ]
 
