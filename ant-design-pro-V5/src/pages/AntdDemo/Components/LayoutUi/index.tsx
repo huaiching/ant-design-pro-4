@@ -5,6 +5,7 @@ import Demo03 from './Components/demo03_Modal'
 import Demo04 from './Components/demo04_PageContainer'
 import Demo05 from './Components/demo05_BackTop'
 import Demo06 from './Components/demo06_Splitter'
+import Demo07 from './Components/demo07_Flex'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
@@ -43,6 +44,11 @@ const AsstManagement: React.FC = () => {
       authCode: '6',
       title: '分割線(Splitter)',
       component: <Demo06/>
+    },
+    {
+      authCode: '7',
+      title: '彈性布局(Flex)',
+      component: <Demo07/>
     }
   ]
 
