@@ -1,7 +1,7 @@
-import { MliFormRow } from '@mli-csmo/base'
+import { MliFormCol, MliFormRow } from '@mli-csmo/base'
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { Button, message, Typography } from 'antd'
+import { Button, Input, message, Space, Typography } from 'antd'
 import React, { useRef } from 'react'
 
 const MyForm: React.FC = () => {
@@ -12,26 +12,25 @@ const MyForm: React.FC = () => {
     return {
       render: () => (
         <FooterToolbar>
-            <Button
-              type='primary'
-              onClick={async () => {
-                formRef.current?.validateFields().then(() => {
-                  // 確認按鈕 點擊後 要進行的 API 操作
-                  message.success('表單提交成功！')
-                })
-              }}
-              key='save'
-            >
-              確認
-            </Button>
-            <Button
-              onClick={async () => {
-                  // 取消按鈕 點擊後 要進行的 API 操作
-                  message.warning('取消作業')
-              }}
-            >
-              取消
-            </Button>
+          <Button
+            type='primary'
+            onClick={async () => {
+              formRef.current?.validateFields().then((values) => {
+                console.info(formRef.current?.getFieldsValue())
+                message.success(`表單提交成功！${JSON.stringify(values)}`)
+              })
+            }}
+            key='save'
+          >
+            確認
+          </Button>
+          <Button
+            onClick={async () => {
+              message.warning('取消作業')
+            }}
+          >
+            取消
+          </Button>
         </FooterToolbar>
       )
     }
@@ -55,25 +54,45 @@ const MyForm: React.FC = () => {
         submitter={submitterRender()}
       >
         <MliFormRow>
-          <ProFormText
-            name='email'
-            label='電子郵件'
-            tooltip='這是用戶電子郵件'
-            placeholder='請輸入電子郵件'
-            colSize={1}
-            rules={[
-              {
-                  required: true,
-                  message: '必填'
-              },
-              {
-                validator: vaildatorEmail
-              }
-            ]}
-            fieldProps={{
-                maxLength: 72
-            }}
-          />
+          {/* 電子郵件欄位 */}
+          <MliFormCol colSize={1}>
+            <ProFormText
+              name='email'
+              label='電子郵件'
+              tooltip='這是用戶電子郵件'
+              placeholder='請輸入電子郵件'
+              rules={[
+                { required: true, message: '必填' },
+                // { validator: vaildatorEmail },
+                { required: true, type: 'email' }
+              ]}
+              fieldProps={{ maxLength: 72 }}
+            />
+          </MliFormCol>
+          <MliFormCol colSize={1}>
+            <ProForm.Item label="住所地址" style={{ marginBottom: 0 }}>
+              <Space.Compact style={{ width: '100%' }}>
+                {/* 郵遞區號，寬度 1 */}
+                <ProForm.Item
+                  name="zipCode"
+                  noStyle
+                  rules={[{ required: true, message: '請輸入郵遞區號' }]}
+                >
+                  <Input placeholder="郵遞區號" style={{ flex: 1 }} />
+                </ProForm.Item>
+
+                {/* 地址，寬度 3 */}
+                <ProForm.Item
+                  name="address"
+                  noStyle
+                  rules={[{ required: true, message: '請輸入地址' }]}
+                >
+                  <Input placeholder="地址" style={{ flex: 3 }} />
+                </ProForm.Item>
+              </Space.Compact>
+            </ProForm.Item>
+          </MliFormCol>
+
         </MliFormRow>
       </ProForm>
     </>
