@@ -4,17 +4,19 @@ import Demo02 from './Components/demo02_ProFormText'
 import Demo03 from './Components/demo03_ProFormTextArea'
 import Demo04 from './Components/demo04_ProFormDigit'
 import Demo05 from './Components/demo05_ProFormSelect'
-import Demo06_1 from './Components/demo06_1_MliFormDatePicker'
-import Demo06_2 from './Components/demo06_2_ProFormDatePicker'
-import Demo07 from './Components/demo07_ProFormTimePicker'
-import Demo08 from './Components/demo08_ProFormSwitch'
-import Demo09 from './Components/demo09_ProFormRadio'
-import Demo10 from './Components/demo10_ProFormCheckbox'
-import Demo11 from './Components/demo11_ProFormUploadButton'
-import Demo12 from './Components/demo12_ProFormGroup'
-import Demo13 from './Components/demo13_AutoComplete'
-import Demo14 from './Components/demo14_ProFormList'
-import Demo15 from './Components/demo15_CaseFolw'
+import Demo06 from './Components/demo06_ProFormCascader'
+import Demo07 from './Components/demo07_ProFormTreeSelect'
+import Demo08_1 from './Components/demo08_1_MliFormDatePicker'
+import Demo08_2 from './Components/demo08_2_ProFormDatePicker'
+import Demo09 from './Components/demo09_ProFormTimePicker'
+import Demo10 from './Components/demo10_ProFormSwitch'
+import Demo11 from './Components/demo11_ProFormRadio'
+import Demo12 from './Components/demo12_ProFormCheckbox'
+import Demo13 from './Components/demo13_ProFormUploadButton'
+import Demo14 from './Components/demo14_ProFormGroup'
+import Demo15 from './Components/demo15_AutoComplete'
+import Demo16 from './Components/demo16_ProFormList'
+import Demo17 from './Components/demo17_CaseFolw'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
@@ -50,59 +52,69 @@ const AsstManagement: React.FC = () => {
       component: <Demo05/>
     },
     {
-      authCode: '6.1',
-      title: '日期選擇(MliFormDatePicker)',
-      component: <Demo06_1/>
-    },
-    {
-      authCode: '6.2',
-      title: '日期選擇(ProFormDatePicker)',
-      component: <Demo06_2/>
+      authCode: '6',
+      title: '級聯選擇框(ProFormCascader)',
+      component: <Demo06/>
     },
     {
       authCode: '7',
-      title: '時間選擇(ProFormTimePicker)',
+      title: '樹狀選擇框(ProFormTreeSelect)',
       component: <Demo07/>
     },
     {
-      authCode: '8',
-      title: '開關控件(ProFormSwitch)',
-      component: <Demo08/>
+      authCode: '8.1',
+      title: '日期選擇(MliFormDatePicker)',
+      component: <Demo08_1/>
+    },
+    {
+      authCode: '8.2',
+      title: '日期選擇(ProFormDatePicker)',
+      component: <Demo08_2/>
     },
     {
       authCode: '9',
-      title: '單選框(ProFormRadio)',
+      title: '時間選擇(ProFormTimePicker)',
       component: <Demo09/>
     },
     {
       authCode: '10',
-      title: '多選框(ProFormCheckbox)',
+      title: '開關控件(ProFormSwitch)',
       component: <Demo10/>
     },
     {
       authCode: '11',
-      title: '文件上傳(ProFormUploadButton)',
+      title: '單選框(ProFormRadio)',
       component: <Demo11/>
     },
     {
       authCode: '12',
-      title: '群組(ProFormGroup)',
+      title: '多選框(ProFormCheckbox)',
       component: <Demo12/>
     },
     {
       authCode: '13',
-      title: '自動填入(AutoComplete)',
+      title: '文件上傳(ProFormUploadButton)',
       component: <Demo13/>
     },
     {
       authCode: '14',
-      title: '結構清單(ProFormList)',
+      title: '群組(ProFormGroup)',
       component: <Demo14/>
     },
     {
       authCode: '15',
-      title: '案件流程(CaseFlow)',
+      title: '自動填入(AutoComplete)',
       component: <Demo15/>
+    },
+    {
+      authCode: '16',
+      title: '結構清單(ProFormList)',
+      component: <Demo16/>
+    },
+    {
+      authCode: '17',
+      title: '案件流程(CaseFlow)',
+      component: <Demo17/>
     }
   ]
 
