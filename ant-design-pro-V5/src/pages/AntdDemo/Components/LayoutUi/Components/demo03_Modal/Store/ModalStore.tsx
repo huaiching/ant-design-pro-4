@@ -11,10 +11,10 @@ export const modalConfirm = (msgList: string[]) => {
       // content: '請問是否要繼續？',    // 內文 單行直接給文字，多行可以用 html標籤
       content: description,
       okText: '繼續',                   // 複寫 確定 的文字 (預設 確定)
-      cancelText: '放棄',               // 複寫 取消 的文字 (預設 取消)
       onOk() {                          // 確定 要做的事情
         message.success('繼續作業')
       },
+      cancelText: '放棄',               // 複寫 取消 的文字 (預設 取消)
       onCancel() {                      // 取消 要做的事情
         message.error('放棄作業')
       }
@@ -31,13 +31,9 @@ export const modalSuccess = (msgList: string[]) => {
       title: '標題文字',                // 標題文字
       // content: '請問是否要繼續？',    // 內文 單行直接給文字，多行可以用 html標籤
       content: description,
-      okText: '繼續',                   // 複寫 確定 的文字 (預設 確定)
-      cancelText: '放棄',               // 複寫 取消 的文字 (預設 取消)
+      // okText: '繼續',                   // 複寫 確定 的文字 (預設 知道了)
       onOk() {                          // 確定 要做的事情
         message.success('繼續作業')
-      },
-      onCancel() {                      // 取消 要做的事情
-        message.error('放棄作業')
       }
     })
   }
@@ -52,13 +48,9 @@ export const modalWarning = (msgList: string[]) => {
       title: '標題文字',                // 標題文字
       // content: '請問是否要繼續？',    // 內文 單行直接給文字，多行可以用 html標籤
       content: description,
-      okText: '繼續',                   // 複寫 確定 的文字 (預設 確定)
-      cancelText: '放棄',               // 複寫 取消 的文字 (預設 取消)
+      // okText: '繼續',                   // 複寫 確定 的文字 (預設 知道了)
       onOk() {                          // 確定 要做的事情
         message.success('繼續作業')
-      },
-      onCancel() {                      // 取消 要做的事情
-        message.error('放棄作業')
       }
     })
   }
@@ -73,13 +65,9 @@ export const modalInfo = (msgList: string[]) => {
       title: '標題文字',                // 標題文字
       // content: '請問是否要繼續？',    // 內文 單行直接給文字，多行可以用 html標籤
       content: description,
-      okText: '繼續',                   // 複寫 確定 的文字 (預設 確定)
-      cancelText: '放棄',               // 複寫 取消 的文字 (預設 取消)
+      // okText: '繼續',                   // 複寫 確定 的文字 (預設 知道了)
       onOk() {                          // 確定 要做的事情
         message.success('繼續作業')
-      },
-      onCancel() {                      // 取消 要做的事情
-        message.error('放棄作業')
       }
     })
   }
@@ -94,13 +82,9 @@ export const modalError = (msgList: string[]) => {
       title: '標題文字',                // 標題文字
       // content: '請問是否要繼續？',    // 內文 單行直接給文字，多行可以用 html標籤
       content: description,
-      okText: '繼續',                   // 複寫 確定 的文字 (預設 確定)
-      cancelText: '放棄',               // 複寫 取消 的文字 (預設 取消)
+      // okText: '繼續',                   // 複寫 確定 的文字 (預設 知道了)
       onOk() {                          // 確定 要做的事情
         message.success('繼續作業')
-      },
-      onCancel() {                      // 取消 要做的事情
-        message.error('放棄作業')
       }
     })
   }
