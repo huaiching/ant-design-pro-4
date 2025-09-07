@@ -79,11 +79,11 @@ const MyForm: React.FC = () => {
             style: { width: '100%' }
           }}
           copyIconProps={false} // 禁用「複製此行」按鈕
-          // deleteIconProps={false} // 禁用默認的「刪除此行」按鈕
-          deleteIconProps={{         // 自定義 默認的「刪除」按鈕樣式
-            tooltipText: '刪除',
-            Icon: RestTwoTone
-          }}
+          deleteIconProps={false} // 禁用默認的「刪除此行」按鈕
+          // deleteIconProps={{         // 自定義 默認的「刪除」按鈕樣式
+          //   tooltipText: '刪除',
+          //   Icon: RestTwoTone
+          // }}
           alwaysShowItemLabel      // 總是顯示項目標籤
         >
           {/* field : 數值資料 */}
