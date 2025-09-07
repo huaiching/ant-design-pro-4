@@ -54,7 +54,7 @@ const MyForm: React.FC = () => {
         submitter={submitterRender()}
       >
         <MliFormRow>
-          {/* 電子郵件欄位 */}
+          {/* 案例 1 */}
           <MliFormCol colSize={1}>
             <ProFormText
               name='email'
@@ -69,10 +69,10 @@ const MyForm: React.FC = () => {
               fieldProps={{ maxLength: 72 }}
             />
           </MliFormCol>
+          {/* 案例 2 */}
           <MliFormCol colSize={1}>
-            <ProForm.Item label="住所地址" style={{ marginBottom: 0 }}>
+            <ProForm.Item label="住所地址(緊湊模式)" style={{ marginBottom: 0 }}>
               <Space.Compact style={{ width: '100%' }}>
-                {/* 郵遞區號，寬度 1 */}
                 <ProForm.Item
                   name="zipCode"
                   noStyle
@@ -80,8 +80,6 @@ const MyForm: React.FC = () => {
                 >
                   <Input placeholder="郵遞區號" style={{ flex: 1 }} />
                 </ProForm.Item>
-
-                {/* 地址，寬度 3 */}
                 <ProForm.Item
                   name="address"
                   noStyle
