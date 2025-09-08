@@ -6,6 +6,7 @@ import Demo04 from './Components/demo04_PageContainer'
 import Demo05 from './Components/demo05_BackTop'
 import Demo06 from './Components/demo06_Splitter'
 import Demo07 from './Components/demo07_Flex'
+import Demo08 from './Components/demo08_ConfigProvider'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
@@ -49,6 +50,11 @@ const AsstManagement: React.FC = () => {
       authCode: '7',
       title: '彈性布局(Flex)',
       component: <Demo07/>
+    },
+    {
+      authCode: '8',
+      title: '全局布局(ConfigProvider)',
+      component: <Demo08/>
     }
   ]
 
