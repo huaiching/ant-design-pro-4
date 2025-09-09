@@ -20,11 +20,11 @@ const MyPage: React.FC = () => {
         <Button type="primary" onClick={() => setEditMode(true)}>
           進入編輯模式
         </Button>
-        <Button
-          className="ignore-guard"
-          onClick={() => setEditMode(false)}
-        >
+        <Button onClick={() => setEditMode(false)}>
           離開編輯模式
+        </Button>
+        <Button>
+          按鈕
         </Button>
       </Space>
     </div>

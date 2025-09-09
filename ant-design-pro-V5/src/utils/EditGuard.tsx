@@ -1,11 +1,12 @@
-import { Modal } from 'antd'
+import { message, Modal } from 'antd'
 import { useEffect, useRef } from 'react'
 
 // 保護頁面，點擊選單時，跳出提示
 const editGuard = (
   editMode: boolean,
-  setEditMode: (v: boolean) => void
+  setEditMode: (v: boolean) => void,
 ) => {
+  // 監控 Model 是否開啟，因為要避免 Model 重複打開
   const isModalOpenRef = useRef(false)
 
   useEffect(() => {
@@ -22,7 +23,6 @@ const editGuard = (
         return
       }
 
-
       // 編輯頁面的容器
       const container = document.querySelector('.ant-pro-layout-container')
       const target = event.target as Element
@@ -38,22 +38,25 @@ const editGuard = (
 
       // target為頁面左邊的選單
       const isMenuClick =
-        target.closest('.ant-pro-base-menu-inline-item-title') ||
-        target.closest('.ant-layout-sider') ||
-        target.closest('.ant-menu-title') ||
-        target.closest('.ant-menu-item')
+        target.closest('.ant-pro-base-menu-inline-item-title') ||   // 左側選單單一項目標題
+        target.closest('.ant-layout-sider') ||                      // 左側側邊欄容器
+        target.closest('.ant-menu-title') ||                        // 菜單群組標題，點擊可能展開子選單或導航
+        target.closest('.ant-menu-item')                            // 菜單子項目，點擊會切換頁面
+
+      // target為左邊選單開啟子選單
+      const isOpenSubMenuClick = 
+        target.closest('.ant-pro-base-menu-inline-item-title') &&   // 左側選單單一項目標題
+        target.closest('.ant-layout-sider')                         // 左側側邊欄容器
 
       // target為頁籤
-      const isTabClick = target.closest('.ant-tabs-tab')
+      // const isTabClick = target.closest('.ant-tabs-tab')
 
-      const isModalClick = target.closest('.ant-modal-content')
-
-      // 點選到左邊選單的話
+      // 點選到左邊選單
       const shouldIntercept =
-        !container.contains(target) || isMenuClick || isTabClick || !isModalClick
+        !container.contains(target) || isMenuClick
 
-      // 如果點選到左邊選單的話，跳出邏輯
-      if (!shouldIntercept || isAntDeisgnFloatingLayer(target)) {
+      // 不是點選到左邊選單 或 左邊選單開啟子選單，跳出邏輯
+      if (!shouldIntercept || isAntDeisgnFloatingLayer(target) || isOpenSubMenuClick) {
         return
       }
 
