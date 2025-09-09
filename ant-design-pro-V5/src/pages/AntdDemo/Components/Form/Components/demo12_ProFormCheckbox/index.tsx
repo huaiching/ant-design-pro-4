@@ -8,31 +8,37 @@ const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
   // 使用 useState 來保存「其他」選項的輸入值
   const [otherValue, setOtherValue] = useState('')
+  const [otherDisabled, setOtherDisabled] = useState<boolean>(true)
+  
+  // 其他 有無勾選的判斷: 有勾選=開放可編輯其他說明；無勾選=關閉其他說明+清空其他說明
+  const handleCheckboxChange = (list: string[]) => {
+    if (!list.includes('4')) {
+      setOtherDisabled(true)
+      setOtherValue('')
+    } else {
+      setOtherDisabled(false)
+    }
+  }
 
   const options = [
-    { label: '讀書', value: 'reading' },
-    { label: '旅行', value: 'travelling' },
-    { label: '運動', value: 'sports' },
-    { // 「其他」選項，內部嵌入一個 Input
+    { label: '讀書', value: '1' },
+    { label: '旅行', value: '2' },
+    { label: '運動', value: '3' },
+    {
       label: (
-        <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+        <>
           其他
           <Input
-            placeholder=""
+            variant="underlined"
             style={{ width: 150, marginLeft: 8 }}
             value={otherValue}
-            onChange={(e) => setOtherValue(e.target.value)}  // 更新狀態
-            onClick={(e) => e.stopPropagation()}
-            /*
-              阻止事件冒泡到父層 Checkbox.Group
-              目的：
-              - 點擊 input 時只聚焦，不觸發 checkbox 勾選/取消
-              - 如果移除，點擊 input 可能會誤觸勾選「其他」
-            */
+            placeholder="其他說明"
+            onChange={(e) => setOtherValue(e.target.value)}
+            disabled={otherDisabled}
           />
-        </span>
+        </>
       ),
-      value: 'other',
+      value: '4',
     },
   ]
 
@@ -54,6 +60,9 @@ const MyForm: React.FC = () => {
             rules={[
               { required: true, message: '請選擇至少一個興趣' }
             ]}
+            fieldProps={{
+              onChange: handleCheckboxChange,
+            }}
           />
         </MliFormRow>
         <Typography.Text type='danger'>
