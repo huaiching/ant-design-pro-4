@@ -110,7 +110,7 @@ const MyForm: React.FC = () => {
             rules={[{ required: true, message: '請選擇狀態' }]}
             fieldProps={{
               defaultValue: '1',
-              onChange: statusChange,
+              onChange: statusChange,   // 透過 onChange 觸發 其他內容的控管函式
               optionType: 'button',
               buttonStyle: 'solid',
             }}

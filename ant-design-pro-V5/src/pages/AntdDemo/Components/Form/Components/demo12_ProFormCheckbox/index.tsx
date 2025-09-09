@@ -61,7 +61,7 @@ const MyForm: React.FC = () => {
               { required: true, message: '請選擇至少一個興趣' }
             ]}
             fieldProps={{
-              onChange: handleCheckboxChange,
+              onChange: handleCheckboxChange,   // 透過 onChange 觸發 其他內容的控管函式
             }}
           />
         </MliFormRow>
