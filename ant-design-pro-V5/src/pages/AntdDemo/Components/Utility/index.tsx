@@ -2,6 +2,7 @@ import React from 'react'
 import Demo01 from './Components/demo01_Navigate'
 import Demo02 from './Components/demo02_SearchReceiveNo'
 import Demo03 from './Components/demo03_xlsx'
+import Demo04 from './Components/demo04_editGuard'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
@@ -25,6 +26,11 @@ const AsstManagement: React.FC = () => {
       authCode: '3',
       title: 'xlsx 前端excel的匯入匯出',
       component: <Demo03/>
+    },
+    {
+      authCode: '4',
+      title: '編輯保護模式(editGuard)',
+      component: <Demo04/>
     }
   ]
 
