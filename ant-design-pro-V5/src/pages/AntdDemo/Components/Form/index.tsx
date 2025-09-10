@@ -14,9 +14,10 @@ import Demo11 from './Components/demo11_ProFormRadio'
 import Demo12 from './Components/demo12_ProFormCheckbox'
 import Demo13 from './Components/demo13_ProFormUploadButton'
 import Demo14 from './Components/demo14_ProFormGroup'
-import Demo15 from './Components/demo15_AutoComplete'
-import Demo16 from './Components/demo16_ProFormList'
-import Demo17 from './Components/demo17_CaseFolw'
+import Demo15 from './Components/demo15_ProFormItem'
+import Demo16 from './Components/demo16_AutoComplete'
+import Demo17 from './Components/demo17_ProFormList'
+import Demo18 from './Components/demo18_CaseFolw'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
@@ -103,18 +104,23 @@ const AsstManagement: React.FC = () => {
     },
     {
       authCode: '15',
-      title: '自動填入(AutoComplete)',
+      title: '欄位容器(ProFormitem)',
       component: <Demo15/>
     },
     {
       authCode: '16',
-      title: '結構清單(ProFormList)',
+      title: '自動填入(AutoComplete)',
       component: <Demo16/>
     },
     {
       authCode: '17',
-      title: '案件流程(CaseFlow)',
+      title: '結構清單(ProFormList)',
       component: <Demo17/>
+    },
+    {
+      authCode: '18',
+      title: '案件流程(CaseFlow)',
+      component: <Demo18/>
     }
   ]
 

@@ -1,7 +1,7 @@
 import { MliFormCol, MliFormRow } from '@mli-csmo/base'
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { Button, Input, message, Space, Typography } from 'antd'
+import { Button, Input, InputNumber, List, message, Space, Typography } from 'antd'
 import React, { useRef } from 'react'
 
 const MyForm: React.FC = () => {
@@ -46,7 +46,7 @@ const MyForm: React.FC = () => {
 
   return (
     <>
-      <Typography.Title level={3}>ProFormText</Typography.Title>
+      <Typography.Title level={3}>ProForm.Item</Typography.Title>
       <ProForm
         grid
         layout='vertical'
@@ -55,21 +55,6 @@ const MyForm: React.FC = () => {
       >
         <MliFormRow>
           {/* 案例 1 */}
-          <MliFormCol colSize={1}>
-            <ProFormText
-              name='email'
-              label='電子郵件'
-              tooltip='這是用戶電子郵件'
-              placeholder='請輸入電子郵件'
-              rules={[
-                { required: true, message: '必填' },
-                // { validator: vaildatorEmail },
-                { required: true, type: 'email' }
-              ]}
-              fieldProps={{ maxLength: 72 }}
-            />
-          </MliFormCol>
-          {/* 案例 2 */}
           <MliFormCol colSize={2}>
             <ProForm.Item label="住所地址(緊湊模式)" required>
               <Space.Compact style={{ width: '100%' }}>
@@ -90,6 +75,42 @@ const MyForm: React.FC = () => {
               </Space.Compact>
             </ProForm.Item>
           </MliFormCol>
+          {/* 案例 2 */}
+          <MliFormCol colSize={2}>
+            <ProForm.Item label="比例" required>
+              <Space.Compact>
+                <ProForm.Item
+                  name="numerator"
+                  noStyle
+                  rules={[{ required: true, message: '請輸入分子' }]}
+                >
+                  <InputNumber placeholder="分子" />
+                </ProForm.Item>
+                <Input
+                  readOnly
+                  value="/"
+                  style={{ width: 30 }}
+                />
+                <ProForm.Item
+                  name="denominator"
+                  noStyle
+                  rules={[{ required: true, message: '請輸入分母' }]}
+                >
+                  <InputNumber placeholder="分母" />
+                </ProForm.Item>
+              </Space.Compact>
+            </ProForm.Item>
+          </MliFormCol>
+          <List
+            size="small"
+            dataSource={[
+              "1. 當元件有多個輸入欄位，但僅需要一個 title，可以透過 ProForm.Item 來將進行封裝。",
+              "2. 通常會搭配 Space.Compact(緊湊模式) 來進行排版，讓欄位可以黏再一起。",
+              "3. 因為 內部欄位 不需要 title，所以 內部不會使用 ProForm 封裝的元件(如：ProFormText)，而是使用 ProForm.Item 在封裝一般的 Antd元件(如：Input)。",
+              "4. 如果需要顯示 必填欄位的 * ，要在 最外層的 ProForm.Item 加上 required，但是 必填檢核 要放在 裡面各自輸入欄位進行設定。"
+            ]}
+            renderItem={(item) => <List.Item>{item}</List.Item>}
+          />
 
         </MliFormRow>
       </ProForm>
