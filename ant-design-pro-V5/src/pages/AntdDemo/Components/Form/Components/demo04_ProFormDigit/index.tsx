@@ -83,7 +83,7 @@ const MyForm: React.FC = () => {
           />
 
           <MliFormCol colSize={1}>
-            <ProForm.Item label="比例" style={{ marginBottom: 0 }}>
+            <ProForm.Item label="比例" style={{ marginBottom: 0 }} required>
               <Space.Compact>
                 <ProForm.Item
                   name="numerator"
