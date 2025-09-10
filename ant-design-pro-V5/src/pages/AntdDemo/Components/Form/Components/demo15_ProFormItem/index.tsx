@@ -105,7 +105,8 @@ const MyForm: React.FC = () => {
             size="small"
             dataSource={[
               "1. 當元件有多個輸入欄位，但僅需要一個 title，可以透過 ProForm.Item 來將進行封裝。",
-              "2. 通常會搭配 Space.Compact(緊湊模式) 來進行排版，讓欄位可以黏再一起。",
+              "2. 外層 使用 一個 ProForm.Item 搭配 label 和 required 屬性 來設定 元件標題 與 必填指示。",
+              "　內層 使用 多個 ProForm.Item 搭配 Antd 元件 來定義 輸入欄位 與 規則，並搭配 Space.Compact(緊湊模式) 來進行排版，讓欄位可以黏再一起。",
               "3. 因為 內部欄位 不需要 title，所以 內部不會使用 ProForm 封裝的元件(如：ProFormText)，而是使用 ProForm.Item 在封裝一般的 Antd元件(如：Input)。",
               "4. 如果需要顯示 必填欄位的 * ，要在 最外層的 ProForm.Item 加上 required，但是 必填檢核 要放在 裡面各自輸入欄位進行設定。"
             ]}
