@@ -71,7 +71,7 @@ const MyForm: React.FC = () => {
           </MliFormCol>
           {/* 案例 2 */}
           <MliFormCol colSize={1}>
-            <ProForm.Item label="住所地址(緊湊模式)" style={{ marginBottom: 0 }}>
+            <ProForm.Item label="住所地址(緊湊模式)" style={{ marginBottom: 0 }} required>
               <Space.Compact style={{ width: '100%' }}>
                 <ProForm.Item
                   name="zipCode"
