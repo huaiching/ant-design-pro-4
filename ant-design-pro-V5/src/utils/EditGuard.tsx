@@ -1,10 +1,10 @@
-import { message, Modal } from 'antd'
+import { Modal } from 'antd'
 import { useEffect, useRef } from 'react'
 
 // 保護頁面，點擊選單時，跳出提示
 const editGuard = (
   editMode: boolean,
-  setEditMode: (v: boolean) => void,
+  setEditMode: (v: boolean) => void
 ) => {
   // 監控 Model 是否開啟，因為要避免 Model 重複打開
   const isModalOpenRef = useRef(false)
@@ -31,10 +31,10 @@ const editGuard = (
         return
       }
 
-      // 忽略存檔保護：設計給 存檔後的頁面跳轉用
-      if (target.closest('.ignore-guard')) {
-        return
-      }
+      // 菜單伸縮，跳出邏輯
+      if (target.closest('.ant-pro-sider-collapsed-button')) return
+      // 伸縮菜單子選單，跳出邏輯
+      if (target.closest('.ant-menu-submenu-title')) return
 
       // target為頁面左邊的選單
       const isMenuClick =
@@ -43,20 +43,12 @@ const editGuard = (
         target.closest('.ant-menu-title') ||                        // 菜單群組標題，點擊可能展開子選單或導航
         target.closest('.ant-menu-item')                            // 菜單子項目，點擊會切換頁面
 
-      // target為左邊選單開啟子選單
-      const isOpenSubMenuClick = 
-        target.closest('.ant-pro-base-menu-inline-item-title') &&   // 左側選單單一項目標題
-        target.closest('.ant-layout-sider')                         // 左側側邊欄容器
-
-      // target為頁籤
-      // const isTabClick = target.closest('.ant-tabs-tab')
-
       // 點選到左邊選單
       const shouldIntercept =
         !container.contains(target) || isMenuClick
 
       // 不是點選到左邊選單 或 左邊選單開啟子選單，跳出邏輯
-      if (!shouldIntercept || isAntDeisgnFloatingLayer(target) || isOpenSubMenuClick) {
+      if (!shouldIntercept || isAntDeisgnFloatingLayer(target)) {
         return
       }
 
