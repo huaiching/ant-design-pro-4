@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react'
 import ProForm, { ProFormInstance, ProFormRadio } from '@ant-design/pro-form'
 import { MliFormRow } from '@mli-csmo/base'
 import { Input } from 'antd'
+import React, { useRef, useState } from 'react'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -53,7 +53,7 @@ const MyForm: React.FC = () => {
           />
         </>
       ),
-      value: '4',
+      value: '4'
     }
   ]
 
@@ -76,19 +76,14 @@ const MyForm: React.FC = () => {
           />
         </>
       ),
-      value: '5',
+      value: '5'
     }
   ]
 
   return (
     <>
       <h1>ProFormRadio.Group</h1>
-      <ProForm
-        grid
-        layout="vertical"
-        formRef={formRef}
-        submitter={false}
-      >
+      <ProForm grid layout="vertical" formRef={formRef} submitter={false}>
         <MliFormRow>
           <Input placeholder="123" variant="borderless" />
           <ProFormRadio.Group
@@ -99,7 +94,7 @@ const MyForm: React.FC = () => {
             rules={[{ required: true, message: '不可空白' }]}
             fieldProps={{
               defaultValue: '1',
-              onChange: hobbiesChange,
+              onChange: hobbiesChange
             }}
           />
           <ProFormRadio.Group
@@ -110,9 +105,9 @@ const MyForm: React.FC = () => {
             rules={[{ required: true, message: '請選擇狀態' }]}
             fieldProps={{
               defaultValue: '1',
-              onChange: statusChange,   // 透過 onChange 觸發 其他內容的控管函式
+              onChange: statusChange, // 透過 onChange 觸發 其他內容的控管函式
               optionType: 'button',
-              buttonStyle: 'solid',
+              buttonStyle: 'solid'
             }}
           />
         </MliFormRow>
