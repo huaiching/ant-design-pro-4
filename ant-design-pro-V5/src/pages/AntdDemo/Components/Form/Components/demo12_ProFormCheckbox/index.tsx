@@ -1,15 +1,14 @@
-
-import React, { useRef, useState } from 'react'
 import ProForm, { ProFormCheckbox, ProFormInstance } from '@ant-design/pro-form'
 import { MliFormRow } from '@mli-csmo/base'
 import { Input, Typography } from 'antd'
+import React, { useRef, useState } from 'react'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
   // 使用 useState 來保存「其他」選項的輸入值
   const [otherValue, setOtherValue] = useState('')
   const [otherDisabled, setOtherDisabled] = useState<boolean>(true)
-  
+
   // 其他 有無勾選的判斷: 有勾選=開放可編輯其他說明；無勾選=關閉其他說明+清空其他說明
   const handleCheckboxChange = (list: string[]) => {
     if (!list.includes('4')) {
@@ -38,35 +37,29 @@ const MyForm: React.FC = () => {
           />
         </>
       ),
-      value: '4',
-    },
+      value: '4'
+    }
   ]
 
   return (
     <>
       <h1>ProFormCheckbox.Group</h1>
-      <ProForm
-        grid
-        layout='vertical'
-        formRef={formRef}
-        submitter={false}
-      >
+      <ProForm grid layout="vertical" formRef={formRef} submitter={false}>
         <MliFormRow>
           <ProFormCheckbox.Group
             colSize={2}
-            name='hobbies'
-            label='選擇興趣'
+            name="hobbies"
+            label="選擇興趣"
             options={options}
-            rules={[
-              { required: true, message: '請選擇至少一個興趣' }
-            ]}
+            rules={[{ required: true, message: '請選擇至少一個興趣' }]}
             fieldProps={{
-              onChange: handleCheckboxChange,   // 透過 onChange 觸發 其他內容的控管函式
+              onChange: handleCheckboxChange // 透過 onChange 觸發 其他內容的控管函式
             }}
           />
         </MliFormRow>
-        <Typography.Text type='danger'>
-          其他 後面使用的 Input 是另外保存的，範例是使用 useState，但實際上可以改成 Mobx 方便後續抓取。
+        <Typography.Text type="danger">
+          其他 後面使用的 Input 是另外保存的，範例是使用 useState，但實際上可以改成 Mobx
+          方便後續抓取。
         </Typography.Text>
       </ProForm>
     </>
