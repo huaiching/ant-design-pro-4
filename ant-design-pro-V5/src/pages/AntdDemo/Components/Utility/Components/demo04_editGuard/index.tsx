@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Button, Space } from 'antd'
+import { Alert, Button, Card, List, Space, Typography } from 'antd'
 import editGuard from '@/utils/EditGuard'
+import { MliFormRow } from '@mli-csmo/base'
 
 const MyPage: React.FC = () => {
 
@@ -10,12 +11,14 @@ const MyPage: React.FC = () => {
 
   return (
     <div>
-      <h2>保護頁面範例</h2>
+      <Typography.Title level={2}>保護頁面範例</Typography.Title>
       {editMode ? (
-        <p>目前在編輯模式中</p>
+        <Alert message="目前在 編輯模式 中" type="warning" showIcon />
       ) : (
-        <p>目前在瀏覽模式</p>
+        <Alert message="目前在 瀏覽模式 中" type="success" showIcon />
       )}
+      <br />
+      <br />
       <Space>
         <Button type="primary" onClick={() => setEditMode(true)}>
           進入編輯模式
@@ -23,10 +26,24 @@ const MyPage: React.FC = () => {
         <Button onClick={() => setEditMode(false)}>
           離開編輯模式
         </Button>
-        <Button>
-          按鈕
-        </Button>
       </Space>
+      <br />
+      <br />
+      <br />
+      <Typography.Title level={3}>使用說明：</Typography.Title>
+      <List
+        size="small"
+        dataSource={[
+          "1. 開啟 編輯保護模式 時，透過 左側菜單 進行 頁面跳轉 時，會出現告警視窗。",
+          "2. 使用時，需要於頁面中，使用下面指令　開啟編輯保護模式。",
+          "　const [editMode, setEditMode] = useState(true)",
+          "　editGuard(editMode, setEditMode)",
+          "3. 需要關閉 編輯保護模式 時，觸發下面指令 即可。",
+          "　setEditMode(false)",
+          "4. 相關工具 位於 utils/EditGuard.tsx。"
+        ]}
+        renderItem={(item) => <List.Item>{item}</List.Item>}
+      />
     </div>
   )
 }
