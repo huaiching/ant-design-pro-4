@@ -35,6 +35,8 @@ const editGuard = (
       if (target.closest('.ant-pro-sider-collapsed-button')) return
       // 伸縮菜單子選單，跳出邏輯
       if (target.closest('.ant-menu-submenu-title')) return
+      // 按鈕，跳出邏輯
+      if (target.closest('button')) return
 
       // target為頁面左邊的選單
       const isMenuClick =
