@@ -1,10 +1,10 @@
 // 引入所需元件與函式庫
 import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { Button, Card, message, Spin } from 'antd'
-import React, { useEffect, useRef, useState } from 'react'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
+import { Button, Card, message, Spin } from 'antd'
 import dayjs from 'dayjs'
+import React, { useEffect, useRef, useState } from 'react'
 import './store/index.less'
 
 // 主元件定義
@@ -75,10 +75,10 @@ const NestedEditableProTable: React.FC = () => {
     ]
 
     // 將字串日期轉換為 dayjs 物件以供 ProForm 處理
-    const chgData = data.map(po => ({
+    const chgData = data.map((po) => ({
       ...po,
       poIssueDate: dayjs(po.poIssueDate, 'TTT/MM/DD'),
-      coList: po.coList.map(co => ({
+      coList: po.coList.map((co) => ({
         ...co,
         coIssueDate: dayjs(co.coIssueDate, 'TTT/MM/DD')
       }))
@@ -88,14 +88,17 @@ const NestedEditableProTable: React.FC = () => {
     formRef.current?.setFieldsValue({ editTable: chgData })
 
     // 初始化保單可編輯列
-    setEditableKeys(data.map(item => item.id))
+    setEditableKeys(data.map((item) => item.id))
 
     // 初始化每張保單對應的保障項目可編輯列
     setCoEditableKeys(
-      data.reduce((acc, item) => ({
-        ...acc,
-        [item.id]: item.coList?.map(co => co.id) || []
-      }), {})
+      data.reduce(
+        (acc, item) => ({
+          ...acc,
+          [item.id]: item.coList?.map((co) => co.id) || []
+        }),
+        {}
+      )
     )
     // 預設展開全部資料
     setExpandedRowKeys(chgData.map((item) => item.id))
@@ -107,7 +110,7 @@ const NestedEditableProTable: React.FC = () => {
       render: () => (
         <FooterToolbar>
           <Button
-            type='primary'
+            type="primary"
             onClick={async () => {
               try {
                 // 驗證整個表單
@@ -119,7 +122,7 @@ const NestedEditableProTable: React.FC = () => {
                 message.error('請檢查表單錯誤')
               }
             }}
-            key='save'
+            key="save"
           >
             確認
           </Button>
@@ -204,24 +207,18 @@ const NestedEditableProTable: React.FC = () => {
 
   return (
     <>
-      <ProForm
-        grid
-        layout='vertical'
-        formRef={formRef}
-        submitter={submitterRender()}
-      >
+      <ProForm grid layout="vertical" formRef={formRef} submitter={submitterRender()}>
         <Card style={{ width: '100%' }}>
           <Spin spinning={loading}>
             <EditableProTable
-              name='editTable'
+              name="editTable"
               columns={poColumns}
-              rowKey='id'
+              rowKey="id"
               scroll={{
-                x: 'max-content',
-                y: 600
+                x: 1000 // 父子表格一致
               }}
               // rowClassName={'ant-table-row-selected'}  // 設定表格底色: 預設顏色
-              rowClassName={() => 'custom-selected-row'}  // 設定表格底色: 透過 CSS 設定
+              rowClassName={() => 'custom-selected-row'} // 設定表格底色: 透過 CSS 設定
               // 新增按鈕
               recordCreatorProps={{
                 newRecordType: 'dataSource',
@@ -242,11 +239,11 @@ const NestedEditableProTable: React.FC = () => {
               expandable={{
                 expandedRowRender: (record, index) => {
                   // 有些型別定義 index 可能是可選，保險起見再算一次
-                  const table = formRef.current?.getFieldValue('editTable') || [];
+                  const table = formRef.current?.getFieldValue('editTable') || []
                   const rowIndex =
                     typeof index === 'number'
                       ? index
-                      : table.findIndex((x: any) => x.id === record.id);
+                      : table.findIndex((x: any) => x.id === record.id)
 
                   return (
                     <EditableProTable
@@ -254,25 +251,28 @@ const NestedEditableProTable: React.FC = () => {
                       columns={coColumns}
                       // ✅ 用索引定位到當列的 coList
                       name={['editTable', rowIndex, 'coList']}
+                      scroll={{
+                        x: 1000 // 父子表格一致
+                      }}
                       recordCreatorProps={{
                         newRecordType: 'dataSource',
                         record: () => ({
-                          id: (Math.random() * 1000000).toFixed(0),
+                          id: (Math.random() * 1000000).toFixed(0)
                         }),
-                        creatorButtonText: '新增保障',
+                        creatorButtonText: '新增保障'
                       }}
                       editable={{
                         type: 'multiple',
                         editableKeys: coEditableKeys[record.id] || [],
                         onChange: (keys) =>
                           setCoEditableKeys((prev) => ({ ...prev, [record.id]: keys })),
-                        actionRender: (row, config, defaultDoms) => [defaultDoms.delete],
+                        actionRender: (row, config, defaultDoms) => [defaultDoms.delete]
                       }}
                     />
-                  );
+                  )
                 },
                 expandedRowKeys,
-                onExpandedRowsChange: (keys: any) => setExpandedRowKeys(keys),
+                onExpandedRowsChange: (keys: any) => setExpandedRowKeys(keys)
               }}
             />
           </Spin>
