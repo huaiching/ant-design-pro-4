@@ -216,7 +216,8 @@ const MyForm: React.FC = () => {
                 record: () => ({
                   id: (Math.random() * 1000000).toFixed(0)
                 }),
-                creatorButtonText: '新增資料'
+                creatorButtonText: '新增資料',
+                style: { backgroundColor: 'rgba(206, 230, 255, 1)' }
               }}
               // 編輯設定
               editable={{

@@ -2,10 +2,11 @@
 import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
-import { Button, Card, message, Spin } from 'antd'
+import { Button, Card, message, Popconfirm, Spin } from 'antd'
 import dayjs from 'dayjs'
 import React, { useEffect, useRef, useState } from 'react'
 import './store/index.less'
+import { DeleteOutlined } from '@ant-design/icons'
 
 // 主元件定義
 const NestedEditableProTable: React.FC = () => {
@@ -225,7 +226,8 @@ const NestedEditableProTable: React.FC = () => {
                 record: () => ({
                   id: (Math.random() * 1000000).toFixed(0)
                 }),
-                creatorButtonText: '新增保單'
+                creatorButtonText: '新增保單',
+                style: { backgroundColor: 'rgba(206, 230, 255, 1)' }
               }}
               // 編輯設定
               editable={{
@@ -233,7 +235,24 @@ const NestedEditableProTable: React.FC = () => {
                 editableKeys: editableKeys,
                 // 更新對應保單的保單可編輯列
                 onChange: setEditableKeys,
-                actionRender: (row, config, defaultDoms) => [defaultDoms.delete]
+                actionRender: (row) => [
+                  <Popconfirm
+                    key="delete"
+                    title="確定刪除嗎？"
+                    onConfirm={() => {
+                      // 取得現有資料
+                      const currentData = formRef.current?.getFieldValue('editTable') || []
+                      // 過濾刪除該列
+                      const newData = currentData.filter((item: any) => item.id !== row.id)
+                      // 更新表單欄位資料
+                      formRef.current?.setFieldValue('editTable', newData)
+                      // 同步更新 editableKeys
+                      setEditableKeys(newData.map((item: any) => item.id))
+                    }}
+                  >
+                    <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: 16 }} />
+                  </Popconfirm>
+                ]
               }}
               // 子表格（保障清單）展開設定
               expandable={{
@@ -259,14 +278,40 @@ const NestedEditableProTable: React.FC = () => {
                         record: () => ({
                           id: (Math.random() * 1000000).toFixed(0)
                         }),
-                        creatorButtonText: '新增保障'
+                        creatorButtonText: '新增保障',
+                        style: { backgroundColor: 'rgba(243, 255, 200, 1)' }
                       }}
                       editable={{
                         type: 'multiple',
                         editableKeys: coEditableKeys[record.id] || [],
                         onChange: (keys) =>
                           setCoEditableKeys((prev) => ({ ...prev, [record.id]: keys })),
-                        actionRender: (row, config, defaultDoms) => [defaultDoms.delete]
+                        actionRender: (row, config, defaultDoms) => [
+                          <Popconfirm
+                            key="delete"
+                            title="確定刪除保障嗎？"
+                            onConfirm={() => {
+                              const table = formRef.current?.getFieldValue('editTable') || []
+                              const poIndex = table.findIndex((po: any) => po.id === record.id)
+
+                              if (poIndex !== -1) {
+                                const oldCoList = table[poIndex].coList || []
+                                const newCoList = oldCoList.filter((co: any) => co.id !== row.id)
+
+                                // 更新表單資料
+                                formRef.current?.setFieldValue(['editTable', poIndex, 'coList'], newCoList)
+
+                                // 更新 coEditableKeys
+                                setCoEditableKeys((prev) => ({
+                                  ...prev,
+                                  [record.id]: newCoList.map((co: any) => co.id)
+                                }))
+                              }
+                            }}
+                          >
+                            <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: 16 }} />
+                          </Popconfirm>
+                        ]
                       }}
                     />
                   )
