@@ -114,6 +114,7 @@ const ProTableDemo: React.FC = () => {
           setDataSource(chgData)
           return { data: chgData, success: true, total: chgData.length }
         }}
+        cardProps={false}        // 移除外層 Card
         // 手動請求
         manualRequest={true}
         // 搜尋表單佈局
