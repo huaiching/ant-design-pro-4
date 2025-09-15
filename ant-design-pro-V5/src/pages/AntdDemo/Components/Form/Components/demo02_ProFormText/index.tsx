@@ -3,6 +3,7 @@ import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, Input, message, Space, Typography } from 'antd'
 import React, { useRef } from 'react'
+import { isGuiNumberValid, isNationalIdentificationNumberValid, isResidentCertificateNumberValid } from 'taiwan-id-validator'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -36,12 +37,21 @@ const MyForm: React.FC = () => {
     }
   }
 
-  const vaildatorEmail = (rule: any, value: any) => {
-    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    if (!re.test(value)) {
-      return Promise.reject('不符合規範!!')
+  const checkClientId = (rule: any, value: any) => {
+    // 檢查 中華民國身分證字號
+    if (isNationalIdentificationNumberValid(value)) {
+      return Promise.resolve()
     }
-    return Promise.resolve()
+    // 檢查 統一編號
+    if (isGuiNumberValid(value)) {
+      return Promise.resolve()
+    }
+    // 檢查 居留證編號
+    if (isResidentCertificateNumberValid(value)) {
+      return Promise.resolve()
+    }
+    
+    return Promise.reject('身分證字號格式錯誤')
   }
 
   return (
@@ -55,20 +65,18 @@ const MyForm: React.FC = () => {
       >
         <MliFormRow>
           {/* 案例 1 */}
-          <MliFormCol colSize={1}>
-            <ProFormText
-              name='email'
-              label='電子郵件'
-              tooltip='這是用戶電子郵件'
-              placeholder='請輸入電子郵件'
-              rules={[
-                { required: true, message: '必填' },
-                // { validator: vaildatorEmail },
-                { required: true, type: 'email' }
-              ]}
-              fieldProps={{ maxLength: 72 }}
-            />
-          </MliFormCol>
+          <ProFormText
+            name='email'
+            label='電子郵件'
+            tooltip='這是用戶電子郵件'
+            placeholder='請輸入電子郵件'
+            rules={[
+              { required: true, message: '必填' },
+              // { validator: vaildatorEmail },
+              { required: true, type: 'email' }
+            ]}
+            fieldProps={{ maxLength: 72 }}
+          />
           {/* 案例 2 */}
           <MliFormCol colSize={2}>
             <ProForm.Item label="住所地址(緊湊模式)" required>
@@ -90,7 +98,31 @@ const MyForm: React.FC = () => {
               </Space.Compact>
             </ProForm.Item>
           </MliFormCol>
+        </MliFormRow>
 
+        <MliFormRow>
+          {/* 案例 3 */}
+          <ProFormText
+            name="clientId"
+            label="客戶證號"
+            tooltip='僅能輸入英數'
+            placeholder=""
+            rules={[
+              { required: true, message: '必填' },
+              { validator: checkClientId }
+            ]}
+            fieldProps={{
+              maxLength: 10,
+              onChange: (e) => {
+                // 輸入文字轉換: 只允許輸入英數字，並強制轉大寫
+                const upper = e.target.value
+                  .replace(/[^a-zA-Z0-9]/g, '') // 只允許輸入英數字
+                  .toUpperCase()  // 強制轉大寫
+                // 更新數值
+                formRef?.current?.setFieldValue('clientId', upper)
+              },
+            }}
+          />
         </MliFormRow>
       </ProForm>
     </>
