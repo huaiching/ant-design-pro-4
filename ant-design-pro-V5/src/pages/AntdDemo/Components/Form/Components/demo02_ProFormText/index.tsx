@@ -72,7 +72,6 @@ const MyForm: React.FC = () => {
             placeholder='請輸入電子郵件'
             rules={[
               { required: true, message: '必填' },
-              // { validator: vaildatorEmail },
               { required: true, type: 'email' }
             ]}
             fieldProps={{ maxLength: 72 }}
