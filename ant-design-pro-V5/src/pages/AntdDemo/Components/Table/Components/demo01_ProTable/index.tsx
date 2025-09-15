@@ -80,14 +80,29 @@ const NestedProTable: React.FC = () => {
       submitter={false} // 不顯示提交按鈕
       layout="vertical" // 垂直排列表單項目
     >
+      <h2>保單清單</h2>
+          <Input
+            key="search"
+            placeholder="快速搜尋"
+            allowClear
+            onChange={(e) => setSearchText(e.target.value)}
+            value={searchText}
+          />
       <ProTable
+        // headerTitle="保單清單"
         rowKey="key" // 每筆唯一 key
         actionRef={actionRef} // 表格操作參考
         columns={policyColumns} // 表格欄位
         dataSource={filteredData} // 傳入篩選後的資料，實現快速搜尋功能
         options={false} // 關閉選單
         search={false} // 關閉搜尋欄
-        pagination={false} // 關閉分頁
+        // pagination={false} // 關閉分頁
+        pagination={{
+          showQuickJumper: true,  // 快速跳轉頁數
+          showSizeChanger: true,  // 顯示改變每頁筆數
+          pageSize: 5,            // 預設每頁筆數
+          pageSizeOptions: ['5', '10', '20', '50', '100']  // 每頁筆數選項
+        }}
         // 捲動設定
         scroll={{
           x: 'max-content',
@@ -98,16 +113,15 @@ const NestedProTable: React.FC = () => {
           selectedRowKeys,
           onChange: (keys) => setSelectedRowKeys(keys)
         }}
-        toolBarRender={() => [
-          <Input
-            key="search"
-            placeholder="快速搜尋"
-            allowClear
-            onChange={(e) => setSearchText(e.target.value)}
-            value={searchText}
-          />
-        ]}
-        headerTitle="保單清單"
+        // toolBarRender={() => [
+        //   <Input
+        //     key="search"
+        //     placeholder="快速搜尋"
+        //     allowClear
+        //     onChange={(e) => setSearchText(e.target.value)}
+        //     value={searchText}
+        //   />
+        // ]}
         /** ✅ 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
         tableAlertRender={() => (
           <Button color="danger" variant="filled" onClick={handleExport}>

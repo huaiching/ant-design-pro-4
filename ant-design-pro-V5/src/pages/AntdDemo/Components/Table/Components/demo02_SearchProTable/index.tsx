@@ -136,6 +136,7 @@ const ProTableDemo: React.FC = () => {
         // 分頁
         pagination={{
           showQuickJumper: true,  // 快速跳轉頁數
+          showSizeChanger: true,  // 顯示改變每頁筆數
           pageSize: 5,            // 預設每頁筆數
           pageSizeOptions: ['5', '10', '20', '50', '100']  // 每頁筆數選項
         }}

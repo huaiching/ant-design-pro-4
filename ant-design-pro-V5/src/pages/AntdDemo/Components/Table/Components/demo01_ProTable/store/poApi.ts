@@ -1,17 +1,15 @@
 export const fetchAllData = async (): Promise<any[]> => {
   await new Promise((res) => setTimeout(res, 100)) // 模擬延遲
-  return [
-    {
-      key: '1',
-      policyNo: 'P20250716001',
-      poStsCode: '有效',
-      poIssueDate: '114/01/01',
-    },
-    {
-      key: '2',
-      policyNo: 'P20250716002',
-      poStsCode: '失效',
-      poIssueDate: '113/12/21',
-    },
-  ]
+
+  const data = Array.from({ length: 50 }, (_, i) => {
+    const id = i + 1
+    return {
+      key: String(id),
+      policyNo: `P20250716${id.toString().padStart(3, '0')}`,
+      poStsCode: id % 2 === 0 ? '有效' : '失效',
+      poIssueDate: `114/01/${(id % 30 + 1).toString().padStart(2, '0')}`,
+    }
+  })
+
+  return data
 }
