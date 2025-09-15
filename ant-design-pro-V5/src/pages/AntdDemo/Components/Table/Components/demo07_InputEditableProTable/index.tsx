@@ -181,7 +181,7 @@ const MyForm: React.FC = () => {
         formRef={formRef}
         submitter={submitterRender()} // 自訂底部 submit 區塊
       >
-        <Card style={{ width: '100%' }}>
+        <div style={{ width: '100%' }}>
           <Spin spinning={loading}>
             <EditableProTable
               name="editTable" // 綁定表單欄位
@@ -213,7 +213,7 @@ const MyForm: React.FC = () => {
               }}
             />
           </Spin>
-        </Card>
+        </div>
       </ProForm>
     </>
   )

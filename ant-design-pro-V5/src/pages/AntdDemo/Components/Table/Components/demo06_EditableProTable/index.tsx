@@ -203,7 +203,7 @@ const MyForm: React.FC = () => {
     <>
       <h1>EditableProTable</h1>
       <ProForm grid layout="vertical" formRef={formRef} submitter={submitterRender()}>
-        <Card style={{ width: '100%' }}>
+        <div style={{ width: '100%' }}>
           <Spin spinning={loading}>
             <EditableProTable
               name="editTable"
@@ -245,7 +245,7 @@ const MyForm: React.FC = () => {
               }}
             />
           </Spin>
-        </Card>
+        </div>
       </ProForm>
     </>
   )

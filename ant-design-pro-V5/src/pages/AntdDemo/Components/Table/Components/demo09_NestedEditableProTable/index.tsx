@@ -209,7 +209,7 @@ const NestedEditableProTable: React.FC = () => {
   return (
     <>
       <ProForm grid layout="vertical" formRef={formRef} submitter={submitterRender()}>
-        <Card style={{ width: '100%' }}>
+        <div style={{ width: '100%' }}>
           <Spin spinning={loading}>
             <EditableProTable
               name="editTable"
@@ -321,7 +321,7 @@ const NestedEditableProTable: React.FC = () => {
               }}
             />
           </Spin>
-        </Card>
+        </div>
       </ProForm>
     </>
   )

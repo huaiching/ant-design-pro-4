@@ -135,6 +135,7 @@ const NestedProTable: React.FC = () => {
         actionRef={actionRef} // 表格操作參考
         columns={policyColumns} // 表格欄位
         dataSource={filteredData} // 傳入篩選後的資料，實現快速搜尋功能
+        cardProps={false}      //  移除 Card 包裝
         search={false} // 關閉搜尋欄
         pagination={false} // 關閉分頁
         // rowClassName={'ant-table-row-selected'}  // 設定表格底色: 預設顏色

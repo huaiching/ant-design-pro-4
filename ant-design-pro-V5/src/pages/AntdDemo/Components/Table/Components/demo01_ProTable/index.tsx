@@ -81,13 +81,13 @@ const NestedProTable: React.FC = () => {
       layout="vertical" // 垂直排列表單項目
     >
       <h2>保單清單</h2>
-          <Input
-            key="search"
-            placeholder="快速搜尋"
-            allowClear
-            onChange={(e) => setSearchText(e.target.value)}
-            value={searchText}
-          />
+      <Input
+        key="search"
+        placeholder="快速搜尋"
+        allowClear
+        onChange={(e) => setSearchText(e.target.value)}
+        value={searchText}
+      />
       <ProTable
         // headerTitle="保單清單"
         rowKey="key" // 每筆唯一 key

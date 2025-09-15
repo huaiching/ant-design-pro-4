@@ -119,6 +119,7 @@ const ShowPolicyTable: React.FC = () => {
           columns={columns}
           dataSource={dataSource}
           actionRef={actionRef}
+          cardProps={false}      //  移除 Card 包裝
           rowKey='policyNo'
           search={false}
           pagination={false}

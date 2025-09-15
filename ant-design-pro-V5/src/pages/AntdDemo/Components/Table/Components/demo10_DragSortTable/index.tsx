@@ -91,6 +91,7 @@ const DragSortTableExample: React.FC = () => {
         search={false}                        // 關閉搜尋欄
         pagination={false}                    // 關閉分頁功能
         dataSource={dataSource}               // 資料來源（直接綁定 state）
+        cardProps={false}                     //  移除 Card 包裝
         dragSortKey="sort"                    // 拖曳排序的對應欄位（自動顯示拖曳把手）
         // ✅ 拖曳排序完成後觸發：更新畫面與提示訊息
         onDragSortEnd={(

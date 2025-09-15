@@ -133,6 +133,7 @@ const PolicyTable: React.FC = () => {
         rowKey='policyNo'     // 唯一鍵
         columns={columns}     // 表格欄位
         dataSource={mockData} // 數據實體
+        cardProps={false}     //  移除 Card 包裝
         search={false}        // 關閉搜尋功能
         pagination={false}    // 關閉分頁功能
         // 點擊行時的事件處理
