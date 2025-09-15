@@ -54,6 +54,13 @@ export const parseRocDate = (input: string): Dayjs | null => {
   }
   // 只留下數字
   let value = input.replace(/\D/g, '')
+
+  // 西元年 轉 民國年
+  if (value.length === 8) {
+    const year = parseInt(value.slice(0, 4), 10) - 1911
+    value = year.toString() + value.slice(4, 8)
+  }
+
   // 規則轉換
   if (value.length === 6) {
     value = '0' + value
@@ -86,6 +93,13 @@ export const parseRocDateMonth = (input: string): Dayjs | null => {
   }
   // 只留下數字
   let value = input.replace(/\D/g, '')
+
+  // 西元年 轉 民國年
+  if (value.length === 6) {
+    const year = parseInt(value.slice(0, 4), 10) - 1911
+    value = year.toString() + value.slice(4, 6)
+  }
+
   // 規則轉換
   if (value.length === 4) {
     value = '0' + value
@@ -105,4 +119,3 @@ export const parseRocDateMonth = (input: string): Dayjs | null => {
   const date = dayjs(dateStr, 'TTT/MM')
   return date.isValid() ? date : null
 }
-
