@@ -5,7 +5,7 @@
 
 import type { ActionType, ProFormInstance } from '@ant-design/pro-components'
 import { ProForm, ProTable } from '@ant-design/pro-components'
-import { Button, Input, List, message, Typography } from 'antd'
+import { Button, Input, List, message } from 'antd'
 import dayjs from 'dayjs'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as poApi from './store/poApi'
@@ -30,6 +30,11 @@ const NestedProTable: React.FC = () => {
   const [dataSource, setDataSource] = useState<any[]>([]) // 主表資料
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]) // 勾選中的保單 key
   const [searchText, setSearchText] = useState('') // 快速搜尋輸入文字狀態
+  // ProTable 的 分頁控制
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 5
+  })
 
   // ✅ 頁面初始化：取得資料並設定到 form 與畫面
   useEffect(() => {
@@ -98,10 +103,14 @@ const NestedProTable: React.FC = () => {
         search={false} // 關閉搜尋欄
         // pagination={false} // 關閉分頁
         pagination={{
-          showQuickJumper: true,  // 快速跳轉頁數
-          showSizeChanger: true,  // 顯示改變每頁筆數
-          pageSize: 5,            // 預設每頁筆數
-          pageSizeOptions: ['5', '10', '20', '50', '100']  // 每頁筆數選項
+          current: pagination.current,
+          pageSize: pagination.pageSize,
+          showQuickJumper: true,
+          showSizeChanger: true,
+          pageSizeOptions: ['5', '10', '20', '50', '100'],
+          onChange: (page, pageSize) => {
+            setPagination({ current: page, pageSize })
+          }
         }}
         // 捲動設定
         scroll={{
@@ -136,13 +145,13 @@ const NestedProTable: React.FC = () => {
         )}
       />
       <List
-        size='small'
+        size="small"
         dataSource={[
-          '1. Date: 日期格式 fieldProps.format 設定為 \'TTT/MM/DD\' (民國年)。',
-          '2. 前端日期資料 (string) 要轉換為 dayjs 物件時，請使用 dayjs(XXX, \'TTT/MM/DD\') 進行格式轉換。',
-          '3. 導出數據時，要使用 dayjs(XXX).format(\'TTT/MM/DD\') 來將 日期 轉換為 string',
+          "1. Date: 日期格式 fieldProps.format 設定為 'TTT/MM/DD' (民國年)。",
+          "2. 前端日期資料 (string) 要轉換為 dayjs 物件時，請使用 dayjs(XXX, 'TTT/MM/DD') 進行格式轉換。",
+          "3. 導出數據時，要使用 dayjs(XXX).format('TTT/MM/DD') 來將 日期 轉換為 string"
         ]}
-        renderItem={item => <List.Item>{item}</List.Item>}
+        renderItem={(item) => <List.Item>{item}</List.Item>}
       />
     </ProForm>
   )
