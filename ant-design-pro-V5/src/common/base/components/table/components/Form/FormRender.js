@@ -23,7 +23,6 @@ import omit from 'omit.js';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useIntl as useReactIntl } from 'react-intl';
 import { renderValueType } from "../../../field/RenderField";
-import { TABLE_SESSION_KEY } from "../../utils/clearTableSessionStorage";
 import { jsx as _jsx } from "react/jsx-runtime";
 function toLowerLine(str) {
   var temp = str.replace(/[A-Z]/g, function (match) {
@@ -249,7 +248,12 @@ var FormRender = function FormRender(_ref) {
       }
     };
   }, [submitButtonLoading]);
-  var storageData = sessionStorage.getItem("".concat(TABLE_SESSION_KEY, "_").concat(moduleName, "_").concat(location.pathname));
+
+  // const storageData = sessionStorage.getItem(
+  //   `${TABLE_SESSION_KEY}_${moduleName}_${location.pathname}`
+  // )
+
+  var storageData = sessionStorage.getItem("".concat(moduleName, "_").concat(location.pathname));
   var dateValueType = ['date', 'dateTime', 'dateMonth', 'dateQuarter', 'dateWeek', 'dateYear'];
   var initValue = useMemo(function () {
     var initData = Object.assign({}, storageData ? JSON.parse(storageData) : formConfig === null || formConfig === void 0 ? void 0 : formConfig.initialValues);
@@ -296,7 +300,12 @@ var FormRender = function FormRender(_ref) {
             pageSize: parseInt(pageSize, 10)
           }));
           // 如果是手動模式不需要提交
-          if (manualRequest) return;
+          // if (manualRequest) return
+
+          if (!storageData) {
+            sessionStorage.setItem("".concat(moduleName, "_").concat(location.pathname), '{}');
+            if (manualRequest) return;
+          }
           submit(getValues, true);
         }
       },

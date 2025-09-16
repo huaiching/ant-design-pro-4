@@ -16,7 +16,7 @@ var minguoEraParse = function minguoEraParse(_o, c) {
     var date = cfg.date,
       args = cfg.args;
     var transCfg = _objectSpread({}, cfg);
-    if (date && typeof date === 'string' && args) {
+    if (date && typeof date === 'string' && date.length >= 3 && args) {
       var format = args[1];
       var match;
       var result = date;

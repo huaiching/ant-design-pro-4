@@ -100,6 +100,21 @@ export function useActionType(ref, action, props) {
     getTableColumns: function getTableColumns() {
       return props === null || props === void 0 ? void 0 : props.tableColumnFields;
     },
+    getSessionItem: function getSessionItem() {
+      var value = sessionStorage.getItem(props.moduleName);
+      try {
+        return value ? JSON.parse(value) : null;
+      } catch (_unused) {
+        return value;
+      }
+    },
+    ifSessionExisted: function ifSessionExisted() {
+      if (sessionStorage.getItem(props.moduleName) === null) {
+        sessionStorage.setItem(props.moduleName, '');
+        return true;
+      }
+      return false;
+    },
     pageInfo: action.pageInfo,
     reload: function () {
       var _reload = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(resetPageIndex) {
@@ -121,8 +136,14 @@ export function useActionType(ref, action, props) {
             case 5:
               props.setSearchFormValues();
               searchParams = props.getSearchFormValues();
-              if (searchParams) {
+              if (searchParams === undefined) {
+                sessionStorage.setItem(props.moduleName, '{}');
+                sessionStorage.setItem("".concat(props.moduleName, "_").concat(location.pathname), '{}');
+              } else {
+                // if (searchParams) {
                 sessionStorage.setItem(props.moduleName, JSON.stringify(searchParams));
+                sessionStorage.setItem("".concat(props.moduleName, "_").concat(location.pathname), JSON.stringify(searchParams));
+                // }
               }
               _context.next = 10;
               return action === null || action === void 0 ? void 0 : action.reload();

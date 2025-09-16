@@ -616,6 +616,7 @@ var ProTable = function ProTable(props) {
     formRef === null || formRef === void 0 || (_formRef$current2 = formRef.current) === null || _formRef$current2 === void 0 || _formRef$current2.setFieldsValue(currentValue);
     props === null || props === void 0 || (_props$beforeReset = props.beforeReset) === null || _props$beforeReset === void 0 || _props$beforeReset.call(props);
     props === null || props === void 0 || (_props$onReset = props.onReset) === null || _props$onReset === void 0 || _props$onReset.call(props);
+    sessionStorage.removeItem("".concat(moduleName, "_").concat(location.pathname));
     sessionStorage.removeItem("".concat(TABLE_SESSION_KEY, "_").concat(moduleName, "_").concat(location.pathname));
   };
   useActionType(actionRef, action, {

@@ -49,8 +49,16 @@ var BackendProcess = function BackendProcess(props) {
     _useState8 = _slicedToArray(_useState7, 2),
     uploadResult = _useState8[0],
     setUploadResult = _useState8[1];
+  var _useState9 = useState(''),
+    _useState10 = _slicedToArray(_useState9, 2),
+    customizedMessage = _useState10[0],
+    setCustomizedMessage = _useState10[1];
   var _props$downloadTempla = props.downloadTemplate,
     downloadTemplate = _props$downloadTempla === void 0 ? true : _props$downloadTempla,
+    _props$showTip = props.showTip,
+    showTip = _props$showTip === void 0 ? true : _props$showTip,
+    _props$showCustomized = props.showCustomizedMessage,
+    showCustomizedMessage = _props$showCustomized === void 0 ? false : _props$showCustomized,
     customTemplate = props.customTemplate,
     customeResultMessage = props.customeResultMessage;
   var formRef = useRef();
@@ -95,7 +103,7 @@ var BackendProcess = function BackendProcess(props) {
   // 處理上傳到後臺
   var handleUpload = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var response, successCount, failCount, data;
+      var response, successCount, failCount, resultMessage, data, _resultMessage;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -126,13 +134,14 @@ var BackendProcess = function BackendProcess(props) {
             if (props.onSuccess && uploadFileList[0]) {
               props.onSuccess(response, uploadFileList[0]);
             }
+
             // 從響應頭中獲取成功和失敗的數量
-            // const totalCount = parseInt(response.headers['total-count'] || '0', 10)
             successCount = parseInt(response.headers['success-count'] || '0', 10);
-            failCount = parseInt(response.headers['failed-count'] || '0', 10); // 獲取響應的文件流
-            _context.next = 18;
+            failCount = parseInt(response.headers['failed-count'] || '0', 10); // 從headers取得後段回傳的客製化訊息
+            resultMessage = response.headers['customized-message'] || ''; // 獲取響應的文件流
+            _context.next = 19;
             return response.data;
-          case 18:
+          case 19:
             data = _context.sent;
             // 更新上傳結果
             setUploadResult({
@@ -141,10 +150,13 @@ var BackendProcess = function BackendProcess(props) {
               failCount: failCount,
               failBlob: failCount > 0 ? data : undefined // 只有在有失敗記錄時才保存blob
             });
-            _context.next = 25;
+
+            // 設置客製化訊息
+            setCustomizedMessage(resultMessage);
+            _context.next = 29;
             break;
-          case 22:
-            _context.prev = 22;
+          case 24:
+            _context.prev = 24;
             _context.t0 = _context["catch"](4);
             // 調用失敗回調
             if (props.onError && uploadFileList[0]) {
@@ -155,15 +167,17 @@ var BackendProcess = function BackendProcess(props) {
                 id: 'component.upload.uploadFile.error'
               }));
             }
-          case 25:
-            _context.prev = 25;
+            _resultMessage = _context.t0.response.headers['customized-message'] || '';
+            setCustomizedMessage(_resultMessage);
+          case 29:
+            _context.prev = 29;
             setUploading(false);
-            return _context.finish(25);
-          case 28:
+            return _context.finish(29);
+          case 32:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[4, 22, 25, 28], [6,, 10, 13]]);
+      }, _callee, null, [[4, 24, 29, 32], [6,, 10, 13]]);
     }));
     return function handleUpload() {
       return _ref.apply(this, arguments);
@@ -207,6 +221,7 @@ var BackendProcess = function BackendProcess(props) {
                   failCount: 0,
                   failBlob: undefined
                 });
+                setCustomizedMessage('');
               } else {
                 (_props$onCancel = props.onCancel) === null || _props$onCancel === void 0 || _props$onCancel.call(props);
               }
@@ -298,8 +313,12 @@ var BackendProcess = function BackendProcess(props) {
             children: uploadResult.failCount
           }), formatMessage({
             id: 'component.upload.label.Failed'
-          }), formatMessage({
-            id: 'component.upload.label.tip'
+          }), showTip && /*#__PURE__*/_jsx("span", {
+            children: formatMessage({
+              id: 'component.upload.label.tip'
+            })
+          }), showCustomizedMessage && /*#__PURE__*/_jsx("span", {
+            children: customizedMessage
           })]
         })
       })

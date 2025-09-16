@@ -40,17 +40,43 @@ var dateToAD = function dateToAD(dateString, formatMessage, type) {
       // 在年份前補零
       dateString = "0".concat(dateString);
     }
-    if (dateString < DIVIDE_YEAR) {
-      // 台灣年
-      var dateMoment = dayjs(dateString, formatMessage({
-        id: "common.".concat(type)
-      }));
-      if (dateMoment.isValid()) {
-        return dateMoment.format(ADFormatMap[type]);
-      }
+
+    // 判斷是否為AD，年份是4位數，就認為是AD
+    var regexAD = /^(\d{4})[\/-](0[1-9]|1[0-2])[\/-](0[1-9]|[12]\d|3[01])$/;
+    var matchAD = regexAD.exec(dateString);
+
+    // 回傳原始值
+    if (matchAD) {
+      return dayjs(dateString).format(ADFormatMap[type]);
     }
+
+    // 驗證格式
+    var regex = /^(\d{1,3})[\/-](0[1-9]|1[0-2])[\/-](0[1-9]|[12]\d|3[01])$/;
+    var match = regex.exec(dateString);
+    if (!match) {
+      return null;
+    }
+
+    // 換成西元
+    var era = parseInt(match[1], 10) + 1911;
+    var month = parseInt(match[2], 10) - 1;
+    var date = parseInt(match[3], 10);
+    // dayjs化
+    var aDDate = dayjs(new Date(era, month, date));
+    if (aDDate.isValid()) {
+      return aDDate.format(ADFormatMap[type]);
+    }
+
+    // if (dateString < DIVIDE_YEAR) {
+    // 台灣年
+    // const dateMoment = dayjs(dateString, formatMessage({ id: `common.${type}` }))
+    // if (dateMoment.isValid()) {
+    //   return dateMoment.format(ADFormatMap[type])
+    // }
+    // }
+    // 
     // 本身是公元年
-    return dateString;
+    // return dateString
   }
   return dateString;
 };
@@ -82,16 +108,55 @@ var dateToROC = function dateToROC(dateString, formatMessage, type) {
     if (dayjs.isDayjs(dateString)) {
       return dateString.format(ROCFormatMap[type]);
     }
-    if (dateString >= DIVIDE_YEAR) {
-      // 西元年
-      var dateMoment = dayjs(dateString, formatMessage({
-        id: "common.".concat(type)
-      }));
-      if (dateMoment.isValid()) {
-        return dateMoment.format(ROCFormatMap[type]);
-      }
+
+    // 判斷是否為ROC，年份是3位數，就認為是ROC
+    var regexROC = /^(\d{1,3})[\/-](0[1-9]|1[0-2])[\/-](0[1-9]|[12]\d|3[01])$/;
+    var matchROC = regexROC.exec(dateString);
+
+    // 回傳原始值
+    if (matchROC) {
+      return dateString;
     }
-    return dateString;
+
+    // 驗證格式
+    var regex = /^(\d{1,4})[\/-](0[1-9]|1[0-2])[\/-](0[1-9]|[1-2]\d|3[01])$/;
+    var match = regex.exec(dateString);
+    if (!match) {
+      return null;
+    }
+    var era = parseInt(match[1], 10);
+    var month = parseInt(match[2], 10) - 1;
+    var date = parseInt(match[3], 10);
+
+    // 西元年小於民國元年皆不計算
+    if (era < 1912) {
+      return null;
+    }
+
+    // 轉成民國年
+    var minguoYear = era - 1911;
+    var minguoDate = dayjs(new Date(era, month, date));
+
+    // 民國年不超過3位數，為符合預設格式
+    if (minguoYear > 999) {
+      return null;
+    }
+    if (minguoDate.isValid()) {
+      return minguoDate.format(ROCFormatMap[type]);
+    }
+
+    // let minguoEraDate = `${minguoYear}/${minguoDate.format('MM')}/${minguoDate.format('DD')}`
+    // return minguoEraDate
+
+    // if (dateString >= DIVIDE_YEAR) {
+    // 西元年
+    // const dateMoment = dayjs(dateString, formatMessage({ id: `common.${type}` }))
+    // if (dateMoment.isValid()) {
+    //   return dateMoment.format(ROCFormatMap[type])
+    // }
+    // }
+    // 
+    // return dateString
   }
   return dateString;
 };
@@ -100,13 +165,15 @@ export var dateToROCDateWithFormat = function dateToROCDateWithFormat(dateString
     if (dayjs.isDayjs(dateString)) {
       return dateString.format(ROCFormatMap['date']);
     }
-    if (dateString >= DIVIDE_YEAR) {
-      // 西元年
-      var dateMoment = dayjs(dateString, format);
-      if (dateMoment.isValid()) {
-        return dateMoment.format(ROCFormatMap['date']);
-      }
+
+    // if (dateString >= DIVIDE_YEAR) {
+    // 西元年
+    var dateMoment = dayjs(dateString, format);
+    if (dateMoment.isValid()) {
+      return dateMoment.format(ROCFormatMap['date']);
     }
+    // }
+
     return dateString;
   }
   return dateString;

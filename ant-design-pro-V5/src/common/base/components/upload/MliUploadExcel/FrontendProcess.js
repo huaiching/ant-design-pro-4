@@ -53,6 +53,8 @@ var FrontendProcess = function FrontendProcess(props) {
     setUploadResult = _useState8[1];
   var _props$downloadTempla = props.downloadTemplate,
     downloadTemplate = _props$downloadTempla === void 0 ? true : _props$downloadTempla,
+    _props$showTip = props.showTip,
+    showTip = _props$showTip === void 0 ? true : _props$showTip,
     customeWorkSheet = props.customeWorkSheet,
     customTemplate = props.customTemplate,
     customHeader = props.customHeaderValue,
@@ -362,8 +364,10 @@ var FrontendProcess = function FrontendProcess(props) {
             children: uploadResult.failCount
           }), formatMessage({
             id: 'component.upload.label.Failed'
-          }), formatMessage({
-            id: 'component.upload.label.tip'
+          }), showTip && /*#__PURE__*/_jsx("span", {
+            children: formatMessage({
+              id: 'component.upload.label.tip'
+            })
           })]
         })
       })

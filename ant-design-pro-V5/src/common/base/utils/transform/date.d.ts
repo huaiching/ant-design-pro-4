@@ -5,12 +5,12 @@ export declare const toTaiwan: (gYear: number, month?: number, day?: number) => 
     month: number | undefined;
     day: number | undefined;
 };
-export declare const dateToADDate: (dateString: Dayjs | string | undefined, formatMessage: IntlShape['formatMessage']) => string | undefined;
-export declare const dateToADYear: (dateString: Dayjs | string | undefined, formatMessage: IntlShape['formatMessage']) => string | undefined;
-export declare const dateToADMonth: (dateString: Dayjs | string | undefined, formatMessage: IntlShape['formatMessage'], valueType?: string) => string | number | undefined;
+export declare const dateToADDate: (dateString: Dayjs | string | undefined, formatMessage: IntlShape['formatMessage']) => string | null | undefined;
+export declare const dateToADYear: (dateString: Dayjs | string | undefined, formatMessage: IntlShape['formatMessage']) => string | null | undefined;
+export declare const dateToADMonth: (dateString: Dayjs | string | undefined, formatMessage: IntlShape['formatMessage'], valueType?: string) => string | number | null | undefined;
 export declare const dateToROCDateWithFormat: (dateString: Dayjs | string | undefined, format: string) => string | undefined;
-export declare const dateToROCMonth: (dateString: Dayjs | string | undefined, formatMessage: IntlShape['formatMessage']) => string | undefined;
-export declare const dateToROCDate: (dateString: Dayjs | string | undefined, formatMessage: IntlShape['formatMessage']) => string | undefined;
+export declare const dateToROCMonth: (dateString: Dayjs | string | undefined, formatMessage: IntlShape['formatMessage']) => string | null | undefined;
+export declare const dateToROCDate: (dateString: Dayjs | string | undefined, formatMessage: IntlShape['formatMessage']) => string | null | undefined;
 export declare const dateTimeToUTC: (dateString: Dayjs | string | undefined, formatMessage: IntlShape['formatMessage']) => any;
 export declare const getDayjsObject: (dateString: Dayjs | string | undefined, formatMessage: IntlShape['formatMessage']) => dayjs.Dayjs | undefined;
 export declare const getDateObject: (dateString: string | undefined, formatMessage: IntlShape['formatMessage']) => dayjs.Dayjs | undefined;

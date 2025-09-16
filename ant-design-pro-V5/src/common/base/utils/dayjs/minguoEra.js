@@ -11,6 +11,7 @@ var minguoEra = function minguoEra(_o, c) {
       var year = String(_this.$y - yearBias);
       var args = [year, 3, '0'];
       // @ts-ignore
+      // return a || year
       return a || (_this$$utils = _this.$utils()).s.apply(_this$$utils, args.concat(['']));
     });
     return oldFormat.bind(this)(result);

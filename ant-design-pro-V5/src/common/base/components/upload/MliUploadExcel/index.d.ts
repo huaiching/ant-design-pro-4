@@ -28,6 +28,8 @@ export interface MliUploadExcelProps {
     customizeNode?: React.ReactNode;
     downloadTemplate?: boolean;
     successMessage?: string;
+    showTip?: boolean;
+    showCustomizedMessage?: boolean;
     beforeUpload?: (file: File) => boolean;
     onSuccess?: (response: any, file: File) => void;
     onError?: (error: any, file: File) => void;
