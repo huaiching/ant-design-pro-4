@@ -15,7 +15,7 @@
 import { parseRocDate } from '@/utils/rocDateUtils'
 import { ProFormInstance } from '@ant-design/pro-form'
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table'
-import { List, Space, Button, message } from 'antd'
+import { Button, List, message } from 'antd'
 import dayjs from 'dayjs'
 import React, { useRef, useState } from 'react'
 import * as userApi from './store/userApi'
@@ -25,6 +25,11 @@ const ProTableDemo: React.FC = () => {
   const actionRef = useRef<ActionType>()
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]) // 勾選資料 key
   const [dataSource, setDataSource] = useState<any[]>([]) // 主表資料
+  // ProTable 的 分頁控制
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 5
+  })
 
   // 性別選項
   const genderInd = [
@@ -55,8 +60,8 @@ const ProTableDemo: React.FC = () => {
       dataIndex: 'name',
       valueType: 'text',
       formItemProps: {
-        rules: [{ required: true, message: '請輸入姓名！' }],
-      },
+        rules: [{ required: true, message: '請輸入姓名！' }]
+      }
     },
     { title: '年齡', dataIndex: 'age', valueType: 'digit', sorter: true, copyable: true },
     { title: '地址', dataIndex: 'address', valueType: 'text', search: false, sorter: true },
@@ -114,7 +119,7 @@ const ProTableDemo: React.FC = () => {
           setDataSource(chgData)
           return { data: chgData, success: true, total: chgData.length }
         }}
-        cardProps={false}        // 移除外層 Card
+        cardProps={false} // 移除外層 Card
         // 手動請求
         manualRequest={true}
         // 搜尋表單佈局
@@ -122,24 +127,24 @@ const ProTableDemo: React.FC = () => {
         // 查詢 不要忽略欄位驗證規則 (預設忽略)
         // form={{ ignoreRules: false }}
         // 工具欄
-        toolBarRender={() => [
-          <Button type='primary'>
-            工具欄
-          </Button>
-        ]}
+        toolBarRender={() => [<Button type="primary">工具欄</Button>]}
         // 表格配置
         options={{
-          density: true,     // 列表密度
-          fullScreen: true,  // 全螢幕
-          reload: true,      // 重新載入
-          setting: true,     // 設定
+          density: true, // 列表密度
+          fullScreen: true, // 全螢幕
+          reload: true, // 重新載入
+          setting: true // 設定
         }}
         // 分頁
         pagination={{
-          showQuickJumper: true,  // 快速跳轉頁數
-          showSizeChanger: true,  // 顯示改變每頁筆數
-          pageSize: 5,            // 預設每頁筆數
-          pageSizeOptions: ['5', '10', '20', '50', '100']  // 每頁筆數選項
+          current: pagination.current,
+          pageSize: pagination.pageSize,
+          showQuickJumper: true,
+          showSizeChanger: true,
+          pageSizeOptions: ['5', '10', '20', '50', '100'],
+          onChange: (page, pageSize) => {
+            setPagination({ current: page, pageSize })
+          }
         }}
         // 選擇行
         rowSelection={{
