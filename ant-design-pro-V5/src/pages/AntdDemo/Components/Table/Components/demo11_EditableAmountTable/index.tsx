@@ -11,9 +11,12 @@ const EditableAmountTable: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const formRef = useRef<ProFormInstance>()
   const [editableKeys, setEditableKeys] = useState<React.Key[]>([])
-  // 幣別宣告與資料設定
+  // 幣別
   const [currency, setCurrency] = useState<string>('TWD')
   formRef.current?.setFieldValue('currency', currency)
+  // 合計金額
+  const [totalAmount, setTotalAmount] = useState<number>(0)
+  formRef.current?.setFieldValue('totalAmount', totalAmount)
 
   // 初始化假資料
   useEffect(() => {
@@ -91,8 +94,10 @@ const EditableAmountTable: React.FC = () => {
                 // 確認按鈕 點擊後 要進行的 API 操作
                 const editableData = formRef.current?.getFieldValue('editTable')
                 const currency = formRef.current?.getFieldValue('currency')
+                const totalAmount = formRef.current?.getFieldValue('totalAmount')
                 console.info('editableData', editableData)
                 console.info('currency', currency)
+                console.info('totalAmount', totalAmount)
                 message.success('表單提交成功！')
               })
             }}
@@ -179,12 +184,13 @@ const EditableAmountTable: React.FC = () => {
                 const precision = currency === 'TWD' ? 0 : 2;
                 // 四捨五入
                 total = currency === 'TWD' ? Math.round(total) : Math.round(total * 100) / 100;
+                setTotalAmount(total);
 
                 return (
                   <Table.Summary.Row>
-                    <Table.Summary.Cell index={0}>合計</Table.Summary.Cell>
+                    <Table.Summary.Cell index={0}></Table.Summary.Cell>
                     <Table.Summary.Cell index={1}></Table.Summary.Cell>
-                    <Table.Summary.Cell index={2} align="right">{total.toFixed(precision)} 元</Table.Summary.Cell>
+                    <Table.Summary.Cell index={2}>合計：{total.toFixed(precision)} 元</Table.Summary.Cell>
                   </Table.Summary.Row>
                 );
               }}
