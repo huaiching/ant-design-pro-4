@@ -175,10 +175,12 @@ const EditableAmountTable: React.FC = () => {
               }}
               // 表格合計欄位
               summary={(pageData) => {
+                // 取得現有資料
+                const dataList = formRef.current?.getFieldValue('editTable') || [];
                 // 計算金額總和
                 let total = 0;
-                pageData.forEach(({ amount }) => {
-                  total += amount || 0;
+                dataList.forEach((data: any) => {
+                  total += data.amount || 0;
                 });
                 // 根據幣別設定小數位數
                 const precision = currency === 'TWD' ? 0 : 2;
