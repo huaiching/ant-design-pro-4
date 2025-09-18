@@ -4,7 +4,7 @@ import { Button, Card, Input, message, Space, Tooltip } from 'antd'
 import dayjs from 'dayjs'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as poApi from './store/poApi'
-import { MliFormCol, MliFormRow } from '@/common/base'
+import { MliFormCol, MliFormRow } from '@mli-csmo/base'
 import { FormOutlined } from '@ant-design/icons'
 
 

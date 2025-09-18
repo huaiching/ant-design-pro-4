@@ -69,7 +69,9 @@ export default {
   'menu.reactDemo.demo07': 'useEffect 效果鉤子',
   'menu.reactDemo.demo08': 'useRef 從輸入框獲取值',
 
-  'menu.antdDemo': 'Ant Design 元件範例',
+  'menu.antd': 'Ant Design 範例',
+  'menu.antd.antdDemo': 'Ant Design 元件範例',
+  'menu.antd.antdDemoComponents': 'Ant Design 頁面導引',
   
   'menu.apiDemo': 'api 呼叫範例',
   'menu.apiDemo.demo01': '一般呼叫',

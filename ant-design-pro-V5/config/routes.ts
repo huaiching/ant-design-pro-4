@@ -165,10 +165,23 @@ export default [
 
   // Ant Design 組件示例區塊
   {
-    name: 'antdDemo',  // 路由名稱
+    name: 'antd',  // 路由名稱
     icon: 'AntDesignOutlined',  // Ant Design 圖標
     path: '/antdDemo',  // 路徑
-    component: './AntdDemo',  // 組件路徑
+    routes: [      
+      {
+        // Ant Design 組件介紹與說明
+        name: 'antdDemo',
+        path: '/antdDemo',
+        component: './AntdDemo',  // 組件路徑
+      },
+      {
+        // Ant Design 組件介紹與說明
+        name: 'antdDemoComponents',
+        path: '/antdDemo/components',
+        component: './AntdDemo/Components/Navigate',
+      }
+    ]
   },
   {
     path: '/antdDemo/navigate',
