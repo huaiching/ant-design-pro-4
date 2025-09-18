@@ -171,15 +171,15 @@ export default [
     routes: [      
       {
         // Ant Design 組件介紹與說明
-        name: 'antdDemo',
-        path: '/antdDemo',
-        component: './AntdDemo',  // 組件路徑
-      },
-      {
-        // Ant Design 組件介紹與說明
         name: 'antdDemoComponents',
         path: '/antdDemo/components',
         component: './AntdDemo/Components/Navigate',
+      },
+      {
+        // Ant Design 組件介紹與說明
+        name: 'antdDemo',
+        path: '/antdDemo/demo',
+        component: './AntdDemo',  // 組件路徑
       }
     ]
   },
