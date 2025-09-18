@@ -10,6 +10,7 @@ import Demo08 from './Components/demo08_InputPreviewProTable'
 import Demo09 from './Components/demo09_NestedEditableProTable'
 import Demo10 from './Components/demo10_DragSortTable'
 import Demo11 from './Components/demo11_EditableAmountTable'
+import Demo12 from './Components/demo12_CaseSearchTable'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
@@ -67,18 +68,23 @@ const AsstManagement: React.FC = () => {
       authCode: '10',
       title: '拖動排序表格(DragSortTable)',
       component: <Demo10/>
-    },
-    {
-      authCode: '11',
-      title: '可編輯金額表格(EditableAmountTable)',
-      component: <Demo11/>
-    }
+      },
+      {
+        authCode: '11',
+        title: '可編輯金額表格(EditableAmountTable)',
+        component: <Demo11/>
+      },
+      {
+        authCode: '12',
+        title: '案例搜尋表格(CaseSearchTable)',
+        component: <Demo12/>
+      }
   ]
   
   return (
       <Tabs 
         type='card'
-        tabPosition='left'
+        // tabPosition='left'
         animated    // 啟用切換動畫
         destroyOnHidden   // 隱藏時銷毀 DOM
       >
