@@ -13,7 +13,7 @@ const CaseSearchTable: React.FC = () => {
   const actionRef = useRef<ActionType>() // 表格操作引用
   const [dataSource, setDataSource] = useState<any[]>([]) // 主表資料
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]) // 勾選中的保單 key
-  const [searchKeys, setSearchKeys] = useState<string[]>([]) // 多選標籤
+  const [searchKeys, setSearchKeys] = useState<string[]>(['all']) // 選中的標籤
   const [textSearch, setTextSearch] = useState('') // 快速搜尋輸入文字狀態
 
   // ProTable 的 分頁控制
@@ -123,6 +123,9 @@ const CaseSearchTable: React.FC = () => {
   // 資料篩選
   const filteredData = useMemo(() => {
     setSelectedRowKeys([]) // 每次篩選都清空勾選
+    // 如果沒有選擇標籤，自動選上 'all'
+    if (searchKeys.length === 0) setSearchKeys(['all'])
+    // 開始篩選
     let result = dataSource
     // 文字搜尋
     if (textSearch) {
