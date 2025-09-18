@@ -11,6 +11,7 @@ import Demo09 from './Components/demo09_NestedEditableProTable'
 import Demo10 from './Components/demo10_DragSortTable'
 import Demo11 from './Components/demo11_EditableAmountTable'
 import Demo12 from './Components/demo12_CaseSearchTable'
+import Demo13 from './Components/demo13_CheckboxNestedEditableProTable'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
@@ -78,6 +79,11 @@ const AsstManagement: React.FC = () => {
         authCode: '12',
         title: '案例搜尋表格(CaseSearchTable)',
         component: <Demo12/>
+      },
+      {
+        authCode: '13',
+        title: '多選嵌套可編輯表格(CheckboxNestedEditableProTable)',
+        component: <Demo13/>
       }
   ]
   
