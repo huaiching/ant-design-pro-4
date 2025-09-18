@@ -179,11 +179,10 @@ const CaseSearchTable: React.FC = () => {
             >
               <Space>
                 {caseData.children?.map((children) => {
-                  const key = children.key
-                  const isSelected = searchKeys.includes(key)
+                  const isSelected = searchKeys.includes(children.key)
                   return (
                     <Button
-                      key={key}
+                      key={children.key}
                       type={isSelected ? 'primary' : 'text'}
                       style={{
                         // 用透明度 辨識 有無選擇
@@ -194,10 +193,10 @@ const CaseSearchTable: React.FC = () => {
                       onClick={() => {
                         // 多選
                         // setSearchKeys((prev) =>
-                        //   isSelected ? prev.filter((k) => k !== key) : [...prev, key]
+                        //   isSelected ? prev.filter((k) => k !== children.key) : [...prev, children.key]
                         // )
                         // 單選
-                        setSearchKeys(isSelected ? [] : [key])
+                        setSearchKeys(isSelected ? [] : [children.key])
                       }}
                     >
                       {children.title} ({children.count})
