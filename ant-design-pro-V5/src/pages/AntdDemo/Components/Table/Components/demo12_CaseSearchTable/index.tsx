@@ -1,11 +1,11 @@
 import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components'
 import { ProForm, ProTable } from '@ant-design/pro-components'
-import { Button, Card, Input, List, message, Space, Tooltip } from 'antd'
+import { Button, Card, Input, message, Space, Tooltip } from 'antd'
 import dayjs from 'dayjs'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as poApi from './store/poApi'
 import { MliFormCol, MliFormRow } from '@/common/base'
-import { DeleteOutlined, FormOutlined } from '@ant-design/icons'
+import { FormOutlined } from '@ant-design/icons'
 
 
 const CaseSearchTable: React.FC = () => {
@@ -42,6 +42,7 @@ const CaseSearchTable: React.FC = () => {
       dataIndex: 'option',
       valueType: 'option',
       width: 80,
+      align: 'center',
       render: (_, entity) => [
         <Tooltip title="編輯" key="edit">
           <Button
@@ -89,7 +90,7 @@ const CaseSearchTable: React.FC = () => {
         children: [
           { key: 'all', title: '全部', colore: 'rgba(150, 150, 150, 1)', count: counts.all },
           { key: 'stsCode2', title: '承辦', colore: 'rgba(255, 0, 0, 1)', count: counts.stsCode2 },
-          { key: 'stsCodeC', title: '變更完成', colore: 'rgba(0, 255, 0, 1)', count: counts.stsCodeC },
+          { key: 'stsCodeC', title: '變更完成', colore: 'rgba(0, 150, 0, 1)', count: counts.stsCodeC },
           { key: 'stsCode3', title: '照會補件', colore: 'rgba(0, 150, 255, 1)', count: counts.stsCode3 },
           { key: 'stsCode5', title: '結案', colore: 'rgba(200, 200, 0, 1)', count: counts.stsCode5 }
         ]
@@ -99,43 +100,11 @@ const CaseSearchTable: React.FC = () => {
         title: '處理類型',
         children: [
           { key: 'userTypeA', title: '同一人', colore: 'rgba(255, 0, 255, 1)', count: counts.userTypeA },
-          { key: 'userTypeB', title: '不同人', colore: 'rgba(0, 255, 255, 1)', count: counts.userTypeB }
+          { key: 'userTypeB', title: '不同人', colore: 'rgba(143, 105, 255, 1)', count: counts.userTypeB }
         ]
       }
     ]
   }, [dataSource])
-
-  // 資料篩選
-  const filteredData = useMemo(() => {
-    let result = dataSource
-    // 文字搜尋
-    if (textSearch) {
-      const lowerSearch = textSearch.toLowerCase()
-      result = result.filter(
-        (item) =>
-          item.receiveNo?.toLowerCase().includes(lowerSearch) ||
-          item.receiveStsCode?.toLowerCase().includes(lowerSearch) ||
-          item.accessUser?.toLowerCase().includes(lowerSearch) ||
-          item.processUser?.toLowerCase().includes(lowerSearch) ||
-          item.receiveDate?.toString().toLowerCase().includes(lowerSearch)
-      )
-    }
-    // 標籤篩選
-    if (searchKeys.length > 0) {
-      result = result.filter((item) => {
-        let matched = false
-        if (searchKeys.includes('all')) matched = true
-        if (searchKeys.includes('stsCode2') && item.receiveStsCode === '承辦') matched = true
-        if (searchKeys.includes('stsCodeC') && item.receiveStsCode === '變更完成') matched = true
-        if (searchKeys.includes('stsCode3') && item.receiveStsCode === '照會補件') matched = true
-        if (searchKeys.includes('stsCode5') && item.receiveStsCode === '結案') matched = true
-        if (searchKeys.includes('userTypeA') && item.accessUser === item.processUser) matched = true
-        if (searchKeys.includes('userTypeB') && item.accessUser !== item.processUser) matched = true
-        return matched
-      })
-    }
-    return result
-  }, [textSearch, searchKeys, dataSource])
 
   // 導出按鈕事件
   const handleExport = () => {
@@ -151,13 +120,60 @@ const CaseSearchTable: React.FC = () => {
     message.info('已清空勾選項目')
   }
 
+  // 資料篩選
+  const filteredData = useMemo(() => {
+    setSelectedRowKeys([]) // 每次篩選都清空勾選
+    let result = dataSource
+    // 文字搜尋
+    if (textSearch) {
+      const lowerSearch = textSearch.toLowerCase()
+      result = result.filter(
+        (item) =>
+          item.receiveNo?.toLowerCase().includes(lowerSearch) ||
+          item.receiveStsCode?.toLowerCase().includes(lowerSearch) ||
+          item.accessUser?.toLowerCase().includes(lowerSearch) ||
+          item.processUser?.toLowerCase().includes(lowerSearch) ||
+          item.receiveDate?.toString().toLowerCase().includes(lowerSearch)
+      )
+    }
+    // 標籤篩選
+    if (searchKeys.length > 0) {
+      // 受理狀態
+      const receiveStsCodeList = caseSearch.find((c) => c.key === 'receiveStsCode')?.children?.map((child) => child.key) || []
+      if (searchKeys.some((key) => receiveStsCodeList.includes(key))) {
+        result = result.filter((item) => {
+          if (searchKeys.includes('all')) return true
+          if (searchKeys.includes('stsCode2') && item.receiveStsCode === '承辦') return true
+          if (searchKeys.includes('stsCodeC') && item.receiveStsCode === '變更完成') return true
+          if (searchKeys.includes('stsCode3') && item.receiveStsCode === '照會補件') return true
+          if (searchKeys.includes('stsCode5') && item.receiveStsCode === '結案') return true
+          return false
+        })
+      }
+      // 處理類型
+      const userTypeList = caseSearch.find((c) => c.key === 'user')?.children?.map((child) => child.key) || []
+      if (searchKeys.some((key) => userTypeList.includes(key))) {
+        result = result.filter((item) => {
+          if (searchKeys.includes('userTypeA') && item.accessUser === item.processUser) return true
+          if (searchKeys.includes('userTypeB') && item.accessUser !== item.processUser) return true
+          return false
+        })
+      }
+    }
+    return result
+  }, [textSearch, searchKeys, dataSource])
+
   return (
     <ProForm formRef={formRef} submitter={false} layout="vertical">
       {/* 搜尋標籤 */}
       <MliFormRow>
         {caseSearch.map((caseData) => (
           <MliFormCol colSize={4 / caseSearch.length} key={caseData.key}>
-            <Card title={caseData.title} type="inner" style={{ textAlign: 'center' }}>
+            <Card
+              title={<span style={{ fontSize: 18 }}>{caseData.title}</span>}
+              type="inner"
+              style={{ textAlign: 'center' }}
+            >
               <Space>
                 {caseData.children?.map((children) => {
                   const key = children.key
@@ -165,21 +181,20 @@ const CaseSearchTable: React.FC = () => {
                   return (
                     <Button
                       key={key}
+                      type={isSelected ? 'primary' : 'text'}
                       style={{
-                        margin: '4px 0',
                         // 用透明度 辨識 有無選擇
                         backgroundColor: isSelected
                           ? children.colore
                           : children.colore.replace('1)', '0.1)'),
-                        // 邊框
-                        border: '1px dashed ' + children.colore,
-                        // 文字顏色
-                        color: '#000'
                       }}
                       onClick={() => {
-                        setSearchKeys((prev) =>
-                          isSelected ? prev.filter((k) => k !== key) : [...prev, key]
-                        )
+                        // 多選
+                        // setSearchKeys((prev) =>
+                        //   isSelected ? prev.filter((k) => k !== key) : [...prev, key]
+                        // )
+                        // 單選
+                        setSearchKeys(isSelected ? [] : [key])
                       }}
                     >
                       {children.title} ({children.count})
