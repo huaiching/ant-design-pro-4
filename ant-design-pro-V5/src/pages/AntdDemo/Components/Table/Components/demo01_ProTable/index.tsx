@@ -6,21 +6,31 @@
 import type { ActionType, ProFormInstance } from '@ant-design/pro-components'
 import { ProForm, ProTable } from '@ant-design/pro-components'
 import { Button, Input, List, message } from 'antd'
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as poApi from './store/poApi'
 
 // 主表格欄位（保單）
 const policyColumns: any[] = [
-  { title: '保單號碼', dataIndex: 'policyNo', valueType: 'text' },
-  { title: '保單狀態', dataIndex: 'poStsCode', valueType: 'text' },
+  {
+    title: '保單號碼',
+    dataIndex: 'policyNo',
+    valueType: 'text',
+    sorter: (a: any, b: any) => a.policyNo > b.policyNo
+  },
+  {
+    title: '保單狀態',
+    dataIndex: 'poStsCode',
+    valueType: 'text'
+  },
   {
     title: '保單生效日',
     dataIndex: 'poIssueDate',
     valueType: 'date',
     fieldProps: {
       format: 'TTT/MM/DD'
-    }
+    },
+    sorter: (a: any, b: any) => dayjs(a.poIssueDate).unix() - dayjs(b.poIssueDate).unix()
   }
 ]
 
