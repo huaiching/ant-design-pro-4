@@ -25,8 +25,14 @@ const Navigate: React.FC = () => {
     {
       key: 'css',
       title: 'CSS 教學',
-      desc: '包含 CSS 的基本用法與進階技巧，幫助你更好地使用 Ant Design',
+      desc: '包含 CSS 的基本用法 與 進階技巧',
       url: 'https://developer.mozilla.org/zh-CN/docs/Web/CSS'
+    },
+    {
+      key: 'JavaScript',
+      title: 'JavaScript 教學',
+      desc: '包含 JavaScript 用法教學 與 查詢網站',
+      url: 'https://developer.mozilla.org/zh-CN/docs/Web/JavaScript'
     }
   ]
   
@@ -45,7 +51,7 @@ const Navigate: React.FC = () => {
             style={{ textAlign: 'center', height: 150 }}
             onClick={() => window.open(navigate.url, '_blank')}
           >
-            {navigate.desc} {colSize}
+            {navigate.desc}
           </Card>
         </MliFormCol>
       ))}
