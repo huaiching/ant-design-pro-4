@@ -4,68 +4,25 @@ import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
 import { Button, message, Popconfirm, Spin } from 'antd'
-import dayjs from 'dayjs'
 import React, { useEffect, useRef, useState } from 'react'
-
-const poData = [
-  {
-    policyNo: '153300362161',
-    coInfo: [
-      { planCodeDesc: '20YHIW-A' },
-      { planCodeDesc: '20AWPR-2' }
-    ]
-  },
-  {
-    policyNo: '173200785511',
-    coInfo: [
-      { planCodeDesc: '20FG-0' },
-      { planCodeDesc: '20DWPR-3' }
-    ]
-  }
-]
-
-// poOption                 = '153300362161', '173200785511'
-// coOption by 153300362161 = '20YHIW-A', '20AWPR-2'
-// coOption by 173200785511 = '20FG-0', '20DWPR-3'
-
+import * as poApi from './store/poApi'
 
 const MyForm: React.FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState<boolean>(false)
   const formRef = useRef<ProFormInstance>()
   // 可編輯的明細資料序號
   const [editableKeys, setEditableKeys] = useState<React.Key[]>([])
+  // 保單資料
+  const [poData, setPoData] = useState<any[]>([])
 
-  // 模擬 API 取得表格資料
+  // 模擬 API 取得資料
   useEffect(() => {
-    const resData = [
-      {
-        id: 1,
-        name: '測試人員 A',
-        age: 25,
-        birthDate: '089/01/10',
-        sex: '1'
-      },
-      {
-        id: 2,
-        name: '測試人員 B',
-        age: 10,
-        birthDate: '104/01/10',
-        sex: '2'
-      }
-    ]
-    // 日期格式轉換
-    const chgData = resData.map((data) => ({
-      ...data,
-      birthDate: dayjs(data.birthDate, 'TTT/MM/DD')
-    }))
-
-    formRef.current?.setFieldsValue({
-      editTable: chgData
+    poApi.fetchAllData().then((data) => {
+      setPoData(data)
     })
     // 設定目前資料列的 id 為可編輯
-    const ids = chgData.map((item) => item.id)
-    setEditableKeys(ids)
+    // const ids = data.map((item) => item.id)
+    // setEditableKeys(ids)
   }, [])
 
   // 控制送出後之動作
