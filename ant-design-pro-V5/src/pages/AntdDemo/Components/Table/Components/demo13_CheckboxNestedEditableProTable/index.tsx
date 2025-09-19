@@ -1,12 +1,12 @@
 // 引入所需元件與函式庫
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
-import { Button, Card, message, Popconfirm, Spin } from 'antd'
+import { Button, message, Popconfirm, Spin } from 'antd'
 import dayjs from 'dayjs'
 import React, { useEffect, useRef, useState } from 'react'
 import './store/index.less'
-import { DeleteOutlined } from '@ant-design/icons'
 
 // 主元件定義
 const NestedEditableProTable: React.FC = () => {
@@ -208,6 +208,7 @@ const NestedEditableProTable: React.FC = () => {
 
   return (
     <>
+      <h2>此頁面目前實驗中</h2>
       <ProForm grid layout="vertical" formRef={formRef} submitter={submitterRender()}>
         <div style={{ width: '100%' }}>
           <Spin spinning={loading}>
@@ -228,6 +229,29 @@ const NestedEditableProTable: React.FC = () => {
                 }),
                 creatorButtonText: '新增保單',
                 style: { backgroundColor: 'rgba(206, 230, 255, 1)' }
+              }}
+              footer={() => {
+                return (
+                  <Button
+                    type="dashed"
+                    style={{ backgroundColor: 'rgba(206, 230, 255, 1)' }}
+                    onClick={(data) => {
+                      const subData = formRef.current?.getFieldValue('editTable') || []
+                      const newData = [
+                        ...subData,
+                        { id: (Math.random() * 1000000).toFixed(0) },
+                        { id: (Math.random() * 1000000).toFixed(0) },
+                        { id: (Math.random() * 1000000).toFixed(0) }
+                      ]
+                      formRef.current?.setFieldValue(['editTable'], newData)
+                      // 更新 coEditableKeys
+                      setEditableKeys(newData.map((item: any) => item.id))
+                    }}
+                  >
+                    <PlusOutlined />
+                    批次新增保單 (一次新增三筆)
+                  </Button>
+                )
               }}
               // 編輯設定
               editable={{
@@ -281,6 +305,39 @@ const NestedEditableProTable: React.FC = () => {
                         creatorButtonText: '新增保障',
                         style: { backgroundColor: 'rgba(243, 255, 200, 1)' }
                       }}
+                      footer={() => {
+                        return (
+                          <Button
+                            type="dashed"
+                            style={{ backgroundColor: 'rgba(243, 255, 200, 1)' }}
+                            onClick={(data) => {
+                              const subData = formRef.current?.getFieldValue([
+                                'editTable',
+                                rowIndex,
+                                'coList'
+                              ]) || []
+                              const newData = [
+                                ...subData,
+                                { id: (Math.random() * 1000000).toFixed(0) },
+                                { id: (Math.random() * 1000000).toFixed(0) },
+                                { id: (Math.random() * 1000000).toFixed(0) }
+                              ]
+                              formRef.current?.setFieldValue(
+                                ['editTable', rowIndex, 'coList'],
+                                newData
+                              )
+                              // 更新 coEditableKeys
+                              setCoEditableKeys((prev) => ({
+                                ...prev,
+                                [record.id]: newData.map((co: any) => co.id)
+                              }))
+                            }}
+                          >
+                            <PlusOutlined />
+                            批次新增保障 (一次新增三筆)
+                          </Button>
+                        )
+                      }}
                       editable={{
                         type: 'multiple',
                         editableKeys: coEditableKeys[record.id] || [],
@@ -299,7 +356,10 @@ const NestedEditableProTable: React.FC = () => {
                                 const newCoList = oldCoList.filter((co: any) => co.id !== row.id)
 
                                 // 更新表單資料
-                                formRef.current?.setFieldValue(['editTable', poIndex, 'coList'], newCoList)
+                                formRef.current?.setFieldValue(
+                                  ['editTable', poIndex, 'coList'],
+                                  newCoList
+                                )
 
                                 // 更新 coEditableKeys
                                 setCoEditableKeys((prev) => ({
@@ -309,7 +369,9 @@ const NestedEditableProTable: React.FC = () => {
                               }
                             }}
                           >
-                            <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: 16 }} />
+                            <DeleteOutlined
+                              style={{ color: 'red', cursor: 'pointer', fontSize: 16 }}
+                            />
                           </Popconfirm>
                         ]
                       }}
