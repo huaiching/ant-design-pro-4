@@ -27,12 +27,6 @@ const Navigate: React.FC = () => {
       title: 'CSS 教學',
       desc: '包含 CSS 的基本用法與進階技巧，幫助你更好地使用 Ant Design',
       url: 'https://developer.mozilla.org/zh-CN/docs/Web/CSS'
-    },
-    {
-      key: 'css',
-      title: 'CSS 教學',
-      desc: '包含 CSS 的基本用法與進階技巧，幫助你更好地使用 Ant Design',
-      url: 'https://developer.mozilla.org/zh-CN/docs/Web/CSS'
     }
   ]
   
