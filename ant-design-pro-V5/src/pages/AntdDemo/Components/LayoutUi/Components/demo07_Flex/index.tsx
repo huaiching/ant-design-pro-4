@@ -40,7 +40,7 @@ const App: React.FC = () => {
   const [gap, setGap] = React.useState<FlexProps['gap']>(gapOptions[0])
 
   return (
-    <Flex gap='middle' align={alignItems} vertical>
+    <Flex gap='middle' vertical>
       <p>水平對齊 (justify)</p>
       <Segmented options={justifyOptions} onChange={setJustify} />
 

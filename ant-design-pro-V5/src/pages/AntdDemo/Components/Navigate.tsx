@@ -21,13 +21,29 @@ const Navigate: React.FC = () => {
       title: 'Ant Design Icons',
       desc: '包含 Ant Design 提供的各種圖示，方便在應用程式中使用',
       url: 'https://ant-design.antgroup.com/components/icon-cn'
+    },
+    {
+      key: 'css',
+      title: 'CSS 教學',
+      desc: '包含 CSS 的基本用法與進階技巧，幫助你更好地使用 Ant Design',
+      url: 'https://developer.mozilla.org/zh-CN/docs/Web/CSS'
+    },
+    {
+      key: 'css',
+      title: 'CSS 教學',
+      desc: '包含 CSS 的基本用法與進階技巧，幫助你更好地使用 Ant Design',
+      url: 'https://developer.mozilla.org/zh-CN/docs/Web/CSS'
     }
   ]
+  
+
+  // 計算欄位寬度，一行最多四個
+  const colSize = (4 / navigateList.length < 1) ? 1 : (4 / navigateList.length)
 
   return (
-    <MliFormRow>
-      {navigateList.map((navigate) => (
-        <MliFormCol colSize={4 / navigateList.length} key={navigate.key}>
+    <MliFormRow gutter={[8,8]}>
+      {navigateList.map((navigate, index) => (
+        <MliFormCol colSize={colSize} key={navigate.key}>
           <Card
             title={<span style={{ fontSize: 18 }}>{navigate.title}</span>}
             type="inner"
@@ -35,7 +51,7 @@ const Navigate: React.FC = () => {
             style={{ textAlign: 'center', height: 150 }}
             onClick={() => window.open(navigate.url, '_blank')}
           >
-            {navigate.desc}
+            {navigate.desc} {colSize}
           </Card>
         </MliFormCol>
       ))}

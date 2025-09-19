@@ -11,7 +11,7 @@ import Demo09 from './Components/demo09_NestedEditableProTable'
 import Demo10 from './Components/demo10_DragSortTable'
 import Demo11 from './Components/demo11_EditableAmountTable'
 import Demo12 from './Components/demo12_CaseSearchTable'
-import Demo13 from './Components/demo13_CheckboxNestedEditableProTable'
+import Demo13 from './Components/demo13_BatchEditablePolicyTable'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
@@ -82,7 +82,7 @@ const AsstManagement: React.FC = () => {
       },
       {
         authCode: '13',
-        title: '多選嵌套可編輯表格(CheckboxNestedEditableProTable)',
+        title: '批量新增資料表格(BatchEditablePolicyTable)',
         component: <Demo13/>
       }
   ]
@@ -90,7 +90,7 @@ const AsstManagement: React.FC = () => {
   return (
       <Tabs 
         type='card'
-        // tabPosition='left'
+        tabPosition='left'
         animated    // 啟用切換動畫
         destroyOnHidden   // 隱藏時銷毀 DOM
       >

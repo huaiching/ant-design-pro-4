@@ -171,13 +171,13 @@ const CaseSearchTable: React.FC = () => {
       {/* 搜尋標籤 */}
       <MliFormRow>
         {caseSearch.map((caseData) => (
-          <MliFormCol colSize={4 / caseSearch.length} key={caseData.key}>
+          <MliFormCol key={caseData.key} colSize={4 / caseSearch.length}>
             <Card
               title={<span style={{ fontSize: 18 }}>{caseData.title}</span>}
               type="inner"
-              style={{ textAlign: 'center' }}
+              style={{ textAlign: 'center', height: '100%' }}
             >
-              <Space>
+              <Space wrap>
                 {caseData.children?.map((children) => {
                   const isSelected = searchKeys.includes(children.key)
                   return (
