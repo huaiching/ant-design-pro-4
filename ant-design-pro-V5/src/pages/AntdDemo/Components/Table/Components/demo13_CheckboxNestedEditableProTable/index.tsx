@@ -8,6 +8,27 @@ import dayjs from 'dayjs'
 import React, { useEffect, useRef, useState } from 'react'
 import './store/index.less'
 
+const poData = [
+  {
+    policyNo: '153300362161',
+    coInfo: [
+      { planCodeDesc: '20YHIW-A' },
+      { planCodeDesc: '20AWPR-2' }
+    ]
+  },
+  {
+    policyNo: '173200785511',
+    coInfo: [
+      { planCodeDesc: '20FG-0' },
+      { planCodeDesc: '20DWPR-3' }
+    ]
+  }
+]
+
+// poOption                 = '153300362161', '173200785511'
+// coOption by 153300362161 = '20YHIW-A', '20AWPR-2'
+// coOption by 173200785511 = '20FG-0', '20DWPR-3'
+
 // 主元件定義
 const NestedEditableProTable: React.FC = () => {
   // 狀態管理：載入中
@@ -33,7 +54,6 @@ const NestedEditableProTable: React.FC = () => {
         coList: [
           {
             id: 1,
-            coverageNo: 1,
             planCode: 'A001',
             rateScale: '0',
             coStsCode: '有效',
@@ -41,7 +61,6 @@ const NestedEditableProTable: React.FC = () => {
           },
           {
             id: 2,
-            coverageNo: 2,
             planCode: 'A002',
             rateScale: '0',
             coStsCode: '有效',
@@ -57,7 +76,6 @@ const NestedEditableProTable: React.FC = () => {
         coList: [
           {
             id: 1,
-            coverageNo: 1,
             planCode: 'B001',
             rateScale: '0',
             coStsCode: '有效',
@@ -65,7 +83,6 @@ const NestedEditableProTable: React.FC = () => {
           },
           {
             id: 2,
-            coverageNo: 2,
             planCode: 'B002',
             rateScale: '0',
             coStsCode: '有效',
@@ -176,11 +193,6 @@ const NestedEditableProTable: React.FC = () => {
       width: 60
     },
     {
-      title: '保障序號',
-      dataIndex: 'coverageNo',
-      valueType: 'text'
-    },
-    {
       title: '險種代碼',
       dataIndex: 'planCode',
       valueType: 'text'
@@ -239,9 +251,10 @@ const NestedEditableProTable: React.FC = () => {
                       const subData = formRef.current?.getFieldValue('editTable') || []
                       const newData = [
                         ...subData,
-                        { id: (Math.random() * 1000000).toFixed(0) },
-                        { id: (Math.random() * 1000000).toFixed(0) },
-                        { id: (Math.random() * 1000000).toFixed(0) }
+                        { id: (Math.random() * 1000000).toFixed(0), poStsCode: '有效' },
+                        { id: (Math.random() * 1000000).toFixed(0), poStsCode: '有效' },
+                        { id: (Math.random() * 1000000).toFixed(0), poStsCode: '有效' },
+                        { id: (Math.random() * 1000000).toFixed(0), poStsCode: '有效' }
                       ]
                       formRef.current?.setFieldValue(['editTable'], newData)
                       // 更新 coEditableKeys
