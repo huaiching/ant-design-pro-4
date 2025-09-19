@@ -3,7 +3,7 @@ import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
-import { Button, message, Popconfirm, Spin } from 'antd'
+import { Button, Flex, message, Popconfirm, Select, Spin } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import * as poApi from './store/poApi'
 
@@ -14,6 +14,9 @@ const MyForm: React.FC = () => {
   const [editableKeys, setEditableKeys] = useState<React.Key[]>([])
   // 保單資料
   const [poData, setPoData] = useState<any[]>([])
+  // 批次新增資料欄位
+  const [batchPolicyNo, setBatchPolicyNo] = useState<string>() // 保單號碼
+  const [batchPlanCode, setBatchPlanCode] = useState<string[]>([]) // 保障資料
 
   // 模擬 API 取得資料
   useEffect(() => {
@@ -244,26 +247,49 @@ const MyForm: React.FC = () => {
               // 下方自定義區域: 這裡用來擺放 批次新增資料
               footer={() => {
                 return (
-                  <Button
-                    type="dashed"
-                    style={{ backgroundColor: 'rgba(206, 230, 255, 1)' }}
-                    onClick={(data) => {
-                      const subData = formRef.current?.getFieldValue('editTable') || []
-                      const newData = [
-                        ...subData,
-                        { id: (Math.random() * 1000000).toFixed(0), poStsCode: '有效' },
-                        { id: (Math.random() * 1000000).toFixed(0), poStsCode: '有效' },
-                        { id: (Math.random() * 1000000).toFixed(0), poStsCode: '有效' },
-                        { id: (Math.random() * 1000000).toFixed(0), poStsCode: '有效' }
-                      ]
-                      formRef.current?.setFieldValue(['editTable'], newData)
-                      // 更新 coEditableKeys
-                      setEditableKeys(newData.map((item: any) => item.id))
-                    }}
+                  <Flex
+                    justify="center" // 水平對齊方式
+                    align="center" // 垂直對齊方式
+                    gap="large" // 元素間距
                   >
-                    <PlusOutlined />
-                    批次新增資料 (一次新增三筆)
-                  </Button>
+                    <Select
+                      value={batchPolicyNo}
+                      showSearch // 開啟搜尋功能
+                      placeholder="保單號碼"
+                      options={[]}
+                      style={{ width: 150 }}
+                      onChange={setBatchPolicyNo}
+                    />
+                    <Select
+                      value={batchPlanCode}
+                      showSearch
+                      placeholder="險種"
+                      mode="multiple" // 多選模式
+                      options={[]}
+                      style={{ width: 200 }}
+                      onChange={setBatchPlanCode}
+                    />
+                    <Button
+                      type="dashed"
+                      style={{ backgroundColor: 'rgba(206, 230, 255, 1)' }}
+                      onClick={(data) => {
+                        const subData = formRef.current?.getFieldValue('editTable') || []
+                        const newData = [
+                          ...subData,
+                          { id: (Math.random() * 1000000).toFixed(0), poStsCode: '有效' },
+                          { id: (Math.random() * 1000000).toFixed(0), poStsCode: '有效' },
+                          { id: (Math.random() * 1000000).toFixed(0), poStsCode: '有效' },
+                          { id: (Math.random() * 1000000).toFixed(0), poStsCode: '有效' }
+                        ]
+                        formRef.current?.setFieldValue(['editTable'], newData)
+                        // 更新 coEditableKeys
+                        setEditableKeys(newData.map((item: any) => item.id))
+                      }}
+                    >
+                      <PlusOutlined />
+                      批次新增資料
+                    </Button>
+                  </Flex>
                 )
               }}
               // 編輯設定
