@@ -16,6 +16,11 @@ interface SymptomInputPreviewProps {
 
 /**
  * 自製元件，可用於 輸入多筆資料 (每筆資料有多個欄位)
+ * optionsData: 選單設定，會依照 欄位順序 自動拼組成 下拉選單的文字
+ * column: 欄位，要對應 optionsData 的欄位
+ * name: 保存到 formRef 的 變數名稱
+ * label: title 文字
+ * placeholder: 提示文字
  */
 const SymptomInputPreview: React.FC<SymptomInputPreviewProps> = ({
   optionsData, colSize, label, name, column, placeholder, formRef
