@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Button, message, Typography } from 'antd'
-import { FooterToolbar } from '@ant-design/pro-components'
+import { FooterToolbar, ProForm, ProFormInstance } from '@ant-design/pro-components'
 import SymptomInputPreview from './Components/SymptomInputPreview'
 
 const optionsData = [
@@ -16,40 +16,58 @@ const column = [
   { title: '文字', dataIndex: 'text', valueType: 'text' },
 ]
 
-const InputPreviewProTable: React.FC = () => {
-  const [selectedOptions, setSelectedOptions] = useState<{ code: string; text: string }[]>([])
+const SelectTable: React.FC = () => {
+  const formRef = useRef<ProFormInstance>()
+
+  // 控制送出後之動作
+  const submitterRender = () => {
+    return {
+      render: () => (
+        <FooterToolbar>
+          <Button
+            type='primary'
+            onClick={async () => {
+              formRef.current?.validateFields().then((values) => {
+                console.info(formRef.current?.getFieldsValue())
+                message.success(`表單提交成功！${JSON.stringify(values)}`)
+              })
+            }}
+            key='save'
+          >
+            確認
+          </Button>
+          <Button
+            onClick={async () => {
+              message.warning('取消作業')
+            }}
+          >
+            取消
+          </Button>
+        </FooterToolbar>
+      )
+    }
+  }
 
   return (
     <>
       <Typography.Title level={3}>此為自製元件</Typography.Title>
-      <SymptomInputPreview
-        label='症狀'
-        name='symptom'
-        column={column}
-        optionsData={optionsData}
-        onChange={(data: any) => setSelectedOptions(data)}
-      />
-
-      <FooterToolbar>
-        <Button
-          type="primary"
-          onClick={() => {
-            console.info('送出的資料', selectedOptions)
-            message.success('表單提交成功！')
-          }}
-        >
-          確認
-        </Button>
-        <Button
-          onClick={() => {
-            message.warning('取消作業')
-          }}
-        >
-          取消
-        </Button>
-      </FooterToolbar>
+      <ProForm
+        grid
+        layout='vertical'
+        formRef={formRef}
+        submitter={submitterRender()}
+      >
+        <SymptomInputPreview
+          label='症狀'
+          name='symptom'
+          formRef={formRef}
+          column={column}
+          optionsData={optionsData}
+          colSize={2}
+        />
+      </ProForm>
     </>
   )
 }
 
-export default InputPreviewProTable
+export default SelectTable
