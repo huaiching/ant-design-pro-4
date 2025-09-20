@@ -4,10 +4,10 @@ import { Button, ConfigProvider, message, Segmented, Space, Typography } from 'a
 import React, { useEffect, useRef, useState } from 'react'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { MliFormRow } from '@mli-csmo/base'
-import { CloseOutlined, EditOutlined } from '@ant-design/icons'
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 
 const editOption = [
-  { value: 'edit', icon: <EditOutlined /> },
+  { value: 'edit', icon: <CheckOutlined /> },
   { value: 'disabled', icon: <CloseOutlined /> }
 ]
 
@@ -72,6 +72,7 @@ const InsurancePolicyCard: React.FC = () => {
                 message.info('按了'+value)
               }}
               size='large'
+              shape="round"
             />
             <Typography.Title level={4}>保單資訊</Typography.Title>
           </Space>
