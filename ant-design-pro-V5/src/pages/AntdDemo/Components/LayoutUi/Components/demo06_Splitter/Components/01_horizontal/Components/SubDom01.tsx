@@ -7,7 +7,7 @@ const SubDom01: React.FC = () => {
       <Typography.Title level={5}>
         SubDom01
       </Typography.Title>
-      <div style={{ height: '1000px' }}>長內容區域...</div>
+      <div style={{ height: '10000px' }}>長內容區域...</div>
     </Flex>
   );
 };
