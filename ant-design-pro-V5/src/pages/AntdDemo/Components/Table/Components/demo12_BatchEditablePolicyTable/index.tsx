@@ -144,6 +144,7 @@ const MyForm: React.FC = () => {
               name="editTable"
               columns={columns}
               rowKey="id"
+              style={{ width: '100%' }}
               // 新增按鈕
               recordCreatorProps={false}
               // recordCreatorProps={{
@@ -188,6 +189,7 @@ const MyForm: React.FC = () => {
                     <Button
                       type="dashed"
                       style={{ backgroundColor: 'rgba(206, 230, 255, 1)' }}
+                      icon={<PlusOutlined />}
                       onClick={() => {
                         const data = formRef.current?.getFieldValue('editTable') || []
                         batchPlanCode.forEach((planCode) => {
@@ -204,7 +206,6 @@ const MyForm: React.FC = () => {
                         setBatchPlanCode([]) // 清空險種欄位
                       }}
                     >
-                      <PlusOutlined />
                       批次新增資料
                     </Button>
                   </Flex>

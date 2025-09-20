@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, message } from 'antd'
+import { Button, message, Typography } from 'antd'
 import { FooterToolbar } from '@ant-design/pro-components'
 import SymptomInputPreview from './Components/SymptomInputPreview'
 
@@ -11,12 +11,21 @@ const optionsData = [
   { code: 'E05', text: '流鼻水' }
 ]
 
+const column = [
+  { title: '代碼', dataIndex: 'code', valueType: 'text' },
+  { title: '文字', dataIndex: 'text', valueType: 'text' },
+]
+
 const InputPreviewProTable: React.FC = () => {
   const [selectedOptions, setSelectedOptions] = useState<{ code: string; text: string }[]>([])
 
   return (
     <>
+      <Typography.Title level={3}>此為自製元件</Typography.Title>
       <SymptomInputPreview
+        label='症狀'
+        name='symptom'
+        column={column}
         optionsData={optionsData}
         onChange={(data: any) => setSelectedOptions(data)}
       />

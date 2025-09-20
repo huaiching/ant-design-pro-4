@@ -6,12 +6,11 @@ import Demo04 from './Components/demo04_ShowRowProTable'
 import Demo05 from './Components/demo05_EditProTable'
 import Demo06 from './Components/demo06_EditableProTable'
 import Demo07 from './Components/demo07_InputEditableProTable'
-import Demo08 from './Components/demo08_InputPreviewProTable'
-import Demo09 from './Components/demo09_NestedEditableProTable'
-import Demo10 from './Components/demo10_DragSortTable'
-import Demo11 from './Components/demo11_EditableAmountTable'
-import Demo12 from './Components/demo12_CaseSearchTable'
-import Demo13 from './Components/demo13_BatchEditablePolicyTable'
+import Demo08 from './Components/demo08_NestedEditableProTable'
+import Demo09 from './Components/demo09_DragSortTable'
+import Demo10 from './Components/demo10_EditableAmountTable'
+import Demo11 from './Components/demo11_CaseSearchTable'
+import Demo12 from './Components/demo12_BatchEditablePolicyTable'
 import { Splitter, Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
@@ -56,33 +55,28 @@ const AsstManagement: React.FC = () => {
     },
     {
       authCode: '8',
-      title: '輸入資料顯示於表格(InputPreviewProTable)',
+      title: '嵌套可編輯表格(NestedEditableProTable)',
       component: <Demo08 />
     },
     {
       authCode: '9',
-      title: '嵌套可編輯表格(NestedEditableProTable)',
+      title: '拖動排序表格(DragSortTable)',
       component: <Demo09 />
     },
     {
       authCode: '10',
-      title: '拖動排序表格(DragSortTable)',
+      title: '可編輯金額表格(EditableAmountTable)',
       component: <Demo10 />
     },
     {
       authCode: '11',
-      title: '可編輯金額表格(EditableAmountTable)',
+      title: '案例搜尋表格(CaseSearchTable)',
       component: <Demo11 />
     },
     {
       authCode: '12',
-      title: '案例搜尋表格(CaseSearchTable)',
-      component: <Demo12 />
-    },
-    {
-      authCode: '13',
       title: '批量新增資料表格(BatchEditablePolicyTable)',
-      component: <Demo13 />
+      component: <Demo12 />
     }
   ]
   // 目前的 tab 標籤
