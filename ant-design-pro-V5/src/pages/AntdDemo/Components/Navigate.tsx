@@ -26,7 +26,7 @@ const Navigate: React.FC = () => {
       key: 'css',
       title: 'CSS 教學',
       desc: '包含 CSS 的基本用法 與 進階技巧',
-      url: 'https://developer.mozilla.org/zh-CN/docs/Web/CSS'
+      url: 'https://steam.oxxostudio.tw/category/css/index.html'
     },
     {
       key: 'JavaScript',
