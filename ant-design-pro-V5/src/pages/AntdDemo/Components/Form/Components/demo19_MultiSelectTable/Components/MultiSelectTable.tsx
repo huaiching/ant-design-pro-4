@@ -4,33 +4,64 @@ import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 import { ProTable, ProColumns, ProForm, ProFormInstance } from '@ant-design/pro-components'
 import { MliFormCol, MliFormRow } from '@mli-csmo/base'
 
+
+interface OptionData {
+  code: string
+  [key: string]: any
+}
+
 interface Props {
-  optionsData: any[]
+  /** 下拉選單的來源資料，第一個欄位必須是 code */
+  optionsData: OptionData[]
+
+  /** 欄位在表單中的佔比 (對應 MliFormCol.colSize)，預設 1 */
   colSize?: number
+
+  /** ProForm.Item 的標籤文字 */
   label: string
+
+  /** 對應 ProForm.Item 的欄位名稱，用於保存輸入結果 */
   name: string
+
+  /** 額外的表格欄位設定，會動態合併進 ProTable columns */
   column?: any[]
+
+  /** AutoComplete 的 placeholder 提示文字 */
   placeholder?: string
+
+  /** 綁定外部 ProForm 的 formRef，用於同步 selectedOptions 值 */
   formRef?: React.MutableRefObject<ProFormInstance | undefined>
+
+  /** 是否必填，若為 true 則會檢核至少需輸入一筆資料 */
   required?: boolean
-  validator?: (value: any[]) => string | undefined | Promise<string | undefined>
+
+  /**
+   * 自訂檢核函式
+   * @param value 目前已選取的資料陣列
+   * @returns string | undefined | Promise<string | undefined>
+   *          - 回傳 string：檢核錯誤訊息
+   *          - 回傳 null | undefined：檢核通過
+   */
+  validator?: (value: any[]) => string | null | undefined | Promise<string | null | undefined>
 }
 
 /**
- * 自製元件，可用於 輸入多筆資料 (每筆資料有多個欄位)
- * optionsData: 選單設定，會依照 欄位順序 自動拼組成 下拉選單的文字
- * column: 欄位，要對應 optionsData 的欄位
- * name: 保存到 formRef 的 變數名稱
- * label: title 文字
- * placeholder: 提示文字
- * required: 是否必填
- * validator: 自訂檢核函式
+ * 自製元件，可用於輸入多筆資料 (每筆資料有多個欄位)
+ * @param optionsData 下拉選單資料來源 (必須包含 code 欄位)
+ * @param colSize     元件在表單中的佔比 (MliFormCol)
+ * @param label       ProForm.Item 標籤文字
+ * @param name        ProForm.Item 欄位名稱
+ * @param column      額外表格欄位設定
+ * @param placeholder AutoComplete 提示文字
+ * @param formRef     外部 ProForm formRef，用於值同步
+ * @param required    是否必填，預設 false
+ * @param validator   自訂檢核函式
  */
 const MultiSelectTable: React.FC<Props> = ({
   optionsData, colSize, label, name, column, placeholder, formRef, required, validator
 }) => {
   const [inputValue, setInputValue] = useState('')
-  const [selectedOptions, setSelectedOptions] = useState<{ code: string; text: string }[]>([])
+  const [selectedOptions, setSelectedOptions] = useState<any[]>([])
 
   // 初始化時，從 formRef 取出資料 (避免編輯場景丟失資料)
   useEffect(() => {
