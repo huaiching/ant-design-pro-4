@@ -156,7 +156,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
       >
         <FloatButton
           icon={<VerticalAlignTopOutlined />}
-          tooltip='回頂部'
+          // tooltip='回頂部'
           onClick={() => {
             window.scrollTo({
               top: 0,
@@ -166,7 +166,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
         />
         <FloatButton
           icon={<VerticalAlignBottomOutlined />}
-          tooltip='到底部'
+          // tooltip='到底部'
           onClick={() => {
             window.scrollTo({
               top: document.documentElement.scrollHeight,

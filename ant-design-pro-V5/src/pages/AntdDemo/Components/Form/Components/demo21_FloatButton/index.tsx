@@ -18,7 +18,7 @@ const TabContent1: React.FC = () => {
       >
         <FloatButton
           icon={<VerticalAlignTopOutlined />}
-          tooltip='回頂部'
+          // tooltip='回頂部'
           onClick={() => {
             window.scrollTo({
               top: 0,
@@ -28,7 +28,7 @@ const TabContent1: React.FC = () => {
         />
         <FloatButton
           icon={<VerticalAlignBottomOutlined />}
-          tooltip='到底部'
+          // tooltip='到底部'
           onClick={() => {
             window.scrollTo({
               top: document.documentElement.scrollHeight,
