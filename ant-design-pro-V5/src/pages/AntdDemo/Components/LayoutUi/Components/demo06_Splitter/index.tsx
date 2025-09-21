@@ -14,33 +14,33 @@ const AsstManagement: React.FC = () => {
     {
       authCode: '1',
       title: '橫向分割線(Horizontal Splitter)',
-      component: <Demo01/>
+      component: <Demo01 />
     },
     {
       authCode: '2',
       title: '縱向分割線(Vertical Splitter)',
-      component: <Demo02/>
+      component: <Demo02 />
     },
     {
       authCode: '3',
       title: '嵌套分割線(Nesting Splitter)',
-      component: <Demo03/>
+      component: <Demo03 />
     }
   ]
 
   return (
-      <Tabs
-        type='card'
-        tabPosition='left'
-        animated    // 啟用切換動畫
-        destroyOnHidden   // 隱藏時銷毀 DOM
-      >
-    {tabs.map((item) => (
-      <TabPane tab={item.title} key={item.authCode}>
-        {item.component}
-      </TabPane>
-    ))}
-  </Tabs>
+    <Tabs
+      type='card'
+      tabPosition='left'
+      animated    // 啟用切換動畫
+      destroyOnHidden   // 隱藏時銷毀 DOM
+    >
+      {tabs.map((item) => (
+        <TabPane tab={item.title} key={item.authCode}>
+          {item.component}
+        </TabPane>
+      ))}
+    </Tabs>
   )
 }
 

@@ -1,14 +1,14 @@
 import ProCard from '@ant-design/pro-card'
-import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
-import { Button, ConfigProvider, message, Modal, Segmented, Space, Typography } from 'antd'
+import ProForm, { ProFormInstance } from '@ant-design/pro-form'
+import { Button, message, Modal, Segmented, Space, Typography } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { MliFormRow } from '@mli-csmo/base'
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
+import { CloseOutlined, FormOutlined } from '@ant-design/icons'
+import PoEdit from './Components/PoEdit'
 
 const editOption = [
-  { value: 'edit', icon: <CheckOutlined /> },
-  { value: 'disabled', icon: <CloseOutlined /> }
+  { value: 'edit', icon: <FormOutlined style={{color: 'blue'}} /> },
+  { value: 'disabled', icon: <CloseOutlined style={{color: 'red'}}/> }
 ]
 
 const initData = {
@@ -18,10 +18,14 @@ const initData = {
 
 const InsurancePolicyCard: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
-  const [poEdit, setPoEdit] = useState<string>('disabled')
+  // 保單編輯設定
+  const [poEdit, setPoEdit] = useState<string>('disabled') // 編輯控制
+  const [poInit, setPoInit] = useState<any>({}) // 資料初始值
+
 
   // 設定初始值
   useEffect(() => {
+    setPoInit(initData)
     formRef.current?.setFieldValue('Q1', initData)
   }, [])
 
@@ -72,6 +76,18 @@ const InsurancePolicyCard: React.FC = () => {
     }
   }
 
+  const cardConfigs = [
+    {
+      key: 'Q1',
+      title: '保單資訊',
+      init: poInit,
+      edit: poEdit,
+      setEdit: setPoEdit,
+      component: <PoEdit poEdit={poEdit} />
+    }
+  ]
+
+
   return (
     <ProForm
       grid
@@ -79,60 +95,45 @@ const InsurancePolicyCard: React.FC = () => {
       formRef={formRef}
       submitter={submitterRender()}
     >
-      <ProCard
-        // title='保單資訊'
-        title={
-          <Space wrap align="center" size='large'>
-            <Segmented
-              value={poEdit}
-              options={editOption}
-              size='large'
-              shape="round"
-              onChange={async (value) => {
-                // 取消編輯確認
-                if (value === 'disabled') {
-                  const recode = await disabledModel('Q1')
-                  if (!recode) {
-                    return
+      {cardConfigs.map((config) => (
+        <ProCard
+          key={config.key}
+          title={
+            <Space wrap align="center" size='large'>
+              <Segmented
+                value={config.edit}
+                options={editOption}
+                size='large'
+                shape="round"
+                onChange={async (value) => {
+                  // 取消編輯確認
+                  if (value === 'disabled') {
+                    const recode = await disabledModel(config.key)
+                    if (!recode) {
+                      return
+                    }
                   }
-                }
-                // 資料還原
-                if (value === 'disabled') {
-                  formRef.current?.setFieldValue('Q1', initData)
-                  message.info('資料已還原')
-                }
-                // 狀態修改
-                setPoEdit(value)
-              }}
-            />
-            <Typography.Title level={4}>Q1</Typography.Title>
-            <Typography.Title level={4}>保單資訊</Typography.Title>
-          </Space>
-        }
-        type='inner'
-        size='small'
-        headerBordered      // 有 分隔線
-        collapsible         // 有 摺疊
-        defaultCollapsed    // 預設 折疊
-        extra={
-          <Typography.Text>extra</Typography.Text>
-        }
-      >
-        <ConfigProvider componentDisabled={poEdit !== 'edit'}>
-          <MliFormRow>
-            <ProFormText
-              name={['Q1','policyNo']}
-              label='保單號碼'
-              placeholder=''
-            />
-            <ProFormText
-              name={['Q1','poStsCode']}
-              label='保單狀態'
-              placeholder=''
-            />
-          </MliFormRow>
-        </ConfigProvider>
-      </ProCard>
+                  // 資料還原
+                  if (value === 'disabled') {
+                    formRef.current?.setFieldValue(config.key, config.init)
+                  }
+                  // 狀態修改
+                  config.setEdit(value)
+                }}
+              />
+              <Typography.Title level={4}>{config.key}：</Typography.Title>
+              <Typography.Title level={4}>{config.title}</Typography.Title>
+            </Space>
+          }
+          type='inner'
+          size='small'
+          ghost
+          collapsible         // 有 摺疊
+          defaultCollapsed    // 預設 折疊
+        >
+          {config.component}
+        </ProCard>
+      ))}
     </ProForm>
   )
 }
