@@ -11,6 +11,7 @@ import { FooterToolbar, ProForm, ProFormDatePicker, ProFormInstance, ProFormSele
 import dayjs from 'dayjs'
 import optionsStore from '../Mobx/optionStore'
 import { MliFormRow } from '@mli-csmo/base'
+import { parseRocDate } from '@/utils/rocDateUtils'
 
 interface Props {
   handleStep: (step: number) => void
@@ -77,34 +78,45 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
           name='receiveDate'
           label='受理日期'
           placeholder=' '
-          colSize={2/3}
+          colSize={2 / 3}
           rules={[
             { required: true, message: '日期為必填項' }
           ]}
           fieldProps={{
-            format: 'YYYY/MM/DD',
-            style: { width: '100%' }
+            format: 'TTT/MM/DD',
+            style: { width: '100%' },
+            onBlur: (e: any) => {
+              if (e.target?.value) {
+                formRef.current?.setFieldValue('receiveDate', parseRocDate(e.target?.value))
+              }
+            }
           }}
         />
         <ProFormDatePicker
           name='chgDate'
           label='變更生效日'
           placeholder=' '
-          colSize={2/3}
+          colSize={2 / 3}
           rules={[
             { required: true, message: '日期為必填項' }
           ]}
           fieldProps={{
-            format: 'YYYY/MM/DD',
-            style: { width: '100%' }
+            format: 'TTT/MM/DD',
+            style: { width: '100%' },
+            onBlur: (e: any) => {
+              if (e.target?.value) {
+                formRef.current?.setFieldValue('chgDate', parseRocDate(e.target?.value))
+              }
+            }
           }}
         />
         <ProFormSelect
           name="chgType"
           label="變更選項"
-          colSize={2/3}
+          colSize={2 / 3}
           options={chgTypeOption}
           rules={[{ required: true }]}
+          showSearch
         />
       </MliFormRow>
 
