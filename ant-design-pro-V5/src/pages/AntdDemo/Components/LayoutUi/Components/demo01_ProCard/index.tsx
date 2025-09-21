@@ -1,6 +1,6 @@
 import ProCard from '@ant-design/pro-card'
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
-import { Button, ConfigProvider, message, Segmented, Space, Typography } from 'antd'
+import { Button, ConfigProvider, message, Modal, Segmented, Space, Typography } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { MliFormRow } from '@mli-csmo/base'
@@ -11,16 +11,35 @@ const editOption = [
   { value: 'disabled', icon: <CloseOutlined /> }
 ]
 
+const initData = {
+  policyNo: '1234567890',
+  poStsCode: '42'
+}
+
 const InsurancePolicyCard: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
   const [poEdit, setPoEdit] = useState<string>('disabled')
 
+  // 設定初始值
   useEffect(() => {
-    formRef.current?.setFieldsValue({
-      policyNo: '1234567890',
-      poStsCode: '42'
-    })
+    formRef.current?.setFieldValue('Q1', initData)
   }, [])
+
+  // 設定 詢問視窗
+  const disabledModel = (questionNo: string): Promise<boolean> => {
+    const title = questionNo + ' 是否確定要 取消編輯？'
+    return new Promise((resolve) => {
+      Modal.confirm({
+        title: title,
+        content: '這將會還原資料，修改將會消失。',
+        okText: '確定',
+        cancelText: '取消',
+        onOk: () => resolve(true),
+        onCancel: () => resolve(false),
+      })
+    })
+  }
+
 
   // 控制送出後之動作
   const submitterRender = () => {
@@ -63,17 +82,30 @@ const InsurancePolicyCard: React.FC = () => {
       <ProCard
         // title='保單資訊'
         title={
-          <Space wrap align="center">
+          <Space wrap align="center" size='large'>
             <Segmented
               value={poEdit}
               options={editOption}
-              onChange={(value)=>{
-                setPoEdit(value)
-                message.info('按了'+value)
-              }}
               size='large'
               shape="round"
+              onChange={async (value) => {
+                // 取消編輯確認
+                if (value === 'disabled') {
+                  const recode = await disabledModel('Q1')
+                  if (!recode) {
+                    return
+                  }
+                }
+                // 資料還原
+                if (value === 'disabled') {
+                  formRef.current?.setFieldValue('Q1', initData)
+                  message.info('資料已還原')
+                }
+                // 狀態修改
+                setPoEdit(value)
+              }}
             />
+            <Typography.Title level={4}>Q1</Typography.Title>
             <Typography.Title level={4}>保單資訊</Typography.Title>
           </Space>
         }
@@ -89,12 +121,14 @@ const InsurancePolicyCard: React.FC = () => {
         <ConfigProvider componentDisabled={poEdit !== 'edit'}>
           <MliFormRow>
             <ProFormText
-              name='policyNo'
+              name={['Q1','policyNo']}
               label='保單號碼'
+              placeholder=''
             />
             <ProFormText
-              name='poStsCode'
+              name={['Q1','poStsCode']}
               label='保單狀態'
+              placeholder=''
             />
           </MliFormRow>
         </ConfigProvider>
