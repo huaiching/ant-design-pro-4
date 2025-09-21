@@ -4,7 +4,7 @@ import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 import { ProTable, ProColumns, ProForm, ProFormInstance } from '@ant-design/pro-components'
 import { MliFormCol, MliFormRow } from '@mli-csmo/base'
 
-interface SymptomInputPreviewProps {
+interface Props {
   optionsData: any[]
   colSize?: number
   label: string
@@ -12,6 +12,8 @@ interface SymptomInputPreviewProps {
   column?: any[]
   placeholder?: string
   formRef?: React.MutableRefObject<ProFormInstance | undefined>
+  required?: boolean
+  validator?: (value: any[]) => string | undefined | Promise<string | undefined>
 }
 
 /**
@@ -21,9 +23,11 @@ interface SymptomInputPreviewProps {
  * name: 保存到 formRef 的 變數名稱
  * label: title 文字
  * placeholder: 提示文字
+ * required: 是否必填
+ * validator: 自訂檢核函式
  */
-const SymptomInputPreview: React.FC<SymptomInputPreviewProps> = ({
-  optionsData, colSize, label, name, column, placeholder, formRef
+const MultiSelectTable: React.FC<Props> = ({
+  optionsData, colSize, label, name, column, placeholder, formRef, required, validator
 }) => {
   const [inputValue, setInputValue] = useState('')
   const [selectedOptions, setSelectedOptions] = useState<{ code: string; text: string }[]>([])
@@ -89,38 +93,71 @@ const SymptomInputPreview: React.FC<SymptomInputPreviewProps> = ({
   ]
   column?.forEach((e) => columns.push(e))
 
+  /** 驗證規則 */
+  const rules = [
+    ...(required
+      ? [{
+          validator: async (_: any, value: any[]) => {
+            if (!value || value.length === 0) {
+              return Promise.reject(new Error(`${label}為必填`))
+            }
+            return Promise.resolve()
+          }
+        }]
+      : []),
+    ...(validator
+      ? [{
+          validator: async (_: any, value: any[]) => {
+            const msg = await validator(value)
+            if (msg) {
+              return Promise.reject(new Error(msg))
+            }
+            return Promise.resolve()
+          }
+        }]
+      : [])
+  ]
+
   return (
     <MliFormRow>
       <MliFormCol colSize={colSize ?? 1}>
-        <ProForm.Item label={label} name={name} layout="vertical">
-          <Space.Compact style={{ width: '100%' }}>
-            <AutoComplete
-              options={autoOptions}
-              value={inputValue}
-              onChange={(val) => setInputValue(val)}
-              placeholder={placeholder}
-              filterOption={(inputValue, option) =>
-                !!option && option.value.toLowerCase().includes(inputValue.toLowerCase())
-              }
-            />
-            <Button shape="default" icon={<PlusOutlined />} onClick={handleAdd} />
-          </Space.Compact>
+        <ProForm.Item
+          label={label}
+          name={name}
+          layout="vertical"
+          required={required ? true : false}
+          rules={rules}
+        >
+          <>
+            <Space.Compact style={{ width: '100%' }}>
+              <AutoComplete
+                options={autoOptions}
+                value={inputValue}
+                onChange={(val) => setInputValue(val)}
+                placeholder={placeholder}
+                filterOption={(inputValue, option) =>
+                  !!option && option.value.toLowerCase().includes(inputValue.toLowerCase())
+                }
+              />
+              <Button shape="default" icon={<PlusOutlined />} onClick={handleAdd} />
+            </Space.Compact>
 
-          {selectedOptions.length > 0 && (
-            <ProTable
-              search={false}
-              options={false}
-              pagination={false}
-              toolBarRender={false}
-              dataSource={selectedOptions}
-              columns={columns}
-              rowKey="code"
-            />
-          )}
+            {selectedOptions.length > 0 && (
+              <ProTable
+                search={false}
+                options={false}
+                pagination={false}
+                toolBarRender={false}
+                dataSource={selectedOptions}
+                columns={columns}
+                rowKey="code"
+              />
+            )}
+          </>
         </ProForm.Item>
       </MliFormCol>
     </MliFormRow>
   )
 }
 
-export default SymptomInputPreview
+export default MultiSelectTable

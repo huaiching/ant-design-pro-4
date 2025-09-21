@@ -18,7 +18,7 @@ import Demo15 from './Components/demo15_ProFormItem'
 import Demo16 from './Components/demo16_AutoComplete'
 import Demo17 from './Components/demo17_ProFormList'
 import Demo18 from './Components/demo18_CaseFolw'
-import Demo19 from './Components/demo19_SelectTable'
+import Demo19 from './Components/demo19_MultiSelectTable'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
@@ -125,7 +125,7 @@ const AsstManagement: React.FC = () => {
     },
     {
       authCode: '19',
-      title: '下拉表單輸入表格(SelectTable)',
+      title: '下拉表單輸入表格(MultiSelectTable)',
       component: <Demo19/>
     }
   ]

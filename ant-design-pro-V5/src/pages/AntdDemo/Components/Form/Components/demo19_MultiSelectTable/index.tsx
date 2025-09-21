@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Button, message, Typography } from 'antd'
 import { FooterToolbar, ProForm, ProFormInstance } from '@ant-design/pro-components'
-import SymptomInputPreview from './Components/SymptomInputPreview'
+import MultiSelectTable from './Components/MultiSelectTable'
 
 const optionsData = [
   { code: 'A01', text: '頭暈' },
@@ -29,7 +29,6 @@ const SelectTable: React.FC = () => {
             onClick={async () => {
               formRef.current?.validateFields().then((values) => {
                 console.info(formRef.current?.getFieldsValue())
-                message.success(`表單提交成功！${JSON.stringify(values)}`)
               })
             }}
             key='save'
@@ -57,13 +56,14 @@ const SelectTable: React.FC = () => {
         formRef={formRef}
         submitter={submitterRender()}
       >
-        <SymptomInputPreview
+        <MultiSelectTable
           label='症狀'
           name='symptom'
           formRef={formRef}
           column={column}
           optionsData={optionsData}
           colSize={2}
+          required
         />
       </ProForm>
     </>
