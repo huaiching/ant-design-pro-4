@@ -20,6 +20,7 @@ import Demo17 from './Components/demo17_ProFormList'
 import Demo18 from './Components/demo18_CaseFolw'
 import Demo19 from './Components/demo19_MultiSelectTable'
 import Demo20 from './Components/demo20_Typography'
+import Demo21 from './Components/demo21_FloatButton'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
@@ -133,6 +134,11 @@ const AsstManagement: React.FC = () => {
       authCode: '20',
       title: '文字樣式(Typography)',
       component: <Demo20/>
+    },
+    {
+      authCode: '21',
+      title: '懸浮按鈕(FloatButton)',
+      component: <Demo21/>
     }
   ]
 

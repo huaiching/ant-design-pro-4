@@ -147,28 +147,28 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
 
       {component}
 
-      <FloatButton
-        icon={<VerticalAlignTopOutlined />}
-        tooltip='回頂部'
-        style={{bottom: 150}}
-        onClick={() => {
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          })
-        }} 
-      />
-      <FloatButton
-        icon={<VerticalAlignBottomOutlined />}
-        tooltip='到底部'
-        style={{bottom: 100}}
-        onClick={() => {
-          window.scrollTo({
-            top: document.documentElement.scrollHeight,
-            behavior: 'smooth',
-          });
-        }}
-      />
+      <FloatButton.Group shape="circle" style={{ bottom: 100 }}>
+        <FloatButton
+          icon={<VerticalAlignTopOutlined />}
+          tooltip='回頂部'
+          onClick={() => {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            })
+          }}
+        />
+        <FloatButton
+          icon={<VerticalAlignBottomOutlined />}
+          tooltip='到底部'
+          onClick={() => {
+            window.scrollTo({
+              top: document.documentElement.scrollHeight,
+              behavior: 'smooth',
+            });
+          }}
+        />
+      </FloatButton.Group>
 
       <FooterToolbar>
         <Button onClick={handlePrevious} disabled={activeTab === firstTab} >上一頁</Button>
