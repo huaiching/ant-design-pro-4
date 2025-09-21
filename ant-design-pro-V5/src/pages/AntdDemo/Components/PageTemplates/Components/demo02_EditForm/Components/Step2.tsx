@@ -16,7 +16,7 @@ import poTableStore from '../Mobx/poTableStore'
 import formRefStore from '../Mobx/formRefStore'
 import tabRefStore from '../Mobx/tabRefStore'
 import TabPane from 'antd/es/tabs/TabPane'
-import { VerticalAlignBottomOutlined, VerticalAlignTopOutlined } from '@ant-design/icons'
+import { AppstoreOutlined, VerticalAlignBottomOutlined, VerticalAlignTopOutlined } from '@ant-design/icons'
 
 interface Props {
   handleStep: (step: number) => void
@@ -147,7 +147,13 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
 
       {component}
 
-      <FloatButton.Group shape="circle" style={{ bottom: 100 }}>
+      <FloatButton.Group
+        shape="square"
+        trigger="click"
+        style={{ bottom: 100 }}
+        placement='top'
+        icon={<AppstoreOutlined />}
+      >
         <FloatButton
           icon={<VerticalAlignTopOutlined />}
           tooltip='回頂部'

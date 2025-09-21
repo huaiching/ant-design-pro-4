@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { observer } from 'mobx-react'
-import { VerticalAlignTopOutlined, VerticalAlignBottomOutlined } from '@ant-design/icons'
+import { VerticalAlignTopOutlined, VerticalAlignBottomOutlined, AppstoreOutlined } from '@ant-design/icons'
 import { FloatButton } from 'antd'
 const TabContent1: React.FC = () => {
 
@@ -9,7 +9,13 @@ const TabContent1: React.FC = () => {
     <>
       <div style={{ height: '5000px' }}>長內容區域...</div>
 
-      <FloatButton.Group shape="circle" style={{ bottom: 100 }}>
+      <FloatButton.Group
+        shape='square'
+        trigger="click"
+        style={{ bottom: 100 }}
+        placement='top'
+        icon={<AppstoreOutlined />}
+      >
         <FloatButton
           icon={<VerticalAlignTopOutlined />}
           tooltip='回頂部'
