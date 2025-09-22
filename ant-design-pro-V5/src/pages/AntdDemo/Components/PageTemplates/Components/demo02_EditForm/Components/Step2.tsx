@@ -3,20 +3,24 @@
  * 變數透過 mobx 設定 可以減少透過 props 傳遞的麻煩
  */
 
-import React, { useEffect, useState } from 'react'
-import { Button, message, BackTop, Card, Tabs, FloatButton } from 'antd'
-import { ProForm, FooterToolbar } from '@ant-design/pro-components'
+import {
+  AppstoreOutlined,
+  VerticalAlignBottomOutlined,
+  VerticalAlignTopOutlined
+} from '@ant-design/icons'
+import { FooterToolbar, ProForm } from '@ant-design/pro-components'
+import { Button, FloatButton, message, Tabs } from 'antd'
+import TabPane from 'antd/es/tabs/TabPane'
+import { log } from 'console'
 import { observer } from 'mobx-react'
+import React, { useEffect, useState } from 'react'
 import basicStore from '../Mobx/basicStore'
+import formRefStore from '../Mobx/formRefStore'
+import poTableStore from '../Mobx/poTableStore'
+import tabRefStore from '../Mobx/tabRefStore'
 import InfoForm from './Components/InfoForm'
 import TabContent1 from './Components/TabContent1'
 import TabContent2 from './Components/TabContent2'
-import { log } from 'console'
-import poTableStore from '../Mobx/poTableStore'
-import formRefStore from '../Mobx/formRefStore'
-import tabRefStore from '../Mobx/tabRefStore'
-import TabPane from 'antd/es/tabs/TabPane'
-import { AppstoreOutlined, VerticalAlignBottomOutlined, VerticalAlignTopOutlined } from '@ant-design/icons'
 
 interface Props {
   handleStep: (step: number) => void
@@ -85,7 +89,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
   }
   // 上一頁 切換事件
   const handlePrevious = () => {
-    const currentIndex = tabs.findIndex(tab => tab.key === activeTab)
+    const currentIndex = tabs.findIndex((tab) => tab.key === activeTab)
     if (currentIndex > 0) {
       const prevKey = tabs[currentIndex - 1].key
       handleTabChange(prevKey)
@@ -93,7 +97,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
   }
   // 下一頁 切換事件
   const handleNext = () => {
-    const currentIndex = tabs.findIndex(tab => tab.key === activeTab)
+    const currentIndex = tabs.findIndex((tab) => tab.key === activeTab)
     if (currentIndex < tabs.length - 1) {
       const nextKey = tabs[currentIndex + 1].key
       handleTabChange(nextKey)
@@ -126,18 +130,14 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
   }
 
   return (
-    <ProForm
-      formRef={formRef}
-      submitter={false}
-      layout='vertical'
-      style={{ padding: 16 }}
-    >
+    <ProForm formRef={formRef} submitter={false} layout="vertical" style={{ padding: 16 }}>
       <InfoForm />
 
       <Tabs
-        type='card'
-        animated    // 啟用切換動畫
-        destroyOnHidden   // 隱藏時銷毀 DOM
+        type="card"
+        activeKey={activeTab}
+        animated // 啟用切換動畫
+        destroyOnHidden // 隱藏時銷毀 DOM
         onChange={setActiveTab}
       >
         {tabs.map((item) => (
@@ -151,7 +151,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
         shape="square"
         trigger="click"
         style={{ bottom: 100 }}
-        placement='top'
+        placement="top"
         icon={<AppstoreOutlined />}
       >
         <FloatButton
@@ -170,17 +170,25 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
           onClick={() => {
             window.scrollTo({
               top: document.documentElement.scrollHeight,
-              behavior: 'smooth',
-            });
+              behavior: 'smooth'
+            })
           }}
         />
       </FloatButton.Group>
 
       <FooterToolbar>
-        <Button onClick={handlePrevious} disabled={activeTab === firstTab} >上一頁</Button>
-        <Button onClick={handleNext} disabled={activeTab === lastTab} >下一頁</Button>
-        <Button type="primary" onClick={handleSubmit}>完成</Button>
-        <Button danger onClick={() => handleStep(0)}>取消</Button>
+        <Button onClick={handlePrevious} disabled={activeTab === firstTab}>
+          上一頁
+        </Button>
+        <Button onClick={handleNext} disabled={activeTab === lastTab}>
+          下一頁
+        </Button>
+        <Button type="primary" onClick={handleSubmit}>
+          完成
+        </Button>
+        <Button danger onClick={() => handleStep(0)}>
+          取消
+        </Button>
       </FooterToolbar>
     </ProForm>
   )
