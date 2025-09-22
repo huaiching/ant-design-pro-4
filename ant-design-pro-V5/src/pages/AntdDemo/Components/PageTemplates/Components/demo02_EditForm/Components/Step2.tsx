@@ -140,10 +140,11 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
       >
         {/* 頁簽 */}
         <Splitter.Panel
-          defaultSize={80} // 預設寬度
+          defaultSize={110} // 預設寬度
           collapsible={{ start: true, end: true }}
         >
           <InfoForm />
+          <br/>
 
           <Tabs
             type="card"
@@ -159,7 +160,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
         </Splitter.Panel>
 
         {/* 內容 */}
-        <Splitter.Panel defaultSize={800} style={{ paddingTop: 20, right: 10 }}>
+        <Splitter.Panel style={{ paddingTop: 20, right: 10 }}>
           <div
             id="tabContent"
             style={{ height: '100%', overflowY: 'auto', paddingLeft: 10, paddingRight: 10 }}

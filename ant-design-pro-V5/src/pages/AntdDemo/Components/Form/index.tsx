@@ -157,7 +157,7 @@ const AsstManagement: React.FC = () => {
         {/* 頁簽 */}
         <Splitter.Panel
           defaultSize={350}   // 預設寬度
-          collapsible={{ start: true, end: true, showCollapsibleIcon: true }}
+          collapsible={{ start: true, end: true }}
         >
           <Tabs
             type='card'
