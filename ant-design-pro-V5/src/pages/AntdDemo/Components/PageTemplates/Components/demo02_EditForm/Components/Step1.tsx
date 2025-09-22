@@ -42,8 +42,8 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
     // 轉成字串格式（date 轉為 字串）
     const parsedValues = {
       ...values,
-      receiveDate: values.receiveDate.format('YYYY/MM/DD'),
-      chgDate: values.chgDate.format('YYYY/MM/DD')
+      receiveDate: values.receiveDate.format('TTT/MM/DD'),
+      chgDate: values.chgDate.format('TTT/MM/DD')
     }
 
     basicStore.setBasic(parsedValues)

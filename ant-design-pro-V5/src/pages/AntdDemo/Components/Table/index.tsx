@@ -79,6 +79,7 @@ const AsstManagement: React.FC = () => {
       component: <Demo12 />
     }
   ]
+
   // 目前的 tab 標籤
   const [activeTab, setActiveTab] = useState('1')
   // 目前的 tab 頁面
@@ -95,7 +96,7 @@ const AsstManagement: React.FC = () => {
       {/* 頁簽 */}
       <Splitter.Panel
         defaultSize={350}   // 預設寬度
-        collapsible={{ start: true, end: true, showCollapsibleIcon: true }}
+        collapsible={{ start: true, end: true }}
       >
         <Tabs
           type='card'
