@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Demo01 from './Components/demo01_MliFormRow'
 import Demo02 from './Components/demo02_ProFormText'
 import Demo03 from './Components/demo03_ProFormTextArea'
@@ -21,7 +21,7 @@ import Demo18 from './Components/demo18_CaseFolw'
 import Demo19 from './Components/demo19_MultiSelectTable'
 import Demo20 from './Components/demo20_Typography'
 import Demo21 from './Components/demo21_FloatButton'
-import { Tabs } from 'antd'
+import { Splitter, Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 
 //asstManagement 主功能名稱
@@ -142,19 +142,42 @@ const AsstManagement: React.FC = () => {
     }
   ]
 
+  // 目前的 tab 標籤
+  const [activeTab, setActiveTab] = useState('1')
+  // 目前的 tab 頁面
+  const component = tabs.find((tab) => tab.authCode === activeTab)?.component
+
   return (
-      <Tabs
-        type='card'
-        tabPosition='left'
-        // animated    // 啟用切換動畫
-        destroyOnHidden   // 隱藏時銷毀 DOM
+    <Splitter
+      layout="horizontal"   // 水平分割 (左右分隔)
+      style={{
+        minHeight: '100vh',
+        height: 'auto'
+      }}
+    >
+      {/* 頁簽 */}
+      <Splitter.Panel
+        defaultSize={350}   // 預設寬度
+        collapsible={{ start: true, end: true }}
       >
-    {tabs.map((item) => (
-      <TabPane tab={item.title} key={item.authCode}>
-        {item.component}
-      </TabPane>
-    ))}
-  </Tabs>
+        <Tabs
+          type='card'
+          tabPosition='left'
+          animated    // 啟用切換動畫
+          destroyOnHidden   // 隱藏時銷毀 DOM
+          onChange={setActiveTab}
+        >
+          {tabs.map((item) => (
+            <TabPane tab={item.title} key={item.authCode} />
+          ))}
+        </Tabs>
+      </Splitter.Panel>
+
+      {/* 內容 */}
+      <Splitter.Panel style={{paddingLeft: 20}}>
+        {component}
+      </Splitter.Panel>
+    </Splitter>
   )
 }
 
