@@ -24,6 +24,11 @@ const TabContent1: React.FC = () => {
               top: 0,
               behavior: 'smooth'
             })
+            const target = document.getElementById('tabContent') || window
+            target.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            })
           }}
         />
         <FloatButton
@@ -33,7 +38,12 @@ const TabContent1: React.FC = () => {
             window.scrollTo({
               top: document.documentElement.scrollHeight,
               behavior: 'smooth',
-            });
+            })
+            const target = document.getElementById('tabContent') || window
+            target.scrollTo({
+              top: document.documentElement.scrollHeight,
+              behavior: 'smooth'
+            })
           }}
         />
       </FloatButton.Group>
