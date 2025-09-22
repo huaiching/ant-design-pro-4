@@ -9,7 +9,7 @@ import {
   VerticalAlignTopOutlined
 } from '@ant-design/icons'
 import { FooterToolbar, ProForm } from '@ant-design/pro-components'
-import { Button, FloatButton, message, Tabs } from 'antd'
+import { Button, FloatButton, message, Splitter, Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import { log } from 'console'
 import { observer } from 'mobx-react'
@@ -130,51 +130,83 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
   }
 
   return (
-    <ProForm formRef={formRef} submitter={false} layout="vertical" style={{ padding: 16 }}>
-      <InfoForm />
-
-      <Tabs
-        type="card"
-        activeKey={activeTab}
-        animated // 啟用切換動畫
-        destroyOnHidden // 隱藏時銷毀 DOM
-        onChange={setActiveTab}
+    <ProForm formRef={formRef} submitter={false} layout="vertical">
+      <Splitter
+        layout="vertical" // 垂直分割 (上下分隔)
+        style={{
+          minHeight: '100vh',
+          height: 'auto'
+        }}
       >
-        {tabs.map((item) => (
-          <TabPane tab={item.title} key={item.key} />
-        ))}
-      </Tabs>
+        {/* 頁簽 */}
+        <Splitter.Panel
+          defaultSize={80} // 預設寬度
+          collapsible={{ start: true, end: true }}
+        >
+          <InfoForm />
 
-      {component}
+          <Tabs
+            type="card"
+            activeKey={activeTab}
+            animated // 啟用切換動畫
+            destroyOnHidden // 隱藏時銷毀 DOM
+            onChange={setActiveTab}
+          >
+            {tabs.map((item) => (
+              <TabPane tab={item.title} key={item.key} />
+            ))}
+          </Tabs>
+        </Splitter.Panel>
 
-      <FloatButton.Group
-        shape="square"
-        trigger="click"
-        style={{ bottom: 100 }}
-        placement="top"
-        icon={<AppstoreOutlined />}
-      >
-        <FloatButton
-          icon={<VerticalAlignTopOutlined />}
-          // tooltip='回頂部'
-          onClick={() => {
-            window.scrollTo({
-              top: 0,
-              behavior: 'smooth'
-            })
-          }}
-        />
-        <FloatButton
-          icon={<VerticalAlignBottomOutlined />}
-          // tooltip='到底部'
-          onClick={() => {
-            window.scrollTo({
-              top: document.documentElement.scrollHeight,
-              behavior: 'smooth'
-            })
-          }}
-        />
-      </FloatButton.Group>
+        {/* 內容 */}
+        <Splitter.Panel defaultSize={800} style={{ paddingTop: 20, right: 10 }}>
+          <div
+            id="tabContent"
+            style={{ height: '100%', overflowY: 'auto', paddingLeft: 10, paddingRight: 10 }}
+          >
+            {component}
+
+            <FloatButton.Group
+              shape="square"
+              trigger="click"
+              style={{ bottom: 100 }}
+              placement="top"
+              icon={<AppstoreOutlined />}
+            >
+              <FloatButton
+                icon={<VerticalAlignTopOutlined />}
+                // tooltip='回頂部'
+                onClick={() => {
+                  window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                  })
+                  const target = document.getElementById('tabContent') || window
+                  target.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                  })
+                }}
+              />
+              <FloatButton
+                icon={<VerticalAlignBottomOutlined />}
+                // tooltip='到底部'
+                onClick={() => {
+                  window.scrollTo({
+                    top: document.documentElement.scrollHeight,
+                    behavior: 'smooth'
+                  })
+                  const target = document.getElementById('tabContent') || window
+                  target.scrollTo({
+                    top: document.documentElement.scrollHeight,
+                    behavior: 'smooth'
+                  })
+                }}
+              />
+            </FloatButton.Group>
+          </div>
+        </Splitter.Panel>
+      </Splitter>
 
       <FooterToolbar>
         <Button onClick={handlePrevious} disabled={activeTab === firstTab}>
