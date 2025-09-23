@@ -117,7 +117,6 @@ const MyForm: React.FC = () => {
                 format="TTT/MM/DD"
                 placeholder="請選擇多個日期"
                 maxTagCount="responsive"
-                style={{ width: '100%' }}
               />
             </ProForm.Item>
           </MliFormCol>
