@@ -5,9 +5,10 @@ import ProForm, {
   ProFormInstance
 } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { MliFormRow } from '@mli-csmo/base'
-import { Button, List, message } from 'antd'
+import { MliFormCol, MliFormRow } from '@mli-csmo/base'
+import { Button, DatePicker, List, message } from 'antd'
 import { log } from 'console'
+import { Dayjs } from 'dayjs'
 import React, { useRef } from 'react'
 
 const MyForm: React.FC = () => {
@@ -104,6 +105,22 @@ const MyForm: React.FC = () => {
               }
             }}
           />
+          {/* 多選日期 */}
+          <MliFormCol colSize={1}>
+            <ProForm.Item
+              name="chkDateMulti"
+              label="多選日期 (僅能使用滑鼠點選)"
+              rules={[{ required: true, message: '請至少選擇一個日期' }]}
+            >
+              <DatePicker
+                multiple
+                format="TTT/MM/DD"
+                placeholder="請選擇多個日期"
+                maxTagCount="responsive"
+                style={{ width: '100%' }}
+              />
+            </ProForm.Item>
+          </MliFormCol>
         </MliFormRow>
         <List
           size="small"

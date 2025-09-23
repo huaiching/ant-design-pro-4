@@ -215,8 +215,8 @@ const NestedEditableProTable: React.FC = () => {
               name="editTable"
               columns={poColumns}
               rowKey="id"
-              scroll={{
-                x: 1000 // 父子表格一致
+              style={{
+                width: '100%'
               }}
               // rowClassName={'ant-table-row-selected'}  // 設定表格底色: 預設顏色
               rowClassName={() => 'custom-selected-row'} // 設定表格底色: 透過 CSS 設定
@@ -254,8 +254,11 @@ const NestedEditableProTable: React.FC = () => {
                   </Popconfirm>
                 ]
               }}
+              pagination={false}
               // 子表格（保障清單）展開設定
               expandable={{
+                expandedRowKeys,
+                onExpandedRowsChange: (keys: any) => setExpandedRowKeys(keys),
                 expandedRowRender: (record, index) => {
                   // 有些型別定義 index 可能是可選，保險起見再算一次
                   const table = formRef.current?.getFieldValue('editTable') || []
@@ -268,11 +271,15 @@ const NestedEditableProTable: React.FC = () => {
                     <EditableProTable
                       rowKey="id"
                       columns={coColumns}
+                      pagination={false}
+                      style={{
+                        width: '100%',
+                        paddingLeft: 50,
+                        paddingBottom: 0,
+                        marginBottom: 0
+                      }}
                       // ✅ 用索引定位到當列的 coList
                       name={['editTable', rowIndex, 'coList']}
-                      scroll={{
-                        x: 1000 // 父子表格一致
-                      }}
                       recordCreatorProps={{
                         newRecordType: 'dataSource',
                         record: () => ({
@@ -315,9 +322,7 @@ const NestedEditableProTable: React.FC = () => {
                       }}
                     />
                   )
-                },
-                expandedRowKeys,
-                onExpandedRowsChange: (keys: any) => setExpandedRowKeys(keys)
+                }
               }}
             />
           </Spin>
