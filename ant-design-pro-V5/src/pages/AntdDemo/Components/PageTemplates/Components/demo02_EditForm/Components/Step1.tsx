@@ -12,6 +12,7 @@ import dayjs from 'dayjs'
 import optionsStore from '../Mobx/optionStore'
 import { MliFormRow } from '@mli-csmo/base'
 import { parseRocDate } from '@/utils/rocDateUtils'
+import { useNavigate } from '@umijs/max'
 
 interface Props {
   handleStep: (step: number) => void
@@ -20,6 +21,7 @@ interface Props {
 const Step1Form: React.FC<Props> = ({ handleStep }) => {
   const formRef = useRef<ProFormInstance>()
   const chgTypeOption = optionsStore.getOptions('chgType')
+  const navigate = useNavigate()
 
   useEffect(() => {
     // 資料初始化
@@ -32,11 +34,13 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
       receiveDate: data.receiveDate ? dayjs(data.receiveDate) : undefined,
       chgDate: data.chgDate ? dayjs(data.chgDate) : undefined
     }
-    // console.info('values', values)
+    // 資料保存
     formRef.current?.setFieldsValue(values)
   })
 
+  // 繼續事件
   const handleSubmit = async () => {
+    // 驗證
     const values = await formRef.current?.validateFields()
 
     // 轉成字串格式（date 轉為 字串）
@@ -45,8 +49,9 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
       receiveDate: values.receiveDate.format('TTT/MM/DD'),
       chgDate: values.chgDate.format('TTT/MM/DD')
     }
-
+    // 基本資料存檔
     basicStore.setBasic(parsedValues)
+    // 步驟跳轉
     handleStep(1)
   }
 
@@ -122,7 +127,9 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
 
       <FooterToolbar>
         <Button type="primary" onClick={handleSubmit}>繼續</Button>
-        <Button danger onClick={() => handleStep(0)}>取消</Button>
+        <Button danger onClick={() => {
+          navigate('/antdDemo/demo')
+        }}>取消</Button>
       </FooterToolbar>
     </ProForm>
   )

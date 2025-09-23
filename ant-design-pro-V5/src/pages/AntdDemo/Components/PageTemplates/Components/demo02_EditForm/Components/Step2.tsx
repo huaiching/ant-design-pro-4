@@ -9,7 +9,7 @@ import {
   VerticalAlignTopOutlined
 } from '@ant-design/icons'
 import { FooterToolbar, ProForm } from '@ant-design/pro-components'
-import { Button, FloatButton, message, Splitter, Tabs } from 'antd'
+import { Button, FloatButton, message, Modal, Splitter, Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import { log } from 'console'
 import { observer } from 'mobx-react'
@@ -21,6 +21,7 @@ import tabRefStore from '../Mobx/tabRefStore'
 import InfoForm from './Components/InfoForm'
 import TabContent1 from './Components/TabContent1'
 import TabContent2 from './Components/TabContent2'
+import { useNavigate } from '@umijs/max'
 
 interface Props {
   handleStep: (step: number) => void
@@ -29,6 +30,7 @@ interface Props {
 const Step2Form: React.FC<Props> = ({ handleStep }) => {
   const formRef = formRefStore.getFormRef
   const basicData = basicStore.getBasic
+  const navigate = useNavigate()
 
   // TAB 資料設定 //
   // 目前的 tab 標籤
@@ -106,24 +108,25 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
 
   // 提交事件
   const handleSubmit = async () => {
+    // 目前頁簽檢核事件，事件設定在各個頁簽中，並透過 Mobx 管理
     const valid = await tabRefStore.runTabLeaveFn(activeTab)
     if (valid) {
+      // 通過檢核，更新頁簽狀態
       const updatedStatus: Record<string, 'pending' | 'valid'> = {
         ...tabStatus,
         [activeTab]: 'valid'
       }
       setTabStatus(updatedStatus)
-
+      // 檢查是否所有頁簽都是完成狀態
       const allValid = Object.entries(updatedStatus).every(([, status]) => status === 'valid')
-      if (allValid) {
-        // const values = formRef.current?.getFieldsValue()
-        log('basicData', basicData)
-        log('tab1', formRef.current?.getFieldValue('tab1'))
-        log('tab2', poTableStore.getPoTableList)
-        message.success('送出成功')
-      } else {
+      if (!allValid) {
         message.error('尚有未完成的頁籤，請逐一檢查')
       }
+      // 全部檢核皆通過，進行 完成處理
+      log('basicData', basicData)
+      log('tab1', formRef.current?.getFieldValue('tab1'))
+      log('tab2', poTableStore.getPoTableList)
+      message.success('送出成功')
     } else {
       message.error('請先完成目前頁籤的欄位')
     }
@@ -144,7 +147,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
           collapsible={{ start: true, end: true }}
         >
           <InfoForm />
-          <br/>
+          <br />
 
           <Tabs
             type="card"
@@ -219,7 +222,20 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
         <Button type="primary" onClick={handleSubmit}>
           完成
         </Button>
-        <Button danger onClick={() => handleStep(0)}>
+        <Button onClick={() => handleStep(0)}>
+          返回
+        </Button>
+        <Button danger onClick={() => {
+          Modal.confirm({
+            title: '請確認是否 取消編輯？',
+            content: '未儲存的修改將會還原。',
+            okText: '確定放棄',
+            onOk() {
+              navigate('/antdDemo/demo')
+            },
+            cancelText: '取消',
+          })
+        }}>
           取消
         </Button>
       </FooterToolbar>
