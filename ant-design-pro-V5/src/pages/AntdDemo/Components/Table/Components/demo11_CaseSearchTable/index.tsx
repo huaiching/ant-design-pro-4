@@ -231,6 +231,7 @@ const CaseSearchTable: React.FC = () => {
           options={false}
           search={false}
           cardBordered={false}
+          style={{width: '100%'}}
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,
