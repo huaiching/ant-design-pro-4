@@ -57,6 +57,7 @@ const MyForm: React.FC = () => {
             rules={[{ required: true, message: '日期為必填項' }]}
             fieldProps={{
               format: 'TTT/MM/DD',
+              style: { width: '100%' },
               inputReadOnly: false,
               onBlur: (e: any) => {
                 if (e.target?.value) {
@@ -72,6 +73,7 @@ const MyForm: React.FC = () => {
             rules={[{ required: true, message: '日期為必填項' }]}
             fieldProps={{
               format: 'TTT/MM',
+              style: { width: '100%' },
               onBlur: (e: any) => {
                 if (e.target?.value) {
                   formRef.current?.setFieldValue('chkDateYYMM', parseRocDateMonth(e.target?.value))
@@ -85,6 +87,7 @@ const MyForm: React.FC = () => {
             rules={[{ required: true, message: '日期為必填項' }]}
             fieldProps={{
               format: 'TTT/MM/DD',
+              style: { width: '100%' },
               onBlur: (e: any) => {
                 if (e.target?.value) {
                   const root = e.target?.closest('.ant-picker-range')
