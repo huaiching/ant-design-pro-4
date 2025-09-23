@@ -143,7 +143,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
       >
         {/* 頁簽 */}
         <Splitter.Panel
-          defaultSize={110} // 預設寬度
+          defaultSize={120} // 預設寬度
           collapsible={{ start: true, end: true }}
         >
           <InfoForm />
@@ -154,7 +154,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
             activeKey={activeTab}
             animated // 啟用切換動畫
             destroyOnHidden // 隱藏時銷毀 DOM
-            onChange={setActiveTab}
+            onChange={handleTabChange}
           >
             {tabs.map((item) => (
               <TabPane tab={item.title} key={item.key} />

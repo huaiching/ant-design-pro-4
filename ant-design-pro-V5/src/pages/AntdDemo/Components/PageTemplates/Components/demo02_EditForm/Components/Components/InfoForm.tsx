@@ -7,9 +7,11 @@ import React from 'react'
 import { Descriptions, DescriptionsProps } from 'antd'
 import { observer } from 'mobx-react'
 import basicStore from '../../Mobx/basicStore'
+import optionsStore from '../../Mobx/optionStore'
 
 const InfoForm: React.FC = () => {
   const basicData = basicStore.getBasic
+  const chgTypeOption = optionsStore.getOptions('chgType')
 
   const items: DescriptionsProps['items'] = [
     {
@@ -47,7 +49,7 @@ const InfoForm: React.FC = () => {
     {
       key: 'chgType',
       label: '變更選項',
-      children: basicData.chgType,
+      children: chgTypeOption.find((option) => option.value === basicData.chgType)?.label || '',
       // labelStyle: { minWidth: 120 },
       contentStyle: { minWidth: 100 },
       span: 1
@@ -61,7 +63,7 @@ const InfoForm: React.FC = () => {
         items={items}       // 欄位資料來源
         layout='horizontal' // 排列方式: horizontal.水平(預設) / vertical.垂直
         size='small'        // 行距
-        // bordered            // 顯示邊框
+        bordered            // 顯示邊框
     />
   )
 }
