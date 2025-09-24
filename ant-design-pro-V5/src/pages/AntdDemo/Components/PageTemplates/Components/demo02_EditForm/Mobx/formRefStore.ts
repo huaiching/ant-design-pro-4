@@ -9,7 +9,7 @@ class FormStore {
     makeAutoObservable(this)
   }
 
-  setFormRef(ref: ProFormInstance<any>) {
+  setFormRef(ref: ProFormInstance<any> | undefined) {
     this.formRef.current = ref
   }
 
