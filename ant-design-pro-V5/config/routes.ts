@@ -179,7 +179,44 @@ export default [
         // Ant Design 組件介紹與說明
         name: 'antdDemo',
         path: '/antdDemo/demo',
-        component: './AntdDemo',  // 組件路徑
+        // component: './AntdDemo',  // 組件路徑
+        routes: [
+          {
+            name: 'Form',
+            path: '/antdDemo/demo/Form',
+            component: './AntdDemo/Components/Form'
+          },
+          {
+            name: 'Container',
+            path: '/antdDemo/demo/Container',
+            component: './AntdDemo/Components/Container'
+          },
+          {
+            name: 'Table',
+            path: '/antdDemo/demo/Table',
+            component: './AntdDemo/Components/Table'
+          },
+          {
+            name: 'LayoutUi',
+            path: '/antdDemo/demo/LayoutUi',
+            component: './AntdDemo/Components/LayoutUi'
+          },
+          {
+            name: 'DataDisplay',
+            path: '/antdDemo/demo/DataDisplay',
+            component: './AntdDemo/Components/DataDisplay'
+          },
+          {
+            name: 'Utility',
+            path: '/antdDemo/demo/Utility',
+            component: './AntdDemo/Components/Utility'
+          },
+          {
+            name: 'PageTemplates',
+            path: '/antdDemo/demo/PageTemplates',
+            component: './AntdDemo/Components/PageTemplates'
+          }
+        ]
       }
     ]
   },

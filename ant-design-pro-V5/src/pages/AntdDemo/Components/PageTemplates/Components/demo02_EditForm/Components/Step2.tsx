@@ -231,7 +231,7 @@ const Step2Form: React.FC<Props> = ({ handleStep }) => {
             content: '未儲存的修改將會還原。',
             okText: '確定放棄',
             onOk() {
-              navigate('/antdDemo/demo')
+              navigate('/antdDemo/demo/PageTemplates?activeKey=EditForm')
             },
             cancelText: '取消',
           })

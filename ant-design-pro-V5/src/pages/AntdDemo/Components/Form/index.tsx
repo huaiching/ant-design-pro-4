@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Demo01 from './Components/demo01_MliFormRow'
 import Demo02 from './Components/demo02_ProFormText'
 import Demo03 from './Components/demo03_ProFormTextArea'
@@ -23,162 +23,182 @@ import Demo20 from './Components/demo20_Typography'
 import Demo21 from './Components/demo21_FloatButton'
 import { Splitter, Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
+import { useNavigate, useSearchParams } from '@umijs/max'
 
 //asstManagement 主功能名稱
 const AsstManagement: React.FC = () => {
 
-  //設定tabs 頁面元件
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
   //主頁主要設定處
   const tabs = [
     {
-      authCode: '1',
+      key: 'MliFormRow',
       title: '布局(MliFormRow)',
-      component: <Demo01/>
+      component: <Demo01 />
     },
     {
-      authCode: '2',
+      key: 'ProFormText',
       title: '單行文本輸入(ProFormText)',
-      component: <Demo02/>
+      component: <Demo02 />
     },
     {
-      authCode: '3',
+      key: 'ProFormTextArea',
       title: '多行文本輸入(ProFormTextArea)',
-      component: <Demo03/>
+      component: <Demo03 />
     },
     {
-      authCode: '4',
+      key: 'ProFormDigit',
       title: '數字輸入(ProFormDigit)',
-      component: <Demo04/>
+      component: <Demo04 />
     },
     {
-      authCode: '5',
+      key: 'ProFormSelect',
       title: '下拉選擇框(ProFormSelect)',
-      component: <Demo05/>
+      component: <Demo05 />
     },
     {
-      authCode: '6',
+      key: 'ProFormCascader',
       title: '級聯選擇框(ProFormCascader)',
-      component: <Demo06/>
+      component: <Demo06 />
     },
     {
-      authCode: '7',
+      key: 'ProFormTreeSelect',
       title: '樹狀選擇框(ProFormTreeSelect)',
-      component: <Demo07/>
+      component: <Demo07 />
     },
     {
-      authCode: '8.1',
+      key: 'MliFormDatePicker',
       title: '日期選擇(MliFormDatePicker)',
-      component: <Demo08_1/>
+      component: <Demo08_1 />
     },
     {
-      authCode: '8.2',
+      key: 'ProFormDatePicker',
       title: '日期選擇(ProFormDatePicker)',
-      component: <Demo08_2/>
+      component: <Demo08_2 />
     },
     {
-      authCode: '9',
+      key: 'ProFormTimePicker',
       title: '時間選擇(ProFormTimePicker)',
-      component: <Demo09/>
+      component: <Demo09 />
     },
     {
-      authCode: '10',
+      key: 'ProFormSwitch',
       title: '開關控件(ProFormSwitch)',
-      component: <Demo10/>
+      component: <Demo10 />
     },
     {
-      authCode: '11',
+      key: 'ProFormRadio',
       title: '單選框(ProFormRadio)',
-      component: <Demo11/>
+      component: <Demo11 />
     },
     {
-      authCode: '12',
+      key: 'ProFormCheckbox',
       title: '多選框(ProFormCheckbox)',
-      component: <Demo12/>
+      component: <Demo12 />
     },
     {
-      authCode: '13',
+      key: 'ProFormUploadButton',
       title: '文件上傳(ProFormUploadButton)',
-      component: <Demo13/>
+      component: <Demo13 />
     },
     {
-      authCode: '14',
+      key: 'ProFormGroup',
       title: '群組(ProFormGroup)',
-      component: <Demo14/>
+      component: <Demo14 />
     },
     {
-      authCode: '15',
+      key: 'ProFormitem',
       title: '欄位容器(ProFormitem)',
-      component: <Demo15/>
+      component: <Demo15 />
     },
     {
-      authCode: '16',
+      key: 'AutoComplete',
       title: '自動填入(AutoComplete)',
-      component: <Demo16/>
+      component: <Demo16 />
     },
     {
-      authCode: '17',
+      key: 'ProFormList',
       title: '結構清單(ProFormList)',
-      component: <Demo17/>
+      component: <Demo17 />
     },
     {
-      authCode: '18',
+      key: 'CaseFlow',
       title: '案件流程(CaseFlow)',
-      component: <Demo18/>
+      component: <Demo18 />
     },
     {
-      authCode: '19',
+      key: 'MultiSelectTable',
       title: '下拉表單輸入表格(MultiSelectTable)',
-      component: <Demo19/>
+      component: <Demo19 />
     },
     {
-      authCode: '20',
+      key: 'Typography',
       title: '文字樣式(Typography)',
-      component: <Demo20/>
+      component: <Demo20 />
     },
     {
-      authCode: '21',
+      key: 'FloatButton',
       title: '懸浮按鈕(FloatButton)',
-      component: <Demo21/>
+      component: <Demo21 />
     }
   ]
-    // 目前的 tab 標籤
-    const [activeTab, setActiveTab] = useState('1')
-    // 目前的 tab 頁面
-    const component = tabs.find((tab) => tab.authCode === activeTab)?.component
-  
-    return (
-      <Splitter
-        layout="horizontal"   // 水平分割 (左右分隔)
-        style={{
-          minHeight: '100vh',
-          height: 'auto'
-        }}
+
+  // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
+  const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
+
+  // 首次載入頁面 key 值加載
+  useEffect(() => {
+    navigate({
+      search: `?activeKey=${currentActiveKey}`
+    })
+  }, [])
+
+  // 目前的 tab 標籤
+  const [activeTab, setActiveTab] = useState('1')
+  // 目前的 tab 頁面
+  const component = tabs.find((tab) => tab.key === activeTab)?.component
+
+  return (
+    <Splitter
+      layout="horizontal"   // 水平分割 (左右分隔)
+      style={{
+        minHeight: '100vh',
+        height: 'auto'
+      }}
+    >
+      {/* 頁簽 */}
+      <Splitter.Panel
+        defaultSize={350}   // 預設寬度
+        collapsible={{ start: true, end: true }}
       >
-        {/* 頁簽 */}
-        <Splitter.Panel
-          defaultSize={350}   // 預設寬度
-          collapsible={{ start: true, end: true }}
+        <Tabs
+          type='card'
+          tabPosition='left'
+          animated    // 啟用切換動畫
+          destroyOnHidden   // 隱藏時銷毀 DOM
+          activeKey={currentActiveKey}
+          onChange={(key: string) => {
+            setActiveTab(key)
+            navigate({
+              search: `?activeKey=${key}`
+            })
+          }}
         >
-          <Tabs
-            type='card'
-            tabPosition='left'
-            animated    // 啟用切換動畫
-            destroyOnHidden   // 隱藏時銷毀 DOM
-            onChange={setActiveTab}
-          >
-            {tabs.map((item) => (
-              <TabPane tab={item.title} key={item.authCode} />
-            ))}
-          </Tabs>
-        </Splitter.Panel>
-  
-        {/* 內容 */}
-        <Splitter.Panel style={{paddingLeft: 20}}>
-          {component}
-        </Splitter.Panel>
-      </Splitter>
-    )
-  }
-  
-  export default AsstManagement
-  
+          {tabs.map((item) => (
+            <TabPane tab={item.title} key={item.key} />
+          ))}
+        </Tabs>
+      </Splitter.Panel>
+
+      {/* 內容 */}
+      <Splitter.Panel style={{ paddingLeft: 20, paddingRight: 10 }}>
+        {component}
+      </Splitter.Panel>
+    </Splitter>
+  )
+}
+
+export default AsstManagement
+

@@ -128,7 +128,7 @@ const Step1Form: React.FC<Props> = ({ handleStep }) => {
       <FooterToolbar>
         <Button type="primary" onClick={handleSubmit}>繼續</Button>
         <Button danger onClick={() => {
-          navigate('/antdDemo/demo')
+          navigate('/antdDemo/demo/PageTemplates?activeKey=EditForm')
         }}>取消</Button>
       </FooterToolbar>
     </ProForm>

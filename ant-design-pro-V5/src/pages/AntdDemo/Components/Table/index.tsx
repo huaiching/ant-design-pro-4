@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Demo01 from './Components/demo01_ProTable'
 import Demo02 from './Components/demo02_SearchProTable'
 import Demo03 from './Components/demo03_NestedProTable'
@@ -13,77 +13,92 @@ import Demo11 from './Components/demo11_CaseSearchTable'
 import Demo12 from './Components/demo12_BatchEditablePolicyTable'
 import { Splitter, Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
+import { useNavigate, useSearchParams } from '@umijs/max'
 
 //asstManagement 主功能名稱
 const AsstManagement: React.FC = () => {
+
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
   //主頁主要設定處
   const tabs = [
     {
-      authCode: '1',
+      key: 'ProTable',
       title: '表格(ProTable)',
       component: <Demo01 />
     },
     {
-      authCode: '2',
+      key: 'SearchProTable',
       title: '查詢表格(SearchProTable)',
       component: <Demo02 />
     },
     {
-      authCode: '3',
+      key: 'NestedProTable',
       title: '嵌套表格(NestedProTable)',
       component: <Demo03 />
     },
     {
-      authCode: '4',
+      key: 'ShowRowProTable',
       title: '選取行顯示明細的表格(ShowRowProTable)',
       component: <Demo04 />
     },
     {
-      authCode: '5',
+      key: 'EditProTable',
       title: '另開的編輯表格(EditProTable)',
       component: <Demo05 />
     },
     {
-      authCode: '6',
+      key: 'EditableProTable',
       title: '可編輯表格(EditableProTable)',
       component: <Demo06 />
     },
     {
-      authCode: '7',
+      key: 'InputEditableProTable',
       title: '手動新增的可編輯表格(InputEditableProTable)',
       component: <Demo07 />
     },
     {
-      authCode: '8',
+      key: 'NestedEditableProTable',
       title: '嵌套可編輯表格(NestedEditableProTable)',
       component: <Demo08 />
     },
     {
-      authCode: '9',
+      key: 'DragSortTable',
       title: '拖動排序表格(DragSortTable)',
       component: <Demo09 />
     },
     {
-      authCode: '10',
+      key: 'EditableAmountTable',
       title: '可編輯金額表格(EditableAmountTable)',
       component: <Demo10 />
     },
     {
-      authCode: '11',
+      key: 'CaseSearchTable',
       title: '案例搜尋表格(CaseSearchTable)',
       component: <Demo11 />
     },
     {
-      authCode: '12',
+      key: 'BatchEditablePolicyTable',
       title: '批量新增資料表格(BatchEditablePolicyTable)',
       component: <Demo12 />
     }
   ]
 
+  // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
+  const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
+
+  // 首次載入頁面 key 值加載
+  useEffect(() => {
+    navigate({
+      search: `?activeKey=${currentActiveKey}`
+    })
+  }, [])
+
   // 目前的 tab 標籤
   const [activeTab, setActiveTab] = useState('1')
   // 目前的 tab 頁面
-  const component = tabs.find((tab) => tab.authCode === activeTab)?.component
+  const component = tabs.find((tab) => tab.key === activeTab)?.component
 
   return (
     <Splitter
@@ -103,16 +118,22 @@ const AsstManagement: React.FC = () => {
           tabPosition='left'
           animated    // 啟用切換動畫
           destroyOnHidden   // 隱藏時銷毀 DOM
-          onChange={setActiveTab}
+          activeKey={currentActiveKey}
+          onChange={(key: string) => {
+            setActiveTab(key)
+            navigate({
+              search: `?activeKey=${key}`
+            })
+          }}
         >
           {tabs.map((item) => (
-            <TabPane tab={item.title} key={item.authCode} />
+            <TabPane tab={item.title} key={item.key} />
           ))}
         </Tabs>
       </Splitter.Panel>
 
       {/* 內容 */}
-      <Splitter.Panel style={{paddingLeft: 20}}>
+      <Splitter.Panel style={{ paddingLeft: 20, paddingRight: 10 }}>
         {component}
       </Splitter.Panel>
     </Splitter>
