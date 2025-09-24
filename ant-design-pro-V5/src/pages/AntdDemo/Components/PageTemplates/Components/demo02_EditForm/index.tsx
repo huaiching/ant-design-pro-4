@@ -3,17 +3,31 @@ import Step1Form from './Components/Step1'
 import Step2Form from './Components/Step2'
 import optionsStore from './Mobx/optionStore'
 import { observer } from 'mobx-react'
+import { useLocation } from '@umijs/max'
+
+// 定義接收的 state 參數類型
+type LocationState = {
+  policyNo?: string
+  receiveNo?: string
+  receiveDate?: string
+  chgDate?: string
+  chgType?: string
+};
 
 const EditForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0)
 
-  // 載入 option
+  // 使用 useLocation 來獲取傳遞的 state 參數
+  const location = useLocation()
+  const state = location.state as LocationState
+
   useEffect(() => {
+    // 載入 option
     optionsStore.setOptions('chgType', [
-            { label: '0 首期契變', value: '0' },
-            { label: '1 一般契變', value: '1' },
-            { label: '2 復效', value: '2' }
-          ])
+      { label: '0 首期契變', value: '0' },
+      { label: '1 一般契變', value: '1' },
+      { label: '2 復效', value: '2' }
+    ])
   }, [])
 
   /**
@@ -27,7 +41,7 @@ const EditForm: React.FC = () => {
 
   return (
     <>
-      {currentStep === 0 && <Step1Form handleStep={handleStep} />}
+      {currentStep === 0 && <Step1Form handleStep={handleStep} state={state} />}
       {currentStep === 1 && <Step2Form handleStep={handleStep} />}
     </>
   )

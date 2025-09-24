@@ -221,6 +221,14 @@ export default [
     ]
   },
   {
+    path: '/antdDemo/demo/PageTemplates/Edit',
+    component: './AntdDemo/Components/PageTemplates/Components/demo02_EditForm',
+  },
+  {
+    path: '/antdDemo/demo/PageTemplates/Create',
+    component: './AntdDemo/Components/PageTemplates/Components/demo02_EditForm',
+  },
+  {
     path: '/antdDemo/navigate',
     component: './AntdDemo/Components/Utility/Components/demo01_Navigate/Components/Navigate',
   },

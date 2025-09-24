@@ -1,0 +1,9 @@
+{
+  "name": "mli-live-demo-webserver",
+  "private": true,
+  "version": "0.0.1",
+  "dependencies": {
+    "compression": "1.7.1",
+    "express": "4.16.2"
+  }
+}

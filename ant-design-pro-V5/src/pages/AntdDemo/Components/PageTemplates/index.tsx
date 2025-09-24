@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import Demo01 from './Components/demo01_Worklist'
 import Demo02 from './Components/demo02_EditForm'
+import Demo03 from './Components/demo03_SearchForm'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import { useNavigate, useSearchParams } from '@umijs/max'
@@ -22,6 +23,11 @@ const AsstManagement: React.FC = () => {
       key: 'EditForm',
       title: '編輯頁面(EditForm)',
       component: <Demo02 />
+    },
+    {
+      key: 'SearchForm',
+      title: '查詢資料 - 新增/修改(SearchForm)',
+      component: <Demo03 />
     },
   ]
 

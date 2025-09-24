@@ -1,0 +1,131 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+npm-debug.log*
+yarn-error.log
+
+# production
+build
+dist
+target
+**/webroot/**
+
+# umi
+.umi
+.umi-production
+.umi-test/*
+.env.local
+
+#npmrc
+.npmrc
+#exclude intelliJ files
+.idea
+.vagrant
+.node
+*.iml
+*.iws
+*.ipr
+
+# VSCode folders
+.history
+.vscode
+*.hprof
+
+*.tgz
+
+# Mac OSX
+.DS_Store
+
+# Eclipse Trace
+*._trace
+
+# Eclipse XText & Xtend
+*/xtend-gen/*
+*/xtext-gen/*
+*/src-gen/*
+
+# DCEVM related
+extraClasspath.properties
+hotswap-agent.properties
+
+# Gradle
+*/.gradle/*
+
+#Gateway selection
+*/gateway/Gateway.js
+
+#exclude eclipse files
+.settings
+.metadata
+.workspace
+*.project
+*.classpath
+*.springBeans
+*.springWebflow
+maven-eclipse.xml
+
+#common tools files
+*.pmd
+*.checkstyle
+**/bin/**
+test-output
+.toDelete
+.directory
+
+# Logs
+logs
+logsPath_IS_UNDEFINED
+*.log
+velocity.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Coverage tools
+lib-cov
+coverage
+
+# Generated code
+gen
+transpiled
+build-ts
+generated
+plugin_gen.xml
+plugin.xml_gen
+*.ucls
+dependency-reduced-pom.xml
+
+# Vertx
+.vertx
+
+# Local folder for storing yarn links during release script execution
+.links
+
+# Local folder for storing results of vulnerabilities-audit command
+audit/*
+
+# Environment variables
+#.env
+
+# Dsm
+.dsm
+
+#exclude QAA related files
+*local.properties
+*localhost.properties
+*retry.xml
+*external_run_id.txt
+*test_results_single_email.html
+*debug.log
+
+# MFE config
+mfe-config.dev.ts
+
+.eslintcache
+/platform/yarn.lock
+/platform/package-lock.json
+
+**/yarn.lock
