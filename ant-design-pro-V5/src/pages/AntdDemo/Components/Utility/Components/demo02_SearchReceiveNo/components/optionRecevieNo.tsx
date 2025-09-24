@@ -45,9 +45,9 @@ const OptionReceiveNo =  (props: any) => {
           request={async ()=>{      // 模擬透過 api 取得 受理資料
               const response = await fetchData()
               return {
-                data: response.data,
+                data: response,
                 success: true,
-                total: response.total
+                total: response.length
               }
           }}   // 數據請求函式
           pagination={{             // 開啟分頁選擇 + 限制 每頁 5 筆
