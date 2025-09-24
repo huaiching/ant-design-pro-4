@@ -4,6 +4,7 @@ import Step2Form from './Components/Step2'
 import optionsStore from './Mobx/optionStore'
 import { observer } from 'mobx-react'
 import { useLocation } from '@umijs/max'
+import { PageContainer } from '@ant-design/pro-components'
 
 // 定義接收的 state 參數類型
 type LocationState = {
@@ -40,10 +41,15 @@ const EditForm: React.FC = () => {
   }
 
   return (
-    <>
+      <PageContainer
+        header={{
+          title: false,
+          ghost: true
+        }}
+      >
       {currentStep === 0 && <Step1Form handleStep={handleStep} state={state} />}
-      {currentStep === 1 && <Step2Form handleStep={handleStep} />}
-    </>
+      {currentStep === 1 && <Step2Form handleStep={handleStep} state={state} />}
+    </PageContainer>
   )
 }
 

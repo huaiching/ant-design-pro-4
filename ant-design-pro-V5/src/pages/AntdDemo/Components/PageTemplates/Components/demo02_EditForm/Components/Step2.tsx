@@ -25,9 +25,10 @@ import { useNavigate } from '@umijs/max'
 
 interface Props {
   handleStep: (step: number) => void
+  state?: any
 }
 
-const Step2Form: React.FC<Props> = ({ handleStep }) => {
+const Step2Form: React.FC<Props> = ({ handleStep, state }) => {
   const formRef = formRefStore.getFormRef
   const basicData = basicStore.getBasic
   const navigate = useNavigate()
