@@ -3,16 +3,23 @@
  * 變數透過 mobx 管理，可以減少資料傳遞的麻煩
  */
 
-import React, { useEffect, useRef, useState } from 'react'
-import { Button, ConfigProvider, message } from 'antd'
-import { observer } from 'mobx-react'
-import basicStore from '../Mobx/basicStore'
-import { FooterToolbar, ProForm, ProFormDatePicker, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-components'
-import dayjs from 'dayjs'
-import optionsStore from '../Mobx/optionStore'
-import { MliFormRow } from '@mli-csmo/base'
 import { parseRocDate } from '@/utils/rocDateUtils'
+import {
+  FooterToolbar,
+  ProForm,
+  ProFormDatePicker,
+  ProFormSelect,
+  ProFormText
+} from '@ant-design/pro-components'
+import { MliFormRow } from '@mli-csmo/base'
 import { useLocation, useNavigate } from '@umijs/max'
+import { Button, ConfigProvider } from 'antd'
+import dayjs from 'dayjs'
+import { observer } from 'mobx-react'
+import React, { useEffect, useState } from 'react'
+import basicStore from '../Mobx/basicStore'
+import formRefStore from '../Mobx/formRefStore'
+import optionsStore from '../Mobx/optionStore'
 
 interface Props {
   handleStep: (step: number) => void
@@ -20,7 +27,7 @@ interface Props {
 }
 
 const Step1Form: React.FC<Props> = ({ handleStep, state }) => {
-  const formRef = useRef<ProFormInstance>()
+  const formRef = formRefStore.getFormRef
   const chgTypeOption = optionsStore.getOptions('chgType')
   const navigate = useNavigate()
 
@@ -29,13 +36,14 @@ const Step1Form: React.FC<Props> = ({ handleStep, state }) => {
   // 不可編輯判定
   const [disabled, setDisabled] = useState<boolean>(false)
   useEffect(() => {
-    // 判斷網址是否符合
+    // 判斷開頭是否符合
     if (location.pathname.includes('/antdDemo/demo/PageTemplates/Edit')) {
       setDisabled(true)
     }
-  }, [location]);
+  }, [location])
 
-
+  // 查詢模式判斷
+  const isQuery = formRef.current?.getFieldValue('isQuery')
 
   useEffect(() => {
     if (state) {
@@ -69,19 +77,19 @@ const Step1Form: React.FC<Props> = ({ handleStep, state }) => {
 
   return (
     <ProForm formRef={formRef} submitter={false} grid>
-      <ConfigProvider componentDisabled={disabled}>
+      <ConfigProvider componentDisabled={disabled || isQuery}>
         <MliFormRow>
           <ProFormText
             name="policyNo"
             label="保單號碼"
-            placeholder=' '
+            placeholder=" "
             colSize={1}
             rules={[{ required: true }]}
           />
           <ProFormText
             name="receiveNo"
             label="受理號碼"
-            placeholder=' '
+            placeholder=" "
             colSize={1}
             rules={[{ required: true }]}
             fieldProps={{
@@ -93,13 +101,11 @@ const Step1Form: React.FC<Props> = ({ handleStep, state }) => {
             }}
           />
           <ProFormDatePicker
-            name='receiveDate'
-            label='受理日期'
-            placeholder=' '
+            name="receiveDate"
+            label="受理日期"
+            placeholder=" "
             colSize={2 / 3}
-            rules={[
-              { required: true, message: '日期為必填項' }
-            ]}
+            rules={[{ required: true, message: '日期為必填項' }]}
             fieldProps={{
               format: 'TTT/MM/DD',
               style: { width: '100%' },
@@ -111,13 +117,11 @@ const Step1Form: React.FC<Props> = ({ handleStep, state }) => {
             }}
           />
           <ProFormDatePicker
-            name='chgDate'
-            label='變更生效日'
-            placeholder=' '
+            name="chgDate"
+            label="變更生效日"
+            placeholder=" "
             colSize={2 / 3}
-            rules={[
-              { required: true, message: '日期為必填項' }
-            ]}
+            rules={[{ required: true, message: '日期為必填項' }]}
             fieldProps={{
               format: 'TTT/MM/DD',
               style: { width: '100%' },
@@ -140,16 +144,25 @@ const Step1Form: React.FC<Props> = ({ handleStep, state }) => {
       </ConfigProvider>
 
       <FooterToolbar>
-        <Button type="primary" onClick={handleSubmit}>繼續</Button>
-        <Button danger onClick={() => {
-          if (location.pathname.includes('/antdDemo/demo/PageTemplates/Edit')) {
-            navigate('/antdDemo/demo/PageTemplates?activeKey=SearchForm')
-          } else if (location.pathname.includes('/antdDemo/demo/PageTemplates/Create')) {
-            navigate('/antdDemo/demo/PageTemplates?activeKey=SearchForm')
-          } else {
-            navigate('/antdDemo/demo/PageTemplates?activeKey=EditForm')
-          }
-        }}>取消</Button>
+        <Button type="primary" onClick={handleSubmit}>
+          繼續
+        </Button>
+        <Button
+          danger
+          onClick={() => {
+            if (location.pathname.includes('/antdDemo/demo/PageTemplates/Edit')) {
+              navigate('/antdDemo/demo/PageTemplates?activeKey=SearchForm')
+            } else if (location.pathname.includes('/antdDemo/demo/PageTemplates/Create')) {
+              navigate('/antdDemo/demo/PageTemplates?activeKey=SearchForm')
+            } else if (location.pathname.includes('/antdDemo/demo/PageTemplates/Query')) {
+              navigate('/antdDemo/demo/PageTemplates?activeKey=SearchForm')
+            } else {
+              navigate('/antdDemo/demo/PageTemplates?activeKey=EditForm')
+            }
+          }}
+        >
+          取消
+        </Button>
       </FooterToolbar>
     </ProForm>
   )

@@ -1,10 +1,12 @@
+import { PageContainer } from '@ant-design/pro-components'
+import { useLocation } from '@umijs/max'
+import { message } from 'antd'
+import { observer } from 'mobx-react'
 import React, { useEffect, useState } from 'react'
 import Step1Form from './Components/Step1'
 import Step2Form from './Components/Step2'
+import formRefStore from './Mobx/formRefStore'
 import optionsStore from './Mobx/optionStore'
-import { observer } from 'mobx-react'
-import { useLocation } from '@umijs/max'
-import { PageContainer } from '@ant-design/pro-components'
 
 // 定義接收的 state 參數類型
 type LocationState = {
@@ -13,9 +15,10 @@ type LocationState = {
   receiveDate?: string
   chgDate?: string
   chgType?: string
-};
+}
 
 const EditForm: React.FC = () => {
+  const formRef = formRefStore.getFormRef
   const [currentStep, setCurrentStep] = useState(0)
 
   // 使用 useLocation 來獲取傳遞的 state 參數
@@ -31,6 +34,14 @@ const EditForm: React.FC = () => {
     ])
   }, [])
 
+  // 查詢模式判斷
+  let isQuery = false
+  // 判斷開頭是否符合
+  if (location.pathname.includes('/antdDemo/demo/PageTemplates/Query')) {
+    isQuery = true
+  }
+  formRef.current?.setFieldValue('isQuery', isQuery)
+
   /**
    * 步驟跳轉
    * @param step 要前往的步驟
@@ -41,12 +52,12 @@ const EditForm: React.FC = () => {
   }
 
   return (
-      <PageContainer
-        header={{
-          title: false,
-          ghost: true
-        }}
-      >
+    <PageContainer
+      header={{
+        title: false,
+        ghost: true
+      }}
+    >
       {currentStep === 0 && <Step1Form handleStep={handleStep} state={state} />}
       {currentStep === 1 && <Step2Form handleStep={handleStep} state={state} />}
     </PageContainer>

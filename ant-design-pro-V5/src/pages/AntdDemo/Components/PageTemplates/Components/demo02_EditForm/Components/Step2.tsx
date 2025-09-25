@@ -9,7 +9,8 @@ import {
   VerticalAlignTopOutlined
 } from '@ant-design/icons'
 import { FooterToolbar, ProForm } from '@ant-design/pro-components'
-import { Button, FloatButton, message, Modal, Splitter, Tabs } from 'antd'
+import { useNavigate } from '@umijs/max'
+import { Button, ConfigProvider, FloatButton, message, Modal, Splitter, Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import { log } from 'console'
 import { observer } from 'mobx-react'
@@ -21,7 +22,6 @@ import tabRefStore from '../Mobx/tabRefStore'
 import InfoForm from './Components/InfoForm'
 import TabContent1 from './Components/TabContent1'
 import TabContent2 from './Components/TabContent2'
-import { useNavigate } from '@umijs/max'
 
 interface Props {
   handleStep: (step: number) => void
@@ -32,6 +32,9 @@ const Step2Form: React.FC<Props> = ({ handleStep, state }) => {
   const formRef = formRefStore.getFormRef
   const basicData = basicStore.getBasic
   const navigate = useNavigate()
+
+  // 查詢模式判斷
+  const isQuery = formRef.current?.getFieldValue('isQuery')
 
   // TAB 資料設定 //
   // 目前的 tab 標籤
@@ -75,7 +78,12 @@ const Step2Form: React.FC<Props> = ({ handleStep, state }) => {
 
   // tab 切換事件
   const handleTabChange = async (key: string) => {
-    const valid = await tabRefStore.runTabLeaveFn(activeTab)
+    let valid = false
+    if (isQuery) {
+      valid = isQuery
+    } else {
+      valid = await tabRefStore.runTabLeaveFn(activeTab)
+    }
     if (valid) {
       setTabStatus((prev) => ({
         ...prev,
@@ -169,7 +177,7 @@ const Step2Form: React.FC<Props> = ({ handleStep, state }) => {
             id="tabContent"
             style={{ height: '100%', overflowY: 'auto', paddingLeft: 10, paddingRight: 10 }}
           >
-            {component}
+            <ConfigProvider componentDisabled={isQuery}>{component}</ConfigProvider>
 
             <FloatButton.Group
               shape="square"
@@ -220,29 +228,33 @@ const Step2Form: React.FC<Props> = ({ handleStep, state }) => {
         <Button onClick={handleNext} disabled={activeTab === lastTab}>
           下一頁
         </Button>
+        {!isQuery &&
         <Button type="primary" onClick={handleSubmit}>
           完成
-        </Button>
-        <Button onClick={() => handleStep(0)}>
-          返回
-        </Button>
-        <Button danger onClick={() => {
-          Modal.confirm({
-            title: '請確認是否 取消編輯？',
-            content: '未儲存的修改將會還原。',
-            okText: '確定放棄',
-            onOk() {
-              if (location.pathname.includes('/antdDemo/demo/PageTemplates/Edit')) {
-                navigate('/antdDemo/demo/PageTemplates?activeKey=SearchForm')
-              } else if (location.pathname.includes('/antdDemo/demo/PageTemplates/Create')) {
-                navigate('/antdDemo/demo/PageTemplates?activeKey=SearchForm')
-              } else {
-                navigate('/antdDemo/demo/PageTemplates?activeKey=EditForm')
-              }
-            },
-            cancelText: '取消',
-          })
-        }}>
+        </Button>        }
+        <Button onClick={() => handleStep(0)}>返回</Button>
+        <Button
+          danger
+          onClick={() => {
+            Modal.confirm({
+              title: '請確認是否 取消編輯？',
+              content: '未儲存的修改將會還原。',
+              okText: '確定放棄',
+              onOk() {
+                if (location.pathname.includes('/antdDemo/demo/PageTemplates/Edit')) {
+                  navigate('/antdDemo/demo/PageTemplates?activeKey=SearchForm')
+                } else if (location.pathname.includes('/antdDemo/demo/PageTemplates/Create')) {
+                  navigate('/antdDemo/demo/PageTemplates?activeKey=SearchForm')
+                } else if (location.pathname.includes('/antdDemo/demo/PageTemplates/Query')) {
+                  navigate('/antdDemo/demo/PageTemplates?activeKey=SearchForm')
+                } else {
+                  navigate('/antdDemo/demo/PageTemplates?activeKey=EditForm')
+                }
+              },
+              cancelText: '取消'
+            })
+          }}
+        >
           取消
         </Button>
       </FooterToolbar>

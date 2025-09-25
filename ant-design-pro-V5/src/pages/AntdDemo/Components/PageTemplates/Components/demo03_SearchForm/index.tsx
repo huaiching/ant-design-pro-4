@@ -3,6 +3,7 @@ import {
   AppstoreOutlined,
   ClearOutlined,
   FormOutlined,
+  SearchOutlined,
   VerticalAlignBottomOutlined,
   VerticalAlignTopOutlined
 } from '@ant-design/icons'
@@ -43,24 +44,44 @@ const SearchForm: React.FC = () => {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
+      width: 80,
       render: (dom, entity) => [
-        <Tooltip title="修改">
-          <Button
-            type="link"
-            icon={<FormOutlined />}
-            onClick={() => {
-              entity = {
-                ...entity,
-                receiveDate: dayjs(entity.receiveDate).format('TTT/MM/DD'),
-                chgDate: dayjs(entity.chgDate).format('TTT/MM/DD')
-              }
-              console.log('entity', entity)
-              navigate('/antdDemo/demo/PageTemplates/Edit', {
-                state: entity
-              })
-            }}
-          />
-        </Tooltip>
+        <>
+          <Tooltip title="修改">
+            <Button
+              type="link"
+              icon={<FormOutlined />}
+              onClick={() => {
+                entity = {
+                  ...entity,
+                  receiveDate: dayjs(entity.receiveDate).format('TTT/MM/DD'),
+                  chgDate: dayjs(entity.chgDate).format('TTT/MM/DD')
+                }
+                console.log('entity', entity)
+                navigate('/antdDemo/demo/PageTemplates/Edit', {
+                  state: entity
+                })
+              }}
+            />
+          </Tooltip>
+          <Tooltip title="查詢">
+            <Button
+              type="link"
+              icon={<SearchOutlined />}
+              onClick={() => {
+                entity = {
+                  ...entity,
+                  receiveDate: dayjs(entity.receiveDate).format('TTT/MM/DD'),
+                  chgDate: dayjs(entity.chgDate).format('TTT/MM/DD')
+                }
+                console.log('entity', entity)
+                navigate('/antdDemo/demo/PageTemplates/Query', {
+                  state: entity
+                })
+              }}
+            />
+          </Tooltip>
+        </>
       ]
     },
     {

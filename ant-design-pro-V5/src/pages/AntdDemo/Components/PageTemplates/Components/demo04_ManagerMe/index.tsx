@@ -427,6 +427,7 @@ const ManagerMe: React.FC = () => {
             pageSize: pagination.pageSize,
             showQuickJumper: true,
             showSizeChanger: true,
+            total: filteredData.length,
             pageSizeOptions: ['5', '10', '20', '50', '100'],
             onChange: (page, pageSize) => {
               setPagination({ current: page, pageSize })

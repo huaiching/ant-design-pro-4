@@ -9,6 +9,7 @@ import { Button, Input, List, message } from 'antd'
 import dayjs, { Dayjs } from 'dayjs'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as poApi from './store/poApi'
+import { filter } from 'lodash'
 
 // 主表格欄位（保單）
 const policyColumns: any[] = [
@@ -21,7 +22,18 @@ const policyColumns: any[] = [
   {
     title: '保單狀態',
     dataIndex: 'poStsCode',
-    valueType: 'text'
+    valueType: 'text',
+    filters: [
+      {
+        text: '有效',
+        value: '有效'
+      },
+      {
+        text: '無效',
+        value: '失效'
+      }
+    ],
+    onFilter: (value: any, record: any) => record.poStsCode.includes(value)
   },
   {
     title: '保單生效日',

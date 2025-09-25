@@ -3,6 +3,7 @@ import Demo01 from './Components/demo01_Navigate'
 import Demo02 from './Components/demo02_SearchReceiveNo'
 import Demo03 from './Components/demo03_xlsx'
 import Demo04 from './Components/demo04_EditGuard'
+import Demo05 from './Components/demo05_DistributeToData'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import { useNavigate, useSearchParams } from '@umijs/max'
@@ -36,6 +37,11 @@ const AsstManagement: React.FC = () => {
       key: 'EditGuard',
       title: '編輯保護模式(EditGuard)',
       component: <Demo04 />
+    },
+    {
+      key: 'DistributeToData',
+      title: '平均分配(DistributeToData)',
+      component: <Demo05 />
     }
   ]
 
