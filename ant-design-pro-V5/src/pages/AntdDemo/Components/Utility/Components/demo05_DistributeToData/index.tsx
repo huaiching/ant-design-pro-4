@@ -1,16 +1,22 @@
-import { Space, Input, Button, InputNumber, Table, Tag } from 'antd'
+import { Space, Input, Button, Tag, InputNumber, Table } from 'antd'
 import React, { useState } from 'react'
 import { distributeToData } from './Store/distributeToDataUtil'
+import { assignDataToAssignees } from './Store/assignDataToAssignees' // 假設已建立這個 util
 
 const DistributeDemo: React.FC = () => {
   // 使用者清單
   const [users, setUsers] = useState<string[]>([])
-  // 當前輸入框名字
   const [name, setName] = useState<string>('')
-  // 總筆數
-  const [totalItems, setTotalItems] = useState<number>(10)
-  // 分配結果
+
+  // 文件清單
+  const [files, setFiles] = useState<string[]>([])
+  const [fileName, setFileName] = useState<string>('')
+
+  // 分配結果 (使用者分到的筆數)
   const [result, setResult] = useState<any[]>([])
+
+  // 文件分配結果 (processUser)
+  const [fileAssignment, setFileAssignment] = useState<any[]>([])
 
   /** 新增使用者 */
   const addUser = () => {
@@ -20,36 +26,84 @@ const DistributeDemo: React.FC = () => {
     }
   }
 
-  /** 移除單個使用者 */
+  /** 移除使用者 */
   const removeUser = (user: string) => {
     setUsers(users.filter((u) => u !== user))
   }
 
-  /** 清空使用者清單、輸入框、分配結果 */
+  /** 新增文件 */
+  const addFile = () => {
+    if (fileName.trim()) {
+      setFiles([...files, fileName.trim()])
+      setFileName('')
+    }
+  }
+
+  /** 移除文件 */
+  const removeFile = (file: string) => {
+    setFiles(files.filter((f) => f !== file))
+  }
+
+  /** 重置所有資料 */
   const resetAll = () => {
     setUsers([])
     setName('')
+    setFiles([])
+    setFileName('')
     setResult([])
+    setFileAssignment([])
   }
 
-  /** 計算分配結果 */
+  /** 計算分配結果 (每個使用者分到的筆數) */
   const calculate = () => {
     const people = users.map((u, idx) => ({ id: idx + 1, name: u }))
+    const totalItems = files.length
     setResult(distributeToData(people, totalItems))
+    setFileAssignment([]) // 重置文件分配結果
   }
 
-  /** Table 欄位設定 */
+  /** 文件處理者分配 */
+  const assignFiles = () => {
+    if (!result.length || !files.length) return
+    const assignedFiles = assignDataToAssignees(files.map(f => ({ fileName: f })), result)
+    setFileAssignment(assignedFiles)
+  }
+
+  /** Table 欄位設定 (count 可編輯) */
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id' },
     { title: '姓名', dataIndex: 'name', key: 'name' },
-    { title: '分到數量', dataIndex: 'count', key: 'count' },
+    {
+      title: '分到筆數',
+      dataIndex: 'count',
+      key: 'count',
+      render: (value: number, record: any) => (
+        <InputNumber
+          min={0}
+          value={value}
+          onChange={(val) => {
+            const newResult = result.map((r) =>
+              r.id === record.id ? { ...r, count: val || 0 } : r
+            )
+            setResult(newResult)
+            setFileAssignment([]) // 人工修改後重置文件分配
+          }}
+        />
+      ),
+    },
+  ]
+
+  /** 文件分配 Table */
+  const fileColumns = [
+    { title: '文件名稱', dataIndex: 'fileName', key: 'fileName' },
+    { title: '處理者', dataIndex: 'processUser', key: 'processUser' },
   ]
 
   return (
     <div style={{ padding: 24 }}>
       <h2>平均分配工具</h2>
 
-      {/* 新增使用者 + 重製按鈕 */}
+      {/* 使用者管理 */}
       <Space style={{ marginBottom: 16 }}>
         <Input
           placeholder='輸入姓名'
@@ -61,21 +115,16 @@ const DistributeDemo: React.FC = () => {
           新增使用者
         </Button>
         <Button onClick={resetAll} danger>
-          重製
+          重置
         </Button>
       </Space>
 
-      {/* 已新增使用者列表 */}
-      <div style={{ margin: '12px 0' }}>
+      {/* 使用者列表 */}
+      <div style={{ marginBottom: 16 }}>
         {users.length > 0 ? (
           <Space wrap>
             {users.map((u, idx) => (
-              <Tag
-                key={idx}
-                color='blue'
-                closable
-                onClose={() => removeUser(u)}
-              >
+              <Tag key={idx} color='blue' onClose={() => removeUser(u)}>
                 {u}
               </Tag>
             ))}
@@ -85,29 +134,77 @@ const DistributeDemo: React.FC = () => {
         )}
       </div>
 
-      {/* 總筆數輸入 */}
-      <div style={{ marginBottom: 16 }}>
-        <span style={{ marginRight: 8 }}>總筆數：</span>
-        <InputNumber
-          min={1}
-          value={totalItems}
-          onChange={(val) => setTotalItems(val || 1)}
+      {/* 文件管理 */}
+      <Space style={{ marginBottom: 16 }}>
+        <Input
+          placeholder='輸入文件名稱'
+          value={fileName}
+          onChange={(e) => setFileName(e.target.value)}
+          style={{ width: 200 }}
         />
+        <Button type='primary' onClick={addFile}>
+          新增文件
+        </Button>
+      </Space>
+
+      {/* 文件列表 */}
+      <div style={{ marginBottom: 16 }}>
+        {files.length > 0 ? (
+          <Space wrap>
+            {files.map((f, idx) => (
+              <Tag key={idx} color='green' onClose={() => removeFile(f)}>
+                {f}
+              </Tag>
+            ))}
+          </Space>
+        ) : (
+          <span style={{ color: '#999' }}>尚未新增文件</span>
+        )}
       </div>
 
-      {/* 計算按鈕 */}
-      <Button type='primary' onClick={calculate} disabled={users.length === 0}>
-        開始分配
-      </Button>
+      {/* 計算分配按鈕 */}
+      <Space style={{ marginBottom: 16 }}>
+        <Button
+          type='primary'
+          onClick={calculate}
+          disabled={users.length === 0 || files.length === 0}
+        >
+          開始分配
+        </Button>
+        <Button
+          type='default'
+          onClick={assignFiles}
+          disabled={!result.length || !files.length}
+        >
+          分配文件處理者
+        </Button>
+      </Space>
 
-      {/* 分配結果表格 */}
-      <Table
-        style={{ marginTop: 24 }}
-        dataSource={result}
-        columns={columns}
-        rowKey='id'
-        pagination={false}
-      />
+      {/* 使用者分配結果 Table */}
+      {result.length > 0 && (
+      <div style={{ marginTop: 24 }}>
+        <h3>每個使用者分到的筆數</h3>
+        <Table
+          dataSource={result}
+          columns={columns}
+          rowKey='id'
+          pagination={false}
+        />
+      </div>
+      )}
+
+      {/* 文件分配結果 Table */}
+      {fileAssignment.length > 0 && (
+        <div style={{ marginTop: 24 }}>
+          <h3>文件處理者分配結果</h3>
+          <Table
+            dataSource={fileAssignment}
+            columns={fileColumns}
+            rowKey='fileName'
+            pagination={false}
+          />
+        </div>
+      )}
     </div>
   )
 }
