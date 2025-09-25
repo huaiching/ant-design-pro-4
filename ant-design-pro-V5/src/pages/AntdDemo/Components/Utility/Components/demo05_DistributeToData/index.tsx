@@ -1,4 +1,4 @@
-import { Space, Input, Button, Tag, InputNumber, Table } from 'antd'
+import { Space, Input, Button, Tag, InputNumber, Table, List } from 'antd'
 import React, { useState } from 'react'
 import { distributeToData } from './Store/distributeToDataUtil'
 import { assignDataToAssignees } from './Store/assignDataToAssignees' // 假設已建立這個 util
@@ -205,6 +205,15 @@ const DistributeDemo: React.FC = () => {
           />
         </div>
       )}
+        <List
+          size="small"
+          dataSource={[
+            "本頁僅是使用範例",
+            "重點是 Store 裡面的 distributeToDataUtil.tsx (分配數量) 和 assignDataToAssignees.tsx (分配處理者) 這兩個方法",
+            ""
+          ]}
+          renderItem={(item) => <List.Item>{item}</List.Item>}
+        />
     </div>
   )
 }
