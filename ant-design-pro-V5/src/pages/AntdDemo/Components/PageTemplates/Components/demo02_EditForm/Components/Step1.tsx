@@ -29,8 +29,8 @@ const Step1Form: React.FC<Props> = ({ handleStep, state }) => {
   // 不可編輯判定
   const [disabled, setDisabled] = useState<boolean>(false)
   useEffect(() => {
-    // 判斷開頭是否符合
-    if (location.pathname.startsWith('/antdDemo/demo/PageTemplates/Edit')) {
+    // 判斷網址是否符合
+    if (location.pathname.includes('/antdDemo/demo/PageTemplates/Edit')) {
       setDisabled(true)
     }
   }, [location]);
@@ -142,9 +142,9 @@ const Step1Form: React.FC<Props> = ({ handleStep, state }) => {
       <FooterToolbar>
         <Button type="primary" onClick={handleSubmit}>繼續</Button>
         <Button danger onClick={() => {
-          if (location.pathname.startsWith('/antdDemo/demo/PageTemplates/Edit')) {
+          if (location.pathname.includes('/antdDemo/demo/PageTemplates/Edit')) {
             navigate('/antdDemo/demo/PageTemplates?activeKey=SearchForm')
-          } else if (location.pathname.startsWith('/antdDemo/demo/PageTemplates/Create')) {
+          } else if (location.pathname.includes('/antdDemo/demo/PageTemplates/Create')) {
             navigate('/antdDemo/demo/PageTemplates?activeKey=SearchForm')
           } else {
             navigate('/antdDemo/demo/PageTemplates?activeKey=EditForm')
