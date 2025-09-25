@@ -65,7 +65,7 @@ const DistributeDemo: React.FC = () => {
   /** 文件處理者分配 */
   const assignFiles = () => {
     if (!result.length || !files.length) return
-    const assignedFiles = assignDataToAssignees(files.map(f => ({ fileName: f })), result)
+    const assignedFiles = assignDataToAssignees(files.map(f => ({ fileName: f })), result, 'userCode')
     setFileAssignment(assignedFiles)
   }
 
@@ -96,7 +96,7 @@ const DistributeDemo: React.FC = () => {
   /** 文件分配 Table */
   const fileColumns = [
     { title: '文件名稱', dataIndex: 'fileName', key: 'fileName' },
-    { title: '處理者', dataIndex: 'processUser', key: 'processUser' },
+    { title: '處理者', dataIndex: 'userCode', key: 'userCode' },
   ]
 
   return (
