@@ -232,9 +232,9 @@ const Step2Form: React.FC<Props> = ({ handleStep, state }) => {
             content: '未儲存的修改將會還原。',
             okText: '確定放棄',
             onOk() {
-              if (location.pathname.startsWith('/antdDemo/demo/PageTemplates/Edit')) {
+              if (location.pathname.includes('/antdDemo/demo/PageTemplates/Edit')) {
                 navigate('/antdDemo/demo/PageTemplates?activeKey=SearchForm')
-              } else if (location.pathname.startsWith('/antdDemo/demo/PageTemplates/Create')) {
+              } else if (location.pathname.includes('/antdDemo/demo/PageTemplates/Create')) {
                 navigate('/antdDemo/demo/PageTemplates?activeKey=SearchForm')
               } else {
                 navigate('/antdDemo/demo/PageTemplates?activeKey=EditForm')
