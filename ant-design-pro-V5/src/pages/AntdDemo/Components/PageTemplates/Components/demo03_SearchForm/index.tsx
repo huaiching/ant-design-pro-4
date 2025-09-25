@@ -1,15 +1,20 @@
-
+import { parseRocDate } from '@/utils/rocDateUtils'
+import {
+  AppstoreOutlined,
+  ClearOutlined,
+  FormOutlined,
+  VerticalAlignBottomOutlined,
+  VerticalAlignTopOutlined
+} from '@ant-design/icons'
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components'
+import { useNavigate } from '@umijs/max'
+import { Button, FloatButton, Tooltip } from 'antd'
 import dayjs from 'dayjs'
 import { observer } from 'mobx-react'
 import React, { useEffect, useRef, useState } from 'react'
 import formStore from './Mobx/formRefStore'
-import { Button, FloatButton, message, Tooltip } from 'antd'
-import { AppstoreOutlined, ClearOutlined, FileAddOutlined, FormOutlined, VerticalAlignBottomOutlined, VerticalAlignTopOutlined } from '@ant-design/icons'
-import { parseRocDate } from '@/utils/rocDateUtils'
 import optionsStore from './Mobx/optionStore'
 import { poChgApi } from './Store/poChgApi'
-import { useNavigate } from '@umijs/max'
 
 const SearchForm: React.FC = () => {
   const formRef = formStore.getFormRef
@@ -39,14 +44,15 @@ const SearchForm: React.FC = () => {
       dataIndex: 'option',
       valueType: 'option',
       render: (dom, entity) => [
-        <Tooltip title='修改'>
+        <Tooltip title="修改">
           <Button
-            type='link' icon={<FormOutlined />}
+            type="link"
+            icon={<FormOutlined />}
             onClick={() => {
               entity = {
                 ...entity,
                 receiveDate: dayjs(entity.receiveDate).format('TTT/MM/DD'),
-                chgDate: dayjs(entity.chgDate).format('TTT/MM/DD'),
+                chgDate: dayjs(entity.chgDate).format('TTT/MM/DD')
               }
               console.log('entity', entity)
               navigate('/antdDemo/demo/PageTemplates/Edit', {
@@ -109,8 +115,7 @@ const SearchForm: React.FC = () => {
       fieldProps: {
         options: optionsStore.getOptions('chgType')
       }
-    },
-
+    }
   ]
 
   return (
@@ -121,11 +126,14 @@ const SearchForm: React.FC = () => {
       }}
     >
       <ProTable
-        rowKey='receiveNo'
+        rowKey="receiveNo"
         columns={columns}
         formRef={formRef}
         actionRef={actionRef}
         cardProps={false} // 移除外層 Card
+        form={{
+          component: false // 移除查詢表單的 Card
+        }}
         // 請求數據
         request={async (params: any) => {
           // 清除模式: 回傳空資料
@@ -167,17 +175,19 @@ const SearchForm: React.FC = () => {
         toolBarRender={() => [
           <>
             <Button
-              type='primary'
+              type="primary"
               onClick={() => {
                 navigate('/antdDemo/demo/PageTemplates/Create')
               }}
-            >新增</Button>
-            <Tooltip title='清除資料'>
+            >
+              新增
+            </Button>
+            <Tooltip title="清除資料">
               <Button
                 icon={<ClearOutlined />}
                 onClick={() => {
-                  setCleared(true)              // 開啟清除模式
-                  actionRef.current?.reload()   // 啟動重新刷新
+                  setCleared(true) // 開啟清除模式
+                  actionRef.current?.reload() // 啟動重新刷新
                 }}
               />
             </Tooltip>
@@ -189,7 +199,7 @@ const SearchForm: React.FC = () => {
       <FloatButton.Group
         shape="square"
         trigger="click"
-        style={{ bottom: 100 }}
+        style={{ bottom: 80 }}
         placement="top"
         icon={<AppstoreOutlined />}
       >
