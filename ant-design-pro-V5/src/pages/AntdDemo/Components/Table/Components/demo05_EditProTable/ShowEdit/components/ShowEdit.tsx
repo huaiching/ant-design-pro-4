@@ -4,14 +4,14 @@ import { Button, Space, Typography } from 'antd'
 import { MliFormRow } from '@mli-csmo/base'
 import { parseRocDate } from '@/utils/rocDateUtils'
 
-interface EditableDetailFormProps {
+interface Props {
   mode: 'create' | 'edit'
   initialValues?: any
   onSubmit: (values: any) => void
   onCancel?: () => void
 }
 
-const EditableDetailForm: React.FC<EditableDetailFormProps> = ({
+const ShowEdit: React.FC<Props> = ({
   mode,
   initialValues,
   onSubmit,
@@ -116,4 +116,4 @@ const EditableDetailForm: React.FC<EditableDetailFormProps> = ({
   )
 }
 
-export default EditableDetailForm
+export default ShowEdit
