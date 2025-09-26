@@ -1,7 +1,7 @@
 import { ModalForm } from '@ant-design/pro-form'
 import ProTable, { ProColumns } from '@ant-design/pro-table'
 import { Button } from 'antd'
-import { fetchData } from '../store/apdtApi'
+import { fetchData } from '../Store/apdtApi'
 
 const OptionReceiveNo =  (props: any) => {
 

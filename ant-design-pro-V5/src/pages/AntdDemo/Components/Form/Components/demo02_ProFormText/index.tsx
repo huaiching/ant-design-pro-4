@@ -1,12 +1,15 @@
 import { MliFormCol, MliFormRow } from '@mli-csmo/base'
-import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
+import ProForm, { ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, Input, message, Space, Typography } from 'antd'
-import React, { useRef } from 'react'
+import React from 'react'
 import { isGuiNumberValid, isNationalIdentificationNumberValid, isResidentCertificateNumberValid } from 'taiwan-id-validator'
+import SearchReceiveNo from './Components/SearchReceiveNo'
+import formStore from './Mobx/formRefStore'
 
 const MyForm: React.FC = () => {
-  const formRef = useRef<ProFormInstance>()
+  // const formRef = useRef<ProFormInstance>()
+  const formRef = formStore.getFormRef
 
   // 控制送出後之動作
   const submitterRender = () => {
@@ -50,7 +53,7 @@ const MyForm: React.FC = () => {
     if (isResidentCertificateNumberValid(value)) {
       return Promise.resolve()
     }
-    
+
     return Promise.reject('身分證字號格式錯誤')
   }
 
@@ -122,6 +125,8 @@ const MyForm: React.FC = () => {
               },
             }}
           />
+          {/* 案例4 */}
+          <SearchReceiveNo />
         </MliFormRow>
       </ProForm>
     </>
