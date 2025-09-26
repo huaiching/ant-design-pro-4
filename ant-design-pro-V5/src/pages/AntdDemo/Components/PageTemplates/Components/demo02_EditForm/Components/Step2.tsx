@@ -45,7 +45,7 @@ const Step2Form: React.FC<Props> = ({ handleStep, state }) => {
     tab2: 'pending'
   })
   // 設定 tab 頁面
-  let tabs = [
+  const [tabs, setTabs] = useState([
     {
       key: 'tab1',
       title: '聯絡資訊',
@@ -56,9 +56,9 @@ const Step2Form: React.FC<Props> = ({ handleStep, state }) => {
       title: '表格資料',
       component: <TabContent2 />
     }
-  ]
+  ])
   // tab 頁面權限控制範例
-  // tabs = tabs.filter((tab) => tab.key !== 'tab1')
+  setTabs((prevTabs) => prevTabs.filter((tab) => tab.key !== 'tab1'))
 
   // 設定 第一個tab 與 最後一個tab
   const firstTab = tabs[0].key
