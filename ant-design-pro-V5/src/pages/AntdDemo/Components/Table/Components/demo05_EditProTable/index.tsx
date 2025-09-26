@@ -33,11 +33,14 @@ const initValue = [
 
 const ShowPolicyTable: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
-  const actionRef = useRef<ActionType>()
   // 編輯模式: 'create' 為新增，'edit' 為編輯
   const [formMode, setFormMode] = useState<'create' | 'edit'>('create')
-  // table 的資料來源
-  const [dataSource, setDataSource] = useState<Policy[]>([])
+  const [dataSource, setDataSource] = useState<any[]>([]) // 主表資料
+  // ProTable 的 分頁控制
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 5
+  })
 
   // 初始化表格資料
   useEffect(() => {
@@ -115,17 +118,28 @@ const ShowPolicyTable: React.FC = () => {
       submitter={submitterRender()}
     >
       <ProCard ghost>
-        <ProTable<Policy>
+        <ProTable
           columns={columns}
           dataSource={dataSource}
-          actionRef={actionRef}
           cardProps={false}      //  移除 Card 包裝
           rowKey='policyNo'
-          search={false}
-          pagination={false}
+          options={false} // 關閉選單
+          search={false} // 關閉搜尋欄
+          pagination={{
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            showQuickJumper: true,
+            showSizeChanger: true,
+            pageSizeOptions: ['5', '10', '20', '50', '100'],
+            onChange: (page, pageSize) => {
+              setPagination({ current: page, pageSize })
+            }
+          }}
+          // row 有無點選 的 樣式設定
           rowClassName={(record) =>
             record.policyNo === editableRow?.policyNo ? 'ant-table-row-selected' : ''
           }
+          // 點擊 row 觸發事件
           onRow={(record) => ({
             onClick: () => {
               setEditableRow({ ...record })
@@ -145,6 +159,7 @@ const ShowPolicyTable: React.FC = () => {
             ]
           }}
         />
+        <br />
 
         {editableRow && (
           <EditableDetailForm

@@ -1,4 +1,5 @@
-114/09/26
+修改處：
 1. Form/demo02 將 ReceiveNo 搬過來
 2. Utillity 移除 02 + 其他後面的往前補
 3. Form 和 Table 的 index.tsx 調整
+4. Table 的 05 調整

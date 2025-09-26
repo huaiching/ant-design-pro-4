@@ -88,15 +88,17 @@ const AsstManagement: React.FC = () => {
   // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
   const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
 
+  // 目前的 tab 標籤
+  const [activeTab, setActiveTab] = useState('ProTable')
+
   // 首次載入頁面 key 值加載
   useEffect(() => {
+    setActiveTab(currentActiveKey)
     navigate({
       search: `?activeKey=${currentActiveKey}`
     })
   }, [])
 
-  // 目前的 tab 標籤
-  const [activeTab, setActiveTab] = useState('ProTable')
   // 目前的 tab 頁面
   const component = tabs.find((tab) => tab.key === activeTab)?.component
 
