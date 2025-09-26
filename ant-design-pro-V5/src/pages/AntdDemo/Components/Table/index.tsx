@@ -96,7 +96,7 @@ const AsstManagement: React.FC = () => {
   }, [])
 
   // 目前的 tab 標籤
-  const [activeTab, setActiveTab] = useState('1')
+  const [activeTab, setActiveTab] = useState('ProTable')
   // 目前的 tab 頁面
   const component = tabs.find((tab) => tab.key === activeTab)?.component
 

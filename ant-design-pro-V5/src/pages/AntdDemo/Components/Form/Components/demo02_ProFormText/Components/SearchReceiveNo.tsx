@@ -35,7 +35,9 @@ const MyForm: React.FC = () => {
         fieldProps={{       // 透過 後置圖標 設定 查詢按鈕
           suffix: (
             <Tooltip title='查詢'>
-              <Button type='text' disabled={!receiveEdit} icon={<SearchOutlined />} onClick={() => setShowModal(true)} />
+              <SearchOutlined
+                onClick={() => setShowModal(true)}
+              />
             </Tooltip>
           )
         }}
