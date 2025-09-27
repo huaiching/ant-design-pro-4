@@ -7,6 +7,7 @@ import Demo05 from './Components/demo05_BackTop'
 import Demo06 from './Components/demo06_Splitter'
 import Demo07 from './Components/demo07_Flex'
 import Demo08 from './Components/demo08_ConfigProvider'
+import Demo09 from './Components/demo09_Test'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import { useNavigate, useSearchParams } from '@umijs/max'
@@ -58,6 +59,11 @@ const AsstManagement: React.FC = () => {
       key: 'ConfigProvider',
       title: '全局布局(ConfigProvider)',
       component: <Demo08 />
+    },
+    {
+      key: 'Test',
+      title: '測試用(Test)',
+      component: <Demo09 />
     }
   ]
 
