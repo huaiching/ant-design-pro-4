@@ -19,6 +19,7 @@ import { Button, List, message } from 'antd'
 import dayjs from 'dayjs'
 import React, { useRef, useState } from 'react'
 import * as userApi from './store/userApi'
+import Typography from 'antd/es/typography/Typography'
 
 const ProTableDemo: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -109,6 +110,10 @@ const ProTableDemo: React.FC = () => {
         columns={columns}
         formRef={formRef}
         actionRef={actionRef}
+        // 自定義無資料要顯示的內容
+        // locale={{
+        //   emptyText: '無資料，請點擊查詢按鈕',
+        // }}
         // 請求數據
         request={async (params) => {
           const res = await userApi.fetchAllData(params)

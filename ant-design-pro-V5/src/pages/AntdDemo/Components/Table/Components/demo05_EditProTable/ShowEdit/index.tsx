@@ -145,7 +145,7 @@ const ShowPolicyTable: React.FC = () => {
             }
           })}
           toolbar={{
-            title: '保單清單',
+            title: '下方顯示編輯',
             actions: [
               <Button key='new' type='primary'
                 onClick={() => {
