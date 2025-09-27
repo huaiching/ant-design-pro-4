@@ -8,16 +8,16 @@ interface Props {
   mode: 'create' | 'edit'
   initialValues?: any
   onSubmit: (values: any) => void
-  visible: boolean
-  setVisible: Dispatch<SetStateAction<boolean>>
+  open: boolean
+  onOpenChange: Dispatch<SetStateAction<boolean>>
 }
 
 const ModelEdit: React.FC<Props> = ({
   mode,
   initialValues,  // 編輯列的資料
   onSubmit,       // 存檔函式
-  visible,        // Model 開關變數
-  setVisible      // 控制 Model 開關的函式
+  open,        // Model 開關變數
+  onOpenChange      // 控制 Model 開關的函式
 }) => {
   const formRef = useRef<ProFormInstance>()
   const readOnly = mode === 'edit'
@@ -33,9 +33,9 @@ const ModelEdit: React.FC<Props> = ({
       render: () => (
         <Space>
           <Button
-            key='save'
             type='primary'
             onClick={async () => {
+              // 取得頁面資料
               const form = formRef.current?.getFieldsValue()
               const data = {
                 ...initialValues,
@@ -50,15 +50,17 @@ const ModelEdit: React.FC<Props> = ({
                 phone: form?.phone,
                 eMail: form?.eMail
               }
-              onSubmit(data)
-              setVisible(false)
+              onSubmit(data) // 更新資料
+              formRef.current?.resetFields() // 清空頁面資料
+              onOpenChange(false) // 提交後關閉彈窗
             }}
           >
             確認
           </Button>
           <Button
             onClick={() => {
-              setVisible(false) // 提交後關閉彈窗
+              formRef.current?.resetFields()  // 清空頁面資料
+              onOpenChange(false) // 提交後關閉彈窗
             }}
           >
             取消
@@ -73,8 +75,8 @@ const ModelEdit: React.FC<Props> = ({
       grid
       layout='vertical'
       formRef={formRef}
-      onOpenChange={setVisible}    // 控制 Modal 開啟/關閉狀態的回調
-      open={visible}               // Modal 開啟/關閉的綁定狀態
+      onOpenChange={onOpenChange}    // 控制 Modal 開啟/關閉狀態的回調
+      open={open}                    // Modal 開啟/關閉的綁定狀態
       modalProps={{
         closable: false,          // 關閉右上角 X 按鈕
         maskClosable: false,      // 禁止點擊遮罩關閉

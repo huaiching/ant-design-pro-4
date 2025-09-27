@@ -154,6 +154,7 @@ const ShowPolicyTable: React.FC = () => {
                 onClick={() => {
                   setEditableRow({} as Policy)  // 新增：編輯列定為 空值
                   setFormMode('create') // 設定編輯狀態：create
+                  setVisible(true)  // 開啟 Model
                 }}>
                 新增
               </Button>
@@ -166,8 +167,8 @@ const ShowPolicyTable: React.FC = () => {
           mode={formMode}
           initialValues={editableRow}
           onSubmit={handleSave}
-          visible={visible}
-          setVisible={setVisible}
+          open={visible}
+          onOpenChange={setVisible}
         />
 
       </ProCard>
