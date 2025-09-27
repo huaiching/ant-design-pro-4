@@ -117,6 +117,7 @@ const ShowPolicyTable: React.FC = () => {
     >
       <ProCard ghost>
         <ProTable
+          headerTitle="下方顯示編輯"
           columns={columns}
           dataSource={dataSource}
           cardProps={false}      //  移除 Card 包裝
@@ -145,7 +146,6 @@ const ShowPolicyTable: React.FC = () => {
             }
           })}
           toolbar={{
-            title: '下方顯示編輯',
             actions: [
               <Button key='new' type='primary'
                 onClick={() => {

@@ -13,9 +13,9 @@ interface Props {
 
 const ShowEdit: React.FC<Props> = ({
   mode,
-  initialValues,
-  onSubmit,
-  onCancel
+  initialValues, // 編輯列的資料
+  onSubmit, // 存檔函式
+  onCancel  // 取消函式
 }) => {
   const formRef = useRef<ProFormInstance>()
   const readOnly = mode === 'edit'
