@@ -58,7 +58,7 @@ const Step2Form: React.FC<Props> = ({ handleStep, state }) => {
     }
   ])
   // tab 頁面權限控制範例
-  setTabs((prevTabs) => prevTabs.filter((tab) => tab.key !== 'tab1'))
+  // setTabs((prevTabs) => prevTabs.filter((tab) => tab.key !== 'tab1'))
 
   // 設定 第一個tab 與 最後一個tab
   const firstTab = tabs[0].key
