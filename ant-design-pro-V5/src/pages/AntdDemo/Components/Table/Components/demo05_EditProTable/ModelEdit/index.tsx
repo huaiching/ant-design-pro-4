@@ -37,6 +37,7 @@ const ShowPolicyTable: React.FC = () => {
   const [formMode, setFormMode] = useState<'create' | 'edit'>('create')
   const [dataSource, setDataSource] = useState<any[]>([]) // 主表資料
   const [visible, setVisible] = useState(false) // 管理 ModelForm 的開關狀態
+  const [editableRow, setEditableRow] = useState<Policy | undefined>() // 編輯行的資料
   // ProTable 的 分頁控制
   const [pagination, setPagination] = useState({
     current: 1,
@@ -56,8 +57,6 @@ const ShowPolicyTable: React.FC = () => {
     })
   }, [dataSource])
 
-  // 編輯行的資料
-  const [editableRow, setEditableRow] = useState<Policy | undefined>()
 
   const columns: ProColumns<Policy>[] = [
     { title: '保單號碼', dataIndex: 'policyNo', valueType: 'text' },
@@ -143,9 +142,9 @@ const ShowPolicyTable: React.FC = () => {
           // 點擊 row 觸發事件
           onRow={(record) => ({
             onClick: () => {
-              setEditableRow({ ...record })
-              setFormMode('edit')
-              setVisible(true)
+              setEditableRow({ ...record }) // 將點擊row的資料，設定為 編輯列
+              setFormMode('edit') // 設定編輯狀態：edit
+              setVisible(true)  // 開啟 Model
             }
           })}
           toolbar={{
@@ -153,8 +152,8 @@ const ShowPolicyTable: React.FC = () => {
             actions: [
               <Button key='new' type='primary'
                 onClick={() => {
-                  setEditableRow({} as Policy)
-                  setFormMode('create')
+                  setEditableRow({} as Policy)  // 新增：編輯列定為 空值
+                  setFormMode('create') // 設定編輯狀態：create
                 }}>
                 新增
               </Button>
