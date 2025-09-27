@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Image, Popover, Space } from 'antd'
-import TestImage from './Store/TestImage.png'
+import TestImage from './Image/TestImage.png'
 
 const PopoverDemo: React.FC = () => {
   return (
