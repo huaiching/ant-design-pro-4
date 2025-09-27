@@ -62,10 +62,11 @@ const App: React.FC = () => {
 
       {/* Flex 容器：根據選擇的 justify 與 align 動態調整排列 */}
       <Flex
+        vertical={vertical}
         style={boxStyle}
-        vertical={vertical} // 是否開啟垂直布局 (沒寫是不開啟)
         justify={justify}   // 水平對齊方式
         align={alignItems}  // 垂直對齊方式
+        // vertical            // 垂直方向排列 (沒寫是水平方向排列)
         gap={gap}         // 元素間距
       >
         <Button type="primary">Primary</Button>

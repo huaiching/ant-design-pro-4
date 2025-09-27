@@ -7,7 +7,7 @@ import Demo05 from './Components/demo05_BackTop'
 import Demo06 from './Components/demo06_Splitter'
 import Demo07 from './Components/demo07_Flex'
 import Demo08 from './Components/demo08_ConfigProvider'
-import Demo09 from './Components/demo09_Test'
+import Demo09 from './Components/demo09_Popover&Image'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import { useNavigate, useSearchParams } from '@umijs/max'
@@ -61,8 +61,8 @@ const AsstManagement: React.FC = () => {
       component: <Demo08 />
     },
     {
-      key: 'Test',
-      title: '測試用(Test)',
+      key: 'Popover&Image',
+      title: '氣泡框與圖片顯示(Popover&Image)',
       component: <Demo09 />
     }
   ]
