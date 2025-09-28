@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Flex, Segmented, Switch } from 'antd'
+import { Button, Flex, Segmented, Switch, Typography } from 'antd'
 import type { FlexProps } from 'antd'
 
 // 外層容器樣式
@@ -42,23 +42,28 @@ const App: React.FC = () => {
 
   return (
     <Flex gap='middle' vertical>
-      <p>垂直布局 (vertical)</p>
-      <Switch
-        value={vertical}
-        onChange={setVertical}
-        style={{width: 60}}
-        checkedChildren='開啟'
-        unCheckedChildren='關閉'
-      />
-
-      <p>水平對齊 (justify)</p>
-      <Segmented options={justifyOptions} onChange={setJustify} />
-
-      <p>垂直對齊 (align)</p>
-      <Segmented options={alignOptions} onChange={setAlignItems} />
-
-      <p>間距 (gap)</p>
-      <Segmented options={gapOptions} onChange={setGap} />
+      <Typography.Paragraph>
+        <Typography.Text>垂直布局 (vertical)：</Typography.Text>
+        <Switch
+          value={vertical}
+          onChange={setVertical}
+          style={{ width: 60 }}
+          checkedChildren='開啟'
+          unCheckedChildren='關閉'
+        />
+      </Typography.Paragraph>
+      <Typography.Paragraph>
+        <Typography.Text>水平對齊 (justify)：</Typography.Text>
+        <Segmented options={justifyOptions} onChange={setJustify} />
+      </Typography.Paragraph>
+      <Typography.Paragraph>
+        <Typography.Text>垂直對齊 (align)：</Typography.Text>
+        <Segmented options={alignOptions} onChange={setAlignItems} />
+      </Typography.Paragraph>
+      <Typography.Paragraph>
+        <Typography.Text>間距 (gap)：</Typography.Text>
+        <Segmented options={gapOptions} onChange={setGap} />
+      </Typography.Paragraph>
 
       {/* Flex 容器：根據選擇的 justify 與 align 動態調整排列 */}
       <Flex
