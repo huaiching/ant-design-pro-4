@@ -5,9 +5,10 @@ import Demo03 from './Components/demo03_Modal'
 import Demo04 from './Components/demo04_PageContainer'
 import Demo05 from './Components/demo05_BackTop'
 import Demo06 from './Components/demo06_Splitter'
-import Demo07 from './Components/demo07_Flex'
-import Demo08 from './Components/demo08_ConfigProvider'
-import Demo09 from './Components/demo09_PopoverImage'
+import Demo07 from './Components/demo07_Space'
+import Demo08 from './Components/demo08_Flex'
+import Demo09 from './Components/demo09_ConfigProvider'
+import Demo10 from './Components/demo10_PopoverImage'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import { useNavigate, useSearchParams } from '@umijs/max'
@@ -51,19 +52,24 @@ const AsstManagement: React.FC = () => {
       component: <Demo06 />
     },
     {
+      key: 'Space',
+      title: '間距(Space)',
+      component: <Demo07 />
+    },
+    {
       key: 'Flex',
       title: '彈性布局(Flex)',
-      component: <Demo07 />
+      component: <Demo08 />
     },
     {
       key: 'ConfigProvider',
       title: '全局布局(ConfigProvider)',
-      component: <Demo08 />
+      component: <Demo09 />
     },
     {
       key: 'PopoverImage',
       title: '氣泡框與圖片顯示(PopoverImage)',
-      component: <Demo09 />
+      component: <Demo10 />
     }
   ]
 
