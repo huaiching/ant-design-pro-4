@@ -170,16 +170,18 @@ export default [
     path: '/antdDemo',  // 路徑
     routes: [      
       {
-        // Ant Design 組件介紹與說明
         name: 'antdDemoComponents',
         path: '/antdDemo/components',
         component: './AntdDemo/Components/Navigate',
       },
       {
-        // Ant Design 組件介紹與說明
+        name: 'antdDemoRoutes',
+        path: '/antdDemo/routes',
+        component: './AntdDemo/Components/Routes',
+      },
+      {
         name: 'antdDemo',
         path: '/antdDemo/demo',
-        // component: './AntdDemo',  // 組件路徑
         routes: [
           {
             name: 'Form',

@@ -20,6 +20,7 @@ export default {
 
   'menu.antd': 'Ant Design 範例',
   'menu.antd.antdDemoComponents': 'Ant Design 頁面導引',
+  'menu.antd.antdDemoRoutes': 'Ant Design 路由設定',
   'menu.antd.antdDemo': 'Ant Design 元件範例',
   'menu.antd.antdDemo.Form': '表單輸入元件',
   'menu.antd.antdDemo.Container': '表單容器',
