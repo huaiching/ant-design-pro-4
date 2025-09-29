@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Demo01 from './Components/demo01_ProCard'
 import Demo02 from './Components/demo02_Notification'
 import Demo03 from './Components/demo03_Modal'
@@ -9,7 +9,7 @@ import Demo07 from './Components/demo07_Space'
 import Demo08 from './Components/demo08_Flex'
 import Demo09 from './Components/demo09_ConfigProvider'
 import Demo10 from './Components/demo10_PopoverImage'
-import { Tabs } from 'antd'
+import { Splitter, Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import { useNavigate, useSearchParams } from '@umijs/max'
 
@@ -72,36 +72,63 @@ const AsstManagement: React.FC = () => {
       component: <Demo10 />
     }
   ]
-
-  // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
-  const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
-
-  // 首次載入頁面 key 值加載
-  useEffect(() => {
-    navigate({
-      search: `?activeKey=${currentActiveKey}`
-    })
-  }, [])
-
-  return (
-    <Tabs
-      type='card'
-      // animated    // 啟用切換動畫
-      destroyOnHidden   // 隱藏時銷毀 DOM
-      activeKey={currentActiveKey}
-      onChange={(key: string) => {
-        navigate({
-          search: `?activeKey=${key}`
-        })
-      }}
-    >
-      {tabs.map((item) => (
-        <TabPane tab={item.title} key={item.key}>
-          {item.component}
-        </TabPane>
-      ))}
-    </Tabs>
-  )
-}
-
-export default AsstManagement
+  
+    // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
+    const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
+  
+    // 目前的 tab 標籤
+    const [activeTab, setActiveTab] = useState('ProCard')
+  
+    // 首次載入頁面 key 值加載
+    useEffect(() => {
+      setActiveTab(currentActiveKey)
+      navigate({
+        search: `?activeKey=${currentActiveKey}`
+      })
+    }, [])
+  
+    // 目前的 tab 頁面
+    const component = tabs.find((tab) => tab.key === activeTab)?.component
+  
+    return (
+      <Splitter
+        layout="horizontal"   // 水平分割 (左右分隔)
+        style={{
+          minHeight: '100vh',
+          height: 'auto'
+        }}
+      >
+        {/* 頁簽 */}
+        <Splitter.Panel
+          defaultSize={300}   // 預設寬度
+          collapsible={{ start: true, end: true }}
+        >
+          <Tabs
+            type='card'
+            tabPosition='left'
+            animated    // 啟用切換動畫
+            destroyOnHidden   // 隱藏時銷毀 DOM
+            activeKey={currentActiveKey}
+            onChange={(key: string) => {
+              setActiveTab(key)
+              navigate({
+                search: `?activeKey=${key}`
+              })
+            }}
+          >
+            {tabs.map((item) => (
+              <TabPane tab={item.title} key={item.key} />
+            ))}
+          </Tabs>
+        </Splitter.Panel>
+  
+        {/* 內容 */}
+        <Splitter.Panel style={{ paddingLeft: 20, paddingRight: 10 }}>
+          {component}
+        </Splitter.Panel>
+      </Splitter>
+    )
+  }
+  
+  export default AsstManagement
+  
