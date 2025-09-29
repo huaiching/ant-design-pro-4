@@ -18,8 +18,7 @@ const Routes: React.FC = () => {
         基本路由 用於定義單一頁面，包含選單名稱、路徑、圖示和對應組件。
       </Paragraph>
       <pre>
-        {`
-{
+{`{
   path: '/antdDemo/components',
   name: 'antdDemoComponents',
   icon: 'AppstoreOutlined',
@@ -51,8 +50,7 @@ const Routes: React.FC = () => {
         子路由 用於建立嵌套選單結構，適用於需要分組的頁面。
       </Paragraph>
       <pre>
-        {`
-{
+{`{
   path: '/antdDemo/demo', 
   name: 'antdDemo',
   routes: [
@@ -100,8 +98,7 @@ const Routes: React.FC = () => {
           </li>
         </ul>
         <pre>
-          {`
-{
+{`{
   {
     path: '/antdDemo/demo/PageTemplates/Query',
     component: './AntdDemo/Components/PageTemplates/Components/demo02_EditForm',
