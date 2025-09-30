@@ -40,7 +40,7 @@ interface Props {
    *          - 回傳 string：檢核錯誤訊息
    *          - 回傳 null | undefined：檢核通過
    */
-  validator?: (value: any[]) => string | null | undefined | Promise<string | null | undefined>
+  validator?: (value: any[]) => Promise<void>
 }
 
 /**
@@ -127,28 +127,24 @@ const MultiSelectTable: React.FC<Props> = ({
   const rules = [
     ...(required
       ? [
-          {
-            validator: async (_: any, value: any[]) => {
-              if (!value || value.length === 0) {
-                return Promise.reject(new Error(`${label}為必填`))
-              }
-              return Promise.resolve()
+        {
+          validator: async (_: any, value: any[]) => {
+            if (!value || value.length === 0) {
+              return Promise.reject(new Error(`${label}為必填`))
             }
+            return Promise.resolve()
           }
-        ]
+        }
+      ]
       : []),
     ...(validator
       ? [
-          {
-            validator: async (_: any, value: any[]) => {
-              const msg = await validator(value)
-              if (msg) {
-                return Promise.reject(new Error(msg))
-              }
-              return Promise.resolve()
-            }
+        {
+          validator: async (_: any, value: any[]) => {
+            return validator(value) // 直接回傳外部 Promise
           }
-        ]
+        }
+      ]
       : [])
   ]
 

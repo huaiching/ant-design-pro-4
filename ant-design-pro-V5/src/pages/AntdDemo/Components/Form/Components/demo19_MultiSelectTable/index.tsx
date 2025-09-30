@@ -50,9 +50,9 @@ const SelectTable: React.FC = () => {
 
   const validateMaxThree = async (value: any[]) => {
     if (value && value.length > 3) {
-      return '最多只能選擇 3 筆資料'
+      return Promise.reject('最多只能選擇 3 筆資料')
     }
-    return null
+    return Promise.resolve()
   }
 
   return (
