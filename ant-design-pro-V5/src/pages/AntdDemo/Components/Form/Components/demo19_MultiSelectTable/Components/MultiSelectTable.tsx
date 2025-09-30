@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import { ProColumns, ProForm, ProFormInstance, ProTable } from '@ant-design/pro-components'
 import { AutoComplete, Button, message, Popconfirm, Space } from 'antd'
-import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
-import { ProTable, ProColumns, ProForm, ProFormInstance } from '@ant-design/pro-components'
-import { MliFormCol, MliFormRow } from '@mli-csmo/base'
-
+import React, { useEffect, useState } from 'react'
 
 interface OptionData {
   code: string
@@ -48,7 +46,6 @@ interface Props {
 /**
  * 自製元件，可用於輸入多筆資料 (每筆資料有多個欄位)
  * @param optionsData 下拉選單資料來源 (必須包含 code 欄位)
- * @param colSize     元件在表單中的佔比 (MliFormCol)
  * @param label       ProForm.Item 標籤文字
  * @param name        ProForm.Item 欄位名稱
  * @param column      額外表格欄位設定
@@ -58,7 +55,14 @@ interface Props {
  * @param validator   自訂檢核函式
  */
 const MultiSelectTable: React.FC<Props> = ({
-  optionsData, colSize, label, name, column, placeholder, formRef, required, validator
+  optionsData,
+  label,
+  name,
+  column,
+  placeholder,
+  formRef,
+  required,
+  validator
 }) => {
   const [inputValue, setInputValue] = useState('')
   const [selectedOptions, setSelectedOptions] = useState<any[]>([])
@@ -80,9 +84,7 @@ const MultiSelectTable: React.FC<Props> = ({
 
   /** 新增資料 */
   const handleAdd = () => {
-    const found = optionsData.find(
-      (item) => Object.values(item).join(' ') === inputValue
-    )
+    const found = optionsData.find((item) => Object.values(item).join(' ') === inputValue)
     if (!found) {
       message.error('輸入資料不存在')
       return
@@ -112,82 +114,78 @@ const MultiSelectTable: React.FC<Props> = ({
       valueType: 'option',
       width: 20,
       render: (_, record) => [
-        <Popconfirm
-          key="delete"
-          title="確認刪除？"
-          onConfirm={() => handleDelete(record.code)}
-        >
+        <Popconfirm key="delete" title="確認刪除？" onConfirm={() => handleDelete(record.code)}>
           <Button icon={<DeleteOutlined />} danger type="link" />
         </Popconfirm>
       ]
-    },
+    }
   ]
   column?.forEach((e) => columns.push(e))
 
   /** 驗證規則 */
   const rules = [
     ...(required
-      ? [{
-          validator: async (_: any, value: any[]) => {
-            if (!value || value.length === 0) {
-              return Promise.reject(new Error(`${label}為必填`))
+      ? [
+          {
+            validator: async (_: any, value: any[]) => {
+              if (!value || value.length === 0) {
+                return Promise.reject(new Error(`${label}為必填`))
+              }
+              return Promise.resolve()
             }
-            return Promise.resolve()
           }
-        }]
+        ]
       : []),
     ...(validator
-      ? [{
-          validator: async (_: any, value: any[]) => {
-            const msg = await validator(value)
-            if (msg) {
-              return Promise.reject(new Error(msg))
+      ? [
+          {
+            validator: async (_: any, value: any[]) => {
+              const msg = await validator(value)
+              if (msg) {
+                return Promise.reject(new Error(msg))
+              }
+              return Promise.resolve()
             }
-            return Promise.resolve()
           }
-        }]
+        ]
       : [])
   ]
 
   return (
-    <MliFormRow>
-      <MliFormCol colSize={colSize ?? 1}>
-        <ProForm.Item
-          label={label}
-          name={name}
-          layout="vertical"
-          required={required ? true : false}
-          rules={rules}
-        >
-          <>
-            <Space.Compact style={{ width: '100%' }}>
-              <AutoComplete
-                options={autoOptions}
-                value={inputValue}
-                onChange={(val) => setInputValue(val)}
-                placeholder={placeholder}
-                filterOption={(inputValue, option) =>
-                  !!option && option.value.toLowerCase().includes(inputValue.toLowerCase())
-                }
-              />
-              <Button shape="default" icon={<PlusOutlined />} onClick={handleAdd} />
-            </Space.Compact>
+    <ProForm.Item
+      label={label}
+      name={name}
+      layout="vertical"
+      required={required ? true : false}
+      rules={rules}
+    >
+      <>
+        <Space.Compact style={{ width: '100%' }}>
+          <AutoComplete
+            options={autoOptions}
+            value={inputValue}
+            onChange={(val) => setInputValue(val)}
+            placeholder={placeholder}
+            filterOption={(inputValue, option) =>
+              !!option && option.value.toLowerCase().includes(inputValue.toLowerCase())
+            }
+          />
+          <Button shape="default" icon={<PlusOutlined />} onClick={handleAdd} />
+        </Space.Compact>
 
-            {selectedOptions.length > 0 && (
-              <ProTable
-                search={false}
-                options={false}
-                pagination={false}
-                toolBarRender={false}
-                dataSource={selectedOptions}
-                columns={columns}
-                rowKey="code"
-              />
-            )}
-          </>
-        </ProForm.Item>
-      </MliFormCol>
-    </MliFormRow>
+        {selectedOptions.length > 0 && (
+          <ProTable
+            search={false}
+            options={false}
+            pagination={false}
+            toolBarRender={false}
+            dataSource={selectedOptions}
+            columns={columns}
+            rowKey="code"
+          />
+        )}
+      </>
+    </ProForm.Item>
   )
 }
 
