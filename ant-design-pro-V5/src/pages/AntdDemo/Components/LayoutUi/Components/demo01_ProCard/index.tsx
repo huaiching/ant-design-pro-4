@@ -99,7 +99,7 @@ const InsurancePolicyCard: React.FC = () => {
         <ProCard
           key={config.key}
           title={
-            <Space wrap align="center" size='large'>
+            <Space wrap size='large'>
               <Segmented
                 value={config.edit}
                 options={editOption}
@@ -121,8 +121,8 @@ const InsurancePolicyCard: React.FC = () => {
                   config.setEdit(value)
                 }}
               />
-              <Typography.Title level={4}>{config.key}：</Typography.Title>
-              <Typography.Title level={4}>{config.title}</Typography.Title>
+              <Typography.Text style={{fontSize: 18}}>{config.key}：</Typography.Text>
+              <Typography.Text style={{fontSize: 18}}>{config.title}</Typography.Text>
             </Space>
           }
           type='inner'
