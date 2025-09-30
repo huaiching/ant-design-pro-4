@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react'
-import { Button, message, Typography } from 'antd'
 import { FooterToolbar, ProForm, ProFormInstance } from '@ant-design/pro-components'
+import { MliFormCol, MliFormRow } from '@mli-csmo/base'
+import { Button, message, Typography } from 'antd'
+import React, { useRef } from 'react'
 import MultiSelectTable from './Components/MultiSelectTable'
 
 const optionsData = [
@@ -13,7 +14,7 @@ const optionsData = [
 
 const column = [
   { title: '代碼', dataIndex: 'code', valueType: 'text' },
-  { title: '文字', dataIndex: 'text', valueType: 'text' },
+  { title: '文字', dataIndex: 'text', valueType: 'text' }
 ]
 
 const SelectTable: React.FC = () => {
@@ -25,13 +26,13 @@ const SelectTable: React.FC = () => {
       render: () => (
         <FooterToolbar>
           <Button
-            type='primary'
+            type="primary"
             onClick={async () => {
               formRef.current?.validateFields().then((values) => {
                 console.info(formRef.current?.getFieldsValue())
               })
             }}
-            key='save'
+            key="save"
           >
             確認
           </Button>
@@ -46,7 +47,7 @@ const SelectTable: React.FC = () => {
       )
     }
   }
-  
+
   const validateMaxThree = async (value: any[]) => {
     if (value && value.length > 3) {
       return '最多只能選擇 3 筆資料'
@@ -59,20 +60,24 @@ const SelectTable: React.FC = () => {
       <Typography.Title level={3}>此為自製元件</Typography.Title>
       <ProForm
         grid
-        layout='vertical'
+        layout="vertical"
         formRef={formRef}
         submitter={submitterRender()}
+        style={{ width: '100%' }}
       >
-        <MultiSelectTable
-          label='症狀'
-          name='symptom'
-          formRef={formRef}
-          column={column}
-          optionsData={optionsData}
-          colSize={2}
-          required
-          validator={validateMaxThree}
-        />
+        <MliFormRow gutter={8} style={{ width: '100%' }}>
+          <MliFormCol colSize={4 / 3}>
+            <MultiSelectTable
+              label="症狀"
+              name="symptom"
+              formRef={formRef}
+              column={column}
+              optionsData={optionsData}
+              required
+              validator={validateMaxThree}
+            />
+          </MliFormCol>
+        </MliFormRow>
       </ProForm>
     </>
   )
