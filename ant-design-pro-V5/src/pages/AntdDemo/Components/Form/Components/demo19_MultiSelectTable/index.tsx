@@ -75,6 +75,9 @@ const SelectTable: React.FC = () => {
               optionsData={optionsData}
               required
               validator={validateMaxThree}
+              onChange={(value)=>{
+                message.info('資料筆數：' + value.length)
+              }}
             />
           </MliFormCol>
         </MliFormRow>
