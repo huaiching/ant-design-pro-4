@@ -12,9 +12,6 @@ interface Props {
   /** 下拉選單的來源資料，第一個欄位必須是 code */
   optionsData: OptionData[]
 
-  /** 欄位在表單中的佔比 (對應 MliFormCol.colSize)，預設 1 */
-  colSize?: number
-
   /** ProForm.Item 的標籤文字 */
   label: string
 
@@ -32,6 +29,9 @@ interface Props {
 
   /** 是否必填，若為 true 則會檢核至少需輸入一筆資料 */
   required?: boolean
+
+  /** 資料異動函式 */
+  onChange?: (value: any) => void
 
   /**
    * 自訂檢核函式
@@ -52,6 +52,7 @@ interface Props {
  * @param placeholder AutoComplete 提示文字
  * @param formRef     外部 ProForm formRef，用於值同步
  * @param required    是否必填，預設 false
+ * @param onChange    資料異動函式
  * @param validator   自訂檢核函式
  */
 const MultiSelectTable: React.FC<Props> = ({
@@ -62,25 +63,25 @@ const MultiSelectTable: React.FC<Props> = ({
   placeholder,
   formRef,
   required,
+  onChange,
   validator
 }) => {
   const [inputValue, setInputValue] = useState('')
   const [selectedOptions, setSelectedOptions] = useState<any[]>([])
 
-  // 初始化時，從 formRef 取出資料 (避免編輯場景丟失資料)
+  // ，從 formRef 取出資料
   useEffect(() => {
-    if (formRef?.current) {
-      const initValue = formRef.current.getFieldValue(name)
-      if (initValue && Array.isArray(initValue)) {
-        setSelectedOptions(initValue)
-      }
-    }
-  }, [formRef, name])
+    if (!formRef?.current) return
+    const value = formRef.current.getFieldValue(name)
+    setSelectedOptions(Array.isArray(value) ? value : [])
+  }, [formRef?.current, formRef?.current?.getFieldValue(name)])
 
-  // 同步到 ProForm
-  useEffect(() => {
-    formRef?.current?.setFieldValue(name, selectedOptions)
-  }, [selectedOptions, formRef, name])
+  // 集中處理狀態與同步
+  const syncChange = (newSelected: any[]) => {
+    setSelectedOptions(newSelected)
+    formRef?.current?.setFieldValue(name, newSelected)
+    onChange && onChange(newSelected)
+  }
 
   /** 新增資料 */
   const handleAdd = () => {
@@ -93,13 +94,13 @@ const MultiSelectTable: React.FC<Props> = ({
       message.warning('資料已存在')
       return
     }
-    setSelectedOptions([...selectedOptions, found])
+    syncChange([...selectedOptions, found])
     setInputValue('')
   }
 
   /** 刪除資料 */
   const handleDelete = (code: string) => {
-    setSelectedOptions(selectedOptions.filter((item) => item.code !== code))
+    syncChange(selectedOptions.filter((item) => item.code !== code))
   }
 
   /** 自動完成選單選項 */
@@ -152,22 +153,16 @@ const MultiSelectTable: React.FC<Props> = ({
   ]
 
   return (
-    <ProForm.Item
-      label={label}
-      name={name}
-      layout="vertical"
-      required={required ? true : false}
-      rules={rules}
-    >
+    <ProForm.Item label={label} name={name} layout="vertical" required={!!required} rules={rules}>
       <>
         <Space.Compact style={{ width: '100%' }}>
           <AutoComplete
             options={autoOptions}
             value={inputValue}
-            onChange={(val) => setInputValue(val)}
+            onChange={setInputValue}
             placeholder={placeholder}
-            filterOption={(inputValue, option) =>
-              !!option && option.value.toLowerCase().includes(inputValue.toLowerCase())
+            filterOption={(inputVal, option) =>
+              !!option && option.value.toLowerCase().includes(inputVal.toLowerCase())
             }
           />
           <Button shape="default" icon={<PlusOutlined />} onClick={handleAdd} />
