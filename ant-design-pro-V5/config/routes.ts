@@ -160,6 +160,12 @@ export default [
         path: 'demo08',
         component: './ReactDemo/Demo08',
       },
+      {
+        // useRef DOM 引用
+        name: 'demo09',
+        path: 'demo09',
+        component: './ReactDemo/Demo09',
+      },
     ],
   },
 
