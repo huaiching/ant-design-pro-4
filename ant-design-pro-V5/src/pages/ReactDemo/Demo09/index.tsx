@@ -1,12 +1,17 @@
+// src/pages/user/index.tsx
 import React from 'react'
-import Example from './Components/Example'
+import { PageContainer } from '@ant-design/pro-components'
+import Create from './Components/Create'
+import Display from './Components/Display'
+import { observer } from 'mobx-react'
 
-const App: React.FC = () => {
+const UserPage: React.FC = () => {
   return (
-    <div style={{ padding: 24 }}>
-        <Example/>
-    </div>
+    <PageContainer>
+      <Create />
+      <Display />
+    </PageContainer>
   )
 }
 
-export default App
+export default observer(UserPage)
