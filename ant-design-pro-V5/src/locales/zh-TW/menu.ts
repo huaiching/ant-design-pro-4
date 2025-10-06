@@ -17,6 +17,8 @@ export default {
   'menu.reactDemo.demo06': 'useContext 遠端的信息傳遞',
   'menu.reactDemo.demo07': 'useEffect 效果鉤子',
   'menu.reactDemo.demo08': 'useRef 從輸入框獲取值',
+  'menu.reactDemo.demo09': 'useSyncExternalStore 外部資料訂閱',
+
 
   'menu.antd': 'Ant Design 範例',
   'menu.antd.antdDemoComponents': 'Ant Design 頁面導引',
