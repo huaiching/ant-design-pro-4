@@ -15,6 +15,7 @@ export interface UserInfo {
   name: string
   age: number
   email: string
+  calcDate: string
 }
 
 // 設定初始值
@@ -22,6 +23,7 @@ let user: UserInfo = {
   name: '',
   age: 0,
   email: '',
+  calcDate: ''
 }
 
 // 儲存 狀態變化時，要通知的訂閱者資訊 (照抄)
@@ -48,6 +50,7 @@ export const userStore = {
       name: '',
       age: 0,
       email: '',
+      calcDate: ''
     }
     emitChange()
   },
@@ -57,7 +60,7 @@ export const userStore = {
     user = { ...user, ...newUser }
     emitChange()
   },
-  
+
   getUser(): UserInfo {
     return user
   },
@@ -77,6 +80,11 @@ export const userStore = {
     user = { ...user, email }
     emitChange()
   },
+  
+  setCalcDate(calcDate: string): void {
+    user = { ...user, calcDate }
+    emitChange()
+  },
 
   // 獲取個別欄位
   getName(): string {
@@ -89,5 +97,9 @@ export const userStore = {
 
   getEmail(): string {
     return user.email
+  },
+
+  getCalcDate(): string {
+    return user.calcDate
   },
 }

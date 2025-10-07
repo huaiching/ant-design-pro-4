@@ -27,6 +27,7 @@ const Display: React.FC = () => {
         <Descriptions.Item label="姓名">{user.name}</Descriptions.Item>
         <Descriptions.Item label="年齡">{user.age}</Descriptions.Item>
         <Descriptions.Item label="Email">{user.email}</Descriptions.Item>
+        <Descriptions.Item label="計算日">{user.calcDate}</Descriptions.Item>
       </Descriptions>
     </Card>
   )
