@@ -3,9 +3,9 @@
  */
 import React, { useEffect, useRef } from 'react'
 import { ProForm, ProFormText, ProFormDigit, ProFormInstance, ProFormDatePicker } from '@ant-design/pro-components'
-import { Button, Card, message } from 'antd'
+import { Typography } from 'antd'
 import { useSyncExternalStore } from 'react'
-import { UserInfo, userStore } from '../Store/userStore'
+import { userStore } from '../Store/userStore'
 import { MliFormRow } from '@/common/base'
 import { parseRocDate } from '@/utils/rocDateUtils'
 import dayjs from 'dayjs'
@@ -22,16 +22,18 @@ const Create: React.FC = () => {
 
   // 資料初始化
   useEffect(() => {
-    // 變數初始化
     userStore.init()
-    // 日期格式轉換
+  }, [])
+
+  // formRef 資料同步
+  useEffect(() => {
     const data = {
-      ...user, 
+      ...user,
       calcDate: dayjs(user.calcDate, 'TTT/MM/DD').isValid() ? dayjs(user.calcDate, 'TTT/MM/DD') : null
     }
-    // formRef 資料同步
     formRef.current?.setFieldsValue(data)
-  }, [])
+  }, [user])
+
 
   // 資料同步函式
   const onValuesChange = (value: any) => {
@@ -43,51 +45,50 @@ const Create: React.FC = () => {
   }
 
   return (
-    <Card title="輸入使用者資料" bordered={false}>
-      <ProForm
-        grid
-        layout="vertical"
-        formRef={formRef}
-        submitter={false}
-        onValuesChange={onValuesChange}
-      >
-        <MliFormRow>
-          <ProFormText
-            name="name"
-            label="姓名"
-            placeholder=""
-          />
-          <ProFormDigit
-            name="age"
-            label="年齡"
-            placeholder=""
-          />
-          <ProFormText
-            name="email"
-            label="Email"
-            placeholder=""
-          />
-          <ProFormDatePicker
-            name="calcDate"
-            label="計算日"
-            placeholder=""
-            fieldProps={{
-              format: 'TTT/MM/DD',
-              style: { width: '100%' },
-              onBlur: (e: any) => {
-                if (e.target?.value) {
-                  const date = parseRocDate(e.target?.value)
-                  formRef.current?.setFieldValue('calcDate', date)
-                  onValuesChange({
-                    calcDate: dayjs(date).format('TTT/MM/DD')
-                  })
-                }
+    <ProForm
+      grid
+      layout="vertical"
+      formRef={formRef}
+      submitter={false}
+      onValuesChange={onValuesChange}
+    >
+      <Typography.Title level={4}>輸入使用者資料</Typography.Title>
+      <MliFormRow>
+        <ProFormText
+          name="name"
+          label="姓名"
+          placeholder=""
+        />
+        <ProFormDigit
+          name="age"
+          label="年齡"
+          placeholder=""
+        />
+        <ProFormText
+          name="address"
+          label="地址"
+          placeholder=""
+        />
+        <ProFormDatePicker
+          name="calcDate"
+          label="計算日"
+          placeholder=""
+          fieldProps={{
+            format: 'TTT/MM/DD',
+            style: { width: '100%' },
+            onBlur: (e: any) => {
+              if (e.target?.value) {
+                const date = parseRocDate(e.target?.value)
+                formRef.current?.setFieldValue('calcDate', date)
+                onValuesChange({
+                  calcDate: dayjs(date).format('TTT/MM/DD')
+                })
               }
-            }}
-          />
-        </MliFormRow>
-      </ProForm>
-    </Card>
+            }
+          }}
+        />
+      </MliFormRow>
+    </ProForm>
   )
 }
 

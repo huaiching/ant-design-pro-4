@@ -2,8 +2,8 @@
  * 📘 User Store 使用 useSyncExternalStore
  * - setUser：設定整筆使用者資料
  * - initUser：重設使用者資料為預設值
- * - setName / setAge / setEmail：個別欄位設定
- * - getName / getAge / getEmail：個別欄位取得
+ * - setName ...：個別欄位設定
+ * - getName ...：個別欄位取得
  * - getUser：取得完整使用者資料
  * - subscribe：訂閱狀態變化
  * 
@@ -14,7 +14,7 @@
 export interface UserInfo {
   name: string
   age: number
-  email: string
+  address: string
   calcDate: string
 }
 
@@ -22,7 +22,7 @@ export interface UserInfo {
 let user: UserInfo = {
   name: '',
   age: 0,
-  email: '',
+  address: '',
   calcDate: ''
 }
 
@@ -49,7 +49,7 @@ export const userStore = {
     user = {
       name: '',
       age: 0,
-      email: '',
+      address: '',
       calcDate: ''
     }
     emitChange()
@@ -76,8 +76,8 @@ export const userStore = {
     emitChange()
   },
 
-  setEmail(email: string): void {
-    user = { ...user, email }
+  setAddress(address: string): void {
+    user = { ...user, address }
     emitChange()
   },
   
@@ -95,8 +95,8 @@ export const userStore = {
     return user.age
   },
 
-  getEmail(): string {
-    return user.email
+  getAddress(): string {
+    return user.address
   },
 
   getCalcDate(): string {
