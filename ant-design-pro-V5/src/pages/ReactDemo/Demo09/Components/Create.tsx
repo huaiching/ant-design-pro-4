@@ -6,7 +6,7 @@ import { ProForm, ProFormText, ProFormDigit, ProFormInstance, ProFormDatePicker 
 import { Typography } from 'antd'
 import { useSyncExternalStore } from 'react'
 import { userStore } from '../Store/userStore'
-import { MliFormRow } from '@/common/base'
+import { MliFormRow } from '@mli-csmo/base'
 import { parseRocDate } from '@/utils/rocDateUtils'
 import dayjs from 'dayjs'
 
