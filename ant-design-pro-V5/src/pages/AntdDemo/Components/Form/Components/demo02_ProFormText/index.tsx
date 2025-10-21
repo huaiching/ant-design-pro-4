@@ -40,6 +40,10 @@ const MyForm: React.FC = () => {
     }
   }
 
+  /**
+   * 身份證字號檢核: 使用 taiwan-id-validator
+   * https://www.npmjs.com/package/taiwan-id-validator/v/1.5.0
+   */
   const checkClientId = (rule: any, value: any) => {
     // 檢查 中華民國身分證字號
     if (isNationalIdentificationNumberValid(value)) {
