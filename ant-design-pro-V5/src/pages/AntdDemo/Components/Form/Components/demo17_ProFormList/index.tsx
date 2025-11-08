@@ -1,16 +1,26 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { ProForm, ProFormText, ProFormSelect, ProFormDigit, ProFormList, ProFormInstance } from '@ant-design/pro-form'
-import { Button, Divider, message, Typography } from 'antd'
-import { PlusOutlined, RestTwoTone } from '@ant-design/icons'
+import { Button, message, Typography } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 import ProCard from '@ant-design/pro-card'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { MliFormRow } from '@mli-csmo/base'
+import { log } from 'console'
+import { debounce } from 'lodash'
 
-const { Text } = Typography
+// 模擬數據
+let data = {}
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>(null)
   const [benfCount, setBenfCount] = useState(0)
+
+  useEffect(() => {
+    // 預設帶入表單資料
+    formRef.current?.setFieldsValue({
+      ...data,
+    })
+  }, [])
 
   // 定義關係選項
   const relationshipOptions = [
@@ -28,9 +38,8 @@ const MyForm: React.FC = () => {
           <Button
             type='primary'
             onClick={async () => {
+              log('表單數據', data)
               formRef.current?.validateFields().then(() => {
-                // 確認按鈕 點擊後 要進行的 API 操作
-                console.info('提交的表單數據:', formRef.current?.getFieldsValue())
                 message.success('表單提交成功！')
               })
             }}
@@ -56,6 +65,15 @@ const MyForm: React.FC = () => {
     setBenfCount(benfList.length)
   }
 
+  // 表單值變更處理，使用 debounce 限制觸發頻率
+  const handleValueChange = debounce(() => {
+    // 取得表單變更資料
+    const values = formRef.current?.getFieldsValue()
+    data = {
+      ...values
+    }
+  }, 300)
+
   return (
     <>
       <Typography.Title level={3}>AutoComplete</Typography.Title>
@@ -65,10 +83,11 @@ const MyForm: React.FC = () => {
         layout='vertical'
         onValuesChange={() => {
           calcBenfCount()
+          handleValueChange()
         }}
         submitter={submitterRender()}
       >
-        <Text >目前受益人數量：{benfCount}</Text>
+        <Typography.Text >目前受益人數量：{benfCount}</Typography.Text>
 
         <ProFormList
           name='benfList'
@@ -158,11 +177,11 @@ const MyForm: React.FC = () => {
                 />
               </MliFormRow>
               {/* 設定分隔線，且 最後一筆不要出現分隔線 */}
-              {index < count - 1 && <hr/>}
+              {index < count - 1 && <hr />}
             </ProCard>
           )}
         </ProFormList>
-      </ProForm>  
+      </ProForm>
     </>
   )
 }

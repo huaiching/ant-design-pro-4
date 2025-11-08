@@ -1,8 +1,13 @@
 import { FooterToolbar, ProForm, ProFormInstance } from '@ant-design/pro-components'
 import { MliFormCol, MliFormRow } from '@mli-csmo/base'
 import { Button, message, Typography } from 'antd'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import MultiSelectTable from './Components/MultiSelectTable'
+import { log } from 'console'
+import { debounce } from 'lodash'
+
+// 模擬數據
+let data = {}
 
 const optionsData = [
   { code: 'A01', text: '頭暈' },
@@ -20,6 +25,13 @@ const column = [
 const SelectTable: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
 
+  useEffect(() => {
+    // 預設帶入表單資料
+    formRef.current?.setFieldsValue({
+      ...data,
+    })
+  }, [])
+
   // 控制送出後之動作
   const submitterRender = () => {
     return {
@@ -28,8 +40,9 @@ const SelectTable: React.FC = () => {
           <Button
             type="primary"
             onClick={async () => {
-              formRef.current?.validateFields().then((values) => {
-                console.info(formRef.current?.getFieldsValue())
+              log('表單數據', data)
+              formRef.current?.validateFields().then(() => {
+                message.success('表單提交成功！')
               })
             }}
             key="save"
@@ -48,6 +61,15 @@ const SelectTable: React.FC = () => {
     }
   }
 
+  // 表單值變更處理，使用 debounce 限制觸發頻率
+  const handleValueChange = debounce(() => {
+    // 取得表單變更資料
+    const values = formRef.current?.getFieldsValue()
+    data = {
+      ...values
+    }
+  }, 300)
+
   const validateMaxThree = async (value: any[]) => {
     if (value && value.length > 3) {
       return Promise.reject('最多只能選擇 3 筆資料')
@@ -63,6 +85,7 @@ const SelectTable: React.FC = () => {
         layout="vertical"
         formRef={formRef}
         submitter={submitterRender()}
+        onValuesChange={handleValueChange}
         style={{ width: '100%' }}
       >
         <MliFormRow gutter={8} style={{ width: '100%' }}>
@@ -75,7 +98,7 @@ const SelectTable: React.FC = () => {
               optionsData={optionsData}
               required
               validator={validateMaxThree}
-              onChange={(value)=>{
+              onChange={(value) => {
                 message.info('資料筆數：' + value.length)
               }}
             />

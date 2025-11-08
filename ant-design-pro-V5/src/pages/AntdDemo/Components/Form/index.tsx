@@ -6,8 +6,7 @@ import Demo04 from './Components/demo04_ProFormDigit'
 import Demo05 from './Components/demo05_ProFormSelect'
 import Demo06 from './Components/demo06_ProFormCascader'
 import Demo07 from './Components/demo07_ProFormTreeSelect'
-import Demo08_1 from './Components/demo08_1_MliFormDatePicker'
-import Demo08_2 from './Components/demo08_2_ProFormDatePicker'
+import Demo08 from './Components/demo08_ProFormDatePicker'
 import Demo09 from './Components/demo09_ProFormTimePicker'
 import Demo10 from './Components/demo10_ProFormSwitch'
 import Demo11 from './Components/demo11_ProFormRadio'
@@ -69,14 +68,9 @@ const AsstManagement: React.FC = () => {
       component: <Demo07 />
     },
     {
-      key: 'MliFormDatePicker',
-      title: '日期選擇(MliFormDatePicker)',
-      component: <Demo08_1 />
-    },
-    {
       key: 'ProFormDatePicker',
       title: '日期選擇(ProFormDatePicker)',
-      component: <Demo08_2 />
+      component: <Demo08 />
     },
     {
       key: 'ProFormTimePicker',

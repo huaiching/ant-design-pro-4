@@ -1,7 +1,6 @@
-// src/pages/CaseFlow/index.tsx
-import React from 'react';
-import { Card, Badge, Row, Col, Typography, message } from 'antd';
-import { MliFormCol, MliFormRow } from '@mli-csmo/base';
+import React from 'react'
+import { Card, Badge, Typography, message } from 'antd'
+import { MliFormCol, MliFormRow } from '@mli-csmo/base'
 
 
 // 模擬流程資料

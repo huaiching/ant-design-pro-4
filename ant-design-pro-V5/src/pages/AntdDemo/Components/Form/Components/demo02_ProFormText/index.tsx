@@ -1,15 +1,27 @@
 import { MliFormCol, MliFormRow } from '@mli-csmo/base'
-import ProForm, { ProFormText } from '@ant-design/pro-form'
+import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
-import { Button, Input, message, Space, Typography } from 'antd'
-import React from 'react'
+import { Button, Input, message, Space, Tooltip, Typography } from 'antd'
+import React, { useEffect, useRef, useState } from 'react'
 import { isGuiNumberValid, isNationalIdentificationNumberValid, isResidentCertificateNumberValid } from 'taiwan-id-validator'
-import SearchReceiveNo from './Components/SearchReceiveNo'
-import formStore from './Mobx/formRefStore'
+import { debounce } from 'lodash'
+import { log } from 'console'
+import { SearchOutlined } from '@ant-design/icons'
+import OptionReceiveNo from './Components/optionRecevieNo'
+
+// 模擬數據
+let data = {}
 
 const MyForm: React.FC = () => {
-  // const formRef = useRef<ProFormInstance>()
-  const formRef = formStore.getFormRef
+  const formRef = useRef<ProFormInstance>()
+  const [showModal, setShowModal] = useState(false)     // modal 開關
+
+  useEffect(() => {
+    // 預設帶入表單資料
+    formRef.current?.setFieldsValue({
+      ...data,
+    })
+  }, [])
 
   // 控制送出後之動作
   const submitterRender = () => {
@@ -19,9 +31,9 @@ const MyForm: React.FC = () => {
           <Button
             type='primary'
             onClick={async () => {
-              formRef.current?.validateFields().then((values) => {
-                console.info(formRef.current?.getFieldsValue())
-                message.success(`表單提交成功！${JSON.stringify(values)}`)
+              log('表單數據', data)
+              formRef.current?.validateFields().then(() => {
+                message.success('表單提交成功！')
               })
             }}
             key='save'
@@ -39,6 +51,16 @@ const MyForm: React.FC = () => {
       )
     }
   }
+
+  // 表單值變更處理，使用 debounce 限制觸發頻率
+  const handleValueChange = debounce(() => {
+    // 取得表單變更資料
+    const values = formRef.current?.getFieldsValue()
+    data = {
+      ...values
+    }
+  }, 300)
+
 
   /**
    * 身份證字號檢核: 使用 taiwan-id-validator
@@ -69,6 +91,7 @@ const MyForm: React.FC = () => {
         layout='vertical'
         formRef={formRef}
         submitter={submitterRender()}
+        onValuesChange={handleValueChange}
       >
         <MliFormRow>
           {/* 案例 1 */}
@@ -126,11 +149,37 @@ const MyForm: React.FC = () => {
                   .toUpperCase()  // 強制轉大寫
                 // 更新數值
                 formRef?.current?.setFieldValue('clientId', upper)
+                handleValueChange()
               },
             }}
           />
           {/* 案例4 */}
-          <SearchReceiveNo />
+          <ProFormText
+            name='receiveNo'
+            label='受理號碼'
+            placeholder='請輸入受理號碼'
+            rules={[
+              {
+                required: true,
+                message: '必填'
+              }
+            ]}
+            fieldProps={{       // 透過 後置圖標 設定 查詢按鈕
+              suffix: (
+                <Tooltip title='查詢'>
+                  <SearchOutlined
+                    onClick={() => setShowModal(true)}
+                  />
+                </Tooltip>
+              )
+            }}
+          />
+          <OptionReceiveNo
+            formRef={formRef}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            handleValueChange={handleValueChange}
+          />
         </MliFormRow>
       </ProForm>
     </>

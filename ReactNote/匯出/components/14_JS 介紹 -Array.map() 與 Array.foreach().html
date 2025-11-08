@@ -1248,96 +1248,139 @@ pre[class*="language-"] {
   <style>.markdown-body{}pre.front-matter{display:none!important;}</style>
 </head>
 <body>
-  <article class="markdown-body"><h1 class="atx" id="js-介紹---多型別變數聯集與交集">JS 介紹 - 多型別變數(聯集與交集)</h1>
-<h2 class="atx" id="聯集-或">聯集 (或)</h2>
-<ol>
-<li><p>只要符合 <code>型別A</code> 或 <code>型別B</code> 其中一種 即可</p>
-</li>
-<li><p>語法</p>
-<pre><code class="fenced-code-block language-ts"><span class="token keyword">let</span> 變數名稱<span class="token operator">:</span> <span class="token punctuation">(</span>型別<span class="token constant">A</span> <span class="token operator">|</span> 型別<span class="token constant">B</span><span class="token punctuation">)</span> <span class="token operator">=</span> 數值</code></pre>
-</li>
-<li><p>範例</p>
-<pre><code class="fenced-code-block language-tsx">import { PageContainer } from '@ant-design/pro-layout';
-import React from 'react';
-
-const VDOM: React.FC = () =&gt; {
-    /* 聯集 (或) */
-    // 類型A: 書本 有 名稱、頁數
-    type Book = {
-        name: string;
-        pages: number;
-    };
-    // 類型B: 電腦 有 RAM、CPU
-    type PC  = {
-        RAM: string;
-        CPU: string;
-    };
-    // 產品 可以是 書 或 電腦
-    type Product = Book | PC;
-    // 第一種產品，內容 = 書
-    const f_data1: Product = {
-        name: "輕鬆學習 TypeScript",
-        pages: 150,
-    }
-    console.log("第一種產品", f_data1);
-    // 第二種產品
-    const f_data2: Product = {
-        RAM: "64GB",
-        CPU: "i9",
-    }
-    console.log("第二種產品", f_data2);
-
-    return (
-        &lt;PageContainer&gt;
-            &lt;h1&gt;詳見 F12&lt;/h1&gt;
-        &lt;/PageContainer&gt;
-    )
-
-}
-
-export default VDOM</code></pre>
-</li>
-</ol>
+  <article class="markdown-body"><h1 class="atx" id="js-介紹---arraymap-與-arrayforeach">JS 介紹 - Array.map() 與 Array.foreach()</h1>
+<h2 class="atx" id="1-arraymap">1. Array.map()</h2>
+<p><code>map()</code> 是陣列的方法，用於將陣列中的每個元素轉換成新的值，並返回一個新陣列</p>
+<ul>
+<li>不會改變原陣列</li>
+<li>返回一個新陣列，長度與原陣列相同</li>
+<li>常用於 React 渲染列表</li>
+</ul>
 <hr>
-<h2 class="atx" id="交集-且">交集 (且)</h2>
-<ol>
-<li><p>必須同時符合 <code>型別A</code> 和 <code>型別B</code></p>
-</li>
-<li><p>語法</p>
-</li>
-</ol>
-<pre><code class="fenced-code-block language-ts"><span class="token keyword">let</span> 變數名稱<span class="token operator">:</span> <span class="token punctuation">(</span>型別<span class="token constant">A</span> <span class="token operator">&amp;</span> 型別<span class="token constant">B</span><span class="token punctuation">)</span> <span class="token operator">=</span> 數值</code></pre>
-<ol start="3">
-<li><p>範例</p>
-<pre><code class="fenced-code-block language-tsx">const VDOM: React.FC = () =&gt; {
-    /* 交集 (且) */
-    // 類型A: 軟體 有 作業系統、版本
-    type Software  = {
-        system: string;
-        version: string;
-    };
-    // 類型B: 硬體 有 RAM、CPU
-    type Hardware   = {
-        RAM: string;
-        CPU: string;
-    };
-    // 手機 同時要有 硬體 和 軟體
-    type Phone = Software &amp; Hardware;
-    // 產品: iPhone 15
-    let f_data: Phone = {
-        system: "ios",
-        version: "17.0",
-        RAM: "16GB",
-        CPU:"A16"
-    }
-    console.log("iPhone 15", f_data);
+<h3 class="atx" id="基本用法">基本用法</h3>
+<pre><code class="fenced-code-block language-ts"><span class="token keyword">const</span> numbers <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span>
+<span class="token keyword">const</span> doubled <span class="token operator">=</span> numbers<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>num <span class="token operator">=&gt;</span> num <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span>
 
-    return (&lt;&gt;&lt;/&gt;)
-}
-export default VDOM
-</code></pre>
-</li>
-</ol>
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>doubled<span class="token punctuation">)</span> <span class="token comment">// [2, 4, 6, 8, 10]</span>
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span> <span class="token comment">// [1, 2, 3, 4, 5] (原陣列不變)</span></code></pre>
+<hr>
+<h3 class="atx" id="轉換物件陣列">轉換物件陣列</h3>
+<pre><code class="fenced-code-block language-ts"><span class="token keyword">const</span> users <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> name<span class="token operator">:</span> <span class="token string">'Alice'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span> name<span class="token operator">:</span> <span class="token string">'Bob'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span> name<span class="token operator">:</span> <span class="token string">'Charlie'</span> <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+
+<span class="token keyword">const</span> userNames <span class="token operator">=</span> users<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>user <span class="token operator">=&gt;</span> user<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>userNames<span class="token punctuation">)</span> <span class="token comment">// ['Alice', 'Bob', 'Charlie']</span></code></pre>
+<hr>
+<h3 class="atx" id="在-react-中使用-map-渲染列表">在 React 中使用 map 渲染列表</h3>
+<pre><code class="fenced-code-block language-tsx"><span class="token keyword">function</span> <span class="token function">UserList</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> users <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> name<span class="token operator">:</span> <span class="token string">'Alice'</span><span class="token punctuation">,</span> age<span class="token operator">:</span> <span class="token number">25</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span> name<span class="token operator">:</span> <span class="token string">'Bob'</span><span class="token punctuation">,</span> age<span class="token operator">:</span> <span class="token number">30</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span> name<span class="token operator">:</span> <span class="token string">'Charlie'</span><span class="token punctuation">,</span> age<span class="token operator">:</span> <span class="token number">35</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+      </span><span class="token punctuation">{</span>users<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>user <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">key</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>user<span class="token punctuation">.</span>id<span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+          </span><span class="token punctuation">{</span>user<span class="token punctuation">.</span>name<span class="token punctuation">}</span><span class="token plain-text"> - </span><span class="token punctuation">{</span>user<span class="token punctuation">.</span>age<span class="token punctuation">}</span><span class="token plain-text"> 歲
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
+      <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">&gt;</span></span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p><strong>重點</strong>: 在 React 中使用 <code>map()</code> 時，每個元素都需要有唯一的 <code>key</code> 屬性!</p>
+<h3 class="atx" id="map-的完整參數">map 的完整參數</h3>
+<pre><code class="fenced-code-block language-ts"><span class="token keyword">const</span> numbers <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">]</span>
+
+<span class="token comment">// map 可以接收三個參數: (元素, 索引, 原陣列)</span>
+<span class="token keyword">const</span> result <span class="token operator">=</span> numbers<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> index<span class="token punctuation">,</span> array<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">元素: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>num<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">, 索引: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>index<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">, 原陣列: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>array<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> num <span class="token operator">*</span> index
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span> <span class="token comment">// [0, 20, 60]</span></code></pre>
+<hr>
+<h3 class="atx" id="常見錯誤">常見錯誤</h3>
+<pre><code class="fenced-code-block language-ts"><span class="token comment">// ❌ 錯誤: 忘記 return</span>
+<span class="token keyword">const</span> wrong <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>num <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  num <span class="token operator">*</span> <span class="token number">2</span> <span class="token comment">// 沒有 return, 結果會是 [undefined, undefined, undefined]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">// ✅ 正確: 使用箭頭函數的隱式返回</span>
+<span class="token keyword">const</span> correct1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>num <span class="token operator">=&gt;</span> num <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span>
+
+<span class="token comment">// ✅ 正確: 明確使用 return</span>
+<span class="token keyword">const</span> correct2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>num <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> num <span class="token operator">*</span> <span class="token number">2</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<hr>
+<h2 class="atx" id="2-arrayforeach">2. Array.foreach()</h2>
+<p><code>forEach()</code> 是陣列的方法，用於遍歷陣列中的每個元素並執行指定的操作</p>
+<ul>
+<li>不會返回新陣列</li>
+<li>無法中斷迴圈(不能使用 break 或 continue)</li>
+<li>主要用於執行副作用(side effects)</li>
+</ul>
+<hr>
+<h3 class="atx" id="基本用法-1">基本用法</h3>
+<pre><code class="fenced-code-block language-ts"><span class="token keyword">const</span> numbers <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span>
+
+numbers<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>num <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">// 輸出: 1 2 3 4 5</span></code></pre>
+<hr>
+<h3 class="atx" id="foreach-的完整參數">forEach 的完整參數</h3>
+<pre><code class="fenced-code-block language-ts"><span class="token keyword">const</span> fruits <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'apple'</span><span class="token punctuation">,</span> <span class="token string">'banana'</span><span class="token punctuation">,</span> <span class="token string">'cherry'</span><span class="token punctuation">]</span>
+
+<span class="token comment">// forEach 可以接收三個參數: (元素, 索引, 原陣列)</span>
+fruits<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span>fruit<span class="token punctuation">,</span> index<span class="token punctuation">,</span> array<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">索引 </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>index<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>fruit<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">原陣列長度: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>array<span class="token punctuation">.</span>length<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 輸出:</span>
+<span class="token comment">// 索引 0: apple</span>
+<span class="token comment">// 原陣列長度: 3</span>
+<span class="token comment">// 索引 1: banana</span>
+<span class="token comment">// 原陣列長度: 3</span>
+<span class="token comment">// 索引 2: cherry</span>
+<span class="token comment">// 原陣列長度: 3</span></code></pre>
+<hr>
+<h2 class="atx" id="3-map-跟-foreach-的比較">3. map 跟 foreach 的比較</h2>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>forEach</th>
+<th>map</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>返回值</td>
+<td>undefined</td>
+<td>新陣列</td>
+</tr>
+<tr>
+<td>用途</td>
+<td>執行副作用</td>
+<td>轉換資料</td>
+</tr>
+<tr>
+<td>React 渲染</td>
+<td>❌ 不適合</td>
+<td>✅ 適合</td>
+</tr>
+<tr>
+<td>可中斷</td>
+<td>❌ 不可</td>
+<td>❌ 不可</td>
+</tr>
+</tbody></table>
 </article>
 </body>
 </html>

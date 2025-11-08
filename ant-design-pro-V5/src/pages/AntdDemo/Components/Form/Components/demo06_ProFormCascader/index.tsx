@@ -2,10 +2,22 @@ import { MliFormRow } from '@mli-csmo/base'
 import ProForm, { ProFormInstance, ProFormCascader } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, message } from 'antd'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { log } from 'console'
+import { debounce } from 'lodash'
+
+// 模擬數據
+let data = {}
 
 const Demo: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
+
+  useEffect(() => {
+    // 預設帶入表單資料
+    formRef.current?.setFieldsValue({
+      ...data,
+    })
+  }, [])
 
   // 縣市與行政區的級聯數據
   const cityDistrictOptions = [
@@ -60,7 +72,7 @@ const Demo: React.FC = () => {
       ],
     },
   ]
-  
+
   // 飲料與品項的級聯數據（多選）
   const drinksOptions = [
     {
@@ -105,9 +117,8 @@ const Demo: React.FC = () => {
           <Button
             type='primary'
             onClick={async () => {
+              log('表單數據', data)
               formRef.current?.validateFields().then(() => {
-                // 確認按鈕 點擊後 要進行的 API 操作
-                console.info(formRef.current?.getFieldsValue())
                 message.success('表單提交成功！')
               })
             }}
@@ -128,6 +139,16 @@ const Demo: React.FC = () => {
     }
   }
 
+  // 表單值變更處理，使用 debounce 限制觸發頻率
+  const handleValueChange = debounce(() => {
+    // 取得表單變更資料
+    const values = formRef.current?.getFieldsValue()
+    data = {
+      ...values
+    }
+  }, 300)
+
+
   return (
     <>
       <h1>ProFormCascader</h1>
@@ -136,6 +157,7 @@ const Demo: React.FC = () => {
         layout='vertical'
         formRef={formRef}
         submitter={submitterRender()}
+        onValuesChange={handleValueChange}
       >
         <MliFormRow>
           <ProFormCascader

@@ -2,10 +2,22 @@ import { MliFormCol, MliFormRow } from '@mli-csmo/base'
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { Button, Input, InputNumber, List, message, Space, Typography } from 'antd'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
+import { log } from 'console'
+import { debounce } from 'lodash'
+
+// 模擬數據
+let data = {}
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
+
+  useEffect(() => {
+    // 預設帶入表單資料
+    formRef.current?.setFieldsValue({
+      ...data,
+    })
+  }, [])
 
   // 控制送出後之動作
   const submitterRender = () => {
@@ -15,9 +27,9 @@ const MyForm: React.FC = () => {
           <Button
             type='primary'
             onClick={async () => {
-              formRef.current?.validateFields().then((values) => {
-                console.info(formRef.current?.getFieldsValue())
-                message.success(`表單提交成功！${JSON.stringify(values)}`)
+              log('表單數據', data)
+              formRef.current?.validateFields().then(() => {
+                message.success('表單提交成功！')
               })
             }}
             key='save'
@@ -36,13 +48,14 @@ const MyForm: React.FC = () => {
     }
   }
 
-  const vaildatorEmail = (rule: any, value: any) => {
-    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    if (!re.test(value)) {
-      return Promise.reject('不符合規範!!')
+  // 表單值變更處理，使用 debounce 限制觸發頻率
+  const handleValueChange = debounce(() => {
+    // 取得表單變更資料
+    const values = formRef.current?.getFieldsValue()
+    data = {
+      ...values
     }
-    return Promise.resolve()
-  }
+  }, 300)
 
   return (
     <>
@@ -52,6 +65,7 @@ const MyForm: React.FC = () => {
         layout='vertical'
         formRef={formRef}
         submitter={submitterRender()}
+        onValuesChange={handleValueChange}
       >
         <MliFormRow>
           {/* 案例 1 */}

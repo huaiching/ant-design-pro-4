@@ -2,10 +2,22 @@ import ProForm, { ProFormGroup, ProFormInstance, ProFormSelect, ProFormText } fr
 import { FooterToolbar } from '@ant-design/pro-layout'
 import { MliFormRow, MliFormCol } from '@mli-csmo/base'
 import { Button, message, Typography } from 'antd'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
+import { log } from 'console'
+import { debounce } from 'lodash'
+
+// 模擬數據
+let data = {}
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
+
+  useEffect(() => {
+    // 預設帶入表單資料
+    formRef.current?.setFieldsValue({
+      ...data,
+    })
+  }, [])
 
   // 控制送出後之動作
   const submitterRender = () => {
@@ -15,8 +27,8 @@ const MyForm: React.FC = () => {
           <Button
             type='primary'
             onClick={async () => {
+              log('表單數據', data)
               formRef.current?.validateFields().then(() => {
-                // 確認按鈕 點擊後 要進行的 API 操作
                 message.success('表單提交成功！')
               })
             }}
@@ -62,6 +74,15 @@ const MyForm: React.FC = () => {
     { label: '連江縣', value: '連江縣' }
   ]
 
+  // 表單值變更處理，使用 debounce 限制觸發頻率
+  const handleValueChange = debounce(() => {
+    // 取得表單變更資料
+    const values = formRef.current?.getFieldsValue()
+    data = {
+      ...values
+    }
+  }, 300)
+
   return (
     <>
       <Typography.Title level={3}>ProFormText</Typography.Title>
@@ -70,6 +91,7 @@ const MyForm: React.FC = () => {
         layout='vertical'
         formRef={formRef}
         submitter={submitterRender()}
+        onValuesChange={handleValueChange}
       >
         <MliFormRow>
           <MliFormCol colSize={2}>

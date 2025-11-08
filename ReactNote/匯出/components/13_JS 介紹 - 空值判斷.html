@@ -1262,7 +1262,7 @@ pre[class*="language-"] {
 <span class="token keyword">if</span> <span class="token punctuation">(</span>b <span class="token operator">===</span> <span class="token keyword">undefined</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'b 是 undefined'</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'b 非是 undefined'</span><span class="token punctuation">)</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'b 不是 undefined'</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
 <hr>
 <h2 class="atx" id="判斷是否為-null">判斷是否為 null</h2>
@@ -1270,11 +1270,19 @@ pre[class*="language-"] {
 <span class="token keyword">if</span> <span class="token punctuation">(</span>a <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'a 是 null'</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'a 非是 null'</span><span class="token punctuation">)</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'a 不是 null'</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
 <hr>
 <h2 class="atx" id="判斷是否為空值-undefined-和-null-皆算空值">判斷是否為空值 (undefined 和 null 皆算空值)</h2>
-<pre><code class="fenced-code-block language-ts"></code></pre>
+<ul>
+<li><code>==</code> 可同時判斷 <code>null</code> 和 <code>undefined</code></li>
+</ul>
+<pre><code class="fenced-code-block language-ts"><span class="token keyword">const</span> a <span class="token operator">=</span> <span class="token keyword">null</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>a <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'a 是 null 或 undefined'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'a 不是 null 或 undefined'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
 </article>
 </body>
 </html>
