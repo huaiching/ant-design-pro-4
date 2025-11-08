@@ -34,7 +34,7 @@ const App: React.FC = () => {
     { id: '13', title: '附錄 - 正規表達式' }
   ];
 
-  const [activeHref, setActiveHref] = useState('Components/01_React_簡介.html');
+  const [activeHref, setActiveHref] = useState('ReactNote/01_React_簡介.html');
 
   const handleLinkClick = (href: string) => {
     setActiveHref(href);
@@ -46,7 +46,7 @@ const App: React.FC = () => {
     try {
       const src = iframe.contentWindow?.location.pathname.split('/').pop();
       if (src) {
-        const fullPath = 'Components/' + src;
+        const fullPath = 'ReactNote/' + src;
         setActiveHref(fullPath);
       }
     } catch {
@@ -60,7 +60,7 @@ const App: React.FC = () => {
         <h2>React 教學筆記</h2>
         <ul>
           {chapters.map(chapter => {
-            const href = `Components/${chapter.id}_${chapter.title}.html`;
+            const href = `ReactNote/${chapter.id}_${chapter.title}.html`;
             return (
               <li key={chapter.id}>
                 <a
