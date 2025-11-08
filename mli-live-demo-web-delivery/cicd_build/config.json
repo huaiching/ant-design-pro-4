@@ -1,9 +1,0 @@
-{
-    "KEYCLOAK_CLIENTID": "csmo-example",
-    "KEYCLOAK_REALM": "MLIExampleRealm",
-    "MLI_KEYCLOAK_APP_URL": "https://sso-mli-rhsso75-uat.apps.ocp4.devapi.mli.com.tw",
-    "BASE_API": "http://localhost:8080",
-    "CLAIM_CONTENT_PATH": "//localhost:8001",
-    "DEMO_CONTENT_PATH": "//localhost:8002",
-    "AGENT_CONTENT_PATH": "//localhost:8003"
-}

@@ -1,6 +1,0 @@
-export * from './auth/auth'
-export * from './config/config'
-export * from './hooks'
-export * from './services'
-export * from './types/microapp.typing'
-export * from './util'

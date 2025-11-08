@@ -1,0 +1,59 @@
+# JS 介紹 - interface(介面)
+
+1. 基本上 跟 type 相同，但多了 聲明合併的特性
+
+2. 語法：
+   
+   ```ts
+   interface 型別名稱A = {
+         必填屬性A: 型別; 
+   }
+   interface 型別名稱A = {
+         必填屬性B: 型別;
+         選填屬性C?: 型別;           // 選填屬性 用「?」表示
+         readonly 屬性D?: 型別;     // 唯獨屬性 只有初始創建時能夠賦值
+   }
+   ```
+   
+   此時 型別名稱A 的 屬性為
+   
+   ```ts
+   {
+         必填屬性A: 型別;
+         必填屬性B: 型別;
+         選填屬性C?: 型別;           // 選填屬性 用「?」表示
+         readonly 屬性D?: 型別;     // 唯獨屬性 只有初始創建時能夠賦值
+   }
+   ```
+
+---
+
+## 範例
+
+```tsx
+const VDOM: React.FC = () => {
+        /* 介面 interface */
+        interface Person {
+            readonly id: number;
+        }
+        interface Person {
+            name: string;
+            age: number;
+            sex?: string;
+        }
+        // 案例
+        let ray: Person = {
+            id: 2,
+            name: "ray",
+            age: 20,
+            sex: "男",
+        }
+        console.log("ray", ray);
+
+        return (
+            <></>
+    )
+}
+
+export default VDOM
+```
