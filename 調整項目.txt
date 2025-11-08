@@ -1,3 +1,6 @@
 修改處：
-1. 新增 routes 說明頁面，所以 routes 和 menu 都有更新
-2. From 19 有修改，重抓
+1. Form 重抓
+2. ReactNote 重抓
+
+
+https://github.com/topabomb/marktext-specialedition/releases
