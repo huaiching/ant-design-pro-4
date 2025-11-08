@@ -66,7 +66,7 @@
     <ul id="nav-list"></ul>
   </nav>
 
-  <iframe name="content-frame" src="components/01_React_簡介.html" id="content-frame"></iframe>
+  <iframe name="content-frame" src="Components/01_React_簡介.html" id="content-frame"></iframe>
 
   <script>
     // 定義章節陣列
@@ -100,7 +100,7 @@
     // 使用 map 產生導覽列
     const navList = document.getElementById('nav-list');
     const navHTML = chapters.map(chapter => {
-      const href = `components/${chapter.id}_${chapter.title}.html`;
+      const href = `Components/${chapter.id}_${chapter.title}.html`;
       return `
         <li>
           <a href="${href}" target="content-frame">${chapter.id} ${chapter.title}</a>
@@ -137,7 +137,7 @@
     // 當 iframe 中的內容變動時也嘗試更新
     iframe.addEventListener('load', () => {
       const src = iframe.contentWindow.location.pathname.split('/').pop();
-      const fullPath = 'components/' + src;
+      const fullPath = 'Components/' + src;
       setActiveLink(fullPath);
     });
   </script>

@@ -162,6 +162,13 @@ export default [
       },
     ],
   },
+  // React 筆記區塊
+  {
+    name: 'reactNote',  // 路由組名稱
+    icon: 'TrademarkCircleFilled',  // 菜單圖標
+    path: '/reactNote',  // 基礎路徑
+        component: './ReactNode',
+  },
 
   // Ant Design 組件示例區塊
   {
@@ -286,7 +293,7 @@ export default [
   },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/antdDemo/components',
   },
   {
     path: '*',

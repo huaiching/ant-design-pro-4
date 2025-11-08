@@ -19,6 +19,7 @@ export default {
   'menu.reactDemo.demo08': 'useRef 從輸入框獲取值',
   'menu.reactDemo.demo09': 'useSyncExternalStore 外部資料訂閱',
 
+  'menu.reactNote': 'React 筆記',
 
   'menu.antd': 'Ant Design 範例',
   'menu.antd.antdDemoComponents': 'Ant Design 頁面導引',
