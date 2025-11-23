@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    // 不排放；允許 Babel 轉換檔。
+    "noEmit": true,
+    // 不允許需要跨文件資訊才能發出的功能。
+    "isolatedModules": true,
+    // 將非 ES 模組作為預設導入。
+    "esModuleInterop": true,
+    // jsx 處理程序
+    "jsx": "preserve",
+    "outDir": "target"
+  },
+  "include": ["src/**/*", "typings/**/*"],
+  "exclude": ["node_modules", "target"]
+}

@@ -1,0 +1,49 @@
+diff --git a/node_modules/@umijs/plugins/templates/locale/SelectLang.tpl b/node_modules/@umijs/plugins/templates/locale/SelectLang.tpl
+index 9a56714..004e042 100644
+--- a/node_modules/@umijs/plugins/templates/locale/SelectLang.tpl
++++ b/node_modules/@umijs/plugins/templates/locale/SelectLang.tpl
+@@ -381,7 +381,7 @@ const defaultLangUConfigMap = {
+   'zh-TW': {
+     lang: 'zh-TW',
+     label: '繁體中文',
+-    icon: '🇭🇰',
++    icon: '🇹w',
+     title: '語言'
+   }
+ };
+@@ -417,9 +417,10 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
+ 
+   const allLangUIConfig =
+     postLocalesData?.(defaultLangUConfig) || defaultLangUConfig;
+-  const handleClick = onItemClick
+-    ? (params: ClickParam) => onItemClick(params)
+-    : changeLang;
++  const handleClick = (params: ClickParam) => {
++    changeLang(params)
++    onItemClick && onItemClick(params)
++  }
+ 
+   const menuItemStyle = { minWidth: "160px" };
+   const menuItemIconStyle = { marginRight: "8px" };
+diff --git a/node_modules/@umijs/plugins/templates/locale/localeExports.tpl b/node_modules/@umijs/plugins/templates/locale/localeExports.tpl
+index 8224eb0..d719ca7 100644
+--- a/node_modules/@umijs/plugins/templates/locale/localeExports.tpl
++++ b/node_modules/@umijs/plugins/templates/locale/localeExports.tpl
+@@ -239,7 +239,7 @@ export const setLocale = (lang: string, realReload: boolean = true) => {
+   //});
+ 
+   const updater = () => {
+-    if (getLocale() !== lang) {
++  //  if (getLocale() !== lang) {
+        if (navigator.cookieEnabled && typeof window.localStorage !== 'undefined' && useLocalStorage) {
+           window.localStorage.setItem('umi_locale', lang || '');
+        }
+@@ -254,7 +254,7 @@ export const setLocale = (lang: string, realReload: boolean = true) => {
+           window.dispatchEvent(event);
+         }
+       }
+-    }
++  //  }
+   }
+ 
+   //if (typeof runtimeLocale?.setLocale === 'function') {

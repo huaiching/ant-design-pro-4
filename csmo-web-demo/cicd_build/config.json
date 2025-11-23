@@ -1,0 +1,4 @@
+{
+  "DXP_PATH": "http://localhost:8080",
+  "MICRO_CONTENT_PATH": "http://localhost:3001"
+}

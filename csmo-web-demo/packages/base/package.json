@@ -1,0 +1,18 @@
+{
+  "name": "@mli-csmo/base",
+  "version": "0.0.1",
+  "description": "An out-of-box UI solution for enterprise applications",
+  "scripts": {
+    "clean:all": "yarn clean:dist && yarn clean:umi",
+    "clean:dist": "rimraf ./dist",
+    "clean:umi": "rimraf --glob ./src/.umi*",
+    "build": "tsc --outDir dist/"
+  },
+  "files": [
+    "src/*"
+  ],
+  "main": "src/index.ts",
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}

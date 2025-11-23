@@ -1,0 +1,201 @@
+/**
+ * 非搜尋的 ProTable
+ * 數據資料 透過 api 取得後，直接放到 dataSource 中
+ */
+
+import type { ActionType, ProFormInstance } from '@ant-design/pro-components'
+import { ProForm, ProTable } from '@ant-design/pro-components'
+import { Button, Input, List, message } from 'antd'
+import dayjs, { Dayjs } from 'dayjs'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import * as poApi from './store/poApi'
+import { filter } from 'lodash'
+
+// 主表格欄位（保單）
+const policyColumns: any[] = [
+  {
+    title: '保單號碼',
+    dataIndex: 'policyNo',
+    valueType: 'text',
+    sorter: (a: any, b: any) => a.policyNo > b.policyNo
+  },
+  {
+    title: '保單狀態',
+    dataIndex: 'poStsCode',
+    valueType: 'text',
+    filters: [
+      {
+        text: '有效',
+        value: '有效'
+      },
+      {
+        text: '無效',
+        value: '失效'
+      }
+    ],
+    onFilter: (value: any, record: any) => record.poStsCode.includes(value)
+  },
+  {
+    title: '保單生效日',
+    dataIndex: 'poIssueDate',
+    valueType: 'date',
+    fieldProps: {
+      format: 'TTT/MM/DD'
+    },
+    sorter: (a: any, b: any) => dayjs(a.poIssueDate).unix() - dayjs(b.poIssueDate).unix()
+  }
+]
+
+const NestedProTable: React.FC = () => {
+  const formRef = useRef<ProFormInstance>() // 表單參照，讀取/寫入資料
+  const actionRef = useRef<ActionType>() // 表格操作引用（如 reload）
+  const [dataSource, setDataSource] = useState<any[]>([]) // 主表資料
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]) // 勾選中的保單 key
+  const [searchText, setSearchText] = useState('') // 快速搜尋輸入文字狀態
+  // ProTable 的 分頁控制
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 5
+  })
+
+  // ✅ 頁面初始化：取得資料並設定到 form 與畫面
+  useEffect(() => {
+    poApi.fetchAllData().then((data) => {
+      // 日期格式轉換
+      const chgData = data.map((e) => ({
+        ...e,
+        poIssueDate: dayjs(e.poIssueDate, 'TTT/MM/DD')
+      }))
+      // 給 table 顯示
+      setDataSource(chgData)
+      // 存入 form 中
+      formRef.current?.setFieldsValue({ policies: chgData })
+    })
+  }, [])
+
+  // 利用 useMemo 篩選 dataSource ，依 searchText 過濾資料，避免每次渲染都重複計算
+  const filteredData = useMemo(() => {
+    if (!searchText) return dataSource
+    // 將 搜尋文字 轉為 小寫
+    const lowerSearch = searchText.toLowerCase()
+    // 過濾資料，將原始資料 轉為小寫 後 進行比較
+    return dataSource.filter(
+      (item) =>
+        item.policyNo?.toLowerCase().includes(lowerSearch) ||
+        item.poStsCode?.toLowerCase().includes(lowerSearch) ||
+        item.poIssueDate?.toString().toLowerCase().includes(lowerSearch)
+    )
+  }, [searchText, dataSource])
+
+  // 導出按鈕事件：從 formRef 中取得 policies，再過濾出勾選的
+  const handleExport = () => {
+    const allData: any[] = formRef.current?.getFieldValue('policies') || []
+    const selectedData = allData.filter((item) => selectedRowKeys.includes(item.key))
+    console.info('勾選導出資料：', selectedData)
+    message.success(`已導出 ${selectedData.length} 筆資料到 console`)
+  }
+
+  // 取消按鈕事件
+  const handleCancel = () => {
+    setSelectedRowKeys([]) // 清空勾選
+    message.info('已清空勾選項目')
+  }
+
+  return (
+    <ProForm
+      formRef={formRef} // 表單參考對象（可透過 get/set 取值）
+      submitter={false} // 不顯示提交按鈕
+      layout="vertical" // 垂直排列表單項目
+    >
+      <h2>保單清單</h2>
+      <Input
+        key="search"
+        placeholder="快速搜尋"
+        allowClear
+        onChange={(e) => setSearchText(e.target.value)}
+        value={searchText}
+      />
+      <ProTable
+        // headerTitle="保單清單"
+        rowKey="key" // 每筆唯一 key
+        actionRef={actionRef} // 表格操作參考
+        columns={policyColumns} // 表格欄位
+        dataSource={filteredData} // 傳入篩選後的資料，實現快速搜尋功能
+        cardProps={false}      //  移除 Card 包裝
+        // options={false} // 關閉選單
+        search={false} // 關閉搜尋欄
+        // pagination={false} // 關閉分頁
+        pagination={{
+          current: pagination.current,
+          pageSize: pagination.pageSize,
+          showQuickJumper: true,
+          showSizeChanger: true,
+          pageSizeOptions: ['5', '10', '20', '50', '100'],
+          onChange: (page, pageSize) => {
+            setPagination({ current: page, pageSize })
+          }
+        }}
+        // 捲動設定
+        scroll={{
+          x: 'max-content',
+          y: 600
+        }}
+        // 勾選設定
+        rowSelection={{
+          selectedRowKeys,
+          onChange: (keys) => setSelectedRowKeys(keys)
+        }}
+        toolBarRender={() => [
+          <Input
+            key="search"
+            placeholder="快速搜尋 toolBarRender"
+            allowClear
+            onChange={(e) => setSearchText(e.target.value)}
+            value={searchText}
+          />
+        ]}
+        headerTitle={
+          <Input
+            placeholder="快速搜尋 headerTitle"
+            allowClear
+            onChange={(e) => setSearchText(e.target.value)}
+            value={searchText}
+            style={{ width: '100%' }}
+          />
+        }
+        title={() => [
+          <Input
+            key="search"
+            placeholder="快速搜尋 title"
+            allowClear
+            onChange={(e) => setSearchText(e.target.value)}
+            value={searchText}
+          />
+        ]}
+        /** ✅ 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
+        tableAlertRender={() => (
+          <Button color="danger" variant="filled" onClick={handleExport}>
+            導出數據(console)
+          </Button>
+        )}
+        /** ✅ 使用 tableAlertOptionRender 顯示取消勾選資料 */
+        tableAlertOptionRender={() => (
+          <Button color="cyan" variant="filled" onClick={handleCancel}>
+            取消勾選
+          </Button>
+        )}
+      />
+      <List
+        size="small"
+        dataSource={[
+          "1. Date: 日期格式 fieldProps.format 設定為 'TTT/MM/DD' (民國年)。",
+          "2. 前端日期資料 (string) 要轉換為 dayjs 物件時，請使用 dayjs(XXX, 'TTT/MM/DD') 進行格式轉換。",
+          "3. 導出數據時，要使用 dayjs(XXX).format('TTT/MM/DD') 來將 日期 轉換為 string"
+        ]}
+        renderItem={(item) => <List.Item>{item}</List.Item>}
+      />
+    </ProForm>
+  )
+}
+
+export default NestedProTable

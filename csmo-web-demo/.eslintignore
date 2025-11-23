@@ -1,0 +1,13 @@
+/lambda/
+/scripts
+/packages/app-model
+/packages/app-common
+.history
+public
+dist
+.umi
+mock
+node_modules
+target
+build
+automatic

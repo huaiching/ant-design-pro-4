@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>CryptoJS Example</title>
+        <style>
+            .container {
+                margin: 20px;
+            }
+            .row {
+                margin-bottom: 10px;
+            }
+            input, button, output {
+                margin-right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <input type="text" id="input1" placeholder="加密文字">
+                <button onclick="processInput1()">加密</button>
+                <output id="output1"></output>
+            </div>
+            <div class="row">
+                <input type="text" id="input2" placeholder="解密文字">
+                <button onclick="processInput2()">解密</button>
+                <output id="output2"></output>
+            </div>
+        </div>
+        <script src="./CryptoUtils-obfuscated.js"></script>
+        <script>
+            function processInput1() {
+                var input = document.getElementById('input1').value;
+                var result = a0_0x9721b3(input);
+                document.getElementById('output1').textContent = result;
+            }
+
+            function processInput2() {
+                var input = document.getElementById('input2').value;
+                var result = a0_0x38843d(input);
+                document.getElementById('output2').textContent = result;
+            }
+        </script>
+    </body>
+</html>
