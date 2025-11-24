@@ -1,4 +1,4 @@
 export default {
-  'micro.home': '首页',
+  'micro.home': '首頁',
   'micro.micro': '子應用'
 }
