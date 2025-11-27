@@ -1,4 +1,4 @@
-﻿export default [
+export default [
   {
     path: '/',
     redirect: '/home'
@@ -123,10 +123,36 @@
         name: 'demo08',
         path: 'demo08',
         component: './ReactDemo/Demo08'
+      },
+      {
+        // useSyncExternalStore 外部資料訂閱
+        name: 'demo09',
+        path: 'demo09',
+        component: './ReactDemo/Demo09',
+      },
+    ]
+  },
+
+  // Mobx 使用範例
+  {
+    name: 'mobXDemo',  // 路由名稱
+    icon: 'ApiFilled',  // Ant Design 圖標
+    path: '/mobXDemo',  // 路徑
+    routes: [  // 嵌套路由
+      {
+        // Mobx 使用範例
+        name: 'demo01',
+        path: 'demo01',  // 相對路徑，實際為 /reactDemo/demo01
+        component: './MobxDemo/01_MobxDocs'
+      },
+      {
+        // 使用範例
+        name: 'demo02',
+        path: 'demo02',  // 相對路徑，實際為 /reactDemo/demo01
+        component: './MobxDemo/02_MobxExample'
       }
     ]
   },
-  // Ant Design 組件示例區塊
   {
     name: 'antd',  // 路由名稱
     icon: 'AntDesignOutlined',  // Ant Design 圖標
@@ -137,6 +163,11 @@
         name: 'antdDemoComponents',
         path: '/antdDemo/components',
         component: './AntdDemo/Components/Navigate',
+      },
+      {
+        name: 'antdDemoRoutes',
+        path: '/antdDemo/routes',
+        component: './AntdDemo/Components/Routes',
       },
       {
         // Ant Design 組件介紹與說明
@@ -201,45 +232,5 @@
   {
     path: '/antdDemo/sessionStorage',
     component: './AntdDemo/Components/Utility/Components/demo01_Navigate/Components/SessionStorage'
-  },
-  // Mobx 使用範例
-  {
-    name: 'mobXDemo',  // 路由名稱
-    icon: 'ApiFilled',  // Ant Design 圖標
-    path: '/mobXDemo',  // 路徑
-    routes: [  // 嵌套路由
-      {
-        // Mobx 使用範例
-        name: 'demo01',
-        path: 'demo01',  // 相對路徑，實際為 /reactDemo/demo01
-        component: './MobxDemo/01_MobxDocs'
-      },
-      {
-        // 使用範例
-        name: 'demo02',
-        path: 'demo02',  // 相對路徑，實際為 /reactDemo/demo01
-        component: './MobxDemo/02_MobxExample'
-      }
-    ]
-  },
-  // api 呼叫範例
-  {
-    name: 'apiDemo',  // 路由名稱
-    icon: 'ApiFilled',  // Ant Design 圖標
-    path: '/apiDemo',  // 路徑
-    routes: [  // 嵌套路由
-      {
-        // 頁面文件基本結構示例
-        name: 'demo01',
-        path: 'demo01',  // 相對路徑，實際為 /reactDemo/demo01
-        component: './ApiDemo/Demo01',
-      },
-      {
-        // 頁面文件基本結構示例
-        name: 'demo02',
-        path: 'demo02',  // 相對路徑，實際為 /reactDemo/demo01
-        component: './ApiDemo/Demo02',
-      },
-    ]
-  },
+  }
 ]
