@@ -3,6 +3,7 @@ export default {
   'menu.exception.404': '404',
   'menu.exception.500': '500',
   'menu.home': '首頁',
+  'menu.insured': '受保人',
 
   'menu.reactDemo': 'React 基本語法範例',
   'menu.reactDemo.demo01': '頁面檔的基本結構',
@@ -22,9 +23,11 @@ export default {
   'menu.reactDemo.demo06': 'useContext 遠端的信息傳遞',
   'menu.reactDemo.demo07': 'useEffect 效果鉤子',
   'menu.reactDemo.demo08': 'useRef 從輸入框獲取值',
+  'menu.reactDemo.demo09': 'useSyncExternalStore 外部資料訂閱',
 
   'menu.antd': 'Ant Design 範例',
   'menu.antd.antdDemoComponents': 'Ant Design 頁面導引',
+  'menu.antd.antdDemoRoutes': 'Ant Design 路由設定',
   'menu.antd.antdDemo': 'Ant Design 元件範例',
   'menu.antd.antdDemo.Form': '表單輸入元件',
   'menu.antd.antdDemo.Container': '表單容器',
@@ -33,10 +36,6 @@ export default {
   'menu.antd.antdDemo.DataDisplay': '資料顯示元件',
   'menu.antd.antdDemo.Utility': '工具類與整合範例',
   'menu.antd.antdDemo.PageTemplates': '頁面樣板',
-    
-  'menu.apiDemo': 'api 呼叫範例',
-  'menu.apiDemo.demo01': '一般呼叫',
-  'menu.apiDemo.demo02': '下載檔案',
 
   'menu.mobXDemo': 'Mobx 使用範例',
   'menu.mobXDemo.demo01': '使用說明',
