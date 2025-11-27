@@ -117,12 +117,98 @@ const Routes: React.FC = () => {
 
       <Divider />
 
+      <Title level={3}>動態路由設定</Title>
+      <Paragraph>
+        動態路由 允許在路徑中使用參數，適用於詳情頁、編輯頁等需要根據 ID 或其他參數載入不同內容的場景。
+      </Paragraph>
+
+      <Title level={4}>基本動態路由</Title>
+      <Paragraph>
+        使用 <Text code>:參數名</Text> 語法定義動態路由參數：
+      </Paragraph>
+      <pre>{`
+{
+  path: '/user/:id',
+  name: 'userDetail',
+  component: './User/Detail',
+}
+      `}</pre>
+      <Paragraph>
+        <ul>
+          <li>
+            <Text strong>:id</Text>：定義動態參數，可以是任何變數名稱（如 <Text code>:userId</Text>、<Text code>:orderId</Text>）。
+          </li>
+          <li>
+            訪問 <Text code>/user/123</Text> 時，組件可透過 <Text code>useParams()</Text> 取得參數：
+            <pre>{`
+import { useParams } from 'umi';
+
+const Detail = () => {
+  const { id } = useParams<{ id: string }>();
+  // id = '123'
+  return <div>使用者 ID: {id}</div>;
+};
+            `}</pre>
+          </li>
+        </ul>
+      </Paragraph>
+
+      <Title level={4}>多層動態路由</Title>
+      <Paragraph>
+        可以在路徑中定義多個動態參數：
+      </Paragraph>
+      <pre>{`
+{
+  path: '/project/:projectId/task/:taskId',
+  name: 'taskDetail',
+  component: './Project/TaskDetail',
+}
+      `}</pre>
+      <Paragraph>
+        組件中可同時取得多個參數：
+      </Paragraph>
+      <pre>{`
+const { projectId, taskId } = useParams<{
+  projectId: string;
+  taskId: string;
+}>();
+      `}</pre>
+
+      <Title level={4}>可選動態參數</Title>
+      <Paragraph>
+        使用 <Text code>?</Text> 設定可選參數：
+      </Paragraph>
+      <pre>{`
+{
+  path: '/product/:category/:id?',
+  name: 'product',
+  component: './Product/Index',
+}
+      `}</pre>
+      <Paragraph>
+        此設定可同時匹配 <Text code>/product/electronics</Text> 和 <Text code>/product/electronics/123</Text>。
+      </Paragraph>
+
+      <Title level={4}>通配符路由</Title>
+      <Paragraph>
+        使用 <Text code>*</Text> 匹配任意路徑，通常用於 404 頁面：
+      </Paragraph>
+      <pre>{`
+{
+  path: '/*',
+  component: './404',
+}
+      `}</pre>
+
       <Title level={3}>注意事項</Title>
       <Paragraph>
         <ul>
           <li>確保 <Text code>path</Text> 唯一，避免路由衝突。</li>
           <li>檢查 <Text code>locales/zh-TW/menu.ts</Text> 中的翻譯是否與 <Text code>name</Text> 對應。</li>
           <li>若組件路徑錯誤，可能導致頁面無法載入，需確認 <Text code>src/pages</Text> 下的檔案是否存在。</li>
+          <li>動態路由參數會以字串形式傳遞，需要時記得進行型別轉換（如 <Text code>Number(id)</Text>）。</li>
+          <li>路由配置順序很重要，將更具體的路由放在前面，通配符路由放在最後。</li>
+          <li>使用動態路由時，建議配合 TypeScript 定義參數型別，提高程式碼可維護性。</li>
         </ul>
       </Paragraph>
     </Typography>
