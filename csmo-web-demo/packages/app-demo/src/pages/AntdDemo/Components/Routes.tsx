@@ -17,14 +17,14 @@ const Routes: React.FC = () => {
       <Paragraph>
         基本路由 用於定義單一頁面，包含選單名稱、路徑、圖示和對應組件。
       </Paragraph>
-      <pre>
-{`{
+      <pre>{`
+{
   path: '/antdDemo/components',
   name: 'antdDemoComponents',
   icon: 'AppstoreOutlined',
   component: './AntdDemo/Components/Navigate',
-}`}
-      </pre>
+}
+      `}</pre>
       <Paragraph>
         <ul>
           <li>
@@ -49,9 +49,9 @@ const Routes: React.FC = () => {
       <Paragraph>
         子路由 用於建立嵌套選單結構，適用於需要分組的頁面。
       </Paragraph>
-      <pre>
-{`{
-  path: '/antdDemo/demo', 
+       <pre>{`
+{
+  path: '/antdDemo/demo',
   name: 'antdDemo',
   routes: [
     {
@@ -60,8 +60,8 @@ const Routes: React.FC = () => {
       component: './AntdDemo/Components/Form'
     }
   ]
-}`}
-      </pre>
+}
+      `}</pre>
       <Paragraph>
         <ul>
           <li>
@@ -97,8 +97,8 @@ const Routes: React.FC = () => {
             搭配 <Text code>navigate</Text> 即可達到，頁面跳轉的同時，進行 參數的傳遞。
           </li>
         </ul>
-        <pre>
-{`{
+        <pre> {`
+{
   {
     path: '/antdDemo/demo/PageTemplates/Query',
     component: './AntdDemo/Components/PageTemplates/Components/demo02_EditForm',
@@ -111,8 +111,8 @@ const Routes: React.FC = () => {
     path: '/antdDemo/demo/PageTemplates/Create',
     component: './AntdDemo/Components/PageTemplates/Components/demo02_EditForm',
   },
-}`}
-        </pre>
+}
+        `} </pre>
       </Paragraph>
 
       <Divider />
