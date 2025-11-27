@@ -1,38 +1,59 @@
-import { PageContainer } from '@ant-design/pro-layout'
-import React from 'react'
+import React, { useEffect } from 'react'
+import Description from './Components/Description'
+import Example from './Components/Example'
+import { Tabs } from 'antd'
+import TabPane from 'antd/es/tabs/TabPane'
+import { useNavigate, useSearchParams } from '@umijs/max'
 
-const VDOM: React.FC = () => {
-    /* 一般陣列 */
-    const f_numbers: number[] = [1,5,3,2,4]
-    /* 泛型陣列 */
-    console.log('宣告', f_numbers)
-    const f_currency: string[] = []
-    
-    // 新增資料
-    f_numbers.push(6)
-    console.log('新增資料', f_numbers)
-    // 陣列長度
-    const f_length = f_numbers.length
-    console.log('陣列長度', f_length)
-    // 排序 (小到大)
-    const f_sortA = f_numbers.sort()
-    console.log('排序 (小到大)', f_sortA)
-    // 排序 (大到小)
-    const f_sortB = f_numbers.sort((x,y) => y-x)
-    console.log('排序 (大到小)', f_sortB)
+//asstManagement 主功能名稱
+const Demo: React.FC = () => {
 
-    // 泛型範例
-    f_currency.push('TWD')
-    f_currency.push('USD')
-    console.log('泛型', f_currency)
-    
-    return (
-        <PageContainer> 
-            <h1>詳見 F12</h1>
-        </PageContainer>
-    )
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
+  //主頁主要設定處
+  const tabs = [
+    {
+      key: 'Description',
+      title: '說明',
+      component: <Description />
+    },
+    {
+      key: 'Example',
+      title: '範例',
+      component: <Example />
+    },
+  ]
+
+  // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
+  const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
+
+  // 首次載入頁面 key 值加載
+  useEffect(() => {
+    navigate({
+      search: `?activeKey=${currentActiveKey}`
+    })
+  }, [])
+
+  return (
+    <Tabs
+      type='card'
+      animated    // 啟用切換動畫
+      destroyOnHidden   // 隱藏時銷毀 DOM
+      activeKey={currentActiveKey}
+      onChange={(key: string) => {
+        navigate({
+          search: `?activeKey=${key}`
+        })
+      }}
+    >
+      {tabs.map((item) => (
+        <TabPane tab={item.title} key={item.key}>
+          {item.component}
+        </TabPane>
+      ))}
+    </Tabs>
+  )
 }
 
-export default VDOM
-
-
+export default Demo

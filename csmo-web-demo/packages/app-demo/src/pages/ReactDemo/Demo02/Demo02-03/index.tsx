@@ -1,36 +1,59 @@
-import { PageContainer } from '@ant-design/pro-layout'
-import React from 'react'
+import React, { useEffect } from 'react'
+import Description from './Components/Description'
+import Example from './Components/Example'
+import { Tabs } from 'antd'
+import TabPane from 'antd/es/tabs/TabPane'
+import { useNavigate, useSearchParams } from '@umijs/max'
 
-const VDOM: React.FC = () => {
-    /* 抽象型別 */
-    // 書本 有 名稱、頁數
-    type Book = {
-        name: string
-        pages: number
-        amt?: number
-        readonly id: number
-    }
-    // 產品A: 無選填屬性 amt
-    const f_data1: Book = {
-        name: '輕鬆學習 TypeScript',
-        pages: 150,
-        id: 1
-    }
-    console.log('產品A', f_data1)
-    // 產品B: 有選填屬性 amt
-    const f_data2: Book = {
-        name: 'React 真簡單',
-        pages: 280,
-        amt: 1500,
-        id: 2
-    }
-    console.log('產品B', f_data2)
-    
-    return (
-        <PageContainer> 
-            <h1>詳見 F12</h1>
-        </PageContainer>
-    )
+//asstManagement 主功能名稱
+const Demo: React.FC = () => {
+
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
+  //主頁主要設定處
+  const tabs = [
+    {
+      key: 'Description',
+      title: '說明',
+      component: <Description />
+    },
+    {
+      key: 'Example',
+      title: '範例',
+      component: <Example />
+    },
+  ]
+
+  // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
+  const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
+
+  // 首次載入頁面 key 值加載
+  useEffect(() => {
+    navigate({
+      search: `?activeKey=${currentActiveKey}`
+    })
+  }, [])
+
+  return (
+    <Tabs
+      type='card'
+      animated    // 啟用切換動畫
+      destroyOnHidden   // 隱藏時銷毀 DOM
+      activeKey={currentActiveKey}
+      onChange={(key: string) => {
+        navigate({
+          search: `?activeKey=${key}`
+        })
+      }}
+    >
+      {tabs.map((item) => (
+        <TabPane tab={item.title} key={item.key}>
+          {item.component}
+        </TabPane>
+      ))}
+    </Tabs>
+  )
 }
 
-export default VDOM
+export default Demo

@@ -17,6 +17,7 @@ export default {
   'menu.reactDemo.demo02.demo02-08': '多型別變數(交集)',
   'menu.reactDemo.demo02.demo02-09': 'JS 語句',
   'menu.reactDemo.demo02.demo02-10': '樣板字串',
+  'menu.reactDemo.demo02.demo02-11': '空值判斷',
   'menu.reactDemo.demo03': 'useState 狀態機',
   'menu.reactDemo.demo04': 'props 組件的信息傳遞',
   'menu.reactDemo.demo05': 'useReducer 管理複雜邏輯的狀態機',

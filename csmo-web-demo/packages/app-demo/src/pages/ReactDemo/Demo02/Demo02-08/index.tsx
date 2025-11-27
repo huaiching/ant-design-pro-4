@@ -1,36 +1,60 @@
-import { PageContainer } from '@ant-design/pro-layout'
-import React from 'react'
+import React, { useEffect } from 'react'
+import Description from './Components/Description'
+import Example from './Components/Example'
+import { Tabs } from 'antd'
+import TabPane from 'antd/es/tabs/TabPane'
+import { useNavigate, useSearchParams } from '@umijs/max'
 
-const VDOM: React.FC = () => {
-    /* 交集 (且) */
-    // 類型A: 軟體 有 作業系統、版本
-    type Software  = {
-        system: string
-        version: string
-    }
-    // 類型B: 硬體 有 RAM、CPU
-    type Hardware   = {
-        RAM: string
-        CPU: string
-    }
-    // 手機 同時要有 硬體 和 軟體
-    type Phone = Software & Hardware
-    // 產品: iPhone 15
-    const f_data: Phone = {
-        system: 'ios',
-        version: '17.0',
-        RAM: '16GB',
-        CPU:'A16'
-    }
-    console.log('iPhone 15', f_data)
-    
+//asstManagement 主功能名稱
+const Demo: React.FC = () => {
 
-    return (
-        <PageContainer>
-            <h1>詳見 F12</h1>
-        </PageContainer>
-    )
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
+  //主頁主要設定處
+  const tabs = [
+    {
+      key: 'Description',
+      title: '說明',
+      component: <Description />
+    },
+    {
+      key: 'Example',
+      title: '範例',
+      component: <Example />
+    },
+  ]
+
+  // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
+  const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
+
+  // 首次載入頁面 key 值加載
+  useEffect(() => {
+    navigate({
+      search: `?activeKey=${currentActiveKey}`
+    })
+  }, [])
+
+  return (
+    <Tabs
+      type='card'
+      animated    // 啟用切換動畫
+      destroyOnHidden   // 隱藏時銷毀 DOM
+      activeKey={currentActiveKey}
+      onChange={(key: string) => {
+        navigate({
+          search: `?activeKey=${key}`
+        })
+      }}
+    >
+      {tabs.map((item) => (
+        <TabPane tab={item.title} key={item.key}>
+          {item.component}
+        </TabPane>
+      ))}
+    </Tabs>
+  )
 }
 
-export default VDOM
+export default Demo
 

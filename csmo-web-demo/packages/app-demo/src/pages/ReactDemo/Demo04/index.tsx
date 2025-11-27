@@ -1,32 +1,60 @@
-import { PageContainer } from '@ant-design/pro-layout'
-import React from 'react'
-import SubDom from './components/subDom'
+import React, { useEffect } from 'react'
+import Description from './Components/Description'
+import Example from './Components/Example'
+import { Tabs } from 'antd'
+import TabPane from 'antd/es/tabs/TabPane'
+import { useNavigate, useSearchParams } from '@umijs/max'
 
-const VDOM: React.FC = () => {
-    // 要傳遞的數據
-    const userData = {
-        name: '王大明',
-        age: 25,
-        sex: '男'
-    }
-    return (
-        <PageContainer>
-            {/* 這種寫法 是將每個要傳遞的屬性 單獨寫出來 */}
-            <div>
-                <h1>單獨傳遞</h1>
-                <SubDom name={userData.name} age={userData.age} sex={userData.sex}/>
-            </div>
-            
-            {/* 下面的寫法，代表傳遞 userData 中全部的屬性 */}
-            <div>
-                <h1>同時傳遞</h1>
-                <SubDom {...userData}/>
-            </div>
-            
-        </PageContainer>
-    )
+//asstManagement 主功能名稱
+const Demo: React.FC = () => {
+
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
+  //主頁主要設定處
+  const tabs = [
+    {
+      key: 'Description',
+      title: '說明',
+      component: <Description />
+    },
+    {
+      key: 'Example',
+      title: '範例',
+      component: <Example />
+    },
+  ]
+
+  // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
+  const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
+
+  // 首次載入頁面 key 值加載
+  useEffect(() => {
+    navigate({
+      search: `?activeKey=${currentActiveKey}`
+    })
+  }, [])
+
+  return (
+    <Tabs
+      type='card'
+      animated    // 啟用切換動畫
+      destroyOnHidden   // 隱藏時銷毀 DOM
+      activeKey={currentActiveKey}
+      onChange={(key: string) => {
+        navigate({
+          search: `?activeKey=${key}`
+        })
+      }}
+    >
+      {tabs.map((item) => (
+        <TabPane tab={item.title} key={item.key}>
+          {item.component}
+        </TabPane>
+      ))}
+    </Tabs>
+  )
 }
 
-export default VDOM
-
+export default Demo
 

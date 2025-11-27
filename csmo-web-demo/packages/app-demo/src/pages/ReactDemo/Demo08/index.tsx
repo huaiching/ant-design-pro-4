@@ -1,29 +1,59 @@
-import { PageContainer } from '@ant-design/pro-layout'
-import { Input, Space } from 'antd'
-import type { InputRef } from 'antd'
-import React, { useRef, useState } from 'react'
+import React, { useEffect } from 'react'
+import Description from './Components/Description'
+import Example from './Components/Example'
+import { Tabs } from 'antd'
+import TabPane from 'antd/es/tabs/TabPane'
+import { useNavigate, useSearchParams } from '@umijs/max'
 
-const MyComponent: React.FC = () => {
-  // useRef 的型態 根據 綁定元件 來使用，這裡因為是使用 Inupt，所以要用 InputRef 作為型態
-  const inputRef = useRef<InputRef>(null)
-  // 設定 姓名變數
-  const [userName, setUserName] = useState<string>('')
-  // 設定 姓名改變事件
-  const chgUserName = () => {
-    const refValue = inputRef.current?.input?.value
-    const name = refValue !== undefined ? refValue : ''
-    setUserName(name)
-  }
+//asstManagement 主功能名稱
+const Demo: React.FC = () => {
+
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
+  //主頁主要設定處
+  const tabs = [
+    {
+      key: 'Description',
+      title: '說明',
+      component: <Description />
+    },
+    {
+      key: 'Example',
+      title: '範例',
+      component: <Example />
+    },
+  ]
+
+  // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
+  const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
+
+  // 首次載入頁面 key 值加載
+  useEffect(() => {
+    navigate({
+      search: `?activeKey=${currentActiveKey}`
+    })
+  }, [])
 
   return (
-    <PageContainer>
-      {/* 使用 ref 指向 Input 的 Ref */}
-      <Space>
-          <Input type='text' ref={inputRef} onChange={chgUserName} />
-          <h1>我是{userName}</h1>
-      </Space>
-    </PageContainer>
+    <Tabs
+      type='card'
+      animated    // 啟用切換動畫
+      destroyOnHidden   // 隱藏時銷毀 DOM
+      activeKey={currentActiveKey}
+      onChange={(key: string) => {
+        navigate({
+          search: `?activeKey=${key}`
+        })
+      }}
+    >
+      {tabs.map((item) => (
+        <TabPane tab={item.title} key={item.key}>
+          {item.component}
+        </TabPane>
+      ))}
+    </Tabs>
   )
 }
 
-export default MyComponent
+export default Demo

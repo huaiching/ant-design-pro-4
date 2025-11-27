@@ -1,27 +1,59 @@
-import './store/index.css'    // 引入 css 樣式模組
-import SubDom from './components/subDom'
-import { PageContainer } from '@ant-design/pro-layout'
+import React, { useEffect } from 'react'
+import Description from './Components/Description'
+import Example from './Components/Example'
+import { Tabs } from 'antd'
+import TabPane from 'antd/es/tabs/TabPane'
+import { useNavigate, useSearchParams } from '@umijs/max'
 
-const VDOM: React.FC = () => {
-    const idvName = 'divId'     // 設定變數
-    const data = 'Hello JSX'
-    return (
-        <PageContainer>
-            {/* 子組件要使用 大寫開頭 */}
-            <SubDom/>
-            {/* JS表達式 要用 {} 包住 */}
-            <div id={idvName}>
-                {/* 使用 css 樣式模組:，要用 className 屬性 */}
-                <h1 className='titleCss'>
-                    <span>此單元為 </span>
-                    {/* css 行內樣式 使用範例 */}
-                    <span style={{color:'orange', fontSize:'20px'}}>
-                        {data}
-                    </span>
-                </h1>
-            </div>
-        </PageContainer>
-    )
+//asstManagement 主功能名稱
+const Demo: React.FC = () => {
+
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
+  //主頁主要設定處
+  const tabs = [
+    {
+      key: 'Description',
+      title: '說明',
+      component: <Description />
+    },
+    {
+      key: 'Example',
+      title: '範例',
+      component: <Example />
+    },
+  ]
+
+  // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
+  const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
+
+  // 首次載入頁面 key 值加載
+  useEffect(() => {
+    navigate({
+      search: `?activeKey=${currentActiveKey}`
+    })
+  }, [])
+
+  return (
+    <Tabs
+      type='card'
+      animated    // 啟用切換動畫
+      destroyOnHidden   // 隱藏時銷毀 DOM
+      activeKey={currentActiveKey}
+      onChange={(key: string) => {
+        navigate({
+          search: `?activeKey=${key}`
+        })
+      }}
+    >
+      {tabs.map((item) => (
+        <TabPane tab={item.title} key={item.key}>
+          {item.component}
+        </TabPane>
+      ))}
+    </Tabs>
+  )
 }
 
-export default VDOM
+export default Demo

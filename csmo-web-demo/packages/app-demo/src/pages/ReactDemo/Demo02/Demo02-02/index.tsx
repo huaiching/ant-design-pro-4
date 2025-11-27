@@ -1,24 +1,59 @@
-import { PageContainer } from '@ant-design/pro-layout'
-import React from 'react'
+import React, { useEffect } from 'react'
+import Description from './Components/Description'
+import Example from './Components/Example'
+import { Tabs } from 'antd'
+import TabPane from 'antd/es/tabs/TabPane'
+import { useNavigate, useSearchParams } from '@umijs/max'
 
-const VDOM: React.FC = () => {
-    // 變數宣告 與 型態設定
-    let f_boolean: boolean = true
-    const f_number_1: number = 10
-    const f_number_2: number = 3.14
-    const f_string: string = 'ABC'
-    // let 可以 直接改變數值
-    f_boolean = false
-    // 透過 console 顯示資訊
-    console.log('boolean =>', f_boolean)
-    console.log('number(整數) =>', f_number_1)
-    console.log('number(小數) =>', f_number_2)
-    console.log('string =>', f_string)
-    return (
-        <PageContainer> 
-            <h1>詳見 F12</h1>
-        </PageContainer>
-    )
+//asstManagement 主功能名稱
+const Demo: React.FC = () => {
+
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
+  //主頁主要設定處
+  const tabs = [
+    {
+      key: 'Description',
+      title: '說明',
+      component: <Description />
+    },
+    {
+      key: 'Example',
+      title: '範例',
+      component: <Example />
+    },
+  ]
+
+  // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
+  const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
+
+  // 首次載入頁面 key 值加載
+  useEffect(() => {
+    navigate({
+      search: `?activeKey=${currentActiveKey}`
+    })
+  }, [])
+
+  return (
+    <Tabs
+      type='card'
+      animated    // 啟用切換動畫
+      destroyOnHidden   // 隱藏時銷毀 DOM
+      activeKey={currentActiveKey}
+      onChange={(key: string) => {
+        navigate({
+          search: `?activeKey=${key}`
+        })
+      }}
+    >
+      {tabs.map((item) => (
+        <TabPane tab={item.title} key={item.key}>
+          {item.component}
+        </TabPane>
+      ))}
+    </Tabs>
+  )
 }
 
-export default VDOM
+export default Demo

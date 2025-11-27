@@ -1,45 +1,59 @@
-import { PageContainer } from '@ant-design/pro-layout'
-import React from 'react'
+import React, { useEffect } from 'react'
+import Description from './Components/Description'
+import Example from './Components/Example'
+import { Tabs } from 'antd'
+import TabPane from 'antd/es/tabs/TabPane'
+import { useNavigate, useSearchParams } from '@umijs/max'
 
-const VDOM: React.FC = () => {
-    // 範例: if
-    const sex = '1'
-    let data1 = ''
-    if (sex === '1') {
-        data1 = '男'
-    } else {
-        data1 = '女'
-    }
-    
-    // 範例: 三元表達式
-    const age = 18
-    const data2 = (age>=18 ? '成年' : '未成年')
+//asstManagement 主功能名稱
+const Demo: React.FC = () => {
 
-    // 範例: for 
-    const data3 = []
-    for (let i = 1 ; i < 5 ; i++) {
-        data3.push(<li>{i}</li>)
-    }
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
-    // 範例: foreach
-    const data4 = ['a','b','c','d']
-    data4.forEach((data) => {
-        data3.push(<li>{data}</li>)
+  //主頁主要設定處
+  const tabs = [
+    {
+      key: 'Description',
+      title: '說明',
+      component: <Description />
+    },
+    {
+      key: 'Example',
+      title: '範例',
+      component: <Example />
+    },
+  ]
+
+  // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
+  const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
+
+  // 首次載入頁面 key 值加載
+  useEffect(() => {
+    navigate({
+      search: `?activeKey=${currentActiveKey}`
     })
-    const data5 = data4.map((data) => {
-        return <li key={data}>{data}</li>
-    })
-    
-    return (
-        <PageContainer>
-            <h3>年齡: {age}，是否成年: {data2}，性別: {data1}</h3>
-            <ul>
-                第一區塊: {data3}
-                第二區塊: {data5}
-            </ul>
-        </PageContainer>
-    )
+  }, [])
+
+  return (
+    <Tabs
+      type='card'
+      animated    // 啟用切換動畫
+      destroyOnHidden   // 隱藏時銷毀 DOM
+      activeKey={currentActiveKey}
+      onChange={(key: string) => {
+        navigate({
+          search: `?activeKey=${key}`
+        })
+      }}
+    >
+      {tabs.map((item) => (
+        <TabPane tab={item.title} key={item.key}>
+          {item.component}
+        </TabPane>
+      ))}
+    </Tabs>
+  )
 }
 
-export default VDOM
-
+export default Demo

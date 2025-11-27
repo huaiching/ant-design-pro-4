@@ -1,21 +1,60 @@
-import { PageContainer } from '@ant-design/pro-layout'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import Description from './Components/Description'
+import Example from './Components/Example'
+import { Tabs } from 'antd'
+import TabPane from 'antd/es/tabs/TabPane'
+import { useNavigate, useSearchParams } from '@umijs/max'
 
-// 頁面顯示計時器，顯示頁面停留了幾秒
-const VDOM: React.FC = () => {
-  const [timer, setTimer] = useState(0)
-  // Effect 僅在頁面首次渲染時執行
-    useEffect(() => {
-        // 設定計時器，每 1 秒 執行一次
-        // 每次 時間 + 1秒
-        setInterval(()=>{
-            setTimer(prevTimer => prevTimer + 1)
-        },1000)
-    },[])
-    return (
-        <PageContainer>
-            <h3>頁面停留 {timer} 秒</h3>
-        </PageContainer>
-    )
+//asstManagement 主功能名稱
+const Demo: React.FC = () => {
+
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
+  //主頁主要設定處
+  const tabs = [
+    {
+      key: 'Description',
+      title: '說明',
+      component: <Description />
+    },
+    {
+      key: 'Example',
+      title: '範例',
+      component: <Example />
+    },
+  ]
+
+  // 取得當前 activeKey，若沒有就預設為第一個 tab 的 key
+  const currentActiveKey = searchParams.get('activeKey') || tabs[0].key
+
+  // 首次載入頁面 key 值加載
+  useEffect(() => {
+    navigate({
+      search: `?activeKey=${currentActiveKey}`
+    })
+  }, [])
+
+  return (
+    <Tabs
+      type='card'
+      animated    // 啟用切換動畫
+      destroyOnHidden   // 隱藏時銷毀 DOM
+      activeKey={currentActiveKey}
+      onChange={(key: string) => {
+        navigate({
+          search: `?activeKey=${key}`
+        })
+      }}
+    >
+      {tabs.map((item) => (
+        <TabPane tab={item.title} key={item.key}>
+          {item.component}
+        </TabPane>
+      ))}
+    </Tabs>
+  )
 }
-export default VDOM
+
+export default Demo
+
