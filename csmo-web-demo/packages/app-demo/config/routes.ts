@@ -136,6 +136,24 @@ export default [
         path: 'demo09',
         component: './ReactDemo/Demo09',
       },
+      {
+        // 附錄 - Button 的 onClick 呼叫函式的寫法
+        name: 'demo10',
+        path: 'demo10',
+        component: './ReactDemo/demo10',
+      },
+      {
+        // 附錄 - 下載後端API產出的檔案
+        name: 'demo11',
+        path: 'demo11',
+        component: './ReactDemo/demo11',
+      },
+      {
+        // 附錄 - 正規表達式
+        name: 'demo12',
+        path: 'demo12',
+        component: './ReactDemo/demo12',
+      },
     ]
   },
 

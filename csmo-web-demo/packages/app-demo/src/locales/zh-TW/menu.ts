@@ -25,6 +25,9 @@ export default {
   'menu.reactDemo.demo07': 'useEffect 效果鉤子',
   'menu.reactDemo.demo08': 'useRef 從輸入框獲取值',
   'menu.reactDemo.demo09': 'useSyncExternalStore 外部資料訂閱',
+  'menu.reactDemo.demo10': '附錄 - Button 的 onClick 呼叫函式的寫法',
+  'menu.reactDemo.demo11': '附錄 - 下載後端API產出的檔案',
+  'menu.reactDemo.demo12': '附錄 - 正規表達式',
 
   'menu.antd': 'Ant Design 範例',
   'menu.antd.antdDemoComponents': 'Ant Design 頁面導引',
