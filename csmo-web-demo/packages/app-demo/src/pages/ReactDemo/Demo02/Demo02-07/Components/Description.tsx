@@ -16,13 +16,12 @@ const UnionTypesPage: React.FC = () => {
         </Paragraph>
 
         <Title level={3}>語法</Title>
-        <pre><code>{`let 變數名稱: (型別A | 型別B) = 數值`}</code></pre>
+        <pre>{`let 變數名稱: (型別A | 型別B) = 數值`}</pre>
 
         <Divider />
 
         <Title level={2}>完整範例</Title>
         <pre>
-          <code>
 {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 
@@ -63,16 +62,7 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-          </code>
         </pre>
-
-        <Paragraph type="secondary" style={{ marginTop: 32 }}>
-          <Text strong>使用場景：</Text><br />
-          • props 可以是 string 或 number<br />
-          • API 回傳可能是 success 或 error 兩種結構<br />
-          • 表單輸入可以是文字或檔案
-        </Paragraph>
-
       </Typography>
     </PageContainer>
   );

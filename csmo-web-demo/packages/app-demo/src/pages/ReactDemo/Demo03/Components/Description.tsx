@@ -17,8 +17,10 @@ const UseStateIntroPage: React.FC = () => {
         <Divider />
 
         <Title level={2}>語法</Title>
-        <pre><code>{`import { useState } from "react"
-const [isHot, setIsHot] = useState(true)`}</code></pre>
+        <pre>
+{`import { useState } from "react"
+const [isHot, setIsHot] = useState(true)`}
+        </pre>
 
         <Divider />
 
@@ -27,12 +29,12 @@ const [isHot, setIsHot] = useState(true)`}</code></pre>
         <Paragraph>
           1. 直接給值 (後蓋前)
         </Paragraph>
-        <pre><code>{`setState(新狀態)`}</code></pre>
+        <pre>{`setState(新狀態)`}</pre>
 
         <Paragraph>
           2. 函式更新
         </Paragraph>
-        <pre><code>{`setState((變數) => {更新邏輯})`}</code></pre>
+        <pre>{`setState((變數) => {更新邏輯})`}</pre>
 
         <Paragraph>
           <ul>
@@ -48,7 +50,6 @@ const [isHot, setIsHot] = useState(true)`}</code></pre>
 
         <Title level={2}>範例</Title>
         <pre>
-          <code>
             {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 import { Button, Space } from "antd";
@@ -76,7 +77,6 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-          </code>
         </pre>
 
       </Typography>

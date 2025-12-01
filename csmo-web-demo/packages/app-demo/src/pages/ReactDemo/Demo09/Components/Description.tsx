@@ -32,14 +32,15 @@ const UseSyncExternalStoreIntroPage: React.FC = () => {
           </ul>
         </Paragraph>
 
-        <pre><code>{`// 儲存 狀態變化時，要通知的訂閱者資訊 (照抄)
+        <pre>
+          {`// 儲存 狀態變化時，要通知的訂閱者資訊 (照抄)
 let listeners: Set<() => void> = new Set()
 
 // 發送狀態變化，通知所有訂閱者 (照抄)
 function emitChange(): void {
   listeners.forEach((listener) => listener())
 }`}
-        </code></pre>
+        </pre>
 
         <Paragraph>
           <ul>
@@ -68,8 +69,8 @@ function emitChange(): void {
           </ul>
         </Paragraph>
 
-        <pre><code>
-          {`// 設定資料型態
+        <pre>
+{`// 設定資料型態
 export interface UserInfo {
   name: string
   age: number
@@ -141,7 +142,7 @@ export const userStore = {
     return user.email
   },
 }`}
-        </code></pre>
+        </pre>
 
         <Divider />
 
@@ -155,12 +156,13 @@ export const userStore = {
             <li>第三個參數：伺服器端的取值函式</li>
           </ul>
         </Paragraph>
-        <pre><code>{`const user = useSyncExternalStore(
+        <pre>
+{`const user = useSyncExternalStore(
   userStore.subscribe, // 訂閱
   userStore.getUser,   // 客戶端取值
   userStore.getUser    // 伺服器端取值
 )`}
-        </code></pre>
+        </pre>
 
         <Title level={3}>2.1. 資料寫入</Title>
         <Paragraph>
@@ -170,8 +172,8 @@ export const userStore = {
             <li>透過 set 方法，進行資料更新</li>
           </ul>
         </Paragraph>
-        <pre><code>
-          {`import React, { useEffect } from 'react'
+        <pre>
+{`import React, { useEffect } from 'react'
 import { ProForm, ProFormText, ProFormDigit } from '@ant-design/pro-components'
 import { Card, message } from 'antd'
 import { useSyncExternalStore } from 'react'
@@ -218,7 +220,7 @@ const Create: React.FC = () => {
   )
 }
 export default Create`}
-        </code></pre>
+        </pre>
 
         <Title level={3}>2.2. 資料讀取</Title>
         <Paragraph>
@@ -227,8 +229,8 @@ export default Create`}
             <li>因為 set 方法 有包含 <Text code>emitChange()</Text>，所以 數值更新時，React 會通知要更新資料</li>
           </ul>
         </Paragraph>
-        <pre><code>
-          {`import React, { useEffect } from 'react'
+        <pre>
+{`import React, { useEffect } from 'react'
 import { Card, Descriptions, message } from 'antd'
 import { useSyncExternalStore } from 'react'
 import { userStore } from '../Store/userStore'
@@ -259,7 +261,7 @@ const Display: React.FC = () => {
   )
 }
 export default Display`}
-        </code></pre>
+        </pre>
 
       </Typography>
     </PageContainer>

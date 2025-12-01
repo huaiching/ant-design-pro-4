@@ -18,13 +18,11 @@ const TypeComplexPage: React.FC = () => {
         </Paragraph>
 
         <pre>
-          <code>
 {`type 型別名稱 = {
       必填屬性A: 型別;
       選填屬性B?: 型別; // 選填屬性 用「?」表示
       readonly 屬性C?: 型別; // 唯讀屬性 只有初始創建時能夠賦值
 }`}
-          </code>
         </pre>
 
         <Divider />
@@ -32,7 +30,6 @@ const TypeComplexPage: React.FC = () => {
         <Title level={2}>範例</Title>
 
         <pre>
-          <code>
 {`const VDOM: React.FC = () => {
     /* 抽象型別 */
     // 書本 有 名稱、頁數
@@ -66,7 +63,6 @@ const TypeComplexPage: React.FC = () => {
 }
 
 export default VDOM`}
-          </code>
         </pre>
 
         <Paragraph type="secondary" style={{ marginTop: 24 }}>

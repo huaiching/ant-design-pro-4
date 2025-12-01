@@ -43,7 +43,6 @@ const JSXAndCSSPage: React.FC = () => {
         {/* index.tsx */}
         <Title level={4}>index.tsx</Title>
         <pre>
-          <code>
 {`import './store/index.css' // 引入 css 樣式模組
 import Demo from './components/demo1'
 
@@ -70,24 +69,20 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-          </code>
         </pre>
 
         {/* index.css */}
         <Title level={4}>index.css</Title>
         <pre>
-          <code>
 {`.titleCss {
     background-color: red;
     font-size: 30px;
 }`}
-          </code>
         </pre>
 
         {/* demo1.tsx */}
         <Title level={4}>components/demo1.tsx</Title>
         <pre>
-          <code>
 {`const demo1: React.FC = () => {
     return (
         <div>
@@ -97,7 +92,6 @@ export default VDOM`}
 }
 
 export default demo1`}
-          </code>
         </pre>
       </Typography>
     </PageContainer>

@@ -23,7 +23,6 @@ const BasicStructurePage: React.FC = () => {
           <Divider />
 
           <pre>
-            <code>
 {`
 import React from 'react';
 // 開頭 進行 元件的載入
@@ -38,7 +37,6 @@ const myExample: React.FC = (輸入參數) => {
 }
 export default myExample;
 `}
-            </code>
           </pre>
 
           <Divider />
@@ -46,7 +44,6 @@ export default myExample;
           <Title level={3}>範例</Title>
 
           <pre>
-            <code>
 {`
 import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
@@ -60,7 +57,6 @@ const myExample: React.FC = () => {
 }
 export default myExample;
 `}
-            </code>
           </pre>
 
           <Paragraph style={{ marginTop: 32 }}>

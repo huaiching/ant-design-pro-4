@@ -30,13 +30,13 @@ const VariableTypesPage: React.FC = () => {
         <Paragraph>
           <ol>
             <li><Text strong>boolean</Text>　只能是 true / false
-              <pre><code>let f_boolean: boolean = true</code></pre>
+              <pre>let f_boolean: boolean = true</pre>
             </li>
             <li><Text strong>number</Text>　只能是 整數 / 小數
-              <pre><code>let f_number_1: number = 10{'\n'}const f_number_2: number = 3.14</code></pre>
+              <pre>let f_number_1: number = 10{'\n'}const f_number_2: number = 3.14</pre>
             </li>
             <li><Text strong>string</Text>　字串
-              <pre><code>const f_string: string = "ABC"</code></pre>
+              <pre>const f_string: string = "ABC"</pre>
             </li>
             <li><Text strong>void</Text>　無回傳值，於 函式 使用</li>
             <li><Text strong>null</Text>　空值</li>
@@ -61,7 +61,6 @@ const VariableTypesPage: React.FC = () => {
 
         <Title level={4}>完整程式碼</Title>
         <pre>
-          <code>
 {`import { PageContainer } from '@ant-design/pro-layout'
 import React from 'react'
 
@@ -89,7 +88,6 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-          </code>
         </pre>
 
         <Paragraph>

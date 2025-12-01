@@ -13,12 +13,12 @@ const ButtonOnClickAppendixPage: React.FC = () => {
         <Paragraph>
           React 中，Button 的 onClick 只能放 無參數函式
         </Paragraph>
-        <pre><code>{`<Button onClick={函式名稱}> 按鈕文字 </Button>`}</code></pre>
+        <pre>{`<Button onClick={函式名稱}> 按鈕文字 </Button>`}</pre>
 
         <Paragraph>
           如果 想要在 onClick 呼叫 有參數函式，就必須再另外進行包裝
         </Paragraph>
-        <pre><code>{`<Button type="primary" onClick={() => 函式名稱(參數)}> 按鈕文字 </Button>`}</code></pre>
+        <pre>{`<Button type="primary" onClick={() => 函式名稱(參數)}> 按鈕文字 </Button>`}</pre>
 
       </Typography>
     </PageContainer>

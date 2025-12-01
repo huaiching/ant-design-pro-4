@@ -34,7 +34,7 @@ const UseRefIntroPage: React.FC = () => {
             </li>
           </ol>
         </Paragraph>
-        <pre><code>{`const ref變數 = useRef<元件的Ref型態>(初始值)`}</code></pre>
+        <pre>{`const ref變數 = useRef<元件的Ref型態>(初始值)`}</pre>
 
         <Paragraph>
           <ol start={2}>
@@ -49,21 +49,20 @@ const UseRefIntroPage: React.FC = () => {
             </li>
           </ol>
         </Paragraph>
-        <pre><code>{`<Input type='text' ref={ref變數} onChange={改變事件} />`}</code></pre>
+        <pre>{`<Input type='text' ref={ref變數} onChange={改變事件} />`}</pre>
 
         <Paragraph>
           <ol start={3}>
             <li>取得數值</li>
           </ol>
         </Paragraph>
-        <pre><code>{`const 變數 = inputRef.current?.input?.value`}</code></pre>
+        <pre>{`const 變數 = inputRef.current?.input?.value`}</pre>
 
         <Divider />
 
         <Title level={2}>範例</Title>
         <pre>
-          <code>
-            {`import { PageContainer } from '@ant-design/pro-layout';
+{`import { PageContainer } from '@ant-design/pro-layout';
 import { Input, Space } from 'antd';
 import type { InputRef } from 'antd';
 import React, { useRef, useState } from 'react';
@@ -94,7 +93,6 @@ const MyComponent: React.FC = () => {
 };
 
 export default MyComponent;`}
-          </code>
         </pre>
 
       </Typography>

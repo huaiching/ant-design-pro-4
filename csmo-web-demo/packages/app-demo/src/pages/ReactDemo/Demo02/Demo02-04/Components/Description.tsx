@@ -18,7 +18,6 @@ const InterfaceIntroPage: React.FC = () => {
         </Paragraph>
 
         <pre>
-          <code>
 {`interface 型別名稱A = {
       必填屬性A: 型別;
 }
@@ -28,7 +27,6 @@ interface 型別名稱A = {
       選填屬性C?: 型別; // 選填屬性 用「?」表示
       readonly 屬性D?: 型別; // 唯讀屬性 只有初始創建時能夠賦值
 }`}
-          </code>
         </pre>
 
         <Paragraph>
@@ -36,14 +34,12 @@ interface 型別名稱A = {
         </Paragraph>
 
         <pre>
-          <code>
 {`{
       必填屬性A: 型別;
       必填屬性B: 型別;
       選填屬性C?: 型別;
       readonly 屬性D?: 型別;
 }`}
-          </code>
         </pre>
 
         <Divider />
@@ -51,7 +47,6 @@ interface 型別名稱A = {
         <Title level={2}>範例</Title>
 
         <pre>
-          <code>
 {`const VDOM: React.FC = () => {
         /* 介面 interface */
         interface Person {
@@ -78,7 +73,6 @@ interface 型別名稱A = {
 }
 
 export default VDOM`}
-          </code>
         </pre>
 
         <Paragraph type="secondary" style={{ marginTop: 24 }}>

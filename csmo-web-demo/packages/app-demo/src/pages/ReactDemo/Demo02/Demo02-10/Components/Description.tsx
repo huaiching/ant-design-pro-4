@@ -14,14 +14,14 @@ const TemplateLiteralsPage: React.FC = () => {
         <Paragraph>
           傳統 JS 字串串接非常麻煩：
         </Paragraph>
-        <pre><code>{'const msg = "我是 " + user.name + "，今年 " + user.age + " 歲，住在 " + user.city + " 。"'}</code></pre>
+        <pre>{'const msg = "我是 " + user.name + "，今年 " + user.age + " 歲，住在 " + user.city + " 。"'}</pre>
 
         <Paragraph>
           ES6 推出 <Text strong>樣板字串</Text>，讓你輕鬆插入變數、換行、保持格式！
         </Paragraph>
 
         <Title level={3}>正確寫法（反引號 + ${'{}'}）</Title>
-        <pre><code>{'const msg2 = `我是 ${user.name}，今年 ${user.age} 歲，住在 ${user.city} 。`'}</code></pre>
+        <pre>{'const msg2 = `我是 ${user.name}，今年 ${user.age} 歲，住在 ${user.city} 。`'}</pre>
 
         <Title level={3}>三大優勢</Title>
         <Paragraph>
@@ -36,7 +36,6 @@ const TemplateLiteralsPage: React.FC = () => {
 
         <Title level={2}>完整範例</Title>
         <pre>
-          <code>
 {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 
@@ -60,15 +59,7 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-          </code>
         </pre>
-
-        <Paragraph type="secondary" style={{ marginTop: 32 }}>
-          <Text strong>顯示技巧小提醒：</Text><br />
-          在 &lt;pre&gt;&lt;code&gt; 中要顯示 <Text code>${'{變數}'}</Text> 時，必須在 $ 前加反斜線轉義：<Text code>\${'{變數}'}</Text><br />
-          否則會被 React 當成真的表達式執行而出錯
-        </Paragraph>
-
       </Typography>
     </PageContainer>
   );

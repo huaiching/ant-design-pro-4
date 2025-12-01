@@ -16,13 +16,12 @@ const IntersectionTypesPage: React.FC = () => {
         </Paragraph>
 
         <Title level={3}>語法</Title>
-        <pre><code>{`let 變數名稱: (型別A & 型別B) = 數值`}</code></pre>
+        <pre>{`let 變數名稱: (型別A & 型別B) = 數值`}</pre>
 
         <Divider />
 
         <Title level={2}>完整範例</Title>
         <pre>
-          <code>
 {`const VDOM: React.FC = () => {
     /* 交集 (且) */
     type Software = {
@@ -51,16 +50,7 @@ const IntersectionTypesPage: React.FC = () => {
 }
 
 export default VDOM`}
-          </code>
         </pre>
-
-        <Paragraph type="secondary" style={{ marginTop: 32 }}>
-          <Text strong>使用場景：</Text><br />
-          • 合併多個介面（interface）<br />
-          • 建立「既有身份又具備權限」的複合型別<br />
-          • 高階型別設計時的「屬性合併神器」
-        </Paragraph>
-
       </Typography>
     </PageContainer>
   );

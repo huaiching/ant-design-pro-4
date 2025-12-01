@@ -53,7 +53,6 @@ const ArrayIntroPage: React.FC = () => {
         <Title level={2}>範例</Title>
 
         <pre>
-          <code>
 {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 
@@ -95,7 +94,6 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-          </code>
         </pre>
 
         <Paragraph type="secondary" style={{ marginTop: 24 }}>

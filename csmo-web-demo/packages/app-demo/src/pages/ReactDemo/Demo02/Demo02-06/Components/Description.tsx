@@ -16,26 +16,32 @@ const FunctionIntroPage: React.FC = () => {
           <ol>
             <li>
               <Text strong>箭頭函式 (arrow function)</Text>
-              <pre><code>{`const 函式名稱 = (參數: 型別, ……): 回傳型別 => {
+              <pre>
+{`const 函式名稱 = (參數: 型別, ……): 回傳型別 => {
     處理邏輯
     return 回傳值
-}`}</code></pre>
+}`}
+              </pre>
             </li>
 
             <li>
               <Text strong>函式宣告 (Function Declaration)</Text>
-              <pre><code>{`function 函式名稱(參數: 型別, ……): 回傳型別 {
+              <pre>
+{`function 函式名稱(參數: 型別, ……): 回傳型別 {
     處理邏輯
     return 回傳值
-}`}</code></pre>
+}`}
+              </pre>
             </li>
 
             <li>
               <Text strong>函式表示式 (Function Expression)</Text>
-              <pre><code>{`const 函式名稱 = function (參數: 型別, ……): 回傳型別 {
+              <pre>
+{`const 函式名稱 = function (參數: 型別, ……): 回傳型別 {
     處理邏輯
     return 回傳值
-}`}</code></pre>
+}`}
+              </pre>
             </li>
           </ol>
         </Paragraph>
@@ -71,7 +77,6 @@ const FunctionIntroPage: React.FC = () => {
         <Title level={2}>範例</Title>
 
         <pre>
-          <code>
 {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 
@@ -103,15 +108,7 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-          </code>
         </pre>
-
-        <Paragraph type="secondary" style={{ marginTop: 32 }}>
-          <Text strong>小提醒：</Text><br />
-          React 組件和事件處理函式幾乎都建議使用 <Text code>箭頭函式</Text>，避免 <Text code>this</Text> 綁定問題<br />
-          <Text code>...rest</Text> 是 TypeScript 中最實用的功能之一，學會它就等於掌握了「可變參數」
-        </Paragraph>
-
       </Typography>
     </PageContainer>
   );
