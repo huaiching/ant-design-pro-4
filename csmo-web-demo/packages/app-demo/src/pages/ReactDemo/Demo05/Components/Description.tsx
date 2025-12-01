@@ -27,8 +27,12 @@ const UseReducerIntroPage: React.FC = () => {
           </ol>
         </Paragraph>
         <Paragraph>
-          - useState 就是 簡化版的 useReducer，<br />
-          &nbsp;&nbsp;直接幫你設定好 狀態改變函式 (僅直接取代原有狀態值)
+          <ul>
+            <li>
+              useState 就是 簡化版的 useReducer，<br />
+              直接幫你設定好 狀態改變函式 (僅直接取代原有狀態值)
+            </li>
+          </ul>
         </Paragraph>
 
         <Divider />
@@ -48,14 +52,23 @@ const UseReducerIntroPage: React.FC = () => {
           </ol>
         </Paragraph>
         <Paragraph>
-          - 參數 state<br />
-          &nbsp;&nbsp;代表 狀態變數 目前的數值<br /><br />
-          - 參數 action<br />
-          &nbsp;&nbsp;代表 執行的操作物件，通常至少會有兩個參數：<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;- type: 操作類型<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;- value: 操作值
+          <ul>
+            <li>
+              參數 state<br />
+              代表 狀態變數 目前的數值<br /><br />
+            </li>
+            <li>
+              參數 action<br />
+              代表 執行的操作物件，通常至少會有兩個參數：<br />
+              <ul>
+                <li>type: 操作類型</li>
+                <li>value: 操作值</li>
+              </ul>
+            </li>
+          </ul>
         </Paragraph>
-        <pre><code>{`const 狀態改變對應函式 = (state: any, action: any) => {
+        <pre><code>
+{`const 狀態改變對應函式 = (state: any, action: any) => {
   // 透過 switch 來設定 不同類型 要執行的操作
   switch (action.type) {
     case "類型A":
@@ -78,8 +91,12 @@ const UseReducerIntroPage: React.FC = () => {
           </ol>
         </Paragraph>
         <Paragraph>
-          - 於事件中 呼叫 狀態改變方法(執行的操作物件)<br />
-          &nbsp;&nbsp;該方法 會自動 呼叫 狀態改變對應函式(目前狀態變數值, 執行的操作物件)
+          <ul>
+            <li>
+              於事件中 呼叫 狀態改變方法(執行的操作物件)<br />
+              該方法 會自動 呼叫 狀態改變對應函式(目前狀態變數值, 執行的操作物件)
+            </li>
+          </ul>
         </Paragraph>
         <pre><code>{`onClick={() => 狀態改變方法({type: "操作類型", value: 操作值})}`}</code></pre>
 

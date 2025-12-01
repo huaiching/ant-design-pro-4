@@ -59,7 +59,7 @@ export default Component`}</code></pre>
 
         <Title level={2}>範例</Title>
 
-        <Paragraph>- index.tsx</Paragraph>
+        <Title level={4}>index.tsx</Title>
         <pre>
           <code>
 {`import { PageContainer } from '@ant-design/pro-layout';
@@ -95,7 +95,7 @@ export default VDOM`}
           </code>
         </pre>
 
-        <Paragraph>- subDom.tsx</Paragraph>
+        <Title level={4}>subDom.tsx</Title>
         <pre>
           <code>
 {`const Component = (prpos: any) => {

@@ -35,9 +35,13 @@ const [isHot, setIsHot] = useState(true)`}</code></pre>
         <pre><code>{`setState((變數) => {更新邏輯})`}</code></pre>
 
         <Paragraph>
-          - setState 若 連續多次執行更新時，<br />
-          &nbsp;&nbsp;結果會 後蓋前，只保留 最後一次的結果<br />
-          &nbsp;&nbsp;如果 每次的結果都要保留到下一次使用，就必須使用 函式進行更新
+          <ul>
+            <li>
+              setState 若 連續多次執行更新時，<br />
+              結果會 後蓋前，只保留 最後一次的結果<br />
+              如果 每次的結果都要保留到下一次使用，就必須使用 函式進行更新
+            </li>
+          </ul>
         </Paragraph>
 
         <Divider />
@@ -45,7 +49,7 @@ const [isHot, setIsHot] = useState(true)`}</code></pre>
         <Title level={2}>範例</Title>
         <pre>
           <code>
-{`import { PageContainer } from '@ant-design/pro-layout';
+            {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 import { Button, Space } from "antd";
 import { useState } from "react";

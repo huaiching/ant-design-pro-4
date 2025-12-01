@@ -66,9 +66,11 @@ export default VDOM`}
 
         <Title level={2}>進階方法: 設定全域狀態變數</Title>
 
-        <Paragraph>- 全域狀態變數設定</Paragraph>
-        <Paragraph>store/useUserContext.tsx</Paragraph>
-        <pre><code>{`import React, { createContext, useContext, useState, ReactNode } from 'react';
+
+        <Title level={4}>全域狀態變數設定</Title>
+        <Title level={5}>store/useUserContext.tsx</Title>
+        <pre><code>
+{`import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 // 定義用戶資料的型別
 interface User {
@@ -116,9 +118,10 @@ export const useUserGlobalContext = () => {
   };`}
         </code></pre>
 
-        <Paragraph>- 父組件: 使用全域狀態變數</Paragraph>
-        <Paragraph>index.tsx</Paragraph>
-        <pre><code>{`import React from 'react';
+        <Title level={4}>父組件: 使用全域狀態變數</Title>
+        <Title level={5}>index.tsx</Title>
+        <pre><code>
+{`import React from 'react';
 import { GlobalProvider } from './store/useUserContext';
 import SubDom1 from './components/subDom1';
 import SubDom2 from './components/subDom2';
@@ -138,9 +141,10 @@ const App: React.FC = () => {
 export default App;`}
         </code></pre>
 
-        <Paragraph>- 子組件: 更新全域狀態變數</Paragraph>
-        <Paragraph>subDom1.tsx</Paragraph>
-        <pre><code>{`import React, { useState } from 'react';
+        <Title level={4}>子組件: 更新全域狀態變數</Title>
+        <Title level={5}>subDom1.tsx</Title>
+        <pre><code>
+{`import React, { useState } from 'react';
 import { useUserGlobalContext } from '../store/useUserContext';
 import { Button, Input, Space } from 'antd';
 
@@ -180,9 +184,10 @@ const Profile: React.FC = () => {
 export default Profile;`}
         </code></pre>
 
-        <Paragraph>- 子組件: 顯示全域狀態變數資料</Paragraph>
-        <Paragraph>subDom2.tsx</Paragraph>
-        <pre><code>{`import { useUserGlobalContext } from '../store/useUserContext';
+        <Title level={4}>子組件: 顯示全域狀態變數資料</Title>
+        <Title level={5}>subDom2.tsx</Title>
+        <pre><code>
+{`import { useUserGlobalContext } from '../store/useUserContext';
 
 const Component = () => {
     const { user } = useUserGlobalContext();

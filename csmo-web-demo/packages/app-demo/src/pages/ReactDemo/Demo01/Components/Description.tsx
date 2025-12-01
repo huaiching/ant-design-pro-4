@@ -5,14 +5,6 @@ import { Card, Typography, Divider } from 'antd';
 
 const { Title, Paragraph, Text } = Typography;
 
-const CodeBlock: React.FC<{ children: string; language?: string }> = ({ children }) => {
-  return (
-    <pre style={{ margin: '16px 0', borderRadius: '8px' }}>
-      <code>{children}</code>
-    </pre>
-  );
-};
-
 const BasicStructurePage: React.FC = () => {
   return (
     <PageContainer title="頁面檔的基本結構">
@@ -30,7 +22,8 @@ const BasicStructurePage: React.FC = () => {
 
           <Divider />
 
-          <CodeBlock>
+          <pre>
+            <code>
 {`
 import React from 'react';
 // 開頭 進行 元件的載入
@@ -44,13 +37,16 @@ const myExample: React.FC = (輸入參數) => {
     )
 }
 export default myExample;
-`}</CodeBlock>
+`}
+            </code>
+          </pre>
 
           <Divider />
 
           <Title level={3}>範例</Title>
 
-          <CodeBlock>
+          <pre>
+            <code>
 {`
 import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
@@ -64,7 +60,8 @@ const myExample: React.FC = () => {
 }
 export default myExample;
 `}
-          </CodeBlock>
+            </code>
+          </pre>
 
           <Paragraph style={{ marginTop: 32 }}>
             <Text type="secondary">

@@ -1,7 +1,7 @@
 import { PageContainer } from '@ant-design/pro-components'
 import { Typography } from 'antd'
 
-const { Paragraph, Title } = Typography;
+const { Paragraph, Title, Text } = Typography;
 
 const RegexAppendixPage: React.FC = () => {
   return (
@@ -57,12 +57,12 @@ const RegexAppendixPage: React.FC = () => {
         <Paragraph>
           <Title level={3}>4.2. 特定字元</Title>
           <code>0-9</code>：接受數字0-9<br />
-          <code>\\d</code>：數字<br />
-          <code>\\D</code>：非數字<br />
-          <code>\\w</code>：數字字母與底線，等同 [A-Za-z0-9_]<br />
-          <code>\\W</code>：非數字字母與底線，等同 [^A-Za-z0-9_]<br />
-          <code>\\s</code>：空白字元<br />
-          <code>\\S</code>：非空白字元
+          <code>\d</code>：數字<br />
+          <code>\D</code>：非數字<br />
+          <code>\w</code>：數字字母與底線，等同 [A-Za-z0-9_]<br />
+          <code>\W</code>：非數字字母與底線，等同 [^A-Za-z0-9_]<br />
+          <code>\s</code>：空白字元<br />
+          <code>\S</code>：非空白字元
         </Paragraph>
 
         <Paragraph>
@@ -78,12 +78,12 @@ const RegexAppendixPage: React.FC = () => {
 
         <Paragraph>
           <Title level={3}>4.4. 跳脫特殊字元</Title>
-          <code>.</code>、<code>^</code>、<code>&</code>、<code>\\</code>… 等特殊符號若要做為文字使用，必須在前面加上 <code>\\</code>
+          <code>.</code>、<code>^</code>、<code>&</code>、<code>\</code>… 等特殊符號若要做為文字使用，必須在前面加上 <code>\</code>
         </Paragraph>
         <Paragraph>
           例如：<br />
-          <code>\\.</code> 為 <code>.</code> 這個文字<br />
-          <code>\\\\</code> 為 <code>\\</code> 這個文字
+          <code>\.</code> 為 <code>.</code> 這個文字<br />
+          <code>\\</code> 為 <code>\</code> 這個文字
         </Paragraph>
       </Typography>
     </PageContainer>

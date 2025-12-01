@@ -22,9 +22,15 @@ const UseRefIntroPage: React.FC = () => {
           <ol>
             <li>
               宣告<br />
-              - <Text code>元件的Ref型態</Text> 需要根據 使用的輸入框 來進行設定<br />
-              &nbsp;&nbsp;若使用 Antd 的 Input 則要使用 <Text code>InputRef</Text><br />
-              - <Text code>初始值</Text> 可以進行預設值的設定，建議使用時 將 <Text code>初始值</Text> 設定為 null
+              <ul>
+                <li>
+                  <Text code>元件的Ref型態</Text> 需要根據 使用的輸入框 來進行設定<br />
+                  若使用 Antd 的 Input 則要使用 <Text code>InputRef</Text><br />
+                </li>
+                <li>
+                  <Text code>初始值</Text> 可以進行預設值的設定，建議使用時 將 <Text code>初始值</Text> 設定為 null
+                </li>
+              </ul>
             </li>
           </ol>
         </Paragraph>
@@ -34,8 +40,12 @@ const UseRefIntroPage: React.FC = () => {
           <ol start={2}>
             <li>
               元素使用<br />
-              - 透過 onChange 來觸發 狀態變數 的 <Text code>改變事件</Text>，已達成 綁定的目的。<br />
-              &nbsp;&nbsp;也就是 輸入框 內容改變時，會同時改變 後台的某個狀態變數
+              <ul>
+                <li>
+                  透過 onChange 來觸發 狀態變數 的 <Text code>改變事件</Text>，已達成 綁定的目的。<br />
+                  也就是 輸入框 內容改變時，會同時改變 後台的某個狀態變數
+                </li>
+              </ul>
             </li>
           </ol>
         </Paragraph>
@@ -53,7 +63,7 @@ const UseRefIntroPage: React.FC = () => {
         <Title level={2}>範例</Title>
         <pre>
           <code>
-{`import { PageContainer } from '@ant-design/pro-layout';
+            {`import { PageContainer } from '@ant-design/pro-layout';
 import { Input, Space } from 'antd';
 import type { InputRef } from 'antd';
 import React, { useRef, useState } from 'react';

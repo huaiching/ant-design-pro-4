@@ -19,9 +19,17 @@ const UseSyncExternalStoreIntroPage: React.FC = () => {
 
         <Title level={2}>1. 設定 Store</Title>
         <Paragraph>
-          - 針對 變數 設定 資料型態<br />
-          - 設定 資料初始值<br />
-          - 進行 訂閱者 儲存 與 通知事件 設定
+          <ul>
+            <li>
+              針對 變數 設定 資料型態
+            </li>
+            <li>
+              設定 資料初始值
+            </li>
+            <li>
+              進行 訂閱者 儲存 與 通知事件 設定
+            </li>
+          </ul>
         </Paragraph>
 
         <pre><code>{`// 儲存 狀態變化時，要通知的訂閱者資訊 (照抄)
@@ -34,15 +42,34 @@ function emitChange(): void {
         </code></pre>
 
         <Paragraph>
-          - 建立 UserStore 類別，包含<br />
-          &nbsp;&nbsp;- subscribe：訂閱狀態變化<br />
-          &nbsp;&nbsp;- 針對 變數整體 的 get 和 set 方法<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;- <Text code>set 方法</Text>：最後必須要有 <Text code>emitChange()</Text> 才能讓訂閱者知道要更新資料<br />
-          &nbsp;&nbsp;- 資料初始化方法<br />
-          &nbsp;&nbsp;- 個別欄位的 get 和 set 方法 (選填)
+          <ul>
+            <li>
+              建立 UserStore 類別，包含
+              <ul>
+                <li>
+                  subscribe：訂閱狀態變化
+                </li>
+                <li>
+                  針對 變數整體 的 get 和 set 方法
+                  <ul>
+                    <li>
+                      <Text code>set 方法</Text>：最後必須要有 <Text code>emitChange()</Text> 才能讓訂閱者知道要更新資料
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  資料初始化方法
+                </li>
+                <li>
+                  個別欄位的 get 和 set 方法 (選填)
+                </li>
+              </ul>
+            </li>
+          </ul>
         </Paragraph>
 
-        <pre><code>{`// 設定資料型態
+        <pre><code>
+          {`// 設定資料型態
 export interface UserInfo {
   name: string
   age: number
@@ -122,9 +149,11 @@ export const userStore = {
 
         <Title level={3}>2.1. useSyncExternalStore 基本語法</Title>
         <Paragraph>
-          - 第一個參數：訂閱狀態變化<br />
-          - 第二個參數：客戶端的取值函式<br />
-          - 第三個參數：伺服器端的取值函式
+          <ul>
+            <li>第一個參數：訂閱狀態變化</li>
+            <li>第二個參數：客戶端的取值函式</li>
+            <li>第三個參數：伺服器端的取值函式</li>
+          </ul>
         </Paragraph>
         <pre><code>{`const user = useSyncExternalStore(
   userStore.subscribe, // 訂閱
@@ -135,11 +164,14 @@ export const userStore = {
 
         <Title level={3}>2.1. 資料寫入</Title>
         <Paragraph>
-          - 設定 useSyncExternalStore<br />
-          - 進行 <Text code>資料初始化</Text>，因為 全域變數，所以 必須透過 useEffect 進行資料初始化，否則 會有舊資料無法清除的問題<br />
-          - 透過 set 方法，進行資料更新
+          <ul>
+            <li>設定 useSyncExternalStore</li>
+            <li>進行 <Text code>資料初始化</Text>，因為 全域變數，所以 必須透過 useEffect 進行資料初始化，否則 會有舊資料無法清除的問題</li>
+            <li>透過 set 方法，進行資料更新</li>
+          </ul>
         </Paragraph>
-        <pre><code>{`import React, { useEffect } from 'react'
+        <pre><code>
+          {`import React, { useEffect } from 'react'
 import { ProForm, ProFormText, ProFormDigit } from '@ant-design/pro-components'
 import { Card, message } from 'antd'
 import { useSyncExternalStore } from 'react'
@@ -190,10 +222,13 @@ export default Create`}
 
         <Title level={3}>2.2. 資料讀取</Title>
         <Paragraph>
-          - 設定 useSyncExternalStore<br />
-          - 因為 set 方法 有包含 <Text code>emitChange()</Text>，所以 數值更新時，React 會通知要更新資料
+          <ul>
+            <li>設定 useSyncExternalStore</li>
+            <li>因為 set 方法 有包含 <Text code>emitChange()</Text>，所以 數值更新時，React 會通知要更新資料</li>
+          </ul>
         </Paragraph>
-        <pre><code>{`import React, { useEffect } from 'react'
+        <pre><code>
+          {`import React, { useEffect } from 'react'
 import { Card, Descriptions, message } from 'antd'
 import { useSyncExternalStore } from 'react'
 import { userStore } from '../Store/userStore'
