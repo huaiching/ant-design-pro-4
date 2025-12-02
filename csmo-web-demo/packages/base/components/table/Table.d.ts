@@ -1,5 +1,5 @@
-import 'antd/lib/table/style';
 import type { ParamsType } from '@ant-design/pro-provider';
+import 'antd/lib/table/style';
 import type Summary from 'rc-table/lib/Footer/Summary';
 import type { ProTableProps } from './typing';
 declare const ProviderTableContainer: {

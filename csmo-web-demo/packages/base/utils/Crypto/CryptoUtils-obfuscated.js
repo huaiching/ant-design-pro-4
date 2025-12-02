@@ -1,3 +1,5 @@
+"use strict";
+
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 /** @preserve
  (c) 2012 by Cédric Mesnil. All rights reserved.
@@ -82,7 +84,7 @@ function a0_0x5718() {
 (function (_0x3a79b4, _0x4003db) {
   var _0x43bd9a = _a0_0xd1b;
   if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === _0x43bd9a(0x16d, 'a7dw')) module[_0x43bd9a(0x184, 'Yy#j')] = exports = _0x4003db();else (typeof define === "undefined" ? "undefined" : _typeof(define)) === _0x43bd9a(0x29c, '&U6k') && define[_0x43bd9a(0x232, 'Q!4U')] ? define([], _0x4003db) : _0x3a79b4[_0x43bd9a(0x2c9, 'UYK5')] = _0x4003db();
-})(this, function () {
+})(void 0, function () {
   var _0x5b0383 = _a0_0xd1b,
     _0x14953b = _0x14953b || function (_0x2fa7f1, _0x5f2804) {
       var _0x3bfcc0 = _a0_0xd1b,

@@ -27,3 +27,6 @@ export declare const genTimeCriterion: (start: string, end: string, columnName: 
 }[];
 export declare const isUtc: (date: string) => boolean;
 export declare const currentTimeROCAmPm: (formatMessage: IntlShape['formatMessage']) => string;
+export declare const ifISO8601ThanTransfer: (jsonString: string) => string;
+export declare function convertROCInISO8601(input: any): any;
+export declare function convertROCFormatToDayjs(input: any): any;

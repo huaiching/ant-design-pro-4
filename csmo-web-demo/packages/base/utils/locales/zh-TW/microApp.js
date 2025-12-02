@@ -1,4 +1,10 @@
-export default {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = exports.default = {
   'micro.home': '首頁',
   'micro.serviceQuality': '服品',
   'micro.channel': '通路',

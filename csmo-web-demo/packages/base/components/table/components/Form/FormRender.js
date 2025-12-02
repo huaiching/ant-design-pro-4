@@ -1,3 +1,24 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _proForm = _interopRequireDefault(require("@ant-design/pro-form"));
+var _proProvider = require("@ant-design/pro-provider");
+var _proUtils = require("@ant-design/pro-utils");
+var _antd = require("antd");
+var _classnames = _interopRequireDefault(require("classnames"));
+var _omit = _interopRequireDefault(require("omit.js"));
+var _react = _interopRequireWildcard(require("react"));
+var _reactIntl = require("react-intl");
+var _RenderField = require("../../../field/RenderField");
+var _clearTableSessionStorage = require("../../utils/clearTableSessionStorage");
+var _date = require("../../../../utils/transform/date");
+var _jsxRuntime = require("react/jsx-runtime");
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != _typeof(e) && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -13,17 +34,6 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-import ProForm from '@ant-design/pro-form';
-import { ProProvider } from '@ant-design/pro-provider';
-import { omitUndefined, runFunction } from '@ant-design/pro-utils';
-import { ConfigProvider, Table } from 'antd';
-import classNames from 'classnames';
-import dayjs from 'dayjs';
-import omit from 'omit.js';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { useIntl as useReactIntl } from 'react-intl';
-import { renderValueType } from "../../../field/RenderField";
-import { jsx as _jsx } from "react/jsx-runtime";
 function toLowerLine(str) {
   var temp = str.replace(/[A-Z]/g, function (match) {
     return "-".concat(match.toLowerCase());
@@ -60,11 +70,11 @@ var getFormCompetent = function getFormCompetent(isForm, searchConfig) {
 var getFromProps = function getFromProps(isForm, searchConfig, name) {
   if (!isForm && name === 'LightFilter') {
     // 傳給 lightFilter 的問題
-    return omit(_objectSpread({}, searchConfig), ['labelWidth', 'defaultCollapsed', 'filterType']);
+    return (0, _omit.default)(_objectSpread({}, searchConfig), ['labelWidth', 'defaultCollapsed', 'filterType']);
   }
   if (!isForm) {
     // 傳給 QueryFilter 的配置
-    return omit(_objectSpread({
+    return (0, _omit.default)(_objectSpread({
       labelWidth: searchConfig ? searchConfig === null || searchConfig === void 0 ? void 0 : searchConfig.labelWidth : undefined
     }, searchConfig), ['filterType']);
   }
@@ -79,7 +89,7 @@ var getFromProps = function getFromProps(isForm, searchConfig, name) {
  */
 var getFormConfigs = function getFormConfigs(_isForm, formConfig) {
   // 傳給Form的配置
-  return omit(formConfig, ['ignoreRules']);
+  return (0, _omit.default)(formConfig, ['ignoreRules']);
 };
 /**
  * 這裡會把 列配置轉化為 form 表單
@@ -107,7 +117,7 @@ var FormRender = function FormRender(_ref) {
     setNeedCollapsed = _ref.setNeedCollapsed,
     onValuesChange = _ref.onValuesChange,
     _onInit = _ref.onInit;
-  var _useContext = useContext(ProProvider),
+  var _useContext = (0, _react.useContext)(_proProvider.ProProvider),
     hashId = _useContext.hashId;
   var isForm = type === 'form';
   /**
@@ -131,11 +141,12 @@ var FormRender = function FormRender(_ref) {
       return _ref2.apply(this, arguments);
     };
   }();
-  var _useContext2 = useContext(ConfigProvider.ConfigContext),
+  var _useContext2 = (0, _react.useContext)(_antd.ConfigProvider.ConfigContext),
     getPrefixCls = _useContext2.getPrefixCls;
-  var columnsList = useMemo(function () {
+  var storageData = sessionStorage.getItem("".concat(_clearTableSessionStorage.COLUMN_SESSION_KEY, "_").concat(moduleName, "_").concat(location.pathname));
+  var columnsList = (0, _react.useMemo)(function () {
     return columns.filter(function (item) {
-      if (item === Table.EXPAND_COLUMN || item === Table.SELECTION_COLUMN) {
+      if (item === _antd.Table.EXPAND_COLUMN || item === _antd.Table.SELECTION_COLUMN) {
         return false;
       }
       if ((item.hideInSearch || item.search === false) && type !== 'form') {
@@ -168,15 +179,25 @@ var FormRender = function FormRender(_ref) {
       });
     });
   }, [columns, type]);
+  var initialValuesFromColumns = (0, _react.useMemo)(function () {
+    var values = {};
+    columns.forEach(function (column) {
+      if (column.initialValue !== undefined && column.dataIndex) {
+        var key = Array.isArray(column.dataIndex) ? column.dataIndex.join('.') : String(column.dataIndex);
+        values[key] = column.initialValue;
+      }
+    });
+    return values;
+  }, [columns]);
   var className = getPrefixCls('pro-table-search');
   var formClassName = getPrefixCls('pro-table-form');
-  var _useState = useState([]),
+  var _useState = (0, _react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     genItems = _useState2[0],
     setGenItems = _useState2[1];
-  var _useReactIntl = useReactIntl(),
+  var _useReactIntl = (0, _reactIntl.useIntl)(),
     formatMessage = _useReactIntl.formatMessage;
-  useEffect(function () {
+  (0, _react.useEffect)(function () {
     var totalSpan = 0;
     var formGenItems = columnsList.map(function (originItem) {
       var _originItem$colSize;
@@ -187,14 +208,14 @@ var FormRender = function FormRender(_ref) {
         setNeedCollapsed(true);
         hidden = true;
       }
-      var item = omitUndefined({
+      var item = (0, _proUtils.omitUndefined)({
         label: '',
         collapsed: collapsed,
         hidden: hidden,
         colSpan: finalSpan,
         moduleName: originItem.moduleName,
         columnName: originItem.columnName,
-        valueType: runFunction(originItem.valueType, {}),
+        valueType: (0, _proUtils.runFunction)(originItem.valueType, {}),
         key: originItem.key,
         valueEnum: originItem.valueEnum,
         dataIndex: originItem.key || originItem.dataIndex,
@@ -209,10 +230,10 @@ var FormRender = function FormRender(_ref) {
         proFieldProps: originItem.proFieldProps,
         fieldProps: originItem.fieldProps,
         getFieldProps: originItem.fieldProps ? function () {
-          return runFunction(originItem.fieldProps, formRef.current, originItem);
+          return (0, _proUtils.runFunction)(originItem.fieldProps, formRef.current, originItem);
         } : undefined,
         getFormItemProps: originItem.formItemProps ? function () {
-          return runFunction(originItem.formItemProps, formRef.current, originItem);
+          return (0, _proUtils.runFunction)(originItem.formItemProps, formRef.current, originItem);
         } : undefined,
         render: originItem.render,
         renderFormItem: originItem.renderFormItem,
@@ -224,7 +245,7 @@ var FormRender = function FormRender(_ref) {
         startColumnName: originItem.startColumnName,
         endColumnName: originItem.endColumnName
       });
-      return renderValueType(item, {
+      return (0, _RenderField.renderValueType)(item, {
         action: action,
         type: type,
         originItem: originItem,
@@ -234,12 +255,12 @@ var FormRender = function FormRender(_ref) {
     });
     setGenItems(formGenItems);
   }, [action, formRef, type, collapsed, columnsList]);
-  var competentName = useMemo(function () {
+  var competentName = (0, _react.useMemo)(function () {
     return getFormCompetent(isForm, searchConfig);
   }, [searchConfig, isForm]);
 
   // 傳給每個表單的配置，理論上大家都需要
-  var loadingProps = useMemo(function () {
+  var loadingProps = (0, _react.useMemo)(function () {
     return {
       submitter: {
         submitButtonProps: {
@@ -248,29 +269,33 @@ var FormRender = function FormRender(_ref) {
       }
     };
   }, [submitButtonLoading]);
-
-  // const storageData = sessionStorage.getItem(
-  //   `${TABLE_SESSION_KEY}_${moduleName}_${location.pathname}`
-  // )
-
-  var storageData = sessionStorage.getItem("".concat(moduleName, "_").concat(location.pathname));
   var dateValueType = ['date', 'dateTime', 'dateMonth', 'dateQuarter', 'dateWeek', 'dateYear'];
-  var initValue = useMemo(function () {
-    var initData = Object.assign({}, storageData ? JSON.parse(storageData) : formConfig === null || formConfig === void 0 ? void 0 : formConfig.initialValues);
+  var initValue = (0, _react.useMemo)(function () {
+    var _formRef$current, _ref3;
+    var fieldsValue = (_formRef$current = formRef.current) === null || _formRef$current === void 0 ? void 0 : _formRef$current.getFieldsValue();
+    if (fieldsValue) {
+      if (Object.keys(fieldsValue).length !== 0) {
+        var stringifyValue = JSON.stringify(fieldsValue);
+        sessionStorage.setItem("".concat(_clearTableSessionStorage.COLUMN_SESSION_KEY, "_").concat(moduleName, "_").concat(location.pathname), stringifyValue);
+      }
+    }
+    var initData = Object.assign({}, (_ref3 = storageData && Object.keys(JSON.parse(storageData)).length !== 0 ? JSON.parse(storageData) : formConfig === null || formConfig === void 0 ? void 0 : formConfig.initialValues) !== null && _ref3 !== void 0 ? _ref3 : {});
+
     // 時間格式轉換成moment 對象
     Object.keys(initData).forEach(function (key) {
       var value = initData[key];
       if (isNaN(value) && !isNaN(Date.parse(value)) && !(value instanceof Array) && columnsList.find(function (item) {
         return item.columnName === key && dateValueType.includes(item.valueType);
       })) {
-        initData[key] = dayjs(value);
+        initData[key] = (0, _date.convertROCFormatToDayjs)(value);
+        // initData[key] = dayjs(value)
       }
     });
     return initData;
   }, [formConfig === null || formConfig === void 0 ? void 0 : formConfig.initialValues, storageData, columnsList]);
-  return /*#__PURE__*/_jsx("div", {
-    className: classNames(hashId, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({}, getPrefixCls('pro-card'), true), "".concat(getPrefixCls('pro-card'), "-border"), !!bordered), "".concat(getPrefixCls('pro-card'), "-bordered"), !!bordered), "".concat(getPrefixCls('pro-card'), "-ghost"), !!ghost), className, true), formClassName, isForm), getPrefixCls("pro-table-search-".concat(toLowerLine(competentName))), true), "".concat(className, "-ghost"), ghost), searchConfig === null || searchConfig === void 0 ? void 0 : searchConfig.className, searchConfig !== false && (searchConfig === null || searchConfig === void 0 ? void 0 : searchConfig.className))),
-    children: /*#__PURE__*/_jsx(ProForm, _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, loadingProps), getFromProps(isForm, searchConfig, competentName)), getFormConfigs(isForm, formConfig || {})), {}, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+    className: (0, _classnames.default)(hashId, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({}, getPrefixCls('pro-card'), true), "".concat(getPrefixCls('pro-card'), "-border"), !!bordered), "".concat(getPrefixCls('pro-card'), "-bordered"), !!bordered), "".concat(getPrefixCls('pro-card'), "-ghost"), !!ghost), className, true), formClassName, isForm), getPrefixCls("pro-table-search-".concat(toLowerLine(competentName))), true), "".concat(className, "-ghost"), ghost), searchConfig === null || searchConfig === void 0 ? void 0 : searchConfig.className, searchConfig !== false && (searchConfig === null || searchConfig === void 0 ? void 0 : searchConfig.className))),
+    children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_proForm.default, _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, loadingProps), getFromProps(isForm, searchConfig, competentName)), getFormConfigs(isForm, formConfig || {})), {}, {
       dateFormatter: dateFormatter,
       submitter: false,
       rowProps: {
@@ -282,7 +307,7 @@ var FormRender = function FormRender(_ref) {
       onInit: function onInit(values) {
         var getValues = initValue;
         if (_onInit) {
-          _onInit(getValues, Object.assign({}, formConfig === null || formConfig === void 0 ? void 0 : formConfig.initialValues, storageData ? JSON.parse(storageData) : {}));
+          _onInit === null || _onInit === void 0 || _onInit(Object.keys(getValues).length === 0 ? initialValuesFromColumns : getValues, Object.assign({}, formConfig === null || formConfig === void 0 ? void 0 : formConfig.initialValues, storageData ? JSON.parse(storageData) : {}));
         }
         // 觸發一個 submit，之所以這裡觸發是為了保證 value 都被 format了
         if (type !== 'form') {
@@ -290,11 +315,11 @@ var FormRender = function FormRender(_ref) {
           // 修改 pageSize，變成從 url 中獲取的
           var pageInfo = (_action$current = action.current) === null || _action$current === void 0 ? void 0 : _action$current.pageInfo;
           // 從 values 裡獲取是因為有時候要從 url中獲取的 pageSize。
-          var _ref3 = values,
-            _ref3$current = _ref3.current,
-            current = _ref3$current === void 0 ? pageInfo === null || pageInfo === void 0 ? void 0 : pageInfo.current : _ref3$current,
-            _ref3$pageSize = _ref3.pageSize,
-            pageSize = _ref3$pageSize === void 0 ? pageInfo === null || pageInfo === void 0 ? void 0 : pageInfo.pageSize : _ref3$pageSize;
+          var _ref4 = values,
+            _ref4$current = _ref4.current,
+            current = _ref4$current === void 0 ? pageInfo === null || pageInfo === void 0 ? void 0 : pageInfo.current : _ref4$current,
+            _ref4$pageSize = _ref4.pageSize,
+            pageSize = _ref4$pageSize === void 0 ? pageInfo === null || pageInfo === void 0 ? void 0 : pageInfo.pageSize : _ref4$pageSize;
           (_action$current2 = action.current) === null || _action$current2 === void 0 || (_action$current2$setP = _action$current2.setPageInfo) === null || _action$current2$setP === void 0 || _action$current2$setP.call(_action$current2, _objectSpread(_objectSpread({}, pageInfo), {}, {
             current: parseInt(current, 10),
             pageSize: parseInt(pageSize, 10)
@@ -303,8 +328,10 @@ var FormRender = function FormRender(_ref) {
           // if (manualRequest) return
 
           if (!storageData) {
-            sessionStorage.setItem("".concat(moduleName, "_").concat(location.pathname), '{}');
-            if (manualRequest) return;
+            sessionStorage.setItem("".concat(_clearTableSessionStorage.COLUMN_SESSION_KEY, "_").concat(moduleName, "_").concat(location.pathname), '{}');
+            if (manualRequest) {
+              return;
+            }
           }
           submit(getValues, true);
         }
@@ -318,4 +345,4 @@ var FormRender = function FormRender(_ref) {
     }))
   });
 };
-export default FormRender;
+var _default = exports.default = FormRender;

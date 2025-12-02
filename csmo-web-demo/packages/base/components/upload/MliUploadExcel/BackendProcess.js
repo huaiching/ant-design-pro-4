@@ -1,4 +1,20 @@
+"use strict";
+
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _icons = require("@ant-design/icons");
+var _proForm = require("@ant-design/pro-form");
+var _utils = require("../../../utils");
+var _antd = require("antd");
+var _react = _interopRequireWildcard(require("react"));
+var _reactIntl = require("react-intl");
+require("../style.less");
+var _jsxRuntime = require("react/jsx-runtime");
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != _typeof(e) && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -12,34 +28,23 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
-import { ModalForm } from '@ant-design/pro-form';
-import { downloadFile } from "../../../utils";
-import { Button, Col, message, Row, Upload } from 'antd';
-import React, { useRef, useState } from 'react';
-import { useIntl } from 'react-intl';
-import "../style.less";
-
-// 後臺處理組件的Props類型
-import { jsx as _jsx } from "react/jsx-runtime";
-import { jsxs as _jsxs } from "react/jsx-runtime";
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; } // 後臺處理組件的Props類型
 var BackendProcess = function BackendProcess(props) {
-  var _useIntl = useIntl(),
+  var _useIntl = (0, _reactIntl.useIntl)(),
     formatMessage = _useIntl.formatMessage;
-  var _useState = useState(false),
+  var _useState = (0, _react.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     disabled = _useState2[0],
     setDisabled = _useState2[1];
-  var _useState3 = useState(false),
+  var _useState3 = (0, _react.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
     uploading = _useState4[0],
     setUploading = _useState4[1];
-  var _useState5 = useState([]),
+  var _useState5 = (0, _react.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
     uploadFileList = _useState6[0],
     setUploadFileList = _useState6[1];
-  var _useState7 = useState({
+  var _useState7 = (0, _react.useState)({
       uploadFinish: false,
       successCount: 0,
       failCount: 0,
@@ -49,7 +54,7 @@ var BackendProcess = function BackendProcess(props) {
     _useState8 = _slicedToArray(_useState7, 2),
     uploadResult = _useState8[0],
     setUploadResult = _useState8[1];
-  var _useState9 = useState(''),
+  var _useState9 = (0, _react.useState)(''),
     _useState10 = _slicedToArray(_useState9, 2),
     customizedMessage = _useState10[0],
     setCustomizedMessage = _useState10[1];
@@ -61,7 +66,7 @@ var BackendProcess = function BackendProcess(props) {
     showCustomizedMessage = _props$showCustomized === void 0 ? false : _props$showCustomized,
     customTemplate = props.customTemplate,
     customeResultMessage = props.customeResultMessage;
-  var formRef = useRef();
+  var formRef = (0, _react.useRef)();
   var handleTemplate = function handleTemplate() {
     if (customTemplate) {
       customTemplate === null || customTemplate === void 0 || customTemplate();
@@ -69,7 +74,7 @@ var BackendProcess = function BackendProcess(props) {
   };
   var uploadProps = {
     iconRender: function iconRender() {
-      return /*#__PURE__*/_jsx(UploadOutlined, {});
+      return /*#__PURE__*/(0, _jsxRuntime.jsx)(_icons.UploadOutlined, {});
     },
     onRemove: function onRemove(file) {
       if (file) setUploadFileList([]);
@@ -89,7 +94,7 @@ var BackendProcess = function BackendProcess(props) {
         if (arr[arr.length - 1] === 'xlsx') {
           setUploadFileList([file]);
         } else {
-          message.warning(formatMessage({
+          _antd.message.warning(formatMessage({
             id: 'component.upload.pleaseSelectTheCorrectFile'
           }));
         }
@@ -111,7 +116,7 @@ var BackendProcess = function BackendProcess(props) {
               _context.next = 3;
               break;
             }
-            message.error('Upload URL is not provided');
+            _antd.message.error('Upload URL is not provided');
             return _context.abrupt("return");
           case 3:
             setUploading(true);
@@ -163,7 +168,7 @@ var BackendProcess = function BackendProcess(props) {
               props.onError(_context.t0, uploadFileList[0]);
             } else {
               console.error('Upload error:', _context.t0);
-              message.error(formatMessage({
+              _antd.message.error(formatMessage({
                 id: 'component.upload.uploadFile.error'
               }));
             }
@@ -187,7 +192,7 @@ var BackendProcess = function BackendProcess(props) {
   // 下載失敗記錄
   var handleDownloadFail = function handleDownloadFail() {
     if (!uploadResult.uploadFinish) {
-      message.error(formatMessage({
+      _antd.message.error(formatMessage({
         id: 'component.upload.pleaseWaitForUploadingBeforeDownloading'
       }));
       return;
@@ -195,10 +200,10 @@ var BackendProcess = function BackendProcess(props) {
     if (uploadResult.failBlob) {
       var _ref2, _props$failTemplateTi;
       var fileName = (_ref2 = (_props$failTemplateTi = props === null || props === void 0 ? void 0 : props.failTemplateTitle) !== null && _props$failTemplateTi !== void 0 ? _props$failTemplateTi : props === null || props === void 0 ? void 0 : props.templateTitle) !== null && _ref2 !== void 0 ? _ref2 : props.title;
-      downloadFile(uploadResult.failBlob, fileName + '.xlsx');
+      (0, _utils.downloadFile)(uploadResult.failBlob, fileName + '.xlsx');
     }
   };
-  return /*#__PURE__*/_jsxs(ModalForm, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_proForm.ModalForm, {
     className: "uploadExcelForm",
     grid: true,
     labelWrap: true,
@@ -236,52 +241,52 @@ var BackendProcess = function BackendProcess(props) {
       };
     }()),
     submitter: false,
-    children: [props.customizeNode, /*#__PURE__*/_jsxs(Row, {
+    children: [props.customizeNode, /*#__PURE__*/(0, _jsxRuntime.jsxs)(_antd.Row, {
       gutter: [16, 60],
       style: {
         width: '100%'
       },
-      children: [/*#__PURE__*/_jsx(Col, {
+      children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Col, {
         span: 5,
-        children: /*#__PURE__*/_jsx(Upload, _objectSpread(_objectSpread({}, uploadProps), {}, {
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Upload, _objectSpread(_objectSpread({}, uploadProps), {}, {
           maxCount: 1,
           disabled: uploading,
           accept: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          children: /*#__PURE__*/_jsx(Button, {
-            icon: /*#__PURE__*/_jsx(UploadOutlined, {}),
+          children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Button, {
+            icon: /*#__PURE__*/(0, _jsxRuntime.jsx)(_icons.UploadOutlined, {}),
             children: formatMessage({
               id: 'component.upload.selectFile'
             })
           })
         }))
-      }), downloadTemplate && /*#__PURE__*/_jsxs(Col, {
+      }), downloadTemplate && /*#__PURE__*/(0, _jsxRuntime.jsxs)(_antd.Col, {
         span: 14,
-        children: [/*#__PURE__*/_jsx("label", {
+        children: [/*#__PURE__*/(0, _jsxRuntime.jsx)("label", {
           children: formatMessage({
             id: 'component.upload.label.pleaseFirst'
           })
-        }), /*#__PURE__*/_jsx(Button, {
+        }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Button, {
           type: "link",
           size: "small",
           onClick: handleTemplate,
           children: formatMessage({
             id: 'component.upload.downloadTemplate'
           })
-        }), /*#__PURE__*/_jsx("label", {
+        }), /*#__PURE__*/(0, _jsxRuntime.jsx)("label", {
           children: formatMessage({
             id: 'component.upload.label.PleaseFillInTheInfo'
           })
         })]
       })]
-    }), /*#__PURE__*/_jsx(Row, {
+    }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Row, {
       gutter: [16, 60],
       style: {
         width: '100%'
       },
-      children: /*#__PURE__*/_jsx(Col, {
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Col, {
         span: 5,
         offset: 19,
-        children: /*#__PURE__*/_jsx(Button, {
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Button, {
           type: "primary",
           onClick: handleUpload,
           hidden: uploadFileList.length === 0,
@@ -292,46 +297,46 @@ var BackendProcess = function BackendProcess(props) {
           })
         })
       })
-    }), /*#__PURE__*/_jsx(Row, {
+    }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Row, {
       gutter: [16, 60],
       style: {
         width: '100%'
       },
       hidden: !uploadResult.uploadFinish,
-      children: customeResultMessage ? customeResultMessage(uploadResult.successCount, uploadResult.failCount) : /*#__PURE__*/_jsx(Col, {
+      children: customeResultMessage ? customeResultMessage(uploadResult.successCount, uploadResult.failCount) : /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Col, {
         span: 24,
-        children: /*#__PURE__*/_jsxs("label", {
+        children: /*#__PURE__*/(0, _jsxRuntime.jsxs)("label", {
           children: [formatMessage({
             id: 'component.upload.label.importResultImportCompleted'
-          }), /*#__PURE__*/_jsx("span", {
+          }), /*#__PURE__*/(0, _jsxRuntime.jsx)("span", {
             className: "upload-success",
             children: uploadResult.successCount
           }), formatMessage({
             id: 'component.upload.label.Success'
-          }), /*#__PURE__*/_jsx("span", {
+          }), /*#__PURE__*/(0, _jsxRuntime.jsx)("span", {
             className: "upload-fail",
             children: uploadResult.failCount
           }), formatMessage({
             id: 'component.upload.label.Failed'
-          }), showTip && /*#__PURE__*/_jsx("span", {
+          }), showTip && /*#__PURE__*/(0, _jsxRuntime.jsx)("span", {
             children: formatMessage({
               id: 'component.upload.label.tip'
             })
-          }), showCustomizedMessage && /*#__PURE__*/_jsx("span", {
+          }), showCustomizedMessage && /*#__PURE__*/(0, _jsxRuntime.jsx)("span", {
             children: customizedMessage
           })]
         })
       })
-    }), uploadResult.uploadFinish && uploadResult.failCount && uploadResult.failCount > 0 ? /*#__PURE__*/_jsx(Row, {
+    }), uploadResult.uploadFinish && uploadResult.failCount && uploadResult.failCount > 0 ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Row, {
       gutter: [16, 60],
       style: {
         width: '100%'
       },
-      children: /*#__PURE__*/_jsx(Col, {
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Col, {
         span: 24,
-        children: /*#__PURE__*/_jsx(Button, {
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Button, {
           type: "primary",
-          icon: /*#__PURE__*/_jsx(DownloadOutlined, {}),
+          icon: /*#__PURE__*/(0, _jsxRuntime.jsx)(_icons.DownloadOutlined, {}),
           onClick: handleDownloadFail,
           children: formatMessage({
             id: 'component.upload.failedDocumentDownload'
@@ -341,4 +346,4 @@ var BackendProcess = function BackendProcess(props) {
     }) : null]
   });
 };
-export default BackendProcess;
+var _default = exports.default = BackendProcess;

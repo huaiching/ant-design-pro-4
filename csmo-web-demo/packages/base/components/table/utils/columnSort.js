@@ -1,4 +1,10 @@
-export var columnSort = function columnSort(columnsMap) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.columnSort = void 0;
+var columnSort = exports.columnSort = function columnSort(columnsMap) {
   return function (a, b) {
     var _columnsMap$aKey, _columnsMap$bKey;
     var aFixed = a.fixed,

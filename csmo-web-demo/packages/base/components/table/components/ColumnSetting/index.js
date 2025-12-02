@@ -1,5 +1,25 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _icons = require("@ant-design/icons");
+var _proProvider = require("@ant-design/pro-provider");
+var _proUtils = require("@ant-design/pro-utils");
+var _antd = require("antd");
+var _classnames = _interopRequireDefault(require("classnames"));
+var _omit = _interopRequireDefault(require("omit.js"));
+var _react = _interopRequireWildcard(require("react"));
+var _Provide = require("../../Store/Provide");
+var _index = require("../../utils/index");
+var _style = require("./style");
+var _jsxRuntime = require("react/jsx-runtime");
 var _excluded = ["key", "dataIndex", "children"],
   _excluded2 = ["disabled"];
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != _typeof(e) && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -14,34 +34,21 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-import { SettingOutlined, VerticalAlignBottomOutlined, VerticalAlignMiddleOutlined, VerticalAlignTopOutlined } from '@ant-design/icons';
-import { ProProvider, useIntl } from '@ant-design/pro-provider';
-import { runFunction, useRefFunction } from '@ant-design/pro-utils';
-import { Checkbox, ConfigProvider, Popover, Space, Tooltip, Tree, Typography } from 'antd';
-import classNames from 'classnames';
-import omit from 'omit.js';
-import React, { useContext, useEffect, useMemo, useRef } from 'react';
-import { TableContext } from "../../Store/Provide";
-import { genColumnKey } from "../../utils/index";
-import { useStyle } from "./style";
-import { jsx as _jsx } from "react/jsx-runtime";
-import { jsxs as _jsxs } from "react/jsx-runtime";
-import { Fragment as _Fragment } from "react/jsx-runtime";
 var ToolTipIcon = function ToolTipIcon(_ref) {
   var title = _ref.title,
     show = _ref.show,
     children = _ref.children,
     columnKey = _ref.columnKey,
     fixed = _ref.fixed;
-  var _useContext = useContext(TableContext),
+  var _useContext = (0, _react.useContext)(_Provide.TableContext),
     columnsMap = _useContext.columnsMap,
     setColumnsMap = _useContext.setColumnsMap;
   if (!show) {
     return null;
   }
-  return /*#__PURE__*/_jsx(Tooltip, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Tooltip, {
     title: title,
-    children: /*#__PURE__*/_jsx("span", {
+    children: /*#__PURE__*/(0, _jsxRuntime.jsx)("span", {
       onClick: function onClick(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -62,34 +69,34 @@ var CheckboxListItem = function CheckboxListItem(_ref2) {
     className = _ref2.className,
     fixed = _ref2.fixed,
     showListItemOption = _ref2.showListItemOption;
-  var intl = useIntl();
-  var _useContext2 = useContext(ProProvider),
+  var intl = (0, _proProvider.useIntl)();
+  var _useContext2 = (0, _react.useContext)(_proProvider.ProProvider),
     hashId = _useContext2.hashId;
-  var dom = /*#__PURE__*/_jsxs("span", {
+  var dom = /*#__PURE__*/(0, _jsxRuntime.jsxs)("span", {
     className: "".concat(className, "-list-item-option ").concat(hashId).trim(),
-    children: [/*#__PURE__*/_jsx(ToolTipIcon, {
+    children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(ToolTipIcon, {
       columnKey: columnKey,
       fixed: "left",
       title: intl.getMessage('tableToolBar.leftPin', '固定在列首'),
       show: fixed !== 'left',
-      children: /*#__PURE__*/_jsx(VerticalAlignTopOutlined, {})
-    }), /*#__PURE__*/_jsx(ToolTipIcon, {
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_icons.VerticalAlignTopOutlined, {})
+    }), /*#__PURE__*/(0, _jsxRuntime.jsx)(ToolTipIcon, {
       columnKey: columnKey,
       fixed: undefined,
       title: intl.getMessage('tableToolBar.noPin', '不固定'),
       show: !!fixed,
-      children: /*#__PURE__*/_jsx(VerticalAlignMiddleOutlined, {})
-    }), /*#__PURE__*/_jsx(ToolTipIcon, {
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_icons.VerticalAlignMiddleOutlined, {})
+    }), /*#__PURE__*/(0, _jsxRuntime.jsx)(ToolTipIcon, {
       columnKey: columnKey,
       fixed: "right",
       title: intl.getMessage('tableToolBar.rightPin', '固定在列尾'),
       show: fixed !== 'right',
-      children: /*#__PURE__*/_jsx(VerticalAlignBottomOutlined, {})
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_icons.VerticalAlignBottomOutlined, {})
     })]
   });
-  return /*#__PURE__*/_jsxs("span", {
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)("span", {
     className: "".concat(className, "-list-item ").concat(hashId).trim(),
-    children: [/*#__PURE__*/_jsx("div", {
+    children: [/*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
       className: "".concat(className, "-list-item-title ").concat(hashId).trim(),
       children: title
     }), showListItemOption && !isLeaf ? dom : null]
@@ -107,15 +114,15 @@ var CheckboxList = function CheckboxList(_ref3) {
     listTitle = _ref3.title,
     _ref3$listHeight = _ref3.listHeight,
     listHeight = _ref3$listHeight === void 0 ? 280 : _ref3$listHeight;
-  var _useContext3 = useContext(ProProvider),
+  var _useContext3 = (0, _react.useContext)(_proProvider.ProProvider),
     hashId = _useContext3.hashId;
-  var _useContext4 = useContext(TableContext),
+  var _useContext4 = (0, _react.useContext)(_Provide.TableContext),
     columnsMap = _useContext4.columnsMap,
     setColumnsMap = _useContext4.setColumnsMap,
     sortKeyColumns = _useContext4.sortKeyColumns,
     setSortKeyColumns = _useContext4.setSortKeyColumns;
   var show = list && list.length > 0;
-  var treeDataConfig = useMemo(function () {
+  var treeDataConfig = (0, _react.useMemo)(function () {
     if (!show) return {};
     var checkedKeys = [];
     var treeMap = new Map();
@@ -126,7 +133,7 @@ var CheckboxList = function CheckboxList(_ref3) {
           dataIndex = _ref4.dataIndex,
           children = _ref4.children,
           rest = _objectWithoutProperties(_ref4, _excluded);
-        var columnKey = genColumnKey(key, [parentConfig === null || parentConfig === void 0 ? void 0 : parentConfig.columnKey, rest.index].filter(Boolean).join('-'));
+        var columnKey = (0, _index.genColumnKey)(key, [parentConfig === null || parentConfig === void 0 ? void 0 : parentConfig.columnKey, rest.index].filter(Boolean).join('-'));
         var config = columnsMap[columnKey || 'null'] || {
           show: true
         };
@@ -135,7 +142,7 @@ var CheckboxList = function CheckboxList(_ref3) {
         }
         var item = _objectSpread(_objectSpread({
           key: columnKey
-        }, omit(rest, ['className'])), {}, {
+        }, (0, _omit.default)(rest, ['className'])), {}, {
           selectable: false,
           disabled: config.disable === true,
           disableCheckbox: typeof config.disable === 'boolean' ? config.disable : (_config$disable = config.disable) === null || _config$disable === void 0 ? void 0 : _config$disable.checkbox,
@@ -167,7 +174,7 @@ var CheckboxList = function CheckboxList(_ref3) {
   /**
    * 移動到指定的位置
    */
-  var move = useRefFunction(function (id, targetId, dropPosition) {
+  var move = (0, _proUtils.useRefFunction)(function (id, targetId, dropPosition) {
     var newMap = _objectSpread({}, columnsMap);
     var newColumns = _toConsumableArray(sortKeyColumns);
     var findIndex = newColumns.findIndex(function (columnKey) {
@@ -199,7 +206,7 @@ var CheckboxList = function CheckboxList(_ref3) {
   /**
    * 選中反選功能
    */
-  var onCheckTree = useRefFunction(function (e) {
+  var onCheckTree = (0, _proUtils.useRefFunction)(function (e) {
     var newColumnMap = _objectSpread({}, columnsMap);
     var loopSetShow = function loopSetShow(key) {
       var _treeDataConfig$map;
@@ -220,7 +227,7 @@ var CheckboxList = function CheckboxList(_ref3) {
   if (!show) {
     return null;
   }
-  var listDom = /*#__PURE__*/_jsx(Tree, {
+  var listDom = /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Tree, {
     itemHeight: 24,
     draggable: draggable && !!((_treeDataConfig$list = treeDataConfig.list) !== null && _treeDataConfig$list !== void 0 && _treeDataConfig$list.length) && ((_treeDataConfig$list2 = treeDataConfig.list) === null || _treeDataConfig$list2 === void 0 ? void 0 : _treeDataConfig$list2.length) > 1,
     checkable: checkable,
@@ -243,8 +250,8 @@ var CheckboxList = function CheckboxList(_ref3) {
         children: undefined
       });
       if (!node.title) return null;
-      var normalizedTitle = runFunction(node.title, node);
-      var wrappedTitle = /*#__PURE__*/_jsx(Typography.Text, {
+      var normalizedTitle = (0, _proUtils.runFunction)(node.title, node);
+      var wrappedTitle = /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Typography.Text, {
         style: {
           width: 80
         },
@@ -253,9 +260,9 @@ var CheckboxList = function CheckboxList(_ref3) {
         },
         children: normalizedTitle
       });
-      return /*#__PURE__*/_jsx(CheckboxListItem, _objectSpread(_objectSpread({
+      return /*#__PURE__*/(0, _jsxRuntime.jsx)(CheckboxListItem, _objectSpread(_objectSpread({
         className: className
-      }, omit(node, ['key'])), {}, {
+      }, (0, _omit.default)(node, ['key'])), {}, {
         showListItemOption: showListItemOption,
         title: wrappedTitle,
         columnKey: node.key
@@ -268,8 +275,8 @@ var CheckboxList = function CheckboxList(_ref3) {
       return config;
     })
   });
-  return /*#__PURE__*/_jsxs(_Fragment, {
-    children: [showTitle && /*#__PURE__*/_jsx("span", {
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
+    children: [showTitle && /*#__PURE__*/(0, _jsxRuntime.jsx)("span", {
       className: "".concat(className, "-list-title ").concat(hashId).trim(),
       children: listTitle
     }), listDom]
@@ -282,12 +289,12 @@ var GroupCheckboxList = function GroupCheckboxList(_ref6) {
     checkable = _ref6.checkable,
     showListItemOption = _ref6.showListItemOption,
     listsHeight = _ref6.listsHeight;
-  var _useContext5 = useContext(ProProvider),
+  var _useContext5 = (0, _react.useContext)(_proProvider.ProProvider),
     hashId = _useContext5.hashId;
   var rightList = [];
   var leftList = [];
   var list = [];
-  var intl = useIntl();
+  var intl = (0, _proProvider.useIntl)();
   localColumns.forEach(function (item) {
     // 不在 setting 中展示的
     if (item.hideInSetting) {
@@ -306,9 +313,9 @@ var GroupCheckboxList = function GroupCheckboxList(_ref6) {
   });
   var showRight = rightList && rightList.length > 0;
   var showLeft = leftList && leftList.length > 0;
-  return /*#__PURE__*/_jsxs("div", {
-    className: classNames("".concat(className, "-list"), hashId, _defineProperty({}, "".concat(className, "-list-group"), showRight || showLeft)),
-    children: [/*#__PURE__*/_jsx(CheckboxList, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
+    className: (0, _classnames.default)("".concat(className, "-list"), hashId, _defineProperty({}, "".concat(className, "-list-group"), showRight || showLeft)),
+    children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(CheckboxList, {
       title: intl.getMessage('tableToolBar.leftFixedTitle', '固定在左側'),
       list: leftList,
       draggable: draggable,
@@ -316,7 +323,7 @@ var GroupCheckboxList = function GroupCheckboxList(_ref6) {
       showListItemOption: showListItemOption,
       className: className,
       listHeight: listsHeight
-    }), /*#__PURE__*/_jsx(CheckboxList, {
+    }), /*#__PURE__*/(0, _jsxRuntime.jsx)(CheckboxList, {
       list: list,
       draggable: draggable,
       checkable: checkable,
@@ -325,7 +332,7 @@ var GroupCheckboxList = function GroupCheckboxList(_ref6) {
       showTitle: showLeft || showRight,
       className: className,
       listHeight: listsHeight
-    }), /*#__PURE__*/_jsx(CheckboxList, {
+    }), /*#__PURE__*/(0, _jsxRuntime.jsx)(CheckboxList, {
       title: intl.getMessage('tableToolBar.rightFixedTitle', '固定在右側'),
       list: rightList,
       draggable: draggable,
@@ -338,16 +345,16 @@ var GroupCheckboxList = function GroupCheckboxList(_ref6) {
 };
 function ColumnSetting(props) {
   var _props$checkable, _props$draggable, _props$showListItemOp, _props$settingIcon;
-  var columnRef = useRef(null);
+  var columnRef = (0, _react.useRef)(null);
   // 獲得當前上下文的 hashID
-  var counter = useContext(TableContext);
+  var counter = (0, _react.useContext)(_Provide.TableContext);
   var localColumns = props.columns;
   var _props$checkedReset = props.checkedReset,
     checkedReset = _props$checkedReset === void 0 ? true : _props$checkedReset;
   var columnsMap = counter.columnsMap,
     setColumnsMap = counter.setColumnsMap,
     clearPersistenceStorage = counter.clearPersistenceStorage;
-  useEffect(function () {
+  (0, _react.useEffect)(function () {
     var _counter$propsRef$cur;
     if ((_counter$propsRef$cur = counter.propsRef.current) !== null && _counter$propsRef$cur !== void 0 && (_counter$propsRef$cur = _counter$propsRef$cur.columnsState) !== null && _counter$propsRef$cur !== void 0 && _counter$propsRef$cur.value) {
       var _counter$propsRef$cur2;
@@ -360,7 +367,7 @@ function ColumnSetting(props) {
    *
    * @param show
    */
-  var setAllSelectAction = useRefFunction(function () {
+  var setAllSelectAction = (0, _proUtils.useRefFunction)(function () {
     var show = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
     var columnKeyMap = {};
     var loopColumns = function loopColumns(columns) {
@@ -370,7 +377,7 @@ function ColumnSetting(props) {
           index = _ref7.index,
           children = _ref7.children,
           disable = _ref7.disable;
-        var columnKey = genColumnKey(key, index);
+        var columnKey = (0, _index.genColumnKey)(key, index);
         if (columnKey) {
           var _columnsMap$columnKey, _columnsMap$columnKey2;
           columnKeyMap[columnKey] = {
@@ -391,7 +398,7 @@ function ColumnSetting(props) {
   });
 
   // 全選和反選
-  var checkedAll = useRefFunction(function (e) {
+  var checkedAll = (0, _proUtils.useRefFunction)(function (e) {
     if (e.target.checked) {
       setAllSelectAction();
     } else {
@@ -400,7 +407,7 @@ function ColumnSetting(props) {
   });
 
   // 重置項目
-  var clearClick = useRefFunction(function () {
+  var clearClick = (0, _proUtils.useRefFunction)(function () {
     var _counter$propsRef$cur3;
     clearPersistenceStorage === null || clearPersistenceStorage === void 0 || clearPersistenceStorage();
     setColumnsMap(((_counter$propsRef$cur3 = counter.propsRef.current) === null || _counter$propsRef$cur3 === void 0 || (_counter$propsRef$cur3 = _counter$propsRef$cur3.columnsState) === null || _counter$propsRef$cur3 === void 0 ? void 0 : _counter$propsRef$cur3.defaultValue) || columnRef.current || counter.defaultColumnKeyMap);
@@ -413,29 +420,29 @@ function ColumnSetting(props) {
 
   // 是否已經選中
   var indeterminate = unCheckedKeys.length > 0 && unCheckedKeys.length !== localColumns.length;
-  var intl = useIntl();
-  var _useContext6 = useContext(ConfigProvider.ConfigContext),
+  var intl = (0, _proProvider.useIntl)();
+  var _useContext6 = (0, _react.useContext)(_antd.ConfigProvider.ConfigContext),
     getPrefixCls = _useContext6.getPrefixCls;
   var className = getPrefixCls('pro-table-column-setting');
-  var _useStyle = useStyle(className),
+  var _useStyle = (0, _style.useStyle)(className),
     wrapSSR = _useStyle.wrapSSR,
     hashId = _useStyle.hashId;
-  return wrapSSR( /*#__PURE__*/_jsx(Popover, {
+  return wrapSSR( /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Popover, {
     arrow: false,
-    title: /*#__PURE__*/_jsxs("div", {
+    title: /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
       className: "".concat(className, "-title ").concat(hashId).trim(),
-      children: [props.checkable === false ? /*#__PURE__*/_jsx("div", {}) : /*#__PURE__*/_jsx(Checkbox, {
+      children: [props.checkable === false ? /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {}) : /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Checkbox, {
         indeterminate: indeterminate,
         checked: unCheckedKeys.length === 0 && unCheckedKeys.length !== localColumns.length,
         onChange: function onChange(e) {
           checkedAll(e);
         },
         children: intl.getMessage('tableToolBar.columnDisplay', '列展示')
-      }), checkedReset ? /*#__PURE__*/_jsx("a", {
+      }), checkedReset ? /*#__PURE__*/(0, _jsxRuntime.jsx)("a", {
         onClick: clearClick,
         className: "".concat(className, "-action-rest-button ").concat(hashId).trim(),
         children: intl.getMessage('tableToolBar.reset', '重置')
-      }) : null, props !== null && props !== void 0 && props.extra ? /*#__PURE__*/_jsx(Space, {
+      }) : null, props !== null && props !== void 0 && props.extra ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Space, {
         size: 12,
         align: "center",
         children: props.extra
@@ -444,7 +451,7 @@ function ColumnSetting(props) {
     overlayClassName: "".concat(className, "-overlay ").concat(hashId).trim(),
     trigger: "click",
     placement: "bottomRight",
-    content: /*#__PURE__*/_jsx(GroupCheckboxList, {
+    content: /*#__PURE__*/(0, _jsxRuntime.jsx)(GroupCheckboxList, {
       checkable: (_props$checkable = props.checkable) !== null && _props$checkable !== void 0 ? _props$checkable : true,
       draggable: (_props$draggable = props.draggable) !== null && _props$draggable !== void 0 ? _props$draggable : true,
       showListItemOption: (_props$showListItemOp = props.showListItemOption) !== null && _props$showListItemOp !== void 0 ? _props$showListItemOp : true,
@@ -452,10 +459,10 @@ function ColumnSetting(props) {
       localColumns: localColumns,
       listsHeight: props.listsHeight
     }),
-    children: props.children || /*#__PURE__*/_jsx(Tooltip, {
+    children: props.children || /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Tooltip, {
       title: intl.getMessage('tableToolBar.columnSetting', '列設置'),
-      children: (_props$settingIcon = props.settingIcon) !== null && _props$settingIcon !== void 0 ? _props$settingIcon : /*#__PURE__*/_jsx(SettingOutlined, {})
+      children: (_props$settingIcon = props.settingIcon) !== null && _props$settingIcon !== void 0 ? _props$settingIcon : /*#__PURE__*/(0, _jsxRuntime.jsx)(_icons.SettingOutlined, {})
     })
   }));
 }
-export default ColumnSetting;
+var _default = exports.default = ColumnSetting;

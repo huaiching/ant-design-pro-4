@@ -1,12 +1,19 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.turn = void 0;
+exports.useStyle = useStyle;
+var _cssinjs = require("@ant-design/cssinjs");
+var _proProvider = require("@ant-design/pro-provider");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-import { Keyframes } from '@ant-design/cssinjs';
-import { useStyle as useAntdStyle } from '@ant-design/pro-provider';
-export var turn = new Keyframes('turn', {
+var turn = exports.turn = new _cssinjs.Keyframes('turn', {
   '0%': {
     transform: 'rotate(0deg)'
   },
@@ -24,7 +31,7 @@ export var turn = new Keyframes('turn', {
   }
 });
 var genProListStyle = function genProListStyle(token) {
-  return _defineProperty(_defineProperty(_defineProperty({}, token.componentCls, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({
+  return _defineProperty(_defineProperty(_defineProperty(_defineProperty({}, token.componentCls, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({
     zIndex: 1
   }, "".concat(token.antCls, "-table-wrapper ").concat(token.antCls, "-table-pagination").concat(token.antCls, "-pagination"), {
     marginBlockEnd: 0
@@ -131,10 +138,44 @@ var genProListStyle = function genProListStyle(token) {
       alignItems: 'center',
       justifyContent: 'flex-end'
     }
-  }));
+  })), '.mli-table', {
+    '.ant-pagination-total-text': {
+      flex: 1
+    },
+    '.ant-pro-table-search': {
+      marginBottom: 0,
+      padding: 0
+    },
+    '.ant-pro-table-list-toolbar': {
+      '.ant-pro-table-list-toolbar-container': {
+        padding: '0 0 16px'
+      }
+    },
+    '.ant-table-cell': {
+      '.ant-btn': {
+        padding: '4px 8px'
+      }
+    },
+    '.title-mask-container': {
+      marginLeft: 4,
+      cursor: 'pointer'
+    },
+    '.mli-table-item-content': {
+      display: 'inline-block',
+      maxWidth: '100%',
+      verticalAlign: 'bottom'
+    },
+    '.mli-table-item-content-number': {
+      width: '100%',
+      textAlign: 'right'
+    },
+    '.ant-alert': {
+      padding: '5px 15px'
+    }
+  });
 };
-export function useStyle(prefixCls) {
-  return useAntdStyle('ProTable', function (token) {
+function useStyle(prefixCls) {
+  return (0, _proProvider.useStyle)('ProTable', function (token) {
     var proListToken = _objectSpread(_objectSpread({}, token), {}, {
       componentCls: ".".concat(prefixCls)
     });

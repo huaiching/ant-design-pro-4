@@ -1,5 +1,25 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _icons = require("@ant-design/icons");
+var _proForm = _interopRequireWildcard(require("@ant-design/pro-form"));
+var _proProvider = require("@ant-design/pro-provider");
+var _proUtils = require("@ant-design/pro-utils");
+var _antd = require("antd");
+var _useMergedState3 = _interopRequireDefault(require("rc-util/lib/hooks/useMergedState"));
+var _get = _interopRequireDefault(require("rc-util/lib/utils/get"));
+var _set = _interopRequireDefault(require("rc-util/lib/utils/set"));
+var _react = _interopRequireWildcard(require("react"));
+var _Table = _interopRequireDefault(require("../../Table"));
+var _jsxRuntime = require("react/jsx-runtime");
 var _excluded = ["onTableChange", "maxLength", "formItemProps", "recordCreatorProps", "rowKey", "controlled", "defaultValue", "onChange", "editableFormRef"],
   _excluded2 = ["record", "position", "creatorButtonText", "newRecordType", "parentKey", "style"];
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != _typeof(e) && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -17,20 +37,7 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-import { PlusOutlined } from '@ant-design/icons';
-import ProForm, { ProFormDependency } from '@ant-design/pro-form';
-import { useIntl } from '@ant-design/pro-provider';
-import { isDeepEqualReact, runFunction, stringify, useRefFunction } from '@ant-design/pro-utils';
-import { Button, Form } from 'antd';
-import useMergedState from "rc-util/es/hooks/useMergedState";
-import get from "rc-util/es/utils/get";
-import set from "rc-util/es/utils/set";
-import React, { useContext, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
-import ProTable from "../../Table";
-import { jsx as _jsx } from "react/jsx-runtime";
-import { jsxs as _jsxs } from "react/jsx-runtime";
-import { Fragment as _Fragment } from "react/jsx-runtime";
-var EditableTableActionContext = /*#__PURE__*/React.createContext(undefined);
+var EditableTableActionContext = /*#__PURE__*/_react.default.createContext(undefined);
 
 /**
  * 可編輯表格的按鈕
@@ -41,8 +48,8 @@ function RecordCreator(props) {
     position = props.position,
     newRecordType = props.newRecordType,
     parentKey = props.parentKey;
-  var actionRef = useContext(EditableTableActionContext);
-  return /*#__PURE__*/React.cloneElement(children, _objectSpread(_objectSpread({}, children.props), {}, {
+  var actionRef = (0, _react.useContext)(EditableTableActionContext);
+  return /*#__PURE__*/_react.default.cloneElement(children, _objectSpread(_objectSpread({}, children.props), {}, {
     onClick: function () {
       var _onClick = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
         var _children$props$onCli, _children$props, _actionRef$current;
@@ -85,7 +92,7 @@ function RecordCreator(props) {
  */
 function EditableTable(props) {
   var _props$editable2, _props$editable4;
-  var intl = useIntl();
+  var intl = (0, _proProvider.useIntl)();
   var onTableChange = props.onTableChange,
     maxLength = props.maxLength,
     formItemProps = props.formItemProps,
@@ -96,15 +103,15 @@ function EditableTable(props) {
     onChange = props.onChange,
     editableFormRef = props.editableFormRef,
     rest = _objectWithoutProperties(props, _excluded);
-  var preData = useRef(undefined);
-  var actionRef = useRef();
-  var formRef = useRef();
+  var preData = (0, _react.useRef)(undefined);
+  var actionRef = (0, _react.useRef)();
+  var formRef = (0, _react.useRef)();
 
   // 設置 ref
-  useImperativeHandle(rest.actionRef, function () {
+  (0, _react.useImperativeHandle)(rest.actionRef, function () {
     return actionRef.current;
   }, [actionRef.current]);
-  var _useMergedState = useMergedState(function () {
+  var _useMergedState = (0, _useMergedState3.default)(function () {
       return props.value || defaultValue || [];
     }, {
       value: props.value,
@@ -113,7 +120,7 @@ function EditableTable(props) {
     _useMergedState2 = _slicedToArray(_useMergedState, 2),
     value = _useMergedState2[0],
     setValue = _useMergedState2[1];
-  var getRowKey = React.useMemo(function () {
+  var getRowKey = _react.default.useMemo(function () {
     if (typeof rowKey === 'function') {
       return rowKey;
     }
@@ -127,7 +134,7 @@ function EditableTable(props) {
    * @param finlayRowKey
    * @returns string | number
    */
-  var coverRowKey = useRefFunction(function (finlayRowKey) {
+  var coverRowKey = (0, _proUtils.useRefFunction)(function (finlayRowKey) {
     // 如果是 prop.name 的模式，就需要把行號轉化成具體的rowKey
     if (typeof finlayRowKey === 'number' && !props.name) {
       if (finlayRowKey >= value.length) return finlayRowKey;
@@ -147,7 +154,7 @@ function EditableTable(props) {
   });
 
   // 設置 editableFormRef
-  useImperativeHandle(editableFormRef, function () {
+  (0, _react.useImperativeHandle)(editableFormRef, function () {
     /**
      * 獲取一行數據的
      * @param rowIndex
@@ -197,20 +204,20 @@ function EditableTable(props) {
         var finlayRowKey = coverRowKey(rowIndex);
         var rowKeyName = [props.name, (_finlayRowKey$toStrin2 = finlayRowKey === null || finlayRowKey === void 0 ? void 0 : finlayRowKey.toString()) !== null && _finlayRowKey$toStrin2 !== void 0 ? _finlayRowKey$toStrin2 : ''].flat(1).filter(Boolean);
         var newRowData = Object.assign({}, _objectSpread(_objectSpread({}, getRowData(rowIndex)), data || {}));
-        var updateValues = set({}, rowKeyName, newRowData);
+        var updateValues = (0, _set.default)({}, rowKeyName, newRowData);
         (_formRef$current4 = formRef.current) === null || _formRef$current4 === void 0 || _formRef$current4.setFieldsValue(updateValues);
         return true;
       }
     });
   }, [coverRowKey, props.name, formRef.current]);
-  useEffect(function () {
+  (0, _react.useEffect)(function () {
     if (!props.controlled) return;
     (value || []).forEach(function (current, index) {
       var _formRef$current5;
       (_formRef$current5 = formRef.current) === null || _formRef$current5 === void 0 || _formRef$current5.setFieldsValue(_defineProperty({}, "".concat(getRowKey(current, index)), current));
     }, {});
-  }, [stringify(value), props.controlled]);
-  useEffect(function () {
+  }, [(0, _proUtils.stringify)(value), props.controlled]);
+  (0, _react.useEffect)(function () {
     if (props.name) {
       var _props$editable;
       formRef.current = props === null || props === void 0 || (_props$editable = props.editable) === null || _props$editable === void 0 ? void 0 : _props$editable.form;
@@ -225,29 +232,29 @@ function EditableTable(props) {
     style = _ref.style,
     restButtonProps = _objectWithoutProperties(_ref, _excluded2);
   var isTop = position === 'top';
-  var creatorButtonDom = useMemo(function () {
+  var creatorButtonDom = (0, _react.useMemo)(function () {
     if (typeof maxLength === 'number' && maxLength <= (value === null || value === void 0 ? void 0 : value.length)) {
       return false;
     }
-    return recordCreatorProps !== false && /*#__PURE__*/_jsx(RecordCreator, {
-      record: runFunction(record, value === null || value === void 0 ? void 0 : value.length, value) || {},
+    return recordCreatorProps !== false && /*#__PURE__*/(0, _jsxRuntime.jsx)(RecordCreator, {
+      record: (0, _proUtils.runFunction)(record, value === null || value === void 0 ? void 0 : value.length, value) || {},
       position: position,
-      parentKey: runFunction(parentKey, value === null || value === void 0 ? void 0 : value.length, value),
+      parentKey: (0, _proUtils.runFunction)(parentKey, value === null || value === void 0 ? void 0 : value.length, value),
       newRecordType: newRecordType,
-      children: /*#__PURE__*/_jsx(Button, _objectSpread(_objectSpread({
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Button, _objectSpread(_objectSpread({
         type: "dashed",
         style: _objectSpread({
           display: 'block',
           margin: '10px 0',
           width: '100%'
         }, style),
-        icon: /*#__PURE__*/_jsx(PlusOutlined, {})
+        icon: /*#__PURE__*/(0, _jsxRuntime.jsx)(_icons.PlusOutlined, {})
       }, restButtonProps), {}, {
         children: creatorButtonText || intl.getMessage('editableTable.action.add', '添加一行數據')
       }))
     });
   }, [recordCreatorProps, maxLength, value === null || value === void 0 ? void 0 : value.length]);
-  var buttonRenderProps = useMemo(function () {
+  var buttonRenderProps = (0, _react.useMemo)(function () {
     if (!creatorButtonDom) {
       return {};
     }
@@ -259,19 +266,19 @@ function EditableTable(props) {
               var _rest$columns;
               var className = _ref2.className,
                 children = _ref2.children;
-              return /*#__PURE__*/_jsxs("thead", {
+              return /*#__PURE__*/(0, _jsxRuntime.jsxs)("thead", {
                 className: className,
-                children: [children, /*#__PURE__*/_jsxs("tr", {
+                children: [children, /*#__PURE__*/(0, _jsxRuntime.jsxs)("tr", {
                   style: {
                     position: 'relative'
                   },
-                  children: [/*#__PURE__*/_jsx("td", {
+                  children: [/*#__PURE__*/(0, _jsxRuntime.jsx)("td", {
                     colSpan: 0,
                     style: {
                       visibility: 'hidden'
                     },
                     children: creatorButtonDom
-                  }), /*#__PURE__*/_jsx("td", {
+                  }), /*#__PURE__*/(0, _jsxRuntime.jsx)("td", {
                     style: {
                       position: 'absolute',
                       left: 0,
@@ -290,7 +297,7 @@ function EditableTable(props) {
     return {
       tableViewRender: function tableViewRender(_, dom) {
         var _props$tableViewRende, _props$tableViewRende2;
-        return /*#__PURE__*/_jsxs(_Fragment, {
+        return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
           children: [(_props$tableViewRende = (_props$tableViewRende2 = props.tableViewRender) === null || _props$tableViewRende2 === void 0 ? void 0 : _props$tableViewRende2.call(props, _, dom)) !== null && _props$tableViewRende !== void 0 ? _props$tableViewRende : dom, creatorButtonDom]
         });
       }
@@ -301,7 +308,7 @@ function EditableTable(props) {
   /**
    * 防止閉包的onchange
    */
-  var newOnValueChange = useRefFunction(function (r, dataSource) {
+  var newOnValueChange = (0, _proUtils.useRefFunction)(function (r, dataSource) {
     var _props$editable3, _props$editable3$onVa, _props$onValuesChange;
     (_props$editable3 = props.editable) === null || _props$editable3 === void 0 || (_props$editable3$onVa = _props$editable3.onValuesChange) === null || _props$editable3$onVa === void 0 || _props$editable3$onVa.call(_props$editable3, r, dataSource);
     (_props$onValuesChange = props.onValuesChange) === null || _props$onValuesChange === void 0 || _props$onValuesChange.call(props, dataSource, r);
@@ -315,10 +322,10 @@ function EditableTable(props) {
   props.controlled && props !== null && props !== void 0 && props.onChange) {
     editableProps.onValuesChange = newOnValueChange;
   }
-  return /*#__PURE__*/_jsxs(_Fragment, {
-    children: [/*#__PURE__*/_jsx(EditableTableActionContext.Provider, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
+    children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(EditableTableActionContext.Provider, {
       value: actionRef,
-      children: /*#__PURE__*/_jsx(ProTable, _objectSpread(_objectSpread(_objectSpread({
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_Table.default, _objectSpread(_objectSpread(_objectSpread({
         search: false,
         options: false,
         pagination: false,
@@ -339,12 +346,12 @@ function EditableTable(props) {
           //  如果是top，需要重新設置一下 form，不然會導致 id 相同數據混淆
           if (props.name && position === 'top') {
             var _formRef$current6;
-            var newValue = set({}, [props.name].flat(1).filter(Boolean), dataSource);
+            var newValue = (0, _set.default)({}, [props.name].flat(1).filter(Boolean), dataSource);
             (_formRef$current6 = formRef.current) === null || _formRef$current6 === void 0 || _formRef$current6.setFieldsValue(newValue);
           }
         }
       }))
-    }), props.name ? /*#__PURE__*/_jsx(ProFormDependency, {
+    }), props.name ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_proForm.ProFormDependency, {
       name: [props.name],
       children: function children(changeValue) {
         var _props$editable5, _props$editable5$onVa;
@@ -352,10 +359,10 @@ function EditableTable(props) {
           preData.current = value;
           return null;
         }
-        var list = get(changeValue, [props.name].flat(1));
+        var list = (0, _get.default)(changeValue, [props.name].flat(1));
         var changeItem = list === null || list === void 0 ? void 0 : list.find(function (item, index) {
           var _preData$current;
-          return !isDeepEqualReact(item, (_preData$current = preData.current) === null || _preData$current === void 0 ? void 0 : _preData$current[index]);
+          return !(0, _proUtils.isDeepEqualReact)(item, (_preData$current = preData.current) === null || _preData$current === void 0 ? void 0 : _preData$current[index]);
         });
         preData.current = value;
         if (!changeItem) return null;
@@ -373,14 +380,14 @@ function EditableTable(props) {
  * @param props
  */
 function FieldEditableTable(props) {
-  var form = ProForm.useFormInstance();
-  if (!props.name) return /*#__PURE__*/_jsx(EditableTable, _objectSpread({
+  var form = _proForm.default.useFormInstance();
+  if (!props.name) return /*#__PURE__*/(0, _jsxRuntime.jsx)(EditableTable, _objectSpread({
     tableLayout: "fixed",
     scroll: {
       x: 'max-content'
     }
   }, props));
-  return /*#__PURE__*/_jsx(Form.Item, _objectSpread(_objectSpread({
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Form.Item, _objectSpread(_objectSpread({
     style: {
       maxWidth: '100%'
     }
@@ -389,12 +396,12 @@ function FieldEditableTable(props) {
     shouldUpdate: function shouldUpdate(prev, next) {
       var name = [props.name].flat(1);
       try {
-        return JSON.stringify(get(prev, name)) !== JSON.stringify(get(next, name));
+        return JSON.stringify((0, _get.default)(prev, name)) !== JSON.stringify((0, _get.default)(next, name));
       } catch (_error) {
         return true;
       }
     },
-    children: /*#__PURE__*/_jsx(EditableTable, _objectSpread(_objectSpread({
+    children: /*#__PURE__*/(0, _jsxRuntime.jsx)(EditableTable, _objectSpread(_objectSpread({
       tableLayout: "fixed",
       scroll: {
         x: 'max-content'
@@ -407,4 +414,4 @@ function FieldEditableTable(props) {
   }));
 }
 FieldEditableTable.RecordCreator = RecordCreator;
-export default FieldEditableTable;
+var _default = exports.default = FieldEditableTable;

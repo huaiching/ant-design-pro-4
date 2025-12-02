@@ -10,7 +10,7 @@ export default {
   'menu.reactDemo.demo02': 'JS 與 TypeScript',
   'menu.reactDemo.demo02.demo02-01': 'CSS 樣式',
   'menu.reactDemo.demo02.demo02-02': '變數宣告 與 型態設定',
-  'menu.reactDemo.demo02.demo02-03': '複雜型別(type)',  'menu.reactDemo.demo02.demo02-04': '介面(interface)',
+  'menu.reactDemo.demo02.demo02-03': '複雜型別(type)', 'menu.reactDemo.demo02.demo02-04': '介面(interface)',
   'menu.reactDemo.demo02.demo02-05': '陣列',
   'menu.reactDemo.demo02.demo02-06': '函式',
   'menu.reactDemo.demo02.demo02-07': '多型別變數(聯集)',
@@ -44,5 +44,8 @@ export default {
   'menu.mobXDemo': 'Mobx 使用範例',
   'menu.mobXDemo.demo01': '使用說明',
   'menu.mobXDemo.demo02': '使用範例',
-  'menu.mobXDemo.demo03': 'formRef 使用範例'
+  'menu.mobXDemo.demo03': 'formRef 使用範例',
+
+  'menu.domain': '後端開發',
+  'menu.domain.sqlDemo': '後端的增刪改查',
 }

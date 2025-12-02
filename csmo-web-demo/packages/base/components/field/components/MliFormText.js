@@ -1,4 +1,20 @@
+"use strict";
+
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _proForm = require("@ant-design/pro-form");
+var _lodash = require("lodash");
+var _omit = _interopRequireDefault(require("omit.js"));
+var React = _interopRequireWildcard(require("react"));
+var _reactIntl = require("react-intl");
+var _utils = require("../../../utils");
+var _jsxRuntime = require("react/jsx-runtime");
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != _typeof(e) && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -10,15 +26,8 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-import { ProFormText } from '@ant-design/pro-form';
-import { merge } from 'lodash';
-import omit from 'omit.js';
-import * as React from 'react';
-import { useIntl } from 'react-intl';
-import { toCDB as TOCDB, toDBC as ToDBC } from "../../../utils";
-import { jsx as _jsx } from "react/jsx-runtime";
 var MliFormText = function MliFormText(props) {
-  var _useIntl = useIntl(),
+  var _useIntl = (0, _reactIntl.useIntl)(),
     formatMessage = _useIntl.formatMessage;
   var moduleName = props.moduleName,
     columnName = props.columnName,
@@ -31,7 +40,7 @@ var MliFormText = function MliFormText(props) {
     _React$useState2 = _slicedToArray(_React$useState, 2),
     lock = _React$useState2[0],
     setLock = _React$useState2[1];
-  var defaultProps = merge({
+  var defaultProps = (0, _lodash.merge)({
     fieldProps: {
       maxLength: 60,
       onCompositionStart: function onCompositionStart() {
@@ -48,7 +57,7 @@ var MliFormText = function MliFormText(props) {
           return val;
         }
         if (!lock) {
-          return toDBC ? ToDBC(val) : toCDB ? TOCDB(val) : val;
+          return toDBC ? (0, _utils.toDBC)(val) : toCDB ? (0, _utils.toCDB)(val) : val;
         }
         return val;
       }
@@ -71,7 +80,7 @@ var MliFormText = function MliFormText(props) {
       defaultProps.rules = [requiredRule];
     }
   }
-  return /*#__PURE__*/_jsx(ProFormText, _objectSpread({
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_proForm.ProFormText, _objectSpread({
     colProps: {
       span: colSpan !== null && colSpan !== void 0 ? colSpan : 8
     },
@@ -86,6 +95,6 @@ var MliFormText = function MliFormText(props) {
         id: moduleName ? "".concat(moduleName, ".columns.").concat(columnName) : "".concat(columnName)
       })
     })
-  }, omit(defaultProps, ['moduleName', 'columnName', 'colSpan'])));
+  }, (0, _omit.default)(defaultProps, ['moduleName', 'columnName', 'colSpan'])));
 };
-export default MliFormText;
+var _default = exports.default = MliFormText;

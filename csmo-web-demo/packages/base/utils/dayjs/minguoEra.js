@@ -1,4 +1,10 @@
-export var yearBias = 1911;
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.yearBias = exports.default = void 0;
+var yearBias = exports.yearBias = 1911;
 var minguoEra = function minguoEra(_o, c) {
   var prototype = c.prototype;
   var oldFormat = prototype.format;
@@ -17,4 +23,4 @@ var minguoEra = function minguoEra(_o, c) {
     return oldFormat.bind(this)(result);
   };
 };
-export default minguoEra;
+var _default = exports.default = minguoEra;

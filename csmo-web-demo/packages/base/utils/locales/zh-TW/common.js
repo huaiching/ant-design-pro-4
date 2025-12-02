@@ -1,4 +1,10 @@
-export default {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = exports.default = {
   'common.year': 'TTT',
   'common.month': 'TTT/MM',
   'common.yearMonth': 'YYYYMM',

@@ -1,5 +1,21 @@
+"use strict";
+
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _icons = require("@ant-design/icons");
+var _antd = require("antd");
+var _lodash = require("lodash");
+var _react = _interopRequireWildcard(require("react"));
+var _reactIntl = require("react-intl");
+var _download = require("../../../utils/file/download");
+var _transform = require("../../../utils/transform");
+var _jsxRuntime = require("react/jsx-runtime");
 var _excluded = ["errorMsg", "uploadRequest", "fieldProps", "formItemProps", "columnName", "moduleName", "readonly", "disabled", "asyncUpload", "showDownload", "handleDownload", "handleDelete", "beforeUpload"];
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != _typeof(e) && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -20,18 +36,8 @@ function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" !=
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-import { FileOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
-import { Button, Col, Form, message, Row, Typography, Upload } from 'antd';
-import { cloneDeep } from 'lodash';
-import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react';
-import { useIntl } from 'react-intl';
-import { fileRead } from "../../../utils/file/download";
-import { getFileIconByName } from "../../../utils/transform";
-import { jsx as _jsx } from "react/jsx-runtime";
-import { jsxs as _jsxs } from "react/jsx-runtime";
-import { Fragment as _Fragment } from "react/jsx-runtime";
 var MliFormUpload = function MliFormUpload(props, ref) {
-  var defaultProps = cloneDeep(props);
+  var defaultProps = (0, _lodash.cloneDeep)(props);
   var errorMsg = defaultProps.errorMsg,
     _defaultProps$uploadR = defaultProps.uploadRequest,
     uploadRequest = _defaultProps$uploadR === void 0 ? function () {
@@ -54,17 +60,17 @@ var MliFormUpload = function MliFormUpload(props, ref) {
     handleDelete = defaultProps.handleDelete,
     beforeUpload = defaultProps.beforeUpload,
     restProps = _objectWithoutProperties(defaultProps, _excluded);
-  var _useIntl = useIntl(),
+  var _useIntl = (0, _reactIntl.useIntl)(),
     formatMessage = _useIntl.formatMessage;
-  var _useState = useState([]),
+  var _useState = (0, _react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     fileList = _useState2[0],
     setFileList = _useState2[1];
-  var _useState3 = useState(),
+  var _useState3 = (0, _react.useState)(),
     _useState4 = _slicedToArray(_useState3, 2),
     onlyOneImage = _useState4[0],
     setOnlyOneImage = _useState4[1];
-  useImperativeHandle(ref, function () {
+  (0, _react.useImperativeHandle)(ref, function () {
     return {
       getFileList: function getFileList() {
         return fileList;
@@ -72,18 +78,18 @@ var MliFormUpload = function MliFormUpload(props, ref) {
       setFileList: setFileList
     };
   });
-  var isPictureCard = useMemo(function () {
+  var isPictureCard = (0, _react.useMemo)(function () {
     return (fieldProps === null || fieldProps === void 0 ? void 0 : fieldProps.listType) === 'picture-card';
   }, [fieldProps === null || fieldProps === void 0 ? void 0 : fieldProps.listType]);
-  var isDisableOrReadOnly = useMemo(function () {
+  var isDisableOrReadOnly = (0, _react.useMemo)(function () {
     return disabled || readonly;
   }, [disabled, readonly]);
-  var isOnlyOne = useMemo(function () {
+  var isOnlyOne = (0, _react.useMemo)(function () {
     return (fieldProps === null || fieldProps === void 0 ? void 0 : fieldProps.maxCount) === 1;
   }, [fieldProps === null || fieldProps === void 0 ? void 0 : fieldProps.maxCount]);
-  useEffect(function () {
+  (0, _react.useEffect)(function () {
     if (isPictureCard && fileList && fileList.length !== 0) {
-      fileRead(fileList[0]).then(function (res) {
+      (0, _download.fileRead)(fileList[0]).then(function (res) {
         setOnlyOneImage(res);
       });
     }
@@ -124,28 +130,28 @@ var MliFormUpload = function MliFormUpload(props, ref) {
   };
   var renderItemDefault = function renderItemDefault(_originNode, file, _files, actions) {
     var _file$response, _file$response2, _file$response3;
-    var icon = file.name ? /*#__PURE__*/_jsx("i", {
-      className: "iconfont ".concat(getFileIconByName(file.name))
-    }) : /*#__PURE__*/_jsx(FileOutlined, {});
-    return /*#__PURE__*/_jsxs(_Fragment, {
-      children: [/*#__PURE__*/_jsxs(Row, {
+    var icon = file.name ? /*#__PURE__*/(0, _jsxRuntime.jsx)("i", {
+      className: "iconfont ".concat((0, _transform.getFileIconByName)(file.name))
+    }) : /*#__PURE__*/(0, _jsxRuntime.jsx)(_icons.FileOutlined, {});
+    return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
+      children: [/*#__PURE__*/(0, _jsxRuntime.jsxs)(_antd.Row, {
         style: {
           width: '100%'
         },
         className: 'mli-upload-file-item-row',
         align: "middle",
-        children: [/*#__PURE__*/_jsx(Col, {
+        children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Col, {
           className: "file-icon-container",
           children: icon
-        }), /*#__PURE__*/_jsx(Col, {
+        }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Col, {
           flex: '1 1 0',
           className: "mli-ellipsis",
-          children: /*#__PURE__*/_jsx(Typography.Text, {
+          children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Typography.Text, {
             children: file.name
           })
-        }), /*#__PURE__*/_jsxs(Col, {
+        }), /*#__PURE__*/(0, _jsxRuntime.jsxs)(_antd.Col, {
           className: "operation-container",
-          children: [!isDisableOrReadOnly ? /*#__PURE__*/_jsx(Button, {
+          children: [!isDisableOrReadOnly ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Button, {
             type: "link",
             className: "remove-btn",
             onClick: /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -162,32 +168,32 @@ var MliFormUpload = function MliFormUpload(props, ref) {
                 }
               }, _callee);
             })),
-            children: /*#__PURE__*/_jsx("i", {
+            children: /*#__PURE__*/(0, _jsxRuntime.jsx)("i", {
               className: 'iconfont icon-delete'
             })
-          }) : null, showDownload ? /*#__PURE__*/_jsx(Button, {
+          }) : null, showDownload ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Button, {
             type: "link",
             className: "download-icon-btn",
             onClick: function onClick() {
               return handleDownload === null || handleDownload === void 0 ? void 0 : handleDownload(file);
             },
-            children: /*#__PURE__*/_jsx("i", {
+            children: /*#__PURE__*/(0, _jsxRuntime.jsx)("i", {
               className: 'iconfont icon-download'
             })
           }) : null]
         })]
-      }), file.status === 'done' && !asyncUpload ? /*#__PURE__*/_jsx(Row, {
+      }), file.status === 'done' && !asyncUpload ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Row, {
         gutter: [16, 60],
         style: {
           width: '100%',
           marginTop: 5
         },
-        children: /*#__PURE__*/_jsx(Col, {
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Col, {
           span: 24,
-          children: /*#__PURE__*/_jsxs("label", {
+          children: /*#__PURE__*/(0, _jsxRuntime.jsxs)("label", {
             children: [formatMessage({
               id: 'component.upload.status'
-            }), (_file$response = file.response) !== null && _file$response !== void 0 && _file$response.result ? /*#__PURE__*/_jsx("span", {
+            }), (_file$response = file.response) !== null && _file$response !== void 0 && _file$response.result ? /*#__PURE__*/(0, _jsxRuntime.jsx)("span", {
               className: "success-text",
               style: {
                 color: '#88b742'
@@ -195,7 +201,7 @@ var MliFormUpload = function MliFormUpload(props, ref) {
               children: formatMessage({
                 id: 'component.upload.uploadFile.success'
               })
-            }) : /*#__PURE__*/_jsx("span", {
+            }) : /*#__PURE__*/(0, _jsxRuntime.jsx)("span", {
               className: "error-text",
               style: {
                 color: '#ff4d4f'
@@ -209,10 +215,10 @@ var MliFormUpload = function MliFormUpload(props, ref) {
       }) : null]
     });
   };
-  var renderPictureCardButton = useCallback(function () {
-    var btnDom = /*#__PURE__*/_jsx(PlusOutlined, {});
+  var renderPictureCardButton = (0, _react.useCallback)(function () {
+    var btnDom = /*#__PURE__*/(0, _jsxRuntime.jsx)(_icons.PlusOutlined, {});
     if ((fieldProps === null || fieldProps === void 0 ? void 0 : fieldProps.maxCount) === 1 && fileList && fileList.length !== 0) {
-      btnDom = /*#__PURE__*/_jsx("img", {
+      btnDom = /*#__PURE__*/(0, _jsxRuntime.jsx)("img", {
         src: onlyOneImage,
         style: {
           width: '100%',
@@ -262,14 +268,14 @@ var MliFormUpload = function MliFormUpload(props, ref) {
     var isJpgOrPngOrBmp = file.type === 'image/jpeg' || file.type === 'image/png' || file.type == 'image/bmp';
     var isLt2M = file.size / 1024 / 1024 < 2;
     if (!isJpgOrPngOrBmp || !isLt2M) {
-      message.error(formatMessage({
+      _antd.message.error(formatMessage({
         id: 'component.upload.invalidFile'
       }));
     }
-    return isJpgOrPngOrBmp && isLt2M || Upload.LIST_IGNORE;
+    return isJpgOrPngOrBmp && isLt2M || _antd.Upload.LIST_IGNORE;
   };
-  return /*#__PURE__*/_jsxs(_Fragment, {
-    children: [/*#__PURE__*/_jsx(Form.Item, _objectSpread(_objectSpread(_objectSpread({
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
+    children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Form.Item, _objectSpread(_objectSpread(_objectSpread({
       style: {
         marginBottom: isPictureCard ? 0 : 24
       },
@@ -280,7 +286,7 @@ var MliFormUpload = function MliFormUpload(props, ref) {
         id: "".concat(moduleName, ".columns.").concat(columnName)
       })
     }, restProps), formItemProps), {}, {
-      children: /*#__PURE__*/_jsx(Upload, _objectSpread(_objectSpread({
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Upload, _objectSpread(_objectSpread({
         beforeUpload: isPictureCard ? handleBeforeUpload : beforeUpload,
         accept: isPictureCard ? 'image/jpeg,image/png,image/bmp' : props.acceptType ? props.acceptType : '*',
         itemRender: isPictureCard ? undefined : renderItemDefault,
@@ -321,15 +327,15 @@ var MliFormUpload = function MliFormUpload(props, ref) {
           }));
         }
       }, fieldProps), {}, {
-        children: isPictureCard ? renderPictureCardButton() : !readonly ? /*#__PURE__*/_jsx(Button, {
-          icon: /*#__PURE__*/_jsx(UploadOutlined, {}),
+        children: isPictureCard ? renderPictureCardButton() : !readonly ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Button, {
+          icon: /*#__PURE__*/(0, _jsxRuntime.jsx)(_icons.UploadOutlined, {}),
           disabled: disabled,
           children: formatMessage({
             id: 'component.upload.uploadFile'
           })
         }) : null
       }))
-    })), isPictureCard ? /*#__PURE__*/_jsx("div", {
+    })), isPictureCard ? /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
       style: {
         fontSize: 12,
         color: 'grey',
@@ -341,4 +347,4 @@ var MliFormUpload = function MliFormUpload(props, ref) {
     }) : null]
   });
 };
-export default /*#__PURE__*/forwardRef(MliFormUpload);
+var _default = exports.default = /*#__PURE__*/(0, _react.forwardRef)(MliFormUpload);

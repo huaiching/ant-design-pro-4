@@ -1,5 +1,12 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.switchData = switchData;
+exports.switchText = void 0;
 /*數據遮罩*/
-export var switchText = {
+var switchText = exports.switchText = {
   /*保單號碼*/
   policyNo: function policyNo() {
     var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -68,7 +75,7 @@ export var switchText = {
   }
 };
 /*遮罩數據轉換*/
-export function switchData(text, type) {
+function switchData(text, type) {
   if (!type) return text;
   return switchText[type](text);
 }

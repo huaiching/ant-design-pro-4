@@ -1,4 +1,20 @@
+"use strict";
+
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _icons = require("@ant-design/icons");
+var _proForm = require("@ant-design/pro-form");
+var _antd = require("antd");
+var _react = _interopRequireWildcard(require("react"));
+var _reactIntl = require("react-intl");
+var _utils = require("../../utils");
+require("./style.less");
+var _jsxRuntime = require("react/jsx-runtime");
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != _typeof(e) && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -13,37 +29,28 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
-import { ModalForm } from '@ant-design/pro-form';
-import { Button, Col, Row, Upload } from 'antd';
-import React, { useRef, useState } from 'react';
-import { useIntl } from 'react-intl';
-import { base64ToBlob, downloadFile } from "../../utils";
-import "./style.less";
-import { jsx as _jsx } from "react/jsx-runtime";
-import { jsxs as _jsxs } from "react/jsx-runtime";
 var MliUploadModal = function MliUploadModal(props) {
   var _props$acceptType = props.acceptType,
     acceptType = _props$acceptType === void 0 ? '*' : _props$acceptType,
     customTemplate = props.customTemplate;
-  var _useIntl = useIntl(),
+  var _useIntl = (0, _reactIntl.useIntl)(),
     formatMessage = _useIntl.formatMessage;
-  var _useState = useState(false),
+  var _useState = (0, _react.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     uploading = _useState2[0],
     setUploading = _useState2[1];
-  var _useState3 = useState([]),
+  var _useState3 = (0, _react.useState)([]),
     _useState4 = _slicedToArray(_useState3, 2),
     uploadFileList = _useState4[0],
     setUploadFileList = _useState4[1];
-  var _useState5 = useState(undefined),
+  var _useState5 = (0, _react.useState)(undefined),
     _useState6 = _slicedToArray(_useState5, 2),
     uploadResult = _useState6[0],
     setUploadResult = _useState6[1];
-  var formRef = useRef();
+  var formRef = (0, _react.useRef)();
   var uploadProps = {
     iconRender: function iconRender() {
-      return /*#__PURE__*/_jsx(UploadOutlined, {});
+      return /*#__PURE__*/(0, _jsxRuntime.jsx)(_icons.UploadOutlined, {});
     },
     onRemove: function onRemove(file) {
       if (file) {
@@ -96,10 +103,10 @@ var MliUploadModal = function MliUploadModal(props) {
   }();
   var handleDownloadFial = function handleDownloadFial() {
     if (uploadResult && !uploadResult.isAllUploadDone) {
-      downloadFile(base64ToBlob((uploadResult === null || uploadResult === void 0 ? void 0 : uploadResult.errorFileContent) || ''), (uploadResult === null || uploadResult === void 0 ? void 0 : uploadResult.errorFileName) || '');
+      (0, _utils.downloadFile)((0, _utils.base64ToBlob)((uploadResult === null || uploadResult === void 0 ? void 0 : uploadResult.errorFileContent) || ''), (uploadResult === null || uploadResult === void 0 ? void 0 : uploadResult.errorFileName) || '');
     }
   };
-  return /*#__PURE__*/_jsxs(ModalForm, _objectSpread(_objectSpread({
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_proForm.ModalForm, _objectSpread(_objectSpread({
     className: "uploadModalForm",
     grid: true,
     labelWrap: true,
@@ -130,37 +137,37 @@ var MliUploadModal = function MliUploadModal(props) {
     }()),
     submitter: false
   }, props === null || props === void 0 ? void 0 : props.modalFormProps), {}, {
-    children: [props.customizeNode, /*#__PURE__*/_jsxs(Row, {
+    children: [props.customizeNode, /*#__PURE__*/(0, _jsxRuntime.jsxs)(_antd.Row, {
       gutter: [16, 60],
       style: {
         width: '100%'
       },
-      children: [/*#__PURE__*/_jsx(Col, {
+      children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Col, {
         span: 5,
-        children: /*#__PURE__*/_jsx(Upload, _objectSpread(_objectSpread({}, uploadProps), {}, {
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Upload, _objectSpread(_objectSpread({}, uploadProps), {}, {
           maxCount: 1,
           disabled: uploading,
           accept: acceptType,
-          children: /*#__PURE__*/_jsx(Button, {
-            icon: /*#__PURE__*/_jsx(UploadOutlined, {}),
+          children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Button, {
+            icon: /*#__PURE__*/(0, _jsxRuntime.jsx)(_icons.UploadOutlined, {}),
             children: formatMessage({
               id: 'component.upload.selectFile'
             })
           })
         }))
-      }), customTemplate ? /*#__PURE__*/_jsx(Col, {
+      }), customTemplate ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Col, {
         span: 5,
         children: customTemplate
       }) : null]
-    }), /*#__PURE__*/_jsx(Row, {
+    }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Row, {
       gutter: [16, 60],
       style: {
         width: '100%'
       },
-      children: /*#__PURE__*/_jsx(Col, {
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Col, {
         span: 5,
         offset: 19,
-        children: /*#__PURE__*/_jsx(Button, {
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Button, {
           type: "primary",
           onClick: handleUpload,
           hidden: uploadFileList.length === 0,
@@ -171,22 +178,22 @@ var MliUploadModal = function MliUploadModal(props) {
           })
         })
       })
-    }), uploadResult !== undefined ? /*#__PURE__*/_jsx(Row, {
+    }), uploadResult !== undefined ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Row, {
       gutter: [16, 60],
       style: {
         width: '100%'
       },
-      children: /*#__PURE__*/_jsx(Col, {
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Col, {
         span: 24,
-        children: /*#__PURE__*/_jsxs("label", {
+        children: /*#__PURE__*/(0, _jsxRuntime.jsxs)("label", {
           children: [formatMessage({
             id: 'component.upload.status'
-          }), uploadResult !== null && uploadResult !== void 0 && uploadResult.isAllUploadDone ? /*#__PURE__*/_jsx("span", {
+          }), uploadResult !== null && uploadResult !== void 0 && uploadResult.isAllUploadDone ? /*#__PURE__*/(0, _jsxRuntime.jsx)("span", {
             className: "success-text",
             children: formatMessage({
               id: 'component.upload.status.success'
             })
-          }) : /*#__PURE__*/_jsx("span", {
+          }) : /*#__PURE__*/(0, _jsxRuntime.jsx)("span", {
             className: "error-text",
             children: formatMessage({
               id: 'component.upload.status.error'
@@ -194,16 +201,16 @@ var MliUploadModal = function MliUploadModal(props) {
           })]
         })
       })
-    }) : null, uploadResult !== undefined && !uploadResult.isAllUploadDone && uploadResult !== null && uploadResult !== void 0 && uploadResult.errorFileContent ? /*#__PURE__*/_jsx(Row, {
+    }) : null, uploadResult !== undefined && !uploadResult.isAllUploadDone && uploadResult !== null && uploadResult !== void 0 && uploadResult.errorFileContent ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Row, {
       gutter: [16, 60],
       style: {
         width: '100%'
       },
-      children: /*#__PURE__*/_jsx(Col, {
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Col, {
         span: 24,
-        children: /*#__PURE__*/_jsx(Button, {
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_antd.Button, {
           type: "primary",
-          icon: /*#__PURE__*/_jsx(DownloadOutlined, {}),
+          icon: /*#__PURE__*/(0, _jsxRuntime.jsx)(_icons.DownloadOutlined, {}),
           onClick: handleDownloadFial,
           children: formatMessage({
             id: 'component.upload.failDocument.download'
@@ -213,4 +220,4 @@ var MliUploadModal = function MliUploadModal(props) {
     }) : null]
   }));
 };
-export default MliUploadModal;
+var _default = exports.default = MliUploadModal;

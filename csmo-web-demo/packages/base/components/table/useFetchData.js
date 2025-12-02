@@ -1,3 +1,13 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _proUtils = require("@ant-design/pro-utils");
+var _react = require("react");
+var _reactDom = require("react-dom");
+var _index = require("./utils/index");
 var _excluded = ["data", "success", "total"];
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -20,11 +30,6 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-import { runFunction, useDebounceFn, useDeepCompareEffect, useMountMergeState, usePrevious, useRefFunction } from '@ant-design/pro-utils';
-import { useEffect, useRef } from 'react';
-import { unstable_batchedUpdates } from 'react-dom';
-import { postDataPipeline } from "./utils/index";
-
 /**
  * 組合用戶的配置和默認值
  *
@@ -65,12 +70,12 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
    * 用於保存組件是否被卸載的狀態的引用
    * @type {React.MutableRefObject<boolean>}
    */
-  var umountRef = useRef(false);
+  var umountRef = (0, _react.useRef)(false);
   /**
    * 用於保存 AbortController 實例的引用，方便需要時進行請求的取消操作
    * @type {React.MutableRefObject<AbortController | null>}
    */
-  var abortRef = useRef(null);
+  var abortRef = (0, _react.useRef)(null);
   /**
    * useFetchData 鉤子的配置項
    * @typedef {object} UseFetchProps
@@ -91,13 +96,13 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
     effects = _ref2$effects === void 0 ? [] : _ref2$effects;
 
   // 是否首次加載的指示器
-  var manualRequestRef = useRef(manual);
+  var manualRequestRef = (0, _react.useRef)(manual);
 
   // 輪詢的setTime ID 儲存
-  var pollingSetTimeRef = useRef();
+  var pollingSetTimeRef = (0, _react.useRef)();
 
   // 用於儲存最新的數據，這樣可以在切換的時候保持數據的一致性
-  var _useMountMergeState = useMountMergeState(defaultData, {
+  var _useMountMergeState = (0, _proUtils.useMountMergeState)(defaultData, {
       value: options === null || options === void 0 ? void 0 : options.dataSource,
       onChange: options === null || options === void 0 ? void 0 : options.onDataSourceChange
     }),
@@ -108,7 +113,7 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
   /**
    * 表格的加載狀態
    */
-  var _useMountMergeState3 = useMountMergeState(false, {
+  var _useMountMergeState3 = (0, _proUtils.useMountMergeState)(false, {
       value: _typeof(options === null || options === void 0 ? void 0 : options.loading) === 'object' ? options === null || options === void 0 || (_options$loading = options.loading) === null || _options$loading === void 0 ? void 0 : _options$loading.spinning : options === null || options === void 0 ? void 0 : options.loading,
       onChange: options === null || options === void 0 ? void 0 : options.onLoadingChange
     }),
@@ -124,7 +129,7 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
    * @property {number} total 數據總量
    * @type {[PageInfo, React.Dispatch<React.SetStateAction<PageInfo>>]}
    */
-  var _useMountMergeState5 = useMountMergeState(function () {
+  var _useMountMergeState5 = (0, _proUtils.useMountMergeState)(function () {
       return mergeOptionAndPageInfo(options);
     }, {
       onChange: options === null || options === void 0 ? void 0 : options.onPageInfoChange
@@ -137,17 +142,17 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
    * 用於比較並設置頁面資訊和回呼函數的引用更新
    * @type {React.MutableRefObject<(changePageInfo: PageInfo) => void>}
    */
-  var _setPageInfo = useRefFunction(function (changePageInfo) {
+  var _setPageInfo = (0, _proUtils.useRefFunction)(function (changePageInfo) {
     if (changePageInfo.current !== pageInfo.current || changePageInfo.pageSize !== pageInfo.pageSize || changePageInfo.total !== pageInfo.total) {
       setPageInfoState(changePageInfo);
     }
   });
-  var _useMountMergeState7 = useMountMergeState(false),
+  var _useMountMergeState7 = (0, _proUtils.useMountMergeState)(false),
     _useMountMergeState8 = _slicedToArray(_useMountMergeState7, 2),
     pollingLoading = _useMountMergeState8[0],
     setPollingLoading = _useMountMergeState8[1];
   var setDataAndLoading = function setDataAndLoading(newData, dataTotal) {
-    unstable_batchedUpdates(function () {
+    (0, _reactDom.unstable_batchedUpdates)(function () {
       setTableDataList(newData);
       if ((pageInfo === null || pageInfo === void 0 ? void 0 : pageInfo.total) !== dataTotal) {
         _setPageInfo(_objectSpread(_objectSpread({}, pageInfo), {}, {
@@ -158,17 +163,17 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
   };
 
   // 上一頁的頁碼
-  var prePage = usePrevious(pageInfo === null || pageInfo === void 0 ? void 0 : pageInfo.current);
+  var prePage = (0, _proUtils.usePrevious)(pageInfo === null || pageInfo === void 0 ? void 0 : pageInfo.current);
 
   // 上一頁的頁面大小
-  var prePageSize = usePrevious(pageInfo === null || pageInfo === void 0 ? void 0 : pageInfo.pageSize);
+  var prePageSize = (0, _proUtils.usePrevious)(pageInfo === null || pageInfo === void 0 ? void 0 : pageInfo.pageSize);
 
   // 上一頁的輪詢時間
-  var prePolling = usePrevious(polling);
+  var prePolling = (0, _proUtils.usePrevious)(polling);
 
   // 不這樣做會導致狀態不更新
-  var requestFinally = useRefFunction(function () {
-    unstable_batchedUpdates(function () {
+  var requestFinally = (0, _proUtils.useRefFunction)(function () {
+    (0, _reactDom.unstable_batchedUpdates)(function () {
       setTableLoading(false);
       setPollingLoading(false);
     });
@@ -221,7 +226,7 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
             }
             return _context.abrupt("return", []);
           case 21:
-            responseData = postDataPipeline(data, [options.postData].filter(function (item) {
+            responseData = (0, _index.postDataPipeline)(data, [options.postData].filter(function (item) {
               return item;
             })); // 設定表格數據
             setDataAndLoading(responseData, total);
@@ -261,7 +266,7 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
    * 若需要輪詢，則在一定時間後再次調用該函數，最小時間為 200ms，避免一直处于 loading 狀態。
    * 如果請求被取消，則返回空。
    */
-  var fetchListDebounce = useDebounceFn( /*#__PURE__*/function () {
+  var fetchListDebounce = (0, _proUtils.useDebounceFn)( /*#__PURE__*/function () {
     var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(isPolling) {
       var abort, msg, needPolling;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
@@ -298,7 +303,7 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
             return _context2.abrupt("return");
           case 11:
             // 放到請求前面會導致數據是上一次的
-            needPolling = runFunction(polling, msg);
+            needPolling = (0, _proUtils.runFunction)(polling, msg);
             /*
              * 這段程式碼是用於控制輪詢的。其中，needPolling 參數表明當前是否需要進行輪詢，umountRef 是一個 ref，用來記錄組件是否被卸載。
              * 如果需要輪詢並且組件沒有被卸載，就會調用 setTimeout，等待一定的時間，然後再次調用 fetchListDebounce 函數，並傳入需要輪詢的時間參數。
@@ -343,7 +348,7 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
   };
 
   // 如果輪詢結束了，直接銷毀計時器
-  useEffect(function () {
+  (0, _react.useEffect)(function () {
     if (!polling) {
       clearTimeout(pollingSetTimeRef.current);
     }
@@ -354,7 +359,7 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
       clearTimeout(pollingSetTimeRef.current);
     };
   }, [polling]);
-  useEffect(function () {
+  (0, _react.useEffect)(function () {
     umountRef.current = false;
     return function () {
       umountRef.current = true;
@@ -362,7 +367,7 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
   }, []);
 
   // PageIndex 改變的時候自動重新加載
-  useEffect(function () {
+  (0, _react.useEffect)(function () {
     var _ref7 = pageInfo || {},
       current = _ref7.current,
       pageSize = _ref7.pageSize;
@@ -387,7 +392,7 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
   }, [pageInfo === null || pageInfo === void 0 ? void 0 : pageInfo.current]);
 
   // pageSize 修改後返回第一頁
-  useEffect(function () {
+  (0, _react.useEffect)(function () {
     if (!prePageSize) {
       return;
     }
@@ -400,7 +405,7 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
    * 接下來，使用名為 fetchListDebounce 的防抖函數並傳入 false 參數。這個函數可以防止請求過於頻繁地發出，通過延遲執行傳遞給它的函數來實現。
    * 最後，檢查是否有正在進行的請求，如果有，則中止它。
    */
-  useDeepCompareEffect(function () {
+  (0, _proUtils.useDeepCompareEffect)(function () {
     abortFetch();
     fetchListDebounce.run(false);
     if (!manual) {
@@ -528,4 +533,4 @@ var useFetchData = function useFetchData(getData, defaultData, options) {
     }()
   };
 };
-export default useFetchData;
+var _default = exports.default = useFetchData;

@@ -1,26 +1,30 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.columnRender = columnRender;
+exports.renderColumnsTitle = exports.defaultOnFilter = void 0;
+var _proUtils = require("@ant-design/pro-utils");
+var _get = _interopRequireDefault(require("rc-util/lib/utils/get"));
+var _react = _interopRequireDefault(require("react"));
+var _ = require(".");
+var _utils = require("../../../utils");
+var _cellRenderToFromItem = _interopRequireDefault(require("./cellRenderToFromItem"));
+var _jsxRuntime = require("react/jsx-runtime");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-import { LabelIconTip, genCopyable, isNil } from '@ant-design/pro-utils';
-import get from "rc-util/es/utils/get";
-import React from 'react';
-import { isMergeCell } from '.';
-import { switchData } from "../../../utils";
-import cellRenderToFromItem from "./cellRenderToFromItem";
-
-// 轉換列的定義
-import { jsx as _jsx } from "react/jsx-runtime";
-import { Fragment as _Fragment } from "react/jsx-runtime";
-import { jsxs as _jsxs } from "react/jsx-runtime";
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); } // 轉換列的定義
 /**
  * 增加了 icon 的功能 render title
  *
  * @param item
  */
-export var renderColumnsTitle = function renderColumnsTitle(item) {
+var renderColumnsTitle = exports.renderColumnsTitle = function renderColumnsTitle(item) {
   var _item$ellipsis;
   var titleOption = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var title = item.title,
@@ -38,29 +42,29 @@ export var renderColumnsTitle = function renderColumnsTitle(item) {
   };
   var ellipsis = typeof (item === null || item === void 0 ? void 0 : item.ellipsis) === 'boolean' ? item === null || item === void 0 ? void 0 : item.ellipsis : item === null || item === void 0 || (_item$ellipsis = item.ellipsis) === null || _item$ellipsis === void 0 ? void 0 : _item$ellipsis.showTitle;
   if (title && typeof title === 'function') {
-    return title(item, 'table', /*#__PURE__*/_jsx(LabelIconTip, {
+    return title(item, 'table', /*#__PURE__*/(0, _jsxRuntime.jsx)(_proUtils.LabelIconTip, {
       label: null,
       tooltip: item.tooltip || item.tip
     }));
   } else if (titleMaskType) {
-    return /*#__PURE__*/_jsxs(_Fragment, {
-      children: [/*#__PURE__*/_jsx(LabelIconTip, {
+    return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
+      children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_proUtils.LabelIconTip, {
         label: title,
         tooltip: item.tooltip || item.tip,
         ellipsis: item.ellipsis
-      }), /*#__PURE__*/_jsx("span", {
+      }), /*#__PURE__*/(0, _jsxRuntime.jsx)("span", {
         className: "title-mask-container",
-        children: titleMaskStatus[columnName] ? /*#__PURE__*/_jsx("i", {
+        children: titleMaskStatus[columnName] ? /*#__PURE__*/(0, _jsxRuntime.jsx)("i", {
           onClick: changeStatus,
           className: "iconfont icon-preview-close"
-        }) : /*#__PURE__*/_jsx("i", {
+        }) : /*#__PURE__*/(0, _jsxRuntime.jsx)("i", {
           onClick: changeStatus,
           className: "iconfont icon-preview-open-one"
         })
       })]
     });
   }
-  return /*#__PURE__*/_jsx(LabelIconTip, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_proUtils.LabelIconTip, {
     label: title,
     tooltip: item.tooltip || item.tip,
     ellipsis: ellipsis
@@ -91,8 +95,8 @@ function isNotEditableCell(text, rowData, index, editable) {
  * @param dataIndex
  * @returns
  */
-export var defaultOnFilter = function defaultOnFilter(value, record, dataIndex) {
-  var recordElement = Array.isArray(dataIndex) ? get(record, dataIndex) : record[dataIndex];
+var defaultOnFilter = exports.defaultOnFilter = function defaultOnFilter(value, record, dataIndex) {
+  var recordElement = Array.isArray(dataIndex) ? (0, _get.default)(record, dataIndex) : record[dataIndex];
   var itemValue = String(recordElement);
   return String(itemValue) === String(value);
 };
@@ -102,7 +106,7 @@ export var defaultOnFilter = function defaultOnFilter(value, record, dataIndex) 
  *
  * @param param0
  */
-export function columnRender(_ref) {
+function columnRender(_ref) {
   var columnProps = _ref.columnProps,
     text = _ref.text,
     rowData = _ref.rowData,
@@ -134,7 +138,7 @@ export function columnRender(_ref) {
       return renderText(text, rowData, index, action);
     }
     if (titleMaskType && counter.titleMaskStatus[columnName]) {
-      return switchData(val, titleMaskType);
+      return (0, _utils.switchData)(val, titleMaskType);
     }
     return val;
   };
@@ -158,7 +162,7 @@ export function columnRender(_ref) {
     prefixName: prefixName,
     editableUtils: editableUtils
   };
-  var textDom = cellRenderToFromItem(_objectSpread(_objectSpread({
+  var textDom = (0, _cellRenderToFromItem.default)(_objectSpread(_objectSpread({
     text: renderTextStr
   }, cellRenderParams), {}, {
     hideColumnToolTip: true
@@ -167,7 +171,7 @@ export function columnRender(_ref) {
   // 如果是編輯模式，並且 renderFormItem 存在直接走 renderFormItem
   if (mode === 'edit') {
     if (columnProps.valueType === 'option') {
-      return /*#__PURE__*/_jsx("div", {
+      return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
         style: {
           display: 'flex',
           alignItems: 'center',
@@ -181,19 +185,19 @@ export function columnRender(_ref) {
     }
     return textDom;
   }
-  var dom = genCopyable(textDom, columnProps, renderTextStr);
+  var dom = (0, _proUtils.genCopyable)(textDom, columnProps, renderTextStr);
   if (!columnProps.render) {
     var maskableText = renderMaskText(text);
-    var defaultDom = cellRenderToFromItem(_objectSpread(_objectSpread({
+    var defaultDom = (0, _cellRenderToFromItem.default)(_objectSpread(_objectSpread({
       text: maskableText
     }, cellRenderParams), {}, {
       hideColumnToolTip: hideColumnToolTip
     }));
-    var maskDom = genCopyable(defaultDom, _objectSpread(_objectSpread({}, columnProps), {}, {
+    var maskDom = (0, _proUtils.genCopyable)(defaultDom, _objectSpread(_objectSpread({}, columnProps), {}, {
       ellipsis: columnProps.copyable ? columnProps.ellipsis : false
     }), maskableText);
-    var isReactRenderNode = /*#__PURE__*/React.isValidElement(maskDom) || ['string', 'number'].includes(_typeof(dom));
-    return !isNil(maskDom) && isReactRenderNode ? maskDom : null;
+    var isReactRenderNode = /*#__PURE__*/_react.default.isValidElement(maskDom) || ['string', 'number'].includes(_typeof(dom));
+    return !(0, _proUtils.isNil)(maskDom) && isReactRenderNode ? maskDom : null;
   }
   var renderDom = columnProps.render(dom, rowData, index, _objectSpread(_objectSpread({}, action), editableUtils), _objectSpread(_objectSpread({}, columnProps), {}, {
     isEditable: isEditable,
@@ -201,11 +205,11 @@ export function columnRender(_ref) {
   }));
 
   // 如果是合併單元格的，直接返回對象
-  if (isMergeCell(renderDom)) {
+  if ((0, _.isMergeCell)(renderDom)) {
     return renderDom;
   }
   if (renderDom && columnProps.valueType === 'option' && Array.isArray(renderDom)) {
-    return /*#__PURE__*/_jsx("div", {
+    return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
       style: {
         display: 'flex',
         alignItems: 'center',

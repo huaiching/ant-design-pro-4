@@ -256,5 +256,19 @@ export default [
   {
     path: '/antdDemo/sessionStorage',
     component: './AntdDemo/Components/Utility/Components/demo01_Navigate/Components/SessionStorage'
-  }
+  },
+  //後端開發
+  {
+    name: 'domain',
+    icon: 'RocketOutlined',
+    path: '/domain',
+    routes: [
+      {
+        // 後端的增刪改查
+        name: 'sqlDemo',
+        path: 'sqlDemo',  // 相對路徑，實際為 /reactDemo/demo01
+        component: './DomainDemo/SqlDemo'
+      },
+    ]
+  },
 ]
