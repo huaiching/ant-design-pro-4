@@ -497,7 +497,7 @@ System.out.println(result); // 輸出：同部門`}
         <CodeBlock code={`T(java.lang.Math).max(#V001, #V002)`} />
 
         <details>
-          <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>範例</summary>
+          <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>完整範例</summary>
           <CodeBlock
             code={`@Service
 public class Demo3Service {
