@@ -1,7 +1,13 @@
 import { PageContainer } from '@ant-design/pro-components'
 import { Divider, Typography } from 'antd'
 
-const { Title, Paragraph, Text } = Typography
+const { Title, Paragraph } = Typography
+
+const CodeBlock: React.FC<{ code: string }> = ({ code }) => (
+  <pre>
+    <code>{code}</code>
+  </pre>
+)
 
 const SqlDemo: React.FC = () => {
   return (
@@ -65,46 +71,42 @@ const SqlDemo: React.FC = () => {
           </li>
           <li>
             範例
-            <pre>
-              {`Criterion criterion =  Criterion.single("clientId", Criterion.QueryOperator.EQUAL, clientId);`}
-            </pre>
+            <CodeBlock
+              code={`Criterion criterion =  Criterion.single("clientId", Criterion.QueryOperator.EQUAL, clientId)`} />
           </li>
         </ul>
 
         <Title level={3}>多個變數</Title>
-        <pre>
-          {`Criterion.between(欄位, 前數值, 後數值)`} <br />
-          {`Criterion.in(欄位, LIST<Object> 數值)`} <br />
-          {`Criterion.notIn(欄位, LIST<Object> 數值)`}
-        </pre>
+        <ul>
+          <li>{`Criterion.between(欄位, 前數值, 後數值)`}</li>
+          <li>{`Criterion.in(欄位, LIST<Object> 數值)`}</li>
+          <li>{`Criterion.notIn(欄位, LIST<Object> 數值)`}</li>
+        </ul>
         <ul>
           <li>
             範例
-            <pre>
-              {`List<Object> policyNoList = poclList.stream()
+            <CodeBlock
+              code={`List<Object> policyNoList = poclList.stream()
                 .map(PoclEntity::getPolicyNo).distinct().collect(Collectors.toList());
-Criterion criterion =  Criterion.in("policyNo", policyNoList);`}
-            </pre>
+Criterion criterion =  Criterion.in("policyNo", policyNoList);`} />
           </li>
         </ul>
 
         <Title level={3}>多個條件</Title>
-        <pre>
-          {`Criterion.and(
+        <CodeBlock
+          code={`Criterion.and(
     Criterion.single(欄位, 運算符號, 數值),
     Criterion.in(欄位, LIST<Object> 數值),
     ......
-)`}
-        </pre>
+)`} />
         <ul>
           <li>
             範例
-            <pre>
-              {`Criterion criterion = Criterion.and(
+            <CodeBlock
+              code={`Criterion criterion = Criterion.and(
     Criterion.single("clientId", Criterion.QueryOperator.EQUAL, addrKey.getClientId()),
     Criterion.single("addrInd", Criterion.QueryOperator.EQUAL, addrKey.getAddrInd())
-);`}
-            </pre>
+);`} />
           </li>
         </ul>
 
@@ -121,13 +123,14 @@ Criterion criterion =  Criterion.in("policyNo", policyNoList);`}
           透過 <code>viewQueryService.findOneSpec</code> 進行查詢，回傳型態為
           <code>{`Optional<?>`}</code>。
         </Paragraph>
-        <pre>{`Optional<?> 變數 = viewQueryService.findOneSpec(Entity.class, Criterion條件);`}</pre>
+        <CodeBlock
+          code={`Optional<?> 變數 = viewQueryService.findOneSpec(Entity.class, Criterion條件);`} />
 
         <ul>
           <li>
             範例
-            <pre>
-              {`@Autowired
+            <CodeBlock
+              code={`@Autowired
 private ViewQueryService viewQueryService;
 
 public ClntEntity queryClntByClientId(String clientId) {
@@ -141,8 +144,7 @@ public ClntEntity queryClntByClientId(String clientId) {
     }
     ClntEntity clntEntity = (ClntEntity)clntOptional.get();
     return clntEntity ;
-}`}
-            </pre>
+}`} />
           </li>
         </ul>
 
@@ -155,8 +157,8 @@ public ClntEntity queryClntByClientId(String clientId) {
         <ul>
           <li>
             範例
-            <pre>
-              {`@Autowired
+            <CodeBlock
+              code={`@Autowired
 private ViewQueryService viewQueryService;
 
 public List<AddrEntity> queryAddrByClientId(String clientId) {
@@ -172,8 +174,7 @@ public List<AddrEntity> queryAddrByClientId(String clientId) {
         return null;
     }
     return viewQueryService.querySpec(AddrEntity.class, criterion);
-}`}
-            </pre>
+}`} />
           </li>
         </ul>
 
@@ -246,8 +247,8 @@ public List<AddrEntity> queryAddrByClientId(String clientId) {
           </li>
           <li>
             範例
-            <pre>
-              {`@QueryHandler
+            <CodeBlock
+              code={`@QueryHandler
 @MethodOverloadForbidden
 public class CmntQueryHandler {
     @Autowired
@@ -285,8 +286,7 @@ public class CmntQueryHandler {
     public List<QueryCmntMainDTO> queryCmntMain(Criterion criterion) {
         return viewQueryService.executeByServiceMethod(criterion);
     }
-}`}
-            </pre>
+}`} />
           </li>
         </ul>
 
@@ -300,10 +300,9 @@ public class CmntQueryHandler {
         <ol>
           <li>
             注入 <code>NamedParameterJdbcTemplate</code>
-            <pre>
-              {`@Autowired
-private NamedParameterJdbcTemplate namedParameterJdbcTemplate;`}
-            </pre>
+            <CodeBlock
+              code={`@Autowired
+private NamedParameterJdbcTemplate namedParameterJdbcTemplate;`} />
           </li>
           <li>
             撰寫 SQL 語法
@@ -311,8 +310,8 @@ private NamedParameterJdbcTemplate namedParameterJdbcTemplate;`}
               <li>
                 變數 前面要使用 <code>:</code> 標示，如: <code>:address</code>
               </li>
-              <pre>
-{`String sql1 = "SELECT * FROM addr " +
+              <CodeBlock
+                code={`String sql1 = "SELECT * FROM addr " +
               "WHERE address LIKE :address";
 String sql2 = "UPDATE addr " +
               "SET client_id = :clientIdNew " +
@@ -322,26 +321,22 @@ String sql2 = "UPDATE addr " +
               "WHERE client_id = :clientIdOri " +
               "  AND addr_ind = :addrIndOri " +
               "  AND address = :addressOri " +
-              "  AND tel = :telOri ";`}
-              </pre>
+              "  AND tel = :telOri ";`} />
               <li>
                 若 變數為集合，要使用 <code>( )</code> 包起來
               </li>
             </ul>
-            <pre>
-{`String sql = "SELECT * FROM gico " +
-           "WHERE client_id IN (:clientIdList)";`}
-            </pre>
+            <CodeBlock
+              code={`String sql = "SELECT * FROM gico " +
+           "WHERE client_id IN (:clientIdList)";`} />
           </li>
           <li>
             透過 Map 設定參數
-            <pre>
-{`Map<String, Object> params1 = new HashMap<>();
-params1.put("address", "%" + address + "%");
-`}
-            </pre>
-            <pre>
-{`Map<String, Object> params2 = new HashMap<>();
+            <CodeBlock
+              code={`Map<String, Object> params1 = new HashMap<>();
+params1.put("address", "%" + address + "%");`} />
+            <CodeBlock
+              code={`Map<String, Object> params2 = new HashMap<>();
 params2.put("clientIdNew", entityNew.getClientId());
 params2.put("addrIndNew", entityNew.getAddrInd());
 params2.put("addressNew", entityNew.getAddress());
@@ -349,8 +344,7 @@ params2.put("telNew", entityNew.getTel());
 params2.put("clientIdOri", entityOri.getClientId());
 params2.put("addrIndOri", entityOri.getAddrInd());
 params2.put("addressOri", entityOri.getAddress());
-params2.put("telOri", entityOri.getTel());`}
-            </pre>
+params2.put("telOri", entityOri.getTel());`} />
           </li>
           <li>
             執行 SQL
@@ -358,21 +352,18 @@ params2.put("telOri", entityOri.getTel());`}
               <li>
                 <code>單筆查詢</code> 透過 <code>namedParameterJdbcTemplate.queryForObject</code>{' '}
                 執行。
-                <pre>
-                    {`Long count = namedParameterJdbcTemplate.queryForObject(countSql + whereSql, params, Long.class);`}
-                </pre>
+                <CodeBlock
+                  code={`Long count = namedParameterJdbcTemplate.queryForObject(countSql + whereSql, params, Long.class);`} />
               </li>
               <li>
                 <code>多筆查詢</code> 透過 <code>`namedParameterJdbcTemplate.query</code> 執行。
-                <pre>
-                    {`List<Addr> addrList = namedParameterJdbcTemplate.query(sql1, params1, new BeanPropertyRowMapper<>(Addr.class));`}
-                </pre>
+                <CodeBlock
+                  code={`List<Addr> addrList = namedParameterJdbcTemplate.query(sql1, params1, new BeanPropertyRowMapper<>(Addr.class));`} />
               </li>
               <li>
                 <code>增刪修</code> 透過 <code>namedParameterJdbcTemplate.update</code> 執行。
-                <pre>
-                    {`namedParameterJdbcTemplate.update(sql2, params2);`}
-                </pre>
+                <CodeBlock
+                  code={`namedParameterJdbcTemplate.update(sql2, params2);`} />
               </li>
             </ul>
           </li>
@@ -387,8 +378,8 @@ params2.put("telOri", entityOri.getTel());`}
           再透過 <code>entityWriteService.applyCommand()</code> 和 <code>SystemCommands.createCommand()</code> 執行。 <br />
           因 新增 可能失敗，所以需要有 <code>try-catch</code>。
         </Paragraph>
-        <pre>
-{`@Autowired
+        <CodeBlock
+          code={`@Autowired
 private EntityWriteService entityWriteService;
 
 public void insertAddr(AddrEntity addrEntity) {
@@ -397,8 +388,7 @@ public void insertAddr(AddrEntity addrEntity) {
     } catch (Exception e) {
         throw new RuntimeException(e);
     }
-}`}
-        </pre>
+}`} />
 
         <Divider />
 
@@ -410,8 +400,8 @@ public void insertAddr(AddrEntity addrEntity) {
           執行 修改 時，會根據 entity 設定的 唯一值 修改對應的資料。 <br />
           因 修改 可能失敗，所以需要有 <code>try-catch</code>。
         </Paragraph>
-        <pre>
-{`@Autowired
+        <CodeBlock
+          code={`@Autowired
 private EntityWriteService entityWriteService;
 
 public void updateAddr(AddrEntity addrEntityNew) {
@@ -420,8 +410,7 @@ public void updateAddr(AddrEntity addrEntityNew) {
     } catch (Exception e) {
         throw new RuntimeException(e);
     }
-}`}
-        </pre>
+}`} />
 
         <Divider />
 
@@ -433,8 +422,8 @@ public void updateAddr(AddrEntity addrEntityNew) {
           執行 刪除 時，會根據 entity 設定的 唯一值 刪除對應的資料。 <br />
           因 刪除 可能失敗，所以需要有 <code>try-catch</code>。
         </Paragraph>
-        <pre>
-{`@Autowired
+        <CodeBlock
+          code={`@Autowired
 private EntityWriteService entityWriteService;
 
 public void deleteAddr(AddrKey addrKey) {
@@ -453,8 +442,7 @@ public void deleteAddr(AddrKey addrKey) {
             throw new RuntimeException(e);
         }
     }
-}`}
-        </pre>
+}`} />
       </Typography>
     </PageContainer>
   )

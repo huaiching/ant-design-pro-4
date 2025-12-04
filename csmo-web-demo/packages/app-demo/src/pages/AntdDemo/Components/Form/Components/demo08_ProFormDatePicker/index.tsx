@@ -33,18 +33,15 @@ const MyForm: React.FC = () => {
     formRef.current?.setFieldsValue({
       ...data,
       // 日期欄位 轉 dayjs 格式
-      chkDate: parseRocDate(data.chkDate) as Dayjs,
-      chkDateYYMM: parseRocDateMonth(data.chkDateYYMM) as Dayjs,
+      chkDate: parseRocDate(data?.chkDate) as Dayjs,
+      chkDateYYMM: parseRocDateMonth(data?.chkDateYYMM) as Dayjs,
       chkDateRange: [
         parseRocDate(data.chkDateRange[0]) as Dayjs,
         parseRocDate(data.chkDateRange[1]) as Dayjs
       ],
-      chkDateMulti: (data.chkDateMulti as string[]).map(item => parseRocDate(item) as Dayjs),
-      dateList: data.dateList.map(item => ({
-        dateRange: [
-          parseRocDate(item.start) as Dayjs,
-          parseRocDate(item.end) as Dayjs
-        ]
+      chkDateMulti: (data.chkDateMulti as string[]).map((item) => parseRocDate(item) as Dayjs),
+      dateList: data.dateList.map((item) => ({
+        dateRange: [parseRocDate(item.start) as Dayjs, parseRocDate(item.end) as Dayjs]
       }))
     })
   }, [])
@@ -54,26 +51,33 @@ const MyForm: React.FC = () => {
     // 取得表單變更資料
     const values = formRef.current?.getFieldsValue()
     // 日期格式轉換
-    const chkDate = values?.chkDate ? dayjs(values.chkDate).format('TTT/MM/DD') : ''
-    const chkDateYYMM = values?.chkDateYYMM ? dayjs(values.chkDateYYMM).format('TTT/MM') : ''
-    const chkDateRange = values?.chkDateRange
-      ? [dayjs(values.chkDateRange[0]).format('TTT/MM/DD'), dayjs(values.chkDateRange[1]).format('TTT/MM/DD')]
-      : ['', '']
+    const chkDate = dayjs(values.chkDate).isValid() ? dayjs(values.chkDate).format('TTT/MM/DD') : ''
+    const chkDateYYMM = dayjs(values.chkDateYYMM).isValid() ? dayjs(values.chkDateYYMM).format('TTT/MM') : ''
+    const chkDateRange = () => {
+      const chkDateRange = values?.chkDateRange || ['', '']
+      return [
+        dayjs(chkDateRange[0] || '').isValid() ? dayjs(chkDateRange[0] || '').format('TTT/MM/DD') : '',
+        dayjs(chkDateRange[1] || '').isValid() ? dayjs(chkDateRange[1] || '').format('TTT/MM/DD') : ''
+      ]
+    }
     const chkDateMulti = values?.chkDateMulti
-        ? (values.chkDateMulti as Dayjs[]).map(item => dayjs(item).format('TTT/MM/DD'))
-        : []
+      ? (values.chkDateMulti as Dayjs[]).map((item) => dayjs(item).format('TTT/MM/DD'))
+      : []
     const dateList = values?.dateList
-        ? (values.dateList as any[]).map(item => ({
-            start: dayjs(item.dateRange[0]).format('TTT/MM/DD'),
-            end: dayjs(item.dateRange[1]).format('TTT/MM/DD')
-          }))
-        : []
+      ? (values.dateList as any[]).map((item) => {
+          const dateRange = item?.dateRange || ['', '']
+          return {
+            start: dayjs(dateRange[0] || '').isValid() ? dayjs(dateRange[0]).format('TTT/MM/DD') : '',
+            end: dayjs(dateRange[1] || '').isValid() ? dayjs(dateRange[1]).format('TTT/MM/DD') : ''
+          }
+        })
+      : []
 
     data = {
       ...data,
       chkDate: chkDate,
       chkDateYYMM: chkDateYYMM,
-      chkDateRange: chkDateRange,
+      chkDateRange: chkDateRange(),
       chkDateMulti: chkDateMulti,
       dateList: dateList
     }
@@ -199,11 +203,11 @@ const MyForm: React.FC = () => {
 
           <MliFormCol colSize={2}>
             <ProFormList
-              name='dateList'
+              name="dateList"
               label="選擇日期區間"
               copyIconProps={false} // 禁用「複製此行」按鈕
               // deleteIconProps={false} // 禁用默認的「刪除此行」按鈕
-              alwaysShowItemLabel      // 總是顯示項目標籤
+              alwaysShowItemLabel // 總是顯示項目標籤
             >
               {/* field : 數值資料 */}
               {/* index : 索引值，從 0 開始 */}
@@ -211,7 +215,7 @@ const MyForm: React.FC = () => {
               {/* count : 總筆數 */}
               {(field, index, action, count) => (
                 <ProFormDateRangePicker
-                  name='dateRange'
+                  name="dateRange"
                   rules={[{ required: true, message: '日期為必填項' }]}
                   fieldProps={{
                     format: 'TTT/MM/DD',
@@ -233,7 +237,10 @@ const MyForm: React.FC = () => {
                         const end = parseRocDate(endRaw)
 
                         if (start || end) {
-                          formRef.current?.setFieldValue(['dateList', index, 'dateRange'], [start, end])
+                          formRef.current?.setFieldValue(
+                            ['dateList', index, 'dateRange'],
+                            [start, end]
+                          )
                           handleValueChange()
                         }
                       }

@@ -1,4 +1,4 @@
-export default [
+﻿export default [
   {
     path: '/',
     redirect: '/home'
@@ -156,7 +156,6 @@ export default [
       },
     ]
   },
-
   // Mobx 使用範例
   {
     name: 'mobXDemo',  // 路由名稱
@@ -177,6 +176,7 @@ export default [
       }
     ]
   },
+  // Ant Design 範例
   {
     name: 'antd',  // 路由名稱
     icon: 'AntDesignOutlined',  // Ant Design 圖標
@@ -265,9 +265,15 @@ export default [
     routes: [
       {
         // 後端的增刪改查
-        name: 'sqlDemo',
-        path: 'sqlDemo',  // 相對路徑，實際為 /reactDemo/demo01
-        component: './DomainDemo/SqlDemo'
+        name: 'crud',
+        path: 'crud',
+        component: './DomainDemo/CRUD'
+      },
+      {
+        // 後端的增刪改查
+        name: 'spel',
+        path: 'spel',
+        component: './DomainDemo/SpEL'
       },
     ]
   },

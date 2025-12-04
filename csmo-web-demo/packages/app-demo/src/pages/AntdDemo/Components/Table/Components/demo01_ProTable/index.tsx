@@ -121,8 +121,7 @@ const NestedProTable: React.FC = () => {
         actionRef={actionRef} // 表格操作參考
         columns={policyColumns} // 表格欄位
         dataSource={filteredData} // 傳入篩選後的資料，實現快速搜尋功能
-        cardProps={false}      //  移除 Card 包裝
-        // options={false} // 關閉選單
+        options={false} // 關閉選單
         search={false} // 關閉搜尋欄
         // pagination={false} // 關閉分頁
         pagination={{
@@ -145,33 +144,15 @@ const NestedProTable: React.FC = () => {
           selectedRowKeys,
           onChange: (keys) => setSelectedRowKeys(keys)
         }}
-        toolBarRender={() => [
-          <Input
-            key="search"
-            placeholder="快速搜尋 toolBarRender"
-            allowClear
-            onChange={(e) => setSearchText(e.target.value)}
-            value={searchText}
-          />
-        ]}
-        headerTitle={
-          <Input
-            placeholder="快速搜尋 headerTitle"
-            allowClear
-            onChange={(e) => setSearchText(e.target.value)}
-            value={searchText}
-            style={{ width: '100%' }}
-          />
-        }
-        title={() => [
-          <Input
-            key="search"
-            placeholder="快速搜尋 title"
-            allowClear
-            onChange={(e) => setSearchText(e.target.value)}
-            value={searchText}
-          />
-        ]}
+        // toolBarRender={() => [
+        //   <Input
+        //     key="search"
+        //     placeholder="快速搜尋"
+        //     allowClear
+        //     onChange={(e) => setSearchText(e.target.value)}
+        //     value={searchText}
+        //   />
+        // ]}
         /** ✅ 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
         tableAlertRender={() => (
           <Button color="danger" variant="filled" onClick={handleExport}>
