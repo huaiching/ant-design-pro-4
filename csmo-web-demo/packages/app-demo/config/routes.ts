@@ -275,6 +275,53 @@
         path: 'spel',
         component: './DomainDemo/SpEL'
       },
+      {
+        // Spring Boot 範例
+        name: 'springBoot',
+        path: 'springBoot',
+        routes: [
+          {
+            path: 'createProject',
+            name: 'createProject',
+            component: './DomainDemo/springBoot/Demo01_CreateProject'
+          },
+          {
+            path: 'entity',
+            name: 'entity',
+            component: './DomainDemo/springBoot/Demo02_Entity'
+          },
+          {
+            path: 'repository',
+            name: 'repository',
+            component: './DomainDemo/springBoot/Demo03_Repository'
+          },
+          {
+            path: 'dto',
+            name: 'dto',
+            component: './DomainDemo/springBoot/Demo04_DTO'
+          },
+          {
+            path: 'constants',
+            name: 'constants',
+            component: './DomainDemo/springBoot/Demo05_Constants'
+          },
+          {
+            path: 'utils',
+            name: 'utils',
+            component: './DomainDemo/springBoot/Demo06_Utils'
+          },
+          {
+            path: 'service',
+            name: 'service',
+            component: './DomainDemo/springBoot/Demo07_Service'
+          },
+          {
+            path: 'controller',
+            name: 'controller',
+            component: './DomainDemo/springBoot/Demo08_Controller'
+          }
+        ],
+      },
     ]
   },
 ]
