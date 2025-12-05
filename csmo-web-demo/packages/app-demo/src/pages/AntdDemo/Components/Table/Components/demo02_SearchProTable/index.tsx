@@ -26,11 +26,11 @@ const ProTableDemo: React.FC = () => {
   const actionRef = useRef<ActionType>()
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]) // 勾選資料 key
   const [dataSource, setDataSource] = useState<any[]>([]) // 主表資料
-  // ProTable 的 分頁控制
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 5
-  })
+  // // ProTable 的 分頁控制
+  // const [pagination, setPagination] = useState({
+  //   current: 1,
+  //   pageSize: 5
+  // })
 
   // 性別選項
   const genderInd = [
@@ -116,13 +116,14 @@ const ProTableDemo: React.FC = () => {
         // }}
         // 請求數據
         request={async (params) => {
+          console.log('params',params)
           const res = await userApi.fetchAllData(params)
           const chgData = res.data.map((e) => ({
             ...e,
             birthDate: dayjs(e.birthDate, 'TTT/MM/DD')
           }))
           setDataSource(chgData)
-          return { data: chgData, success: true, total: chgData.length }
+          return { data: chgData, success: res.success, total: res.total }
         }}
         cardProps={false} // 移除外層 Card
         // 手動請求
@@ -142,14 +143,15 @@ const ProTableDemo: React.FC = () => {
         }}
         // 分頁
         pagination={{
-          current: pagination.current,
-          pageSize: pagination.pageSize,
+          // current: pagination.current,
+          // pageSize: pagination.pageSize,
+          defaultPageSize: 5,
           showQuickJumper: true,
           showSizeChanger: true,
           pageSizeOptions: ['5', '10', '20', '50', '100'],
-          onChange: (page, pageSize) => {
-            setPagination({ current: page, pageSize })
-          }
+          // onChange: (page, pageSize) => {
+          //   setPagination({ current: page, pageSize })
+          // }
         }}
         // 選擇行
         rowSelection={{
