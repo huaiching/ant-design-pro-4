@@ -1,7 +1,7 @@
-// src/pages/NullUndefinedCheck/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
+import CodeView from '@/utils/CodeView';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -21,26 +21,26 @@ const NullUndefinedCheckPage: React.FC = () => {
         <Divider />
 
         <Title level={2}>判斷是否為 undefined</Title>
-        <pre>
+        <CodeView code=
 {`const b = undefined
 if (b === undefined) {
   console.log('b 是 undefined')
 } else {
   console.log('b 不是 undefined')
 }`}
-        </pre>
+        />
 
         <Divider />
 
         <Title level={2}>判斷是否為 null</Title>
-        <pre>
+        <CodeView code=
 {`const a = null
 if (a === null) {
   console.log('a 是 null')
 } else {
   console.log('a 不是 null')
 }`}
-        </pre>
+        />
 
         <Divider />
 
@@ -48,7 +48,7 @@ if (a === null) {
         <Paragraph>
           使用 <Text code>== null</Text> 可以同時檢查 <Text code>null</Text> 和 <Text code>undefined</Text>
         </Paragraph>
-        <pre>
+        <CodeView code=
 {`const a = null
 // 或 const a = undefined 也會進到這裡
 if (a == null) {
@@ -56,7 +56,7 @@ if (a == null) {
 } else {
   console.log('a 不是空值')
 }`}
-        </pre>
+        />
       </Typography>
     </PageContainer>
   );

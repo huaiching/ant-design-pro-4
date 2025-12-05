@@ -1,7 +1,7 @@
-// src/pages/VariableTypes/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
+import CodeView from '@/utils/CodeView';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -14,12 +14,12 @@ const VariableTypesPage: React.FC = () => {
         <Paragraph>
           <ol>
             <li>
-              <Text strong>let</Text>　數值可修改 的 變數
-              <pre><code>let 變數名稱 = 初始化值</code></pre>
+              <code>let</code>：數值可修改 的 變數
+             <CodeView code={`let 變數名稱 = 初始化值`} />
             </li>
             <li>
-              <Text strong>const</Text>　數值不可直接修改 的 變數
-              <pre><code>const 變數名稱 = 初始化值</code></pre>
+              <code>const</code>：數值不可直接修改 的 變數
+             <CodeView code={`const 變數名稱 = 初始化值`} />
             </li>
           </ol>
         </Paragraph>
@@ -29,19 +29,20 @@ const VariableTypesPage: React.FC = () => {
         <Title level={2}>變數的基本型別</Title>
         <Paragraph>
           <ol>
-            <li><Text strong>boolean</Text>　只能是 true / false
-              <pre>let f_boolean: boolean = true</pre>
+            <li><code>boolean</code>：只能是 true / false
+              <CodeView code={`let f_boolean: boolean = true`} />
             </li>
-            <li><Text strong>number</Text>　只能是 整數 / 小數
-              <pre>let f_number_1: number = 10{'\n'}const f_number_2: number = 3.14</pre>
+            <li><code>number</code>：只能是 整數 / 小數
+              <CodeView code={`let f_number_1: number = 10
+const f_number_2: number = 3.14`} />
             </li>
-            <li><Text strong>string</Text>　字串
-              <pre>const f_string: string = "ABC"</pre>
+            <li><code>string</code>：字串
+              <CodeView code={`const f_string: string = "ABC"`} />
             </li>
-            <li><Text strong>void</Text>　無回傳值，於 函式 使用</li>
-            <li><Text strong>null</Text>　空值</li>
-            <li><Text strong>undefined</Text>　沒有賦值</li>
-            <li><Text strong>any</Text>　任意值</li>
+            <li><code>void</code>：無回傳值，於 函式 使用</li>
+            <li><code>null</code>：空值</li>
+            <li><code>undefined</code>：沒有賦值</li>
+            <li><code>any</code>：任意值</li>
           </ol>
         </Paragraph>
 
@@ -60,8 +61,7 @@ const VariableTypesPage: React.FC = () => {
         <Title level={2}>範例</Title>
 
         <Title level={4}>完整程式碼</Title>
-        <pre>
-{`import { PageContainer } from '@ant-design/pro-layout'
+        <CodeView code={`import { PageContainer } from '@ant-design/pro-layout'
 import React from 'react'
 
 const VDOM: React.FC = () => {
@@ -88,7 +88,7 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-        </pre>
+        />
 
         <Paragraph>
           <Text type="secondary">

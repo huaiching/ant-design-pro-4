@@ -1,7 +1,7 @@
-// src/pages/TypeComplex/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
+import CodeView from '@/utils/CodeView';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -17,19 +17,19 @@ const TypeComplexPage: React.FC = () => {
           </ol>
         </Paragraph>
 
-        <pre>
+        <CodeView code=
 {`type 型別名稱 = {
       必填屬性A: 型別;
       選填屬性B?: 型別; // 選填屬性 用「?」表示
       readonly 屬性C?: 型別; // 唯讀屬性 只有初始創建時能夠賦值
 }`}
-        </pre>
+        />
 
         <Divider />
 
         <Title level={2}>範例</Title>
 
-        <pre>
+        <CodeView code=
 {`const VDOM: React.FC = () => {
     /* 抽象型別 */
     // 書本 有 名稱、頁數
@@ -63,7 +63,7 @@ const TypeComplexPage: React.FC = () => {
 }
 
 export default VDOM`}
-        </pre>
+        />
 
         <Paragraph type="secondary" style={{ marginTop: 24 }}>
           <Text strong>重點提示：</Text><br />

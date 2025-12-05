@@ -1,7 +1,7 @@
-// src/pages/UnionTypes/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
+import CodeView from '@/utils/CodeView';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -16,12 +16,12 @@ const UnionTypesPage: React.FC = () => {
         </Paragraph>
 
         <Title level={3}>語法</Title>
-        <pre>{`let 變數名稱: (型別A | 型別B) = 數值`}</pre>
+        <CodeView code={`let 變數名稱: (型別A | 型別B) = 數值`} />
 
         <Divider />
 
         <Title level={2}>完整範例</Title>
-        <pre>
+        <CodeView code=
 {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 
@@ -62,7 +62,7 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-        </pre>
+        />
       </Typography>
     </PageContainer>
   );

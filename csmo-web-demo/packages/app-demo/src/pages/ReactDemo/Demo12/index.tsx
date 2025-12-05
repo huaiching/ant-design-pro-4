@@ -1,14 +1,15 @@
 import { PageContainer } from '@ant-design/pro-components'
 import { Typography } from 'antd'
+import CodeView from '@/utils/CodeView';
 
-const { Paragraph, Title, Text } = Typography;
+const { Paragraph, Title } = Typography;
 
 const RegexAppendixPage: React.FC = () => {
   return (
     <PageContainer title="附錄 - 正規表達式">
       <Typography>
         <Paragraph>
-         <Title level={2}>1. `^`：開頭符號 / `$`：結尾符號</Title>
+          <Title level={2}>1. `^`：開頭符號 / `$`：結尾符號</Title>
           範例：<br />
           <code>/^a/</code>：代表 a 開頭<br />
           <code>/a$/</code>：代表 a 結尾<br />
@@ -23,16 +24,16 @@ const RegexAppendixPage: React.FC = () => {
         <Paragraph>
           靜態：(效能較佳) — 使用「/」將正規表達式夾起來：
         </Paragraph>
-        <pre>
-{`const re = /^a$/`}
-        </pre>
+        <CodeView code=
+          {`const re = /^a$/`}
+        />
 
         <Paragraph>
           動態：透過 new RegExp() 進行封裝：
         </Paragraph>
-        <pre>
-{`const re = new RegExp("^a$")`}
-        </pre>
+        <CodeView code=
+          {`const re = new RegExp("^a$")`}
+        />
 
         <Paragraph>
           <Title level={2}>3. 條件檢核</Title>
@@ -40,9 +41,9 @@ const RegexAppendixPage: React.FC = () => {
         <Paragraph>
           透過 test() 判斷是否符合正規表達式規則：
         </Paragraph>
-        <pre>
-{`正規表達式.test(要檢查的數值)`}
-        </pre>
+        <CodeView code=
+          {`正規表達式.test(要檢查的數值)`}
+        />
         <Paragraph>true = 符合；false = 不符合</Paragraph>
 
         <Paragraph>

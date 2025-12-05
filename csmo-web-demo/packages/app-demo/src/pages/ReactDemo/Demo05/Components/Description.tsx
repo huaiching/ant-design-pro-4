@@ -1,7 +1,7 @@
-// src/pages/UseReducerIntro/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
+import CodeView from '@/utils/CodeView';
 
 const { Title, Paragraph } = Typography;
 
@@ -44,7 +44,7 @@ const UseReducerIntroPage: React.FC = () => {
             <li>宣告 useReducer</li>
           </ol>
         </Paragraph>
-        <pre>{`const [狀態變數, 狀態改變方法] = useReducer(狀態改變對應函式, 初始值)`}</pre>
+        <CodeView code={`const [狀態變數, 狀態改變方法] = useReducer(狀態改變對應函式, 初始值)`}/>
 
         <Paragraph>
           <ol start={2}>
@@ -67,7 +67,7 @@ const UseReducerIntroPage: React.FC = () => {
             </li>
           </ul>
         </Paragraph>
-        <pre>
+        <CodeView code=
 {`const 狀態改變對應函式 = (state: any, action: any) => {
   // 透過 switch 來設定 不同類型 要執行的操作
   switch (action.type) {
@@ -83,7 +83,7 @@ const UseReducerIntroPage: React.FC = () => {
       return 其他情況處理後的 狀態變數值，通常會直接丟出 state
   }
 }`}
-        </pre>
+        />
 
         <Paragraph>
           <ol start={3}>
@@ -98,12 +98,12 @@ const UseReducerIntroPage: React.FC = () => {
             </li>
           </ul>
         </Paragraph>
-        <pre>{`onClick={() => 狀態改變方法({type: "操作類型", value: 操作值})}`}</pre>
+        <CodeView code={`onClick={() => 狀態改變方法({type: "操作類型", value: 操作值})}`}/>
 
         <Divider />
 
         <Title level={2}>範例</Title>
-        <pre>
+        <CodeView code=
 {`import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Row, Space } from 'antd';
 import React, { useReducer } from 'react';
@@ -183,7 +183,7 @@ const MyComponent: React.FC = () => {
 };
 
 export default MyComponent;`}
-        </pre>
+        />
 
       </Typography>
     </PageContainer>

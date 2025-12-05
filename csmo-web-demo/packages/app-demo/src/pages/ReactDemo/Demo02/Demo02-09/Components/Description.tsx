@@ -1,9 +1,9 @@
-// src/pages/JSStatements/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
+import CodeView from '@/utils/CodeView';
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Paragraph } = Typography;
 
 const JSStatementsPage: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const JSStatementsPage: React.FC = () => {
       <Typography>
 
         <Title level={2}>if</Title>
-        <pre>
+        <CodeView code=
 {`if (布林條件式) {
    內容;
 }
@@ -22,12 +22,12 @@ else if (布林條件式) {
 else {
    內容;
 }}`}
-        </pre>
+        />
 
         <Divider />
 
         <Title level={2}>switch</Title>
-        <pre>
+        <CodeView code=
 {`switch (變數) {
    case 值A:
       內容;
@@ -43,7 +43,7 @@ else {
       內容;
       break;
 }`}
-        </pre>
+        />
 
         <Divider />
 
@@ -53,14 +53,14 @@ else {
             <li>語法</li>
           </ol>
         </Paragraph>
-        <pre>{`布林條件式 ? True的結果 : False的結果`}</pre>
+        <CodeView code={`布林條件式 ? True的結果 : False的結果`}/>
 
         <Paragraph>
           <ol start={2}>
             <li>範例</li>
           </ol>
         </Paragraph>
-        <pre>{`const data = (age>=18 ? '成年' : '未成年')`}</pre>
+        <CodeView code={`const data = (age>=18 ? '成年' : '未成年')`}/>
         <Paragraph type="secondary">
           如果 age ≥ 18 會是 成年；否則是 未成年
         </Paragraph>
@@ -73,36 +73,36 @@ else {
             <li>無回傳值（單純遍歷）</li>
           </ol>
         </Paragraph>
-        <pre>
+        <CodeView code=
 {`陣列變數.forEach((陣列元素變數) => {
    內容
 })`}
-        </pre>
+        />
 
         <Paragraph>
           <ol start={2}>
             <li>有回傳值（會自動組成新陣列）</li>
           </ol>
         </Paragraph>
-        <pre>
+        <CodeView code=
 {`const 變數 = 陣列變數.map((陣列元素變數) => {
    return 內容
 })`}
-        </pre>
+        />
 
         <Divider />
 
         <Title level={2}>while</Title>
-        <pre>
+        <CodeView code=
 {`while (布林條件式) {
    內容;
 }`}
-        </pre>
+        />
 
         <Divider />
 
         <Title level={2}>完整範例</Title>
-        <pre>
+        <CodeView code=
 {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 
@@ -149,7 +149,7 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-        </pre>
+        />
       </Typography>
     </PageContainer>
   );

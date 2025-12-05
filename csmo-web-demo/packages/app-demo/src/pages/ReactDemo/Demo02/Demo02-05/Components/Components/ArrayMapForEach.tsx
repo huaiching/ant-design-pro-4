@@ -1,7 +1,7 @@
-// src/pages/ArrayMapForEach/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider, Table } from 'antd';
+import CodeView from '@/utils/CodeView';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -34,15 +34,15 @@ const ArrayMapForEachPage: React.FC = () => {
         </ul>
 
         <Title level={3}>基本用法</Title>
-        <pre>
+        <CodeView code=
           {`const numbers = [1, 2, 3, 4, 5]
 const doubled = numbers.map(num => num * 2)
 console.log(doubled) // [2, 4, 6, 8, 10]
 console.log(numbers) // [1, 2, 3, 4, 5] (原陣列不變)`}
-        </pre>
+        />
 
         <Title level={3}>轉換物件陣列</Title>
-        <pre>
+        <CodeView code=
           {`const users = [
   { id: 1, name: 'Alice' },
   { id: 2, name: 'Bob' },
@@ -50,10 +50,10 @@ console.log(numbers) // [1, 2, 3, 4, 5] (原陣列不變)`}
 ]
 const userNames = users.map(user => user.name)
 console.log(userNames) // ['Alice', 'Bob', 'Charlie']`}
-        </pre>
+        />
 
         <Title level={3}>在 React 中使用 map 渲染列表</Title>
-        <pre>
+        <CodeView code=
           {`function UserList() {
   const users = [
     { id: 1, name: 'Alice', age: 25 },
@@ -70,13 +70,13 @@ console.log(userNames) // ['Alice', 'Bob', 'Charlie']`}
     </ul>
   )
 }`}
-        </pre>
+        />
         <Paragraph>
           <Text strong>重點</Text>: 在 React 中使用 <Text code>map()</Text> 時，每個元素都需要有唯一的 <Text code>key</Text> 屬性!
         </Paragraph>
 
         <Title level={3}>map 的完整參數</Title>
-        <pre>
+        <CodeView code=
           {`const numbers = [10, 20, 30]
 // map 可以接收三個參數: (元素, 索引, 原陣列)
 const result = numbers.map((num, index, array) => {
@@ -84,10 +84,10 @@ const result = numbers.map((num, index, array) => {
   return num * index
 })
 console.log(result) // [0, 20, 60]`}
-        </pre>
+        />
 
         <Title level={3}>常見錯誤</Title>
-        <pre>
+        <CodeView code=
           {`// 錯誤: 忘記 return
 const wrong = [1, 2, 3].map(num => {
   num * 2 // 沒有 return, 結果會是 [undefined, undefined, undefined]
@@ -99,7 +99,7 @@ const correct1 = [1, 2, 3].map(num => num * 2)
 const correct2 = [1, 2, 3].map(num => {
   return num * 2
 })`}
-        </pre>
+        />
 
         <Divider />
 
@@ -114,23 +114,23 @@ const correct2 = [1, 2, 3].map(num => {
         </ul>
 
         <Title level={3}>基本用法</Title>
-        <pre>
+        <CodeView code=
           {`const numbers = [1, 2, 3, 4, 5]
 numbers.forEach(num => {
   console.log(num)
 })
 // 輸出: 1 2 3 4 5`}
-        </pre>
+        />
 
         <Title level={3}>forEach 的完整參數</Title>
-        <pre>
+        <CodeView code=
           {`const fruits = ['apple', 'banana', 'cherry']
 // forEach 可以接收三個參數: (元素, 索引, 原陣列)
 fruits.forEach((fruit, index, array) => {
   console.log(\`索引 \${index}: \${fruit}\`)
   console.log(\`原陣列長度: \${array.length}\`)
 })`}
-        </pre>
+        />
 
         <Divider />
 

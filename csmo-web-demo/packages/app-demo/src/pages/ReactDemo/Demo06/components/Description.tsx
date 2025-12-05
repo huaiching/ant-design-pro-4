@@ -1,9 +1,9 @@
-// src/pages/UseContextIntro/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
+import CodeView from '@/utils/CodeView';
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Paragraph } = Typography;
 
 const UseContextIntroPage: React.FC = () => {
   return (
@@ -25,7 +25,7 @@ const UseContextIntroPage: React.FC = () => {
             <li>父組件</li>
           </ol>
         </Paragraph>
-        <pre>
+        <CodeView code=
 {`import { createContext } from "react"
 // 宣告 context 變數
 // 要下『export』因為 後層組件需要調用
@@ -40,14 +40,14 @@ const VDOM: React.FC = () => {
   )
 }
 export default VDOM`}
-        </pre>
+        />
 
         <Paragraph>
           <ol start={2}>
             <li>子組件</li>
           </ol>
         </Paragraph>
-        <pre>
+        <CodeView code=
 {`// 載入 父組件所在的組件，並設定取得 Context變數
 import { Context變數 } from 'context所在的組件'
 import { useContext } from "react"
@@ -62,7 +62,7 @@ const VDOM_C: React.FC = () => {
  )
 }
 export default VDOM`}
-        </pre>
+        />
 
         <Divider />
 
@@ -71,7 +71,7 @@ export default VDOM`}
 
         <Title level={4}>全域狀態變數設定</Title>
         <Title level={5}>store/useUserContext.tsx</Title>
-        <pre>
+        <CodeView code=
 {`import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 // 定義用戶資料的型別
@@ -118,11 +118,11 @@ export const useUserGlobalContext = () => {
     }
     return context;
   };`}
-        </pre>
+        />
 
         <Title level={4}>父組件: 使用全域狀態變數</Title>
         <Title level={5}>index.tsx</Title>
-        <pre>
+        <CodeView code=
 {`import React from 'react';
 import { GlobalProvider } from './store/useUserContext';
 import SubDom1 from './components/subDom1';
@@ -141,11 +141,11 @@ const App: React.FC = () => {
 };
 
 export default App;`}
-        </pre>
+        />
 
         <Title level={4}>子組件: 更新全域狀態變數</Title>
         <Title level={5}>subDom1.tsx</Title>
-        <pre>
+        <CodeView code=
 {`import React, { useState } from 'react';
 import { useUserGlobalContext } from '../store/useUserContext';
 import { Button, Input, Space } from 'antd';
@@ -184,11 +184,11 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;`}
-        </pre>
+        />
 
         <Title level={4}>子組件: 顯示全域狀態變數資料</Title>
         <Title level={5}>subDom2.tsx</Title>
-        <pre>
+        <CodeView code=
 {`import { useUserGlobalContext } from '../store/useUserContext';
 
 const Component = () => {
@@ -202,7 +202,7 @@ const Component = () => {
     )
 }
 export default Component`}
-        </pre>
+        />
 
       </Typography>
     </PageContainer>

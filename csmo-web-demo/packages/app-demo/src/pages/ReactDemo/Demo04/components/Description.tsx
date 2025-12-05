@@ -1,7 +1,7 @@
-// src/pages/PropsParentToChild/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
+import CodeView from '@/utils/CodeView';
 
 const { Title, Paragraph } = Typography;
 
@@ -27,18 +27,18 @@ const PropsParentToChildPage: React.FC = () => {
           1. 單獨傳遞<br />
           &nbsp;&nbsp;將每個信息，透過 屬性標籤 單獨傳遞過去
         </Paragraph>
-        <pre>
+        <CodeView code=
 {`<Component
  name={userData.name}
  age={userData.age}
  sex={userData.sex}/>`}
-        </pre>
+        />
 
         <Paragraph>
           2. 同時傳遞<br />
           &nbsp;&nbsp;將所有 信息 包裝起來，就可以一次傳遞過去
         </Paragraph>
-        <pre>{`<Component {...userData}/>`}</pre>
+        <CodeView code={`<Component {...userData}/>`}/>
 
         <Paragraph>
           2. 子組件 (接收)
@@ -46,7 +46,7 @@ const PropsParentToChildPage: React.FC = () => {
         <Paragraph>
           在 頁面函數 的 參數區域 中，設定要接受的變數名稱
         </Paragraph>
-        <pre>
+        <CodeView code=
 {`const Component = (props: any) => {
     return (
         <ul>
@@ -57,14 +57,14 @@ const PropsParentToChildPage: React.FC = () => {
     )
 }
 export default Component`}
-      </pre>
+      />
 
         <Divider />
 
         <Title level={2}>範例</Title>
 
         <Title level={4}>index.tsx</Title>
-        <pre>
+        <CodeView code=
 {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 import SubDom from './components/subDom';
@@ -95,10 +95,10 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-        </pre>
+        />
 
         <Title level={4}>subDom.tsx</Title>
-        <pre>
+        <CodeView code=
 {`const Component = (prpos: any) => {
     return (
         <ul>
@@ -109,7 +109,7 @@ export default VDOM`}
     )
 }
 export default Component`}
-        </pre>
+        />
 
       </Typography>
     </PageContainer>

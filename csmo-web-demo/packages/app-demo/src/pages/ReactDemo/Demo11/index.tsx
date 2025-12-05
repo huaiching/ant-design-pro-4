@@ -2,6 +2,7 @@
 import React from 'react'
 import { PageContainer } from '@ant-design/pro-components'
 import { Typography } from 'antd'
+import CodeView from '@/utils/CodeView';
 
 const { Paragraph } = Typography;
 
@@ -21,7 +22,7 @@ const DownloadFileAppendixPage: React.FC = () => {
           下面是 檔案的資料流 轉換為 檔案連結 的範例
         </Paragraph>
 
-        <pre>
+        <CodeView code=
 {`    
 await 後端API方法(參數, {
   responseType: 'blob', // 回應請求設定為 blob (二進位檔案)
@@ -38,7 +39,7 @@ await 後端API方法(參數, {
   FileSaver.saveAs(data, decodeURIComponent(filename))
 })
 `}
-        </pre>
+        />
 
       </Typography>
     </PageContainer>

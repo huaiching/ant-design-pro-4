@@ -1,7 +1,7 @@
-// src/pages/BasicStructure/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Card, Typography, Divider } from 'antd';
+import CodeView from '@/utils/CodeView';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -22,9 +22,7 @@ const BasicStructurePage: React.FC = () => {
 
           <Divider />
 
-          <pre>
-{`
-import React from 'react';
+          <CodeView code={`import React from 'react';
 // 開頭 進行 元件的載入
 // 頁面檔 其實就是一個函式，return 出去的就是要渲染的 html 元件
 const myExample: React.FC = (輸入參數) => {
@@ -35,17 +33,14 @@ const myExample: React.FC = (輸入參數) => {
         </div>
     )
 }
-export default myExample;
-`}
-          </pre>
+export default myExample;`}
+          />
 
           <Divider />
 
           <Title level={3}>範例</Title>
 
-          <pre>
-{`
-import { PageContainer } from '@ant-design/pro-layout';
+          <CodeView code={`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 
 const myExample: React.FC = () => {
@@ -55,9 +50,8 @@ const myExample: React.FC = () => {
         </PageContainer>
     )
 }
-export default myExample;
-`}
-          </pre>
+export default myExample;`}
+          />
 
           <Paragraph style={{ marginTop: 32 }}>
             <Text type="secondary">

@@ -1,7 +1,7 @@
-// src/pages/TemplateLiterals/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
+import CodeView from '@/utils/CodeView';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -14,14 +14,14 @@ const TemplateLiteralsPage: React.FC = () => {
         <Paragraph>
           傳統 JS 字串串接非常麻煩：
         </Paragraph>
-        <pre>{'const msg = "我是 " + user.name + "，今年 " + user.age + " 歲，住在 " + user.city + " 。"'}</pre>
+        <CodeView code={'const msg = "我是 " + user.name + "，今年 " + user.age + " 歲，住在 " + user.city + " 。"'}/>
 
         <Paragraph>
           ES6 推出 <Text strong>樣板字串</Text>，讓你輕鬆插入變數、換行、保持格式！
         </Paragraph>
 
         <Title level={3}>正確寫法（反引號 + ${'{}'}）</Title>
-        <pre>{'const msg2 = `我是 ${user.name}，今年 ${user.age} 歲，住在 ${user.city} 。`'}</pre>
+        <CodeView code={'const msg2 = `我是 ${user.name}，今年 ${user.age} 歲，住在 ${user.city} 。`'}/>
 
         <Title level={3}>三大優勢</Title>
         <Paragraph>
@@ -35,7 +35,7 @@ const TemplateLiteralsPage: React.FC = () => {
         <Divider />
 
         <Title level={2}>完整範例</Title>
-        <pre>
+        <CodeView code=
 {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 
@@ -59,7 +59,7 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-        </pre>
+        />
       </Typography>
     </PageContainer>
   );

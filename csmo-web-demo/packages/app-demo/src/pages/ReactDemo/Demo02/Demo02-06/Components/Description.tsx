@@ -1,7 +1,7 @@
-// src/pages/FunctionIntro/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
+import CodeView from '@/utils/CodeView';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -16,32 +16,32 @@ const FunctionIntroPage: React.FC = () => {
           <ol>
             <li>
               <Text strong>箭頭函式 (arrow function)</Text>
-              <pre>
+              <CodeView code=
 {`const 函式名稱 = (參數: 型別, ……): 回傳型別 => {
     處理邏輯
     return 回傳值
 }`}
-              </pre>
+              />
             </li>
 
             <li>
               <Text strong>函式宣告 (Function Declaration)</Text>
-              <pre>
+              <CodeView code=
 {`function 函式名稱(參數: 型別, ……): 回傳型別 {
     處理邏輯
     return 回傳值
 }`}
-              </pre>
+              />
             </li>
 
             <li>
               <Text strong>函式表示式 (Function Expression)</Text>
-              <pre>
+              <CodeView code=
 {`const 函式名稱 = function (參數: 型別, ……): 回傳型別 {
     處理邏輯
     return 回傳值
 }`}
-              </pre>
+              />
             </li>
           </ol>
         </Paragraph>
@@ -54,15 +54,15 @@ const FunctionIntroPage: React.FC = () => {
           <ol>
             <li>
               <Text strong>必填參數</Text>
-              <pre><code>參數: 型別</code></pre>
+              <CodeView code={`參數: 型別`} />
             </li>
             <li>
               <Text strong>選填參數</Text>
-              <pre><code>參數?: 型別</code></pre>
+              <CodeView code={`參數?: 型別`} />
             </li>
             <li>
               <Text strong>剩餘參數</Text>
-              <pre><code>...參數: 型別[]</code></pre>
+              <CodeView code={`...參數: 型別[]`} />
               <ul style={{ marginTop: 8, marginLeft: 20 }}>
                 <li>必須是 函數的 最後一個 參數</li>
                 <li>必須是一個 陣列</li>
@@ -76,7 +76,7 @@ const FunctionIntroPage: React.FC = () => {
 
         <Title level={2}>範例</Title>
 
-        <pre>
+        <CodeView code=
 {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 
@@ -108,7 +108,7 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-        </pre>
+        />
       </Typography>
     </PageContainer>
   );

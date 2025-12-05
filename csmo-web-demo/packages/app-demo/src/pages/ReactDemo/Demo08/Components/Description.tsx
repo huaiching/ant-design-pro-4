@@ -1,7 +1,7 @@
-// src/pages/UseRefIntro/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
+import CodeView from '@/utils/CodeView';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -34,7 +34,7 @@ const UseRefIntroPage: React.FC = () => {
             </li>
           </ol>
         </Paragraph>
-        <pre>{`const ref變數 = useRef<元件的Ref型態>(初始值)`}</pre>
+        <CodeView code={`const ref變數 = useRef<元件的Ref型態>(初始值)`}/>
 
         <Paragraph>
           <ol start={2}>
@@ -49,19 +49,19 @@ const UseRefIntroPage: React.FC = () => {
             </li>
           </ol>
         </Paragraph>
-        <pre>{`<Input type='text' ref={ref變數} onChange={改變事件} />`}</pre>
+        <CodeView code={`<Input type='text' ref={ref變數} onChange={改變事件} />`}/>
 
         <Paragraph>
           <ol start={3}>
             <li>取得數值</li>
           </ol>
         </Paragraph>
-        <pre>{`const 變數 = inputRef.current?.input?.value`}</pre>
+        <CodeView code={`const 變數 = inputRef.current?.input?.value`}/>
 
         <Divider />
 
         <Title level={2}>範例</Title>
-        <pre>
+        <CodeView code=
 {`import { PageContainer } from '@ant-design/pro-layout';
 import { Input, Space } from 'antd';
 import type { InputRef } from 'antd';
@@ -93,7 +93,7 @@ const MyComponent: React.FC = () => {
 };
 
 export default MyComponent;`}
-        </pre>
+        />
 
       </Typography>
     </PageContainer>

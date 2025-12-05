@@ -21,24 +21,28 @@ const CodeView: React.FC<CodeViewProps> = ({
       string: '#ce9178',
       number: '#b5cea8',
       comment: '#6a9955',
+      javadoc: '#7ca668',
       function: '#dcdcaa',
       class: '#4ec9b0',
       operator: '#d4d4d4',
       lineNumber: '#858585',
-      lineNumberBg: '#2b2b2b'
+      lineNumberBg: '#2b2b2b',
+      htmlTag: '#808080'
     },
     light: {
       background: '#f5f5f5',
-      text: '#333333',
-      keyword: '#0000ff',
+      text: '#2d2d2d',
+      keyword: '#0066cc',
       string: '#a31515',
       number: '#098658',
-      comment: '#008000',
+      comment: '#6a9955',
+      javadoc: '#5a8c4a',
       function: '#795e26',
       class: '#267f99',
       operator: '#000000',
-      lineNumber: '#999999',
-      lineNumberBg: '#f5f5f5'
+      lineNumber: '#888888',
+      lineNumberBg: '#f5f5f5',
+      htmlTag: '#666666'
     }
   };
 
@@ -66,7 +70,22 @@ const CodeView: React.FC<CodeViewProps> = ({
 
     let highlighted = code;
 
-    // 1. 註解（最先處理）
+    // 1. JavaDoc 註解（Java 特有，需要在一般註解之前處理）
+    if (lang === 'java') {
+      highlighted = highlighted.replace(
+        /(\/\*\*[\s\S]*?\*\/)/gm,
+        (match) => {
+          // 處理 JavaDoc 內部的標籤如 @param, @return 等
+          let javadocContent = match.replace(
+            /(@\w+)/g,
+            '<span class="javadoc-tag">$1</span>'
+          );
+          return protect(`<span class="javadoc">${javadocContent}</span>`);
+        }
+      );
+    }
+
+    // 2. 一般註解
     highlighted = highlighted.replace(
       /(\/\/.*$|\/\*[\s\S]*?\*\/)/gm,
       (match) => protect(`<span class="comment">${match}</span>`)
@@ -179,10 +198,20 @@ const CodeView: React.FC<CodeViewProps> = ({
       }
     );
 
-    // 9. JSX 標籤（TSX 特有）
+    // 9. JSX/HTML 標籤（TSX 特有）
     if (lang === 'tsx') {
+      // HTML 標籤（小寫開頭）
       highlighted = highlighted.replace(
-        /(&lt;|<)\/?([A-Z][a-zA-Z0-9]*)/g,
+        /(&lt;|<)\/?\s*([a-z][a-zA-Z0-9]*)/g,
+        (match, bracket, tag) => {
+          if (match.includes(MARKER)) return match;
+          return protect(`${bracket}<span class="html-tag">${tag}</span>`);
+        }
+      );
+      
+      // React 組件標籤（大寫開頭）
+      highlighted = highlighted.replace(
+        /(&lt;|<)\/?\s*([A-Z][a-zA-Z0-9]*)/g,
         (match, bracket, tag) => {
           if (match.includes(MARKER)) return match;
           return protect(`${bracket}<span class="jsx-tag">${tag}</span>`);
@@ -200,21 +229,22 @@ const CodeView: React.FC<CodeViewProps> = ({
   const preStyle: CSSProperties = {
     background: currentTheme.background,
     color: currentTheme.text,
-    padding: showLineNumbers ? '16px 16px 16px 0' : '16px',
+    padding: showLineNumbers ? '8px 8px 8px 0' : '4px 8px 4px 8px',
     borderRadius: '4px',
+    border: '1px solid rgba(128, 128, 128, 0.2)',
     overflow: 'auto',
     fontFamily: 'Consolas, Monaco, "Courier New", monospace',
     fontSize: '14px',
     lineHeight: '1.6',
-    margin: 0,
+    margin: '16px 0 16px 0',
     display: 'flex'
   };
 
   const lineNumberStyle: CSSProperties = {
     color: currentTheme.lineNumber,
     textAlign: 'right',
-    paddingRight: '16px',
-    paddingLeft: '16px',
+    paddingRight: '10px',
+    paddingLeft: '10px',
     userSelect: 'none',
     minWidth: '40px',
     background: currentTheme.lineNumberBg,
@@ -223,7 +253,7 @@ const CodeView: React.FC<CodeViewProps> = ({
 
   const codeStyle: CSSProperties = {
     flex: 1,
-    paddingLeft: showLineNumbers ? '16px' : '0'
+    paddingLeft: showLineNumbers ? '10px' : '0'
   };
 
   const styleContent = `
@@ -231,10 +261,13 @@ const CodeView: React.FC<CodeViewProps> = ({
     .string { color: ${currentTheme.string}; }
     .number { color: ${currentTheme.number}; }
     .comment { color: ${currentTheme.comment}; font-style: italic; }
+    .javadoc { color: ${currentTheme.javadoc}; font-style: italic; }
+    .javadoc-tag { color: #4d9375; font-weight: 600; }
     .function { color: ${currentTheme.function}; }
     .class { color: ${currentTheme.class}; font-weight: 500; }
     .operator { color: ${currentTheme.operator}; }
     .annotation { color: #c586c0; font-style: italic; }
+    .html-tag { color: ${currentTheme.htmlTag}; }
     .jsx-tag { color: ${currentTheme.class}; font-weight: 600; }
   `;
 

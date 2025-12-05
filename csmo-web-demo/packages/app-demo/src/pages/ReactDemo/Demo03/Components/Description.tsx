@@ -1,9 +1,9 @@
-// src/pages/UseStateIntro/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
+import CodeView from '@/utils/CodeView';
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Paragraph } = Typography;
 
 const UseStateIntroPage: React.FC = () => {
   return (
@@ -17,10 +17,10 @@ const UseStateIntroPage: React.FC = () => {
         <Divider />
 
         <Title level={2}>語法</Title>
-        <pre>
+        <CodeView code=
 {`import { useState } from "react"
 const [isHot, setIsHot] = useState(true)`}
-        </pre>
+        />
 
         <Divider />
 
@@ -29,12 +29,12 @@ const [isHot, setIsHot] = useState(true)`}
         <Paragraph>
           1. 直接給值 (後蓋前)
         </Paragraph>
-        <pre>{`setState(新狀態)`}</pre>
+        <CodeView code={`setState(新狀態)`}/>
 
         <Paragraph>
           2. 函式更新
         </Paragraph>
-        <pre>{`setState((變數) => {更新邏輯})`}</pre>
+        <CodeView code={`setState((變數) => {更新邏輯})`}/>
 
         <Paragraph>
           <ul>
@@ -49,7 +49,7 @@ const [isHot, setIsHot] = useState(true)`}
         <Divider />
 
         <Title level={2}>範例</Title>
-        <pre>
+        <CodeView code=
             {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 import { Button, Space } from "antd";
@@ -77,7 +77,7 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-        </pre>
+        />
 
       </Typography>
     </PageContainer>

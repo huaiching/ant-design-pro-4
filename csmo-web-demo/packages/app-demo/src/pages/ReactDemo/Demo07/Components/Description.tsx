@@ -1,7 +1,7 @@
-// src/pages/UseEffectIntro/index.tsx
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
+import CodeView from '@/utils/CodeView';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -23,45 +23,45 @@ const UseEffectIntroPage: React.FC = () => {
 
         <Title level={2}>每次渲染 執行</Title>
         <Paragraph>無監測對象，就是 <Text code>每次渲染</Text> 都要執行</Paragraph>
-        <pre>
+        <CodeView code=
 {`useEffect(()=>{
     // useEffect 『啟動』時要執行的操作
     return () => {
         // useEffect 『卸載』時要執行的操作
     }
 })`}
-        </pre>
+        />
 
         <Divider />
 
         <Title level={2}>首次渲染 執行</Title>
         <Paragraph>監測對象空白，就是 <Text code>首次渲染</Text> 才要執行</Paragraph>
-        <pre>
+        <CodeView code=
 {`useEffect(()=>{
     // useEffect 『啟動』時要執行的操作
     return () => {
         // useEffect 『卸載』時要執行的操作
     }
 },[])`}
-        </pre>
+        />
 
         <Divider />
 
         <Title level={2}>特定對象觸發渲染 執行</Title>
         <Paragraph>有設定監測對象，就是 <Text code>監測對象數值更新</Text> 才要執行</Paragraph>
-        <pre>
+        <CodeView code=
 {`useEffect(()=>{
     // Effect 『啟動』時要執行的操作
     return () => {
         // Effect 『卸載』時要執行的操作
     }
 },[監測對象, 監測對象, ……])`}
-        </pre>
+        />
 
         <Divider />
 
         <Title level={2}>範例</Title>
-        <pre>
+        <CodeView code=
 {`import { PageContainer } from "@ant-design/pro-layout"
 import React, { useEffect, useState } from "react"
 
@@ -86,7 +86,7 @@ const VDOM: React.FC = () => {
 }
 
 export default VDOM`}
-        </pre>
+        />
 
       </Typography>
     </PageContainer>
