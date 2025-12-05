@@ -1,13 +1,8 @@
 import { PageContainer } from '@ant-design/pro-components'
 import { Divider, Typography } from 'antd'
+import CodeView from '@/utils/CodeView'
 
 const { Title, Paragraph } = Typography
-
-const CodeBlock: React.FC<{ code: string }> = ({ code }) => (
-  <pre>
-    <code>{code}</code>
-  </pre>
-)
 
 const SqlDemo: React.FC = () => {
   return (
@@ -71,7 +66,7 @@ const SqlDemo: React.FC = () => {
           </li>
           <li>
             範例
-            <CodeBlock
+            <CodeView
               code={`Criterion criterion =  Criterion.single("clientId", Criterion.QueryOperator.EQUAL, clientId)`} />
           </li>
         </ul>
@@ -85,7 +80,7 @@ const SqlDemo: React.FC = () => {
         <ul>
           <li>
             範例
-            <CodeBlock
+            <CodeView
               code={`List<Object> policyNoList = poclList.stream()
                 .map(PoclEntity::getPolicyNo).distinct().collect(Collectors.toList());
 Criterion criterion =  Criterion.in("policyNo", policyNoList);`} />
@@ -93,7 +88,7 @@ Criterion criterion =  Criterion.in("policyNo", policyNoList);`} />
         </ul>
 
         <Title level={3}>多個條件</Title>
-        <CodeBlock
+        <CodeView
           code={`Criterion.and(
     Criterion.single(欄位, 運算符號, 數值),
     Criterion.in(欄位, LIST<Object> 數值),
@@ -102,7 +97,7 @@ Criterion criterion =  Criterion.in("policyNo", policyNoList);`} />
         <ul>
           <li>
             範例
-            <CodeBlock
+            <CodeView
               code={`Criterion criterion = Criterion.and(
     Criterion.single("clientId", Criterion.QueryOperator.EQUAL, addrKey.getClientId()),
     Criterion.single("addrInd", Criterion.QueryOperator.EQUAL, addrKey.getAddrInd())
@@ -123,13 +118,13 @@ Criterion criterion =  Criterion.in("policyNo", policyNoList);`} />
           透過 <code>viewQueryService.findOneSpec</code> 進行查詢，回傳型態為
           <code>{`Optional<?>`}</code>。
         </Paragraph>
-        <CodeBlock
+        <CodeView
           code={`Optional<?> 變數 = viewQueryService.findOneSpec(Entity.class, Criterion條件);`} />
 
         <ul>
           <li>
             範例
-            <CodeBlock
+            <CodeView
               code={`@Autowired
 private ViewQueryService viewQueryService;
 
@@ -157,7 +152,7 @@ public ClntEntity queryClntByClientId(String clientId) {
         <ul>
           <li>
             範例
-            <CodeBlock
+            <CodeView
               code={`@Autowired
 private ViewQueryService viewQueryService;
 
@@ -247,7 +242,7 @@ public List<AddrEntity> queryAddrByClientId(String clientId) {
           </li>
           <li>
             範例
-            <CodeBlock
+            <CodeView
               code={`@QueryHandler
 @MethodOverloadForbidden
 public class CmntQueryHandler {
@@ -300,7 +295,7 @@ public class CmntQueryHandler {
         <ol>
           <li>
             注入 <code>NamedParameterJdbcTemplate</code>
-            <CodeBlock
+            <CodeView
               code={`@Autowired
 private NamedParameterJdbcTemplate namedParameterJdbcTemplate;`} />
           </li>
@@ -310,7 +305,7 @@ private NamedParameterJdbcTemplate namedParameterJdbcTemplate;`} />
               <li>
                 變數 前面要使用 <code>:</code> 標示，如: <code>:address</code>
               </li>
-              <CodeBlock
+              <CodeView
                 code={`String sql1 = "SELECT * FROM addr " +
               "WHERE address LIKE :address";
 String sql2 = "UPDATE addr " +
@@ -326,16 +321,16 @@ String sql2 = "UPDATE addr " +
                 若 變數為集合，要使用 <code>( )</code> 包起來
               </li>
             </ul>
-            <CodeBlock
+            <CodeView
               code={`String sql = "SELECT * FROM gico " +
            "WHERE client_id IN (:clientIdList)";`} />
           </li>
           <li>
             透過 Map 設定參數
-            <CodeBlock
+            <CodeView
               code={`Map<String, Object> params1 = new HashMap<>();
 params1.put("address", "%" + address + "%");`} />
-            <CodeBlock
+            <CodeView
               code={`Map<String, Object> params2 = new HashMap<>();
 params2.put("clientIdNew", entityNew.getClientId());
 params2.put("addrIndNew", entityNew.getAddrInd());
@@ -352,17 +347,17 @@ params2.put("telOri", entityOri.getTel());`} />
               <li>
                 <code>單筆查詢</code> 透過 <code>namedParameterJdbcTemplate.queryForObject</code>{' '}
                 執行。
-                <CodeBlock
+                <CodeView
                   code={`Long count = namedParameterJdbcTemplate.queryForObject(countSql + whereSql, params, Long.class);`} />
               </li>
               <li>
                 <code>多筆查詢</code> 透過 <code>`namedParameterJdbcTemplate.query</code> 執行。
-                <CodeBlock
+                <CodeView
                   code={`List<Addr> addrList = namedParameterJdbcTemplate.query(sql1, params1, new BeanPropertyRowMapper<>(Addr.class));`} />
               </li>
               <li>
                 <code>增刪修</code> 透過 <code>namedParameterJdbcTemplate.update</code> 執行。
-                <CodeBlock
+                <CodeView
                   code={`namedParameterJdbcTemplate.update(sql2, params2);`} />
               </li>
             </ul>
@@ -378,7 +373,7 @@ params2.put("telOri", entityOri.getTel());`} />
           再透過 <code>entityWriteService.applyCommand()</code> 和 <code>SystemCommands.createCommand()</code> 執行。 <br />
           因 新增 可能失敗，所以需要有 <code>try-catch</code>。
         </Paragraph>
-        <CodeBlock
+        <CodeView
           code={`@Autowired
 private EntityWriteService entityWriteService;
 
@@ -400,7 +395,7 @@ public void insertAddr(AddrEntity addrEntity) {
           執行 修改 時，會根據 entity 設定的 唯一值 修改對應的資料。 <br />
           因 修改 可能失敗，所以需要有 <code>try-catch</code>。
         </Paragraph>
-        <CodeBlock
+        <CodeView
           code={`@Autowired
 private EntityWriteService entityWriteService;
 
@@ -422,7 +417,7 @@ public void updateAddr(AddrEntity addrEntityNew) {
           執行 刪除 時，會根據 entity 設定的 唯一值 刪除對應的資料。 <br />
           因 刪除 可能失敗，所以需要有 <code>try-catch</code>。
         </Paragraph>
-        <CodeBlock
+        <CodeView
           code={`@Autowired
 private EntityWriteService entityWriteService;
 

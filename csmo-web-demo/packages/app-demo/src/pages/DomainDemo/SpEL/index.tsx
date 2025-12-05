@@ -1,13 +1,8 @@
+import CodeView from '@/utils/CodeView'
 import { PageContainer } from '@ant-design/pro-components'
 import { Divider, Table, Typography } from 'antd'
 
 const { Title, Paragraph } = Typography
-
-const CodeBlock: React.FC<{ code: string }> = ({ code }) => (
-  <pre>
-    <code>{code}</code>
-  </pre>
-)
 
 const SpELDemo: React.FC = () => {
   return (
@@ -29,7 +24,7 @@ const SpELDemo: React.FC = () => {
           <li><code>value</code>：變數值</li>
         </ul>
 
-        <CodeBlock
+        <CodeView
           code={`Map<String, Object> result = new HashMap<>();
 result.put("age", 30);
 result.put("income", 50000);
@@ -38,7 +33,7 @@ result.put("planClasCode", "9A21");`}
 
         <Title level={3}>2. 基本結構</Title>
 
-        <CodeBlock
+        <CodeView
           code={`ExpressionParser parser = new SpelExpressionParser();
 EvaluationContext context = new StandardEvaluationContext();
 變數Map.forEach(context::setVariable);
@@ -66,7 +61,7 @@ String 判斷式 = "spEL 表達式 ? 符合結果 : 不符合結果";
           <Paragraph>
             為了提升效能，可將 SpEL 表達式 進行 <b>緩存</b>，避免每次都重新解析：
           </Paragraph>
-          <CodeBlock
+          <CodeView
             code={`// SpEL 表達式解析器全局單例: 避免 多次 new 浪費記憶體
 private static final ExpressionParser PARSER = new SpelExpressionParser();
 
@@ -78,7 +73,7 @@ private final Map<String, Expression> expressionCache = new ConcurrentHashMap<>(
           <Paragraph>
             此時，使用下述方法進行 SpEL 表達式 解析
           </Paragraph>
-          <CodeBlock
+          <CodeView
             code={`// 從緩存獲取或解析（Key 是完整的 ruleCode）
 Expression expression = expressionCache.computeIfAbsent(ruleCode, code -> {
     // 檢查緩存大小，防止無限增長
@@ -92,7 +87,7 @@ Boolean result = expression.getValue(context, Boolean.class);`}
           <Paragraph>
             為了避免 緩存無限增長，可在每次新增前，檢查緩存大小，並適當清除舊的緩存資料
           </Paragraph>
-          <CodeBlock
+          <CodeView
             code={`private void evictOldestEntries(Map<String, Expression> expressionCache) {
     int removeCount = 1000 / 5; // 清除 20%
     Iterator<String> iterator = expressionCache.keySet().iterator();
@@ -109,7 +104,7 @@ Boolean result = expression.getValue(context, Boolean.class);`}
 
         <details>
           <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>範例 (基本用法)</summary>
-          <CodeBlock
+          <CodeView
             code={`@Service
 public class SampleSpelService {
     private static final Logger log = LoggerFactory.getLogger(SampleSpelService.class);
@@ -162,7 +157,7 @@ public class SampleSpelService {
         
         <details>
           <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>範例 (優化)</summary>
-          <CodeBlock
+          <CodeView
             code={`@Service
 public class Demo1Service {
     private static final Logger log = LoggerFactory.getLogger(Demo1Service.class);
@@ -437,7 +432,7 @@ public class Demo1Service {
           <ul>
             <li>
               DTO
-              <CodeBlock
+              <CodeView
                 code={`public class UserDto {
     private String userCode;
     private String userName;
@@ -449,7 +444,7 @@ public class Demo1Service {
             </li>
             <li>
               取值範例
-              <CodeBlock
+              <CodeView
                 code={`Map<String, Object> dataMap = new HashMap<>();
 dataMap.put("user", new UserDto("ABC001", "測試人員", "90250"));
 
@@ -465,7 +460,7 @@ System.out.println(userCode); // 輸出：ABC001`}
             </li>
             <li>
               判斷範例
-              <CodeBlock
+              <CodeView
                 code={`Map<String, Object> dataMap = new HashMap<>();
 dataMap.put("user", new UserDto("ABC001", "測試人員", "90250"));
 
@@ -491,14 +486,14 @@ System.out.println(result); // 輸出：同部門`}
         <Paragraph>spEL 表達式 可以用來進行 數值計算，並且 可以使用 JAVA 的函式</Paragraph>
 
         <Title level={4}>語法</Title>
-        <CodeBlock code={`T(import).函式名稱(輸入參數)`} />
+        <CodeView code={`T(import).函式名稱(輸入參數)`} />
 
         <Title level={4}>範例</Title>
-        <CodeBlock code={`T(java.lang.Math).max(#V001, #V002)`} />
+        <CodeView code={`T(java.lang.Math).max(#V001, #V002)`} />
 
         <details>
           <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>完整範例</summary>
-          <CodeBlock
+          <CodeView
             code={`@Service
 public class Demo3Service {
     private static final Logger log = LoggerFactory.getLogger(Demo3Service.class);
@@ -594,17 +589,17 @@ public class Demo3Service {
         </Paragraph>
 
         <Title level={4}>註冊 自製函式</Title>
-        <CodeBlock
+        <CodeView
           code={`Method calcMethod = 自製函式程式.class.getDeclaredMethod("自製函式名稱", 輸入參數型態.class, ...);
 context.registerFunction("自製函式名稱", calcMethod);`}
         />
 
         <Title level={4}>使用 自製函式</Title>
-        <CodeBlock code={`#自製函式名稱(參數...)`} />
+        <CodeView code={`#自製函式名稱(參數...)`} />
 
         <details>
           <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>範例</summary>
-          <CodeBlock
+          <CodeView
             code={`@Service
 public class Demo4Service {
     private static final Logger log = LoggerFactory.getLogger(Demo4Service.class);
