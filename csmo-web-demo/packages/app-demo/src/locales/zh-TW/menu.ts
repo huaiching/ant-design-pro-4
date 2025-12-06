@@ -58,4 +58,6 @@ export default {
   'menu.domain.springBoot.util': 'Util — 工具與共用方法',
   'menu.domain.springBoot.service': 'Service — 商業邏輯層',
   'menu.domain.springBoot.controller': 'Controller — API 對外介面',
+  'menu.domain.springBoot.exception': 'Exception — 全局例外處理',
+  'menu.domain.springBoot.pageApi': 'Page API — 分頁查詢',
 }

@@ -43,9 +43,9 @@ const Entity = () => {
           <li>
             屬性欄位
             <ul>
-              <li>使用 <code>@Id</code> 標註 主鍵欄位</li>
-              <li>使用 <code>@Column(name = "column_name")</code> 指定對應的資料庫欄位名稱</li>
-              <li>使用 <code>@Schema(description = "swagger說明")</code>：Swagger 的說明註解</li>
+              <li><code>@Id</code> 標註 主鍵欄位</li>
+              <li><code>@Column(name = "column_name")</code> 指定對應的資料庫欄位名稱</li>
+              <li><code>@Schema(description = "swagger說明")</code>：Swagger 的說明註解</li>
             </ul>
           </li>
           <li>

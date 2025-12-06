@@ -319,6 +319,16 @@
             path: 'controller',
             name: 'controller',
             component: './DomainDemo/springBoot/Demo08_Controller'
+          },
+          {
+            path: 'exception',
+            name: 'exception',
+            component: './DomainDemo/springBoot/Demo09_Exception'
+          },
+          {
+            path: 'pageApi',
+            name: 'pageApi',
+            component: './DomainDemo/springBoot/Demo10_PageApi'
           }
         ],
       },
