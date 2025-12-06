@@ -32,6 +32,10 @@ const Service = () => {
           <li>
             <code>@Service</code>：標註此類別為 Service 層的組件，讓 Spring 能夠掃描並管理它。
           </li>
+          <li>
+            <code>@Transactional</code>：方法有 <code>INSERT</code>、<code>UPDATE</code>、<code>DELETE</code> 要加上此標註，讓執行錯誤時，可以 <code>ROLLBACK</code>。 <br/>
+            <Paragraph type='danger'>import 要使用 <code>import org.springframework.transaction.annotation.Transactional;</code></Paragraph>
+          </li>
         </ul>
 
         <details>
@@ -85,6 +89,7 @@ public class AddrService {
      * @param addrInd 地址指示
      * @param address 新地址
      */
+    @Transactional
     public void updateAddress(String clientId, String addrInd, String address) {
         String sql = "UPDATE addr " +
                      "SET address = :address " +
