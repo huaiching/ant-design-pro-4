@@ -1,0 +1,23 @@
+.code-xml-highlighter {
+  background: #1e1e1e;
+  border-radius: 0 0 6px 6px;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+  font-size: 14px;
+}
+
+.xml-code {
+  margin: 0;
+  padding: 16px !important;
+  color: #d4d4d4;
+  line-height: 1.5;
+}
+
+.xml-bracket       { color: #808080; }
+.xml-tag-opening   { color: #569cd6; font-weight: bold; }
+.xml-tag-closing   { color: #d16969; font-weight: bold; }
+.xml-attr-name     { color: #9cdcfe; }
+.xml-attr-value    { color: #ce9178; }
+.xml-comment       { color: #6a9955; opacity: 0.85; }
+.xml-cdata         { color: #608b4e; }
+.xml-proc-instr    { color: #808080; font-style: italic; }

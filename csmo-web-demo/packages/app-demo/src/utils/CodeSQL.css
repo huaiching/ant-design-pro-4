@@ -1,0 +1,22 @@
+.code-sql-highlighter {
+  background: #1e1e1e;
+  border-radius: 0 0 6px 6px;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 14px;
+}
+
+.sql-code {
+  margin: 0;
+  padding: 16px !important;
+  color: #d4d4d4;
+  white-space: pre;
+}
+
+.sql-keyword   { color: #569cd6; font-weight: bold; }
+.sql-function  { color: #dcdcaa; }
+.sql-string    { color: #ce9178; }
+.sql-comment   { color: #6a9955; opacity: 0.8; }
+.sql-number    { color: #b5cea8; }
+.sql-table     { color: #4ec9b0; }
+.sql-alias     { color: #9cdcfe; font-style: italic; }
