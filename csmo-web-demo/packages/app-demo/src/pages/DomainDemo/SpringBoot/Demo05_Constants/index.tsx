@@ -54,6 +54,7 @@ VALUE_2("2","女性");`}/>
             Getter 方法
             <ul>
               <li>由 IDE 自動產生</li>
+              <li>因為 常數 不可修改，所以不需要 Setter 方法</li>
             </ul>
           </li>
           <li>
