@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -34,7 +34,7 @@ const UseRefIntroPage: React.FC = () => {
             </li>
           </ol>
         </Paragraph>
-        <CodeView code={`const ref變數 = useRef<元件的Ref型態>(初始值)`}/>
+        <CodeTsx code={`const ref變數 = useRef<元件的Ref型態>(初始值)`}/>
 
         <Paragraph>
           <ol start={2}>
@@ -49,19 +49,19 @@ const UseRefIntroPage: React.FC = () => {
             </li>
           </ol>
         </Paragraph>
-        <CodeView code={`<Input type='text' ref={ref變數} onChange={改變事件} />`}/>
+        <CodeTsx code={`<Input type='text' ref={ref變數} onChange={改變事件} />`}/>
 
         <Paragraph>
           <ol start={3}>
             <li>取得數值</li>
           </ol>
         </Paragraph>
-        <CodeView code={`const 變數 = inputRef.current?.input?.value`}/>
+        <CodeTsx code={`const 變數 = inputRef.current?.input?.value`}/>
 
         <Divider />
 
         <Title level={2}>範例</Title>
-        <CodeView code=
+        <CodeTsx code=
 {`import { PageContainer } from '@ant-design/pro-layout';
 import { Input, Space } from 'antd';
 import type { InputRef } from 'antd';

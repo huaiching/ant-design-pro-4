@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -15,11 +15,11 @@ const ArrayIntroPage: React.FC = () => {
           <ol>
             <li>
               <Text strong>一般</Text>
-              <CodeView code={`let 陣列名稱: 型別[] = [數值A, 數值B]`} />
+              <CodeTsx code={`let 陣列名稱: 型別[] = [數值A, 數值B]`} />
             </li>
             <li>
               <Text strong>泛型</Text>
-              <CodeView code={`let 陣列名稱: Array&lt;型別&gt; = [數值A, 數值B]`} />
+              <CodeTsx code={`let 陣列名稱: Array&lt;型別&gt; = [數值A, 數值B]`} />
             </li>
           </ol>
         </Paragraph>
@@ -31,19 +31,19 @@ const ArrayIntroPage: React.FC = () => {
           <ol>
             <li>
               <Text strong>新增</Text>
-              <CodeView code={`陣列名稱.push(數值)`} />
+              <CodeTsx code={`陣列名稱.push(數值)`} />
             </li>
             <li>
               <Text strong>長度</Text>
-              <CodeView code={`陣列名稱.length`} />
+              <CodeTsx code={`陣列名稱.length`} />
             </li>
             <li>
               <Text strong>排序 (小到大)</Text>
-              <CodeView code={`陣列名稱.sort()`} />
+              <CodeTsx code={`陣列名稱.sort()`} />
             </li>
             <li>
               <Text strong>排序 (大到小)</Text>
-              <CodeView code={`陣列名稱.sort((x,y) =>  y-x)`} />
+              <CodeTsx code={`陣列名稱.sort((x,y) =>  y-x)`} />
             </li>
           </ol>
         </Paragraph>
@@ -52,7 +52,7 @@ const ArrayIntroPage: React.FC = () => {
 
         <Title level={2}>範例</Title>
 
-        <CodeView code=
+        <CodeTsx code=
 {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 

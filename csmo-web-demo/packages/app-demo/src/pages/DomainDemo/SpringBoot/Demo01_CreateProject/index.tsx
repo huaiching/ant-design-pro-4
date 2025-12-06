@@ -1,5 +1,8 @@
 import { PageContainer } from "@ant-design/pro-components"
-import CodeView from '@/utils/CodeView'
+import CodeJava from '@/utils/CodeJava'
+import CodeTsx from '@/utils/CodeTsx'
+import CodeSQL from '@/utils/CodeSQL'
+import CodeXML from '@/utils/CodeXML'
 import { Button, Typography } from "antd"
 
 const { Title, Paragraph } = Typography
@@ -65,13 +68,13 @@ const CreateProject = () => {
             <ul>
               <li>
                 將 <code>spring-boot-starter-parent</code> 版本調降為 <code>2.7.18</code>。
-                <CodeView code={`<groupId>org.springframework.boot</groupId>
+                <CodeXML code={`<groupId>org.springframework.boot</groupId>
 <artifactId>spring-boot-starter-parent</artifactId>
 <version>2.7.18</version>`} />
               </li>
               <li>
                 將 <code>Java</code> 調降為 <code>11</code>。
-                <CodeView code={`<properties>
+                <CodeXML code={`<properties>
 	<java.version>11</java.version>
 </properties>`} />
               </li>
@@ -80,7 +83,7 @@ const CreateProject = () => {
           <li>
             安裝 <code>swagger</code> <br />
             在 <code>dependencies</code> 中，加入以下內容：
-            <CodeView code={`<dependency>
+            <CodeXML code={`<dependency>
     <groupId>org.springdoc</groupId>
     <artifactId>springdoc-openapi-ui</artifactId>
     <version>1.8.0</version>
@@ -97,7 +100,7 @@ const CreateProject = () => {
         <Paragraph>
           在 <code>src/main/resources/</code> 目錄下，將 <code>application.properties</code> 修改為 <code>application.yml</code>，並加入以下內容：
         </Paragraph>
-        <CodeView code={`server:
+        <CodeTsx code={`server:
   port: 9010
 # ==================== SpringBoot ====================
 spring:
@@ -143,7 +146,7 @@ springdoc:
         <Paragraph>
           於 <code>Application</code> 主程式同目錄下，新增資料夾 <code>config</code>，並在其中 新增檔案 <code>SpringDocConfig.java</code> ，並加入以下內容：
         </Paragraph>
-        <CodeView language='java' code={`import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+        <CodeJava  code={`import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
@@ -166,7 +169,7 @@ public class SwaggerDocConfig {
         <Paragraph>
           於 <code>src/main/resources/</code> 新增檔案 <code>schema.sql</code>，並在 這個檔案中，設定 專案啟動時 要自動執行的 SQL 指令，例如：
         </Paragraph>
-        <CodeView code={`-- 客戶資料檔
+        <CodeSQL sql={`-- 客戶資料檔
 CREATE TABLE IF NOT EXISTS clnt ( 
     clinet_id   CHAR(10),   -- 客戶證號
     names       CHAR(40),   -- 客戶姓名

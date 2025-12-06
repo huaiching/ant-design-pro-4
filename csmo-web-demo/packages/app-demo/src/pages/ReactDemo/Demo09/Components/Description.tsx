@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -32,7 +32,7 @@ const UseSyncExternalStoreIntroPage: React.FC = () => {
           </ul>
         </Paragraph>
 
-        <CodeView code=
+        <CodeTsx code=
           {`// 儲存 狀態變化時，要通知的訂閱者資訊 (照抄)
 let listeners: Set<() => void> = new Set()
 
@@ -69,7 +69,7 @@ function emitChange(): void {
           </ul>
         </Paragraph>
 
-        <CodeView code=
+        <CodeTsx code=
 {`// 設定資料型態
 export interface UserInfo {
   name: string
@@ -156,7 +156,7 @@ export const userStore = {
             <li>第三個參數：伺服器端的取值函式</li>
           </ul>
         </Paragraph>
-        <CodeView code=
+        <CodeTsx code=
 {`const user = useSyncExternalStore(
   userStore.subscribe, // 訂閱
   userStore.getUser,   // 客戶端取值
@@ -172,7 +172,7 @@ export const userStore = {
             <li>透過 set 方法，進行資料更新</li>
           </ul>
         </Paragraph>
-        <CodeView code=
+        <CodeTsx code=
 {`import React, { useEffect } from 'react'
 import { ProForm, ProFormText, ProFormDigit } from '@ant-design/pro-components'
 import { Card, message } from 'antd'
@@ -229,7 +229,7 @@ export default Create`}
             <li>因為 set 方法 有包含 <Text code>emitChange()</Text>，所以 數值更新時，React 會通知要更新資料</li>
           </ul>
         </Paragraph>
-        <CodeView code=
+        <CodeTsx code=
 {`import React, { useEffect } from 'react'
 import { Card, Descriptions, message } from 'antd'
 import { useSyncExternalStore } from 'react'

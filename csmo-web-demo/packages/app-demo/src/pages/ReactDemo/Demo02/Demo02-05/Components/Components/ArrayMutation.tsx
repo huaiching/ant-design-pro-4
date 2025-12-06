@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title } = Typography;
 
@@ -11,7 +11,7 @@ const ArrayMutationPage: React.FC = () => {
       <Typography>
 
         <Title level={2}>1. 直接修改陣列元素</Title>
-        <CodeView code=
+        <CodeTsx code=
 {`const numbers = [1, 2, 3, 4, 5]
 
 // 透過索引直接修改
@@ -25,7 +25,7 @@ console.log(numbers) // [10, 2, 30, 4, 5]`}
 
         <Title level={2}>2. 修改物件陣列中的特定屬性</Title>
 
-        <CodeView code=
+        <CodeTsx code=
 {`const users = [
  { id: 1, name: 'Alice', age: 25 },
  { id: 2, name: 'Bob', age: 30 },

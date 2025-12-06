@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -17,7 +17,7 @@ const TypeComplexPage: React.FC = () => {
           </ol>
         </Paragraph>
 
-        <CodeView code=
+        <CodeTsx code=
 {`type 型別名稱 = {
       必填屬性A: 型別;
       選填屬性B?: 型別; // 選填屬性 用「?」表示
@@ -29,7 +29,7 @@ const TypeComplexPage: React.FC = () => {
 
         <Title level={2}>範例</Title>
 
-        <CodeView code=
+        <CodeTsx code=
 {`const VDOM: React.FC = () => {
     /* 抽象型別 */
     // 書本 有 名稱、頁數

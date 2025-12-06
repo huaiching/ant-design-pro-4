@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -17,7 +17,7 @@ const InterfaceIntroPage: React.FC = () => {
           </ol>
         </Paragraph>
 
-        <CodeView code=
+        <CodeTsx code=
 {`interface 型別名稱A = {
       必填屬性A: 型別;
 }
@@ -33,7 +33,7 @@ interface 型別名稱A = {
           此時 <Text code>型別名稱A</Text> 的屬性會自動合併為：
         </Paragraph>
 
-        <CodeView code=
+        <CodeTsx code=
 {`{
       必填屬性A: 型別;
       必填屬性B: 型別;
@@ -46,7 +46,7 @@ interface 型別名稱A = {
 
         <Title level={2}>範例</Title>
 
-        <CodeView code=
+        <CodeTsx code=
 {`const VDOM: React.FC = () => {
         /* 介面 interface */
         interface Person {

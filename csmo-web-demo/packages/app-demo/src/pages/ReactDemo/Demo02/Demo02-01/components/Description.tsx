@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -42,7 +42,7 @@ const JSXAndCSSPage: React.FC = () => {
 
         {/* index.tsx */}
         <Title level={4}>index.tsx</Title>
-        <CodeView code={`import './store/index.css' // 引入 css 樣式模組
+        <CodeTsx code={`import './store/index.css' // 引入 css 樣式模組
 import Demo from './components/demo1'
 
 const VDOM: React.FC = () => {
@@ -72,7 +72,7 @@ export default VDOM`}
 
         {/* index.css */}
         <Title level={4}>index.css</Title>
-        <CodeView code=
+        <CodeTsx code=
 {`.titleCss {
     background-color: red;
     font-size: 30px;
@@ -81,7 +81,7 @@ export default VDOM`}
 
         {/* demo1.tsx */}
         <Title level={4}>components/demo1.tsx</Title>
-        <CodeView code={`const demo1: React.FC = () => {
+        <CodeTsx code={`const demo1: React.FC = () => {
     return (
         <div>
             <h1>css使用範例</h1>

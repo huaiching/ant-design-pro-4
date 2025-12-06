@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -23,7 +23,7 @@ const UseEffectIntroPage: React.FC = () => {
 
         <Title level={2}>每次渲染 執行</Title>
         <Paragraph>無監測對象，就是 <Text code>每次渲染</Text> 都要執行</Paragraph>
-        <CodeView code=
+        <CodeTsx code=
 {`useEffect(()=>{
     // useEffect 『啟動』時要執行的操作
     return () => {
@@ -36,7 +36,7 @@ const UseEffectIntroPage: React.FC = () => {
 
         <Title level={2}>首次渲染 執行</Title>
         <Paragraph>監測對象空白，就是 <Text code>首次渲染</Text> 才要執行</Paragraph>
-        <CodeView code=
+        <CodeTsx code=
 {`useEffect(()=>{
     // useEffect 『啟動』時要執行的操作
     return () => {
@@ -49,7 +49,7 @@ const UseEffectIntroPage: React.FC = () => {
 
         <Title level={2}>特定對象觸發渲染 執行</Title>
         <Paragraph>有設定監測對象，就是 <Text code>監測對象數值更新</Text> 才要執行</Paragraph>
-        <CodeView code=
+        <CodeTsx code=
 {`useEffect(()=>{
     // Effect 『啟動』時要執行的操作
     return () => {
@@ -61,7 +61,7 @@ const UseEffectIntroPage: React.FC = () => {
         <Divider />
 
         <Title level={2}>範例</Title>
-        <CodeView code=
+        <CodeTsx code=
 {`import { PageContainer } from "@ant-design/pro-layout"
 import React, { useEffect, useState } from "react"
 

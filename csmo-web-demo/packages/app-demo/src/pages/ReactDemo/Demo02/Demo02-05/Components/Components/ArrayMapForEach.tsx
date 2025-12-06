@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider, Table } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -34,7 +34,7 @@ const ArrayMapForEachPage: React.FC = () => {
         </ul>
 
         <Title level={3}>基本用法</Title>
-        <CodeView code=
+        <CodeTsx code=
           {`const numbers = [1, 2, 3, 4, 5]
 const doubled = numbers.map(num => num * 2)
 console.log(doubled) // [2, 4, 6, 8, 10]
@@ -42,7 +42,7 @@ console.log(numbers) // [1, 2, 3, 4, 5] (原陣列不變)`}
         />
 
         <Title level={3}>轉換物件陣列</Title>
-        <CodeView code=
+        <CodeTsx code=
           {`const users = [
   { id: 1, name: 'Alice' },
   { id: 2, name: 'Bob' },
@@ -53,7 +53,7 @@ console.log(userNames) // ['Alice', 'Bob', 'Charlie']`}
         />
 
         <Title level={3}>在 React 中使用 map 渲染列表</Title>
-        <CodeView code=
+        <CodeTsx code=
           {`function UserList() {
   const users = [
     { id: 1, name: 'Alice', age: 25 },
@@ -76,7 +76,7 @@ console.log(userNames) // ['Alice', 'Bob', 'Charlie']`}
         </Paragraph>
 
         <Title level={3}>map 的完整參數</Title>
-        <CodeView code=
+        <CodeTsx code=
           {`const numbers = [10, 20, 30]
 // map 可以接收三個參數: (元素, 索引, 原陣列)
 const result = numbers.map((num, index, array) => {
@@ -87,7 +87,7 @@ console.log(result) // [0, 20, 60]`}
         />
 
         <Title level={3}>常見錯誤</Title>
-        <CodeView code=
+        <CodeTsx code=
           {`// 錯誤: 忘記 return
 const wrong = [1, 2, 3].map(num => {
   num * 2 // 沒有 return, 結果會是 [undefined, undefined, undefined]
@@ -114,7 +114,7 @@ const correct2 = [1, 2, 3].map(num => {
         </ul>
 
         <Title level={3}>基本用法</Title>
-        <CodeView code=
+        <CodeTsx code=
           {`const numbers = [1, 2, 3, 4, 5]
 numbers.forEach(num => {
   console.log(num)
@@ -123,7 +123,7 @@ numbers.forEach(num => {
         />
 
         <Title level={3}>forEach 的完整參數</Title>
-        <CodeView code=
+        <CodeTsx code=
           {`const fruits = ['apple', 'banana', 'cherry']
 // forEach 可以接收三個參數: (元素, 索引, 原陣列)
 fruits.forEach((fruit, index, array) => {

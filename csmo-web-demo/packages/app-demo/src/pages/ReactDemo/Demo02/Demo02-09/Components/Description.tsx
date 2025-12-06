@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title, Paragraph } = Typography;
 
@@ -11,7 +11,7 @@ const JSStatementsPage: React.FC = () => {
       <Typography>
 
         <Title level={2}>if</Title>
-        <CodeView code=
+        <CodeTsx code=
 {`if (布林條件式) {
    內容;
 }
@@ -27,7 +27,7 @@ else {
         <Divider />
 
         <Title level={2}>switch</Title>
-        <CodeView code=
+        <CodeTsx code=
 {`switch (變數) {
    case 值A:
       內容;
@@ -53,14 +53,14 @@ else {
             <li>語法</li>
           </ol>
         </Paragraph>
-        <CodeView code={`布林條件式 ? True的結果 : False的結果`}/>
+        <CodeTsx code={`布林條件式 ? True的結果 : False的結果`}/>
 
         <Paragraph>
           <ol start={2}>
             <li>範例</li>
           </ol>
         </Paragraph>
-        <CodeView code={`const data = (age>=18 ? '成年' : '未成年')`}/>
+        <CodeTsx code={`const data = (age>=18 ? '成年' : '未成年')`}/>
         <Paragraph type="secondary">
           如果 age ≥ 18 會是 成年；否則是 未成年
         </Paragraph>
@@ -73,7 +73,7 @@ else {
             <li>無回傳值（單純遍歷）</li>
           </ol>
         </Paragraph>
-        <CodeView code=
+        <CodeTsx code=
 {`陣列變數.forEach((陣列元素變數) => {
    內容
 })`}
@@ -84,7 +84,7 @@ else {
             <li>有回傳值（會自動組成新陣列）</li>
           </ol>
         </Paragraph>
-        <CodeView code=
+        <CodeTsx code=
 {`const 變數 = 陣列變數.map((陣列元素變數) => {
    return 內容
 })`}
@@ -93,7 +93,7 @@ else {
         <Divider />
 
         <Title level={2}>while</Title>
-        <CodeView code=
+        <CodeTsx code=
 {`while (布林條件式) {
    內容;
 }`}
@@ -102,7 +102,7 @@ else {
         <Divider />
 
         <Title level={2}>完整範例</Title>
-        <CodeView code=
+        <CodeTsx code=
 {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 

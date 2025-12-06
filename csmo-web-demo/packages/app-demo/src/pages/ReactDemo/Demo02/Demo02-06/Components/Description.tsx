@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -16,7 +16,7 @@ const FunctionIntroPage: React.FC = () => {
           <ol>
             <li>
               <Text strong>箭頭函式 (arrow function)</Text>
-              <CodeView code=
+              <CodeTsx code=
 {`const 函式名稱 = (參數: 型別, ……): 回傳型別 => {
     處理邏輯
     return 回傳值
@@ -26,7 +26,7 @@ const FunctionIntroPage: React.FC = () => {
 
             <li>
               <Text strong>函式宣告 (Function Declaration)</Text>
-              <CodeView code=
+              <CodeTsx code=
 {`function 函式名稱(參數: 型別, ……): 回傳型別 {
     處理邏輯
     return 回傳值
@@ -36,7 +36,7 @@ const FunctionIntroPage: React.FC = () => {
 
             <li>
               <Text strong>函式表示式 (Function Expression)</Text>
-              <CodeView code=
+              <CodeTsx code=
 {`const 函式名稱 = function (參數: 型別, ……): 回傳型別 {
     處理邏輯
     return 回傳值
@@ -54,15 +54,15 @@ const FunctionIntroPage: React.FC = () => {
           <ol>
             <li>
               <Text strong>必填參數</Text>
-              <CodeView code={`參數: 型別`} />
+              <CodeTsx code={`參數: 型別`} />
             </li>
             <li>
               <Text strong>選填參數</Text>
-              <CodeView code={`參數?: 型別`} />
+              <CodeTsx code={`參數?: 型別`} />
             </li>
             <li>
               <Text strong>剩餘參數</Text>
-              <CodeView code={`...參數: 型別[]`} />
+              <CodeTsx code={`...參數: 型別[]`} />
               <ul style={{ marginTop: 8, marginLeft: 20 }}>
                 <li>必須是 函數的 最後一個 參數</li>
                 <li>必須是一個 陣列</li>
@@ -76,7 +76,7 @@ const FunctionIntroPage: React.FC = () => {
 
         <Title level={2}>範例</Title>
 
-        <CodeView code=
+        <CodeTsx code=
 {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 

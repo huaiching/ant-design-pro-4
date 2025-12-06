@@ -1,6 +1,6 @@
 import { PageContainer } from '@ant-design/pro-components'
 import { Typography } from 'antd'
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Paragraph, Title } = Typography;
 
@@ -24,14 +24,14 @@ const RegexAppendixPage: React.FC = () => {
         <Paragraph>
           靜態：(效能較佳) — 使用「/」將正規表達式夾起來：
         </Paragraph>
-        <CodeView code=
+        <CodeTsx code=
           {`const re = /^a$/`}
         />
 
         <Paragraph>
           動態：透過 new RegExp() 進行封裝：
         </Paragraph>
-        <CodeView code=
+        <CodeTsx code=
           {`const re = new RegExp("^a$")`}
         />
 
@@ -41,7 +41,7 @@ const RegexAppendixPage: React.FC = () => {
         <Paragraph>
           透過 test() 判斷是否符合正規表達式規則：
         </Paragraph>
-        <CodeView code=
+        <CodeTsx code=
           {`正規表達式.test(要檢查的數值)`}
         />
         <Paragraph>true = 符合；false = 不符合</Paragraph>

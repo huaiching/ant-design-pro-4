@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -16,12 +16,12 @@ const IntersectionTypesPage: React.FC = () => {
         </Paragraph>
 
         <Title level={3}>語法</Title>
-        <CodeView code={`let 變數名稱: (型別A & 型別B) = 數值`} />
+        <CodeTsx code={`let 變數名稱: (型別A & 型別B) = 數值`} />
 
         <Divider />
 
         <Title level={2}>完整範例</Title>
-        <CodeView code=
+        <CodeTsx code=
 {`const VDOM: React.FC = () => {
     /* 交集 (且) */
     type Software = {

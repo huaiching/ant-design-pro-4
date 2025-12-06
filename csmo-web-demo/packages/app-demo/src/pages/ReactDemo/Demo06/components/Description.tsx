@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title, Paragraph } = Typography;
 
@@ -25,7 +25,7 @@ const UseContextIntroPage: React.FC = () => {
             <li>父組件</li>
           </ol>
         </Paragraph>
-        <CodeView code=
+        <CodeTsx code=
 {`import { createContext } from "react"
 // 宣告 context 變數
 // 要下『export』因為 後層組件需要調用
@@ -47,7 +47,7 @@ export default VDOM`}
             <li>子組件</li>
           </ol>
         </Paragraph>
-        <CodeView code=
+        <CodeTsx code=
 {`// 載入 父組件所在的組件，並設定取得 Context變數
 import { Context變數 } from 'context所在的組件'
 import { useContext } from "react"
@@ -71,7 +71,7 @@ export default VDOM`}
 
         <Title level={4}>全域狀態變數設定</Title>
         <Title level={5}>store/useUserContext.tsx</Title>
-        <CodeView code=
+        <CodeTsx code=
 {`import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 // 定義用戶資料的型別
@@ -122,7 +122,7 @@ export const useUserGlobalContext = () => {
 
         <Title level={4}>父組件: 使用全域狀態變數</Title>
         <Title level={5}>index.tsx</Title>
-        <CodeView code=
+        <CodeTsx code=
 {`import React from 'react';
 import { GlobalProvider } from './store/useUserContext';
 import SubDom1 from './components/subDom1';
@@ -145,7 +145,7 @@ export default App;`}
 
         <Title level={4}>子組件: 更新全域狀態變數</Title>
         <Title level={5}>subDom1.tsx</Title>
-        <CodeView code=
+        <CodeTsx code=
 {`import React, { useState } from 'react';
 import { useUserGlobalContext } from '../store/useUserContext';
 import { Button, Input, Space } from 'antd';
@@ -188,7 +188,7 @@ export default Profile;`}
 
         <Title level={4}>子組件: 顯示全域狀態變數資料</Title>
         <Title level={5}>subDom2.tsx</Title>
-        <CodeView code=
+        <CodeTsx code=
 {`import { useUserGlobalContext } from '../store/useUserContext';
 
 const Component = () => {

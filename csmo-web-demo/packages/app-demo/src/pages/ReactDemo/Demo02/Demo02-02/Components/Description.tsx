@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -15,11 +15,11 @@ const VariableTypesPage: React.FC = () => {
           <ol>
             <li>
               <code>let</code>：數值可修改 的 變數
-             <CodeView code={`let 變數名稱 = 初始化值`} />
+             <CodeTsx code={`let 變數名稱 = 初始化值`} />
             </li>
             <li>
               <code>const</code>：數值不可直接修改 的 變數
-             <CodeView code={`const 變數名稱 = 初始化值`} />
+             <CodeTsx code={`const 變數名稱 = 初始化值`} />
             </li>
           </ol>
         </Paragraph>
@@ -30,14 +30,14 @@ const VariableTypesPage: React.FC = () => {
         <Paragraph>
           <ol>
             <li><code>boolean</code>：只能是 true / false
-              <CodeView code={`let f_boolean: boolean = true`} />
+              <CodeTsx code={`let f_boolean: boolean = true`} />
             </li>
             <li><code>number</code>：只能是 整數 / 小數
-              <CodeView code={`let f_number_1: number = 10
+              <CodeTsx code={`let f_number_1: number = 10
 const f_number_2: number = 3.14`} />
             </li>
             <li><code>string</code>：字串
-              <CodeView code={`const f_string: string = "ABC"`} />
+              <CodeTsx code={`const f_string: string = "ABC"`} />
             </li>
             <li><code>void</code>：無回傳值，於 函式 使用</li>
             <li><code>null</code>：空值</li>
@@ -61,7 +61,7 @@ const f_number_2: number = 3.14`} />
         <Title level={2}>範例</Title>
 
         <Title level={4}>完整程式碼</Title>
-        <CodeView code={`import { PageContainer } from '@ant-design/pro-layout'
+        <CodeTsx code={`import { PageContainer } from '@ant-design/pro-layout'
 import React from 'react'
 
 const VDOM: React.FC = () => {

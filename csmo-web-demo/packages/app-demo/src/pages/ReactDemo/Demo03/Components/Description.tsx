@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Typography, Divider } from 'antd';
-import CodeView from '@/utils/CodeView';
+import CodeTsx from '@/utils/CodeTsx';
 
 const { Title, Paragraph } = Typography;
 
@@ -17,7 +17,7 @@ const UseStateIntroPage: React.FC = () => {
         <Divider />
 
         <Title level={2}>語法</Title>
-        <CodeView code=
+        <CodeTsx code=
 {`import { useState } from "react"
 const [isHot, setIsHot] = useState(true)`}
         />
@@ -29,12 +29,12 @@ const [isHot, setIsHot] = useState(true)`}
         <Paragraph>
           1. 直接給值 (後蓋前)
         </Paragraph>
-        <CodeView code={`setState(新狀態)`}/>
+        <CodeTsx code={`setState(新狀態)`}/>
 
         <Paragraph>
           2. 函式更新
         </Paragraph>
-        <CodeView code={`setState((變數) => {更新邏輯})`}/>
+        <CodeTsx code={`setState((變數) => {更新邏輯})`}/>
 
         <Paragraph>
           <ul>
@@ -49,7 +49,7 @@ const [isHot, setIsHot] = useState(true)`}
         <Divider />
 
         <Title level={2}>範例</Title>
-        <CodeView code=
+        <CodeTsx code=
             {`import { PageContainer } from '@ant-design/pro-layout';
 import React from 'react';
 import { Button, Space } from "antd";
