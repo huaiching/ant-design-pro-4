@@ -81,8 +81,9 @@ const CodeXML: React.FC<CodeXMLProps> = ({ code, title = 'XML', copyable = true 
 
   return (
     <Card
-      bodyStyle={{ padding: 0 }}
+      bodyStyle={{ padding: 0, margin: '16px 0 16px 0' }}
       size='small'
+      variant="borderless"
       extra={
         copyable && (
           <Tooltip title="複製 XML">

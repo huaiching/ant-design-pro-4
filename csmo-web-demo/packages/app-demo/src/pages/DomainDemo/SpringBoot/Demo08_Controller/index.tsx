@@ -1,11 +1,18 @@
 import { PageContainer } from "@ant-design/pro-components"
+import CodeJava from '@/utils/CodeJava'
+import CodeSQL from '@/utils/CodeSQL'
+import { Typography } from "antd"
+
+const { Title, Paragraph } = Typography
 
 const Controller = () => {
-    return (
-        <PageContainer>
-            系統建置中
-        </PageContainer>
-    )
+  return (
+    <PageContainer>
+      <Typography>
+        
+      </Typography>
+    </PageContainer>
+  )
 }
 
 export default Controller

@@ -5,7 +5,7 @@ import { Typography } from "antd"
 
 const { Title, Paragraph } = Typography
 
-const Constants = () => {
+const Util = () => {
   return (
     <PageContainer>
       <Typography>
@@ -15,4 +15,4 @@ const Constants = () => {
   )
 }
 
-export default Constants
+export default Util

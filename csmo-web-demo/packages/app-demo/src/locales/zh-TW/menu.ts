@@ -53,9 +53,9 @@ export default {
   'menu.domain.springBoot.createProject': '建立 Spring Boot 專案',
   'menu.domain.springBoot.entity': 'Entity — 資料表對應的資料模型',
   'menu.domain.springBoot.repository': 'Repository — 資料存取層',
-  'menu.domain.springBoot.dto': 'DTO — 資料傳輸物件',
+  'menu.domain.springBoot.dtoAndVo': 'DTO/VO — 資料傳輸物件',
   'menu.domain.springBoot.constants': 'Constants — 常數與Enum定義',
-  'menu.domain.springBoot.utils': 'Utils — 工具與共用方法',
+  'menu.domain.springBoot.util': 'Util — 工具與共用方法',
   'menu.domain.springBoot.service': 'Service — 商業邏輯層',
   'menu.domain.springBoot.controller': 'Controller — API 對外介面',
 }

@@ -1,6 +1,5 @@
 import { PageContainer } from "@ant-design/pro-components"
 import CodeJava from '@/utils/CodeJava'
-import CodeTsx from '@/utils/CodeTsx'
 import CodeSQL from '@/utils/CodeSQL'
 import CodeXML from '@/utils/CodeXML'
 import CodeYAML from '@/utils/CodeYAML'
@@ -22,7 +21,7 @@ const CreateProject = () => {
   return (
     <PageContainer>
       <Typography>
-        <Paragraph type="danger">此為 如何架設 原生專案方式，CSMO 專案建立方式 請看 EQUI 的教學</Paragraph>
+        <Paragraph type="danger">此為 如何架設 <code>原生專案</code> 的方法，<code>CSMO 專案</code> 請根據 EQUI 教學，複製 範例專案 進行修改。</Paragraph>
 
         <Title level={3}>1. 透過 Spring Initalizr 建立 Spring Boot 專案</Title>
 
@@ -76,7 +75,7 @@ const CreateProject = () => {
               <li>
                 將 <code>Java</code> 調降為 <code>11</code>。
                 <CodeXML code={`<properties>
-	<java.version>11</java.version>
+  <java.version>11</java.version>
 </properties>`} />
               </li>
             </ul>
@@ -171,8 +170,8 @@ public class SwaggerDocConfig {
           於 <code>src/main/resources/</code> 新增檔案 <code>schema.sql</code>，並在 這個檔案中，設定 專案啟動時 要自動執行的 SQL 指令，例如：
         </Paragraph>
         <CodeSQL sql={`-- 客戶資料檔
-CREATE TABLE IF NOT EXISTS clnt ( 
-    clinet_id   CHAR(10),   -- 客戶證號
+CREATE TABLE IF NOT EXISTS clnt (
+    client_id   CHAR(10),   -- 客戶證號
     names       CHAR(40),   -- 客戶姓名
     sex         CHAR(1),    -- 客戶性別
     age         INTEGER     -- 客戶年齡

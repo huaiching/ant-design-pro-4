@@ -296,9 +296,9 @@
             component: './DomainDemo/springBoot/Demo03_Repository'
           },
           {
-            path: 'dto',
-            name: 'dto',
-            component: './DomainDemo/springBoot/Demo04_DTO'
+            path: 'dtoAndVo',
+            name: 'dtoAndVo',
+            component: './DomainDemo/springBoot/Demo04_DtoAndVo'
           },
           {
             path: 'constants',
@@ -306,9 +306,9 @@
             component: './DomainDemo/springBoot/Demo05_Constants'
           },
           {
-            path: 'utils',
-            name: 'utils',
-            component: './DomainDemo/springBoot/Demo06_Utils'
+            path: 'util',
+            name: 'util',
+            component: './DomainDemo/springBoot/Demo06_Util'
           },
           {
             path: 'service',
