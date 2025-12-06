@@ -3,6 +3,7 @@ import CodeJava from '@/utils/CodeJava'
 import CodeTsx from '@/utils/CodeTsx'
 import CodeSQL from '@/utils/CodeSQL'
 import CodeXML from '@/utils/CodeXML'
+import CodeYAML from '@/utils/CodeYAML'
 import { Button, Typography } from "antd"
 
 const { Title, Paragraph } = Typography
@@ -100,7 +101,7 @@ const CreateProject = () => {
         <Paragraph>
           在 <code>src/main/resources/</code> 目錄下，將 <code>application.properties</code> 修改為 <code>application.yml</code>，並加入以下內容：
         </Paragraph>
-        <CodeTsx code={`server:
+        <CodeYAML yaml={`server:
   port: 9010
 # ==================== SpringBoot ====================
 spring:

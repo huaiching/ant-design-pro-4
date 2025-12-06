@@ -76,7 +76,7 @@ const CodeXML: React.FC<CodeXMLProps> = ({ code, title = 'XML', copyable = true 
   const handleCopy = () => {
     navigator.clipboard.writeText(code.trim());
     const { message } = require('antd');
-    message.success('已複製 XML');
+    message.success('已複製到剪貼簿');
   };
 
   return (
