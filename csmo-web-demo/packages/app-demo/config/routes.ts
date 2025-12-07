@@ -185,7 +185,7 @@
       {
         // Ant Design 組件介紹與說明
         name: 'antdDemoComponents',
-        path: '/antdDemo/components',
+        path: '/antdDemo/navigate',
         component: './AntdDemo/Components/Navigate',
       },
       {
@@ -341,6 +341,12 @@
             component: './DomainDemo/springBoot/Demo12_Transactional'
           },
         ],
+      },
+      {
+        // 後端的增刪改查
+        name: 'resource',
+        path: 'resource',
+        component: './DomainDemo/resource'
       },
     ]
   },
