@@ -335,6 +335,11 @@
             name: 'beanUtils',
             component: './DomainDemo/springBoot/Demo11_BeanUtils'
           },
+          {
+            path: 'transactional',
+            name: 'transactional',
+            component: './DomainDemo/springBoot/Demo12_Transactional'
+          },
         ],
       },
     ]
