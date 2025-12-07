@@ -29,18 +29,18 @@ const yamlHighlight = (raw: string): string => {
   code = code.replace(/(&[A-Za-z0-9_-]+)/g, '<span class="yaml-anchor">$1</span>');
   code = code.replace(/(\*[A-Za-z0-9_-]+)/g, '<span class="yaml-alias">$1</span>');
 
-  // Step 4: 關鍵字（true, false, null, ~）
+  // Step 4: 字串（有引號的）
+  code = code.replace(/(["'])(.*?)\1/g, '<span class="yaml-string">$&</span>');
+
+  // Step 5: 關鍵字（true, false, null, ~）
   code = code.replace(/\b(true|false|null|~)\b/g, '<span class="yaml-boolean">$1</span>');
 
-  // Step 5: 數字（含負數、科學記號）
+  // Step 6: 數字（含負數、科學記號）
   code = code.replace(/\b(-?\d+\.?\d*([eE][+-]?\d+)?)\b/g, '<span class="yaml-number">$1</span>');
 
-  // Step 6: 日期時間（2025-12-25, 2025-12-25T10:20:30Z）
+  // Step 7: 日期時間（2025-12-25, 2025-12-25T10:20:30Z）
   code = code.replace(/\b(\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})?)?)\b/g,
     '<span class="yaml-datetime">$1</span>');
-
-  // Step 7: 字串（有引號的）
-  code = code.replace(/(["'])(.*?)\1/g, '<span class="yaml-string">$&</span>');
 
   // Step 8: 鍵名（: 前面的部分）
   code = code.replace(/^([ \t]*)([^#\s].*?)(?=\s*:)/gm, (match, indent, key) => {
@@ -59,7 +59,7 @@ const yamlHighlight = (raw: string): string => {
   for (const [key, value] of placeholderMap) {
     code = code.replace(new RegExp(key, 'g'), value);
   }
-
+console.log('code',code)
   return `<pre class="yaml-code"><code>${code}</code></pre>`;
 };
 

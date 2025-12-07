@@ -98,7 +98,7 @@ VALUE_2("2","女性");`}/>
      * @param code 代碼
      * @return SexEnum
      */
-    public SexEnum getEnumByCode(String code) {
+    public static SexEnum getEnumByCode(String code) {
         for (SexEnum sexEnum : SexEnum.values()) {
             if (sexEnum.getCode().equals(code)) {
                 return sexEnum;
@@ -112,7 +112,7 @@ VALUE_2("2","女性");`}/>
      * @param code 要查詢的代碼
      * @return 對應的中文
      */
-    public String getDescByCode(String code) {
+    public static String getDescByCode(String code) {
         SexEnum sexEnum = getEnumByCode(code);
         if (sexEnum == null) {
             return "";

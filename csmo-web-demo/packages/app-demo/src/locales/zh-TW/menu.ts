@@ -60,4 +60,5 @@ export default {
   'menu.domain.springBoot.controller': 'Controller — API 對外介面',
   'menu.domain.springBoot.exception': 'Exception — 全局例外處理',
   'menu.domain.springBoot.pageApi': 'Page API — 分頁查詢',
+  'menu.domain.springBoot.beanUtils': 'DTO 的 資料複製方法',
 }

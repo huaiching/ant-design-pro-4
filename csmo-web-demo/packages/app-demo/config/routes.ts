@@ -329,7 +329,12 @@
             path: 'pageApi',
             name: 'pageApi',
             component: './DomainDemo/springBoot/Demo10_PageApi'
-          }
+          },
+          {
+            path: 'beanUtils',
+            name: 'beanUtils',
+            component: './DomainDemo/springBoot/Demo11_BeanUtils'
+          },
         ],
       },
     ]
