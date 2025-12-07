@@ -343,7 +343,26 @@
         ],
       },
       {
-        // 後端的增刪改查
+        // 常用工具類
+        name: 'utilityCode',
+        path: 'utilityCode',
+        routes: [
+          {
+            // 民國年日期工具
+            path: 'DateUtil',
+            name: 'DateUtil',
+            component: './DomainDemo/UtilityCode/DateUtil'
+          },
+          {
+            // 文字處理工具
+            path: 'Big5Util',
+            name: 'Big5Util',
+            component: './DomainDemo/UtilityCode/Big5Util'
+          },
+        ]
+      },
+      {
+        // 相關資源
         name: 'resource',
         path: 'resource',
         component: './DomainDemo/resource'
