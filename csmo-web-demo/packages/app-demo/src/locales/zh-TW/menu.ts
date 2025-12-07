@@ -65,5 +65,6 @@ export default {
   'menu.domain.utilityCode': '常用工具類',
   'menu.domain.utilityCode.DateUtil': '民國年日期工具',
   'menu.domain.utilityCode.Big5Util': 'Big5 文字處理工具',
+  'menu.domain.utilityCode.ZipUtil': 'zip 檔案壓縮工具',
   'menu.domain.resource': '相關資源',
 }

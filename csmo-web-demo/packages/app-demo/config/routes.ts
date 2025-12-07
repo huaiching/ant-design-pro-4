@@ -359,6 +359,12 @@
             name: 'Big5Util',
             component: './DomainDemo/UtilityCode/Big5Util'
           },
+          {
+            // zip 檔案壓縮工具
+            path: 'ZipUtil',
+            name: 'ZipUtil',
+            component: './DomainDemo/UtilityCode/ZipUtil'
+          },
         ]
       },
       {
