@@ -59,7 +59,7 @@ const yamlHighlight = (raw: string): string => {
   for (const [key, value] of placeholderMap) {
     code = code.replace(new RegExp(key, 'g'), value);
   }
-console.log('code',code)
+  
   return `<pre class="yaml-code"><code>${code}</code></pre>`;
 };
 
