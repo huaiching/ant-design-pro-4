@@ -61,7 +61,7 @@ public class SexPageDto extends PageRequestDto {
         <Paragraph>
           <code>Page&lt;XXXVo&gt;</code> 的 <code>return</code>，格式必須為
         </Paragraph>
-        <CodeJava code={`return new PageImpl<>(分頁資料, PageRequest.of(當前頁數, 每頁大小), 總筆數);`} />
+        <CodeJava code={`return new PageImpl(分頁資料, PageRequest.of(當前頁數, 每頁大小), 總筆數);`} />
         <Paragraph>
           為了避免 <code>每次手動 new</code>，需要同時處理 <code>資料拆分</code> 和 <code>總筆數計算</code>，建立 工具方法 來統一處理。
         </Paragraph>
