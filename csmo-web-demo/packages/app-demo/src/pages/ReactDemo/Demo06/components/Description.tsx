@@ -1,7 +1,8 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
-import { Typography, Divider } from 'antd';
+import { Typography, Divider, Image } from 'antd';
 import CodeTsx from '@/utils/CodePre/CodeTsx';
+import ImgContext from './Image/context.png'
 
 const { Title, Paragraph } = Typography;
 
@@ -15,6 +16,11 @@ const UseContextIntroPage: React.FC = () => {
           如果當 需要這個信息的子組件 位於 遠端時，信息傳遞就變得很麻煩。<br />
           為了滿足這類的需求，React 使用 context 進行 這類信息的傳遞。
         </Paragraph>
+
+        <Image
+          width={400}
+          src={ImgContext}
+        />
 
         <Divider />
 
