@@ -72,21 +72,27 @@ public class SexPageDto extends PageRequestDto {
  * 分頁查詢 資料整理工具
  */
 public class PageUtil {
-    public PageUtil() {
-    }
+    /**
+     *
+     * @param dataList    回傳資料
+     * @param pageCurrent 當前頁數
+     * @param pageSize    每頁大小
+     */
+    public static <T> Page<T> of(List<T> dataList, Integer pageCurrent, Integer pageSize) {
+        int page = (pageCurrent != null && pageCurrent > 0) ? pageCurrent - 1 : 0; // 前端 1 → Java 0
+        int size = (pageSize != null && pageSize > 0) ? pageSize : 10;
 
-    public static <T> Page<T> of(List<T> list, Pageable pageable) {
-        if (CollectionUtils.isEmpty(list)) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        if (CollectionUtils.isEmpty(dataList)) {
             return new PageImpl(Collections.emptyList(), pageable, 0L);
         } else {
-            Class<T> clazz = list.get(0).getClass();
-            Stream<T> stream = list.stream();
-            if (!IterableUtils.isEmpty(pageable.getSort())) {
-                stream = stream.sorted(getComparator(pageable.getSort(), clazz));
-            }
+            Stream<T> stream = dataList.stream();
 
-            List<T> slice = (List)stream.skip((long)pageable.getPageNumber() * (long)pageable.getPageSize()).limit((long)pageable.getPageSize()).collect(Collectors.toList());
-            return new PageImpl(slice, pageable, (long)list.size());
+            List<T> slice = (List) stream.skip((long) pageable.getPageNumber() * (long) pageable.getPageSize())
+                    .limit((long) pageable.getPageSize()).collect(Collectors.toList());
+
+            return new PageImpl(slice, pageable, (long) dataList.size());
         }
     }
 }`} />

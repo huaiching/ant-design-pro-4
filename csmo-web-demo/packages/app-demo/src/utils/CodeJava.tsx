@@ -25,7 +25,7 @@ const javaHighlight = (code: string): string => {
   });
 
   // Step 3: 數字
-  html = html.replace(/\b(\d+\.?\d*([eE][+-]?\d+)?|\.\d+([eE][+-]?\d+)?)\b/g, '<span class="java-number">$1</span>');
+  // html = html.replace(/\b(\d+\.?\d*([eE][+-]?\d+)?|\.\d+([eE][+-]?\d+)?)\b/g, '<span class="java-number">$1</span>');
 
   // Step 4: 關鍵字
   const keywords = 'abstract assert boolean break byte case catch char class const continue default do double else enum exports extends final finally float for goto if implements import instanceof int interface long native new package private protected public return short static strictfp super switch synchronized this throw throws transient try var void volatile while true false null'.split(' ');
