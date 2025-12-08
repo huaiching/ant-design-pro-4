@@ -1,5 +1,6 @@
 import { PageContainer } from "@ant-design/pro-components"
 import CodeJava from '@/utils/CodeJava'
+import CodeText from '@/utils/CodeText'
 import { Typography } from "antd"
 const { Title, Paragraph } = Typography
 
@@ -193,7 +194,7 @@ public class AddrService {
         <Paragraph>
           當拋出 <code>new BusinessException(HttpStatus.NOT_FOUND, "找不到該客戶的地址資料")</code> 時，前端會收到：
         </Paragraph>
-        <CodeJava code={`{
+        <CodeText code={`{
   "status": 404,
   "message": "找不到該客戶的地址資料",
   "errorCode": 404,
