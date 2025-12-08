@@ -14,7 +14,7 @@ const PageAPI = () => {
         <Paragraph type="success">
           <strong>統一回傳類型：</strong><code>ResponseEntity&lt;Page&lt;XXXVo&gt;&gt;</code>，前端 <code>ProTable</code> 會自動進行 分頁資料顯示。
         </Paragraph>
-        
+
         <Paragraph type='danger'>
           因 Page 的 回傳值格式 略有不同，前端使用時 需注意 <code>後端實際的回傳格式</code>。
         </Paragraph>
@@ -72,20 +72,22 @@ public class SexPageDto extends PageRequestDto {
  * 分頁查詢 資料整理工具
  */
 public class PageUtil {
-    public static <T> Page<T> of(List<T> dataList, Integer pageCurrent, Integer pageSize) {
+    public PageUtil() {
+    }
 
-        if (dataList == null) dataList = Collections.emptyList();
+    public static <T> Page<T> of(List<T> list, Pageable pageable) {
+        if (CollectionUtils.isEmpty(list)) {
+            return new PageImpl(Collections.emptyList(), pageable, 0L);
+        } else {
+            Class<T> clazz = list.get(0).getClass();
+            Stream<T> stream = list.stream();
+            if (!IterableUtils.isEmpty(pageable.getSort())) {
+                stream = stream.sorted(getComparator(pageable.getSort(), clazz));
+            }
 
-        int page = (pageCurrent != null && pageCurrent > 0) ? pageCurrent - 1 : 0; // 前端從 1 開始
-        int size = (pageSize != null && pageSize > 0) ? pageSize : 10;
-
-        long total = dataList.size();
-        int from = Math.min(page * size, (int) total);
-        int to   = Math.min(from + size, (int) total);
-
-        List<T> content = from >= to ? Collections.emptyList() : dataList.subList(from, to);
-
-        return new PageImpl<>(content, PageRequest.of(page, size), total);
+            List<T> slice = (List)stream.skip((long)pageable.getPageNumber() * (long)pageable.getPageSize()).limit((long)pageable.getPageSize()).collect(Collectors.toList());
+            return new PageImpl(slice, pageable, (long)list.size());
+        }
     }
 }`} />
         </details>
@@ -112,9 +114,9 @@ public class PageService {
 
     public Page<ClntVo> queryClntBySex(SexPageDto dto) {
         // 轉換頁數（前端 1 → Java 0）
-        int page = dto.getPageCurrent() != null && dto.getPageCurrent() > 0 
+        int page = dto.getPageCurrent() != null && dto.getPageCurrent() > 0
                    ? dto.getPageCurrent() - 1 : 0;
-        int size = dto.getPageSize() != null && dto.getPageSize() > 0 
+        int size = dto.getPageSize() != null && dto.getPageSize() > 0
                    ? dto.getPageSize() : 10;
 
         String sql = "SELECT * FROM clnt WHERE sex = :sex";
@@ -125,7 +127,7 @@ public class PageService {
             sql, params, new BeanPropertyRowMapper<>(ClntVo.class));
 
         // 使用 PageUtil 封裝
-        return PageUtil.of(list, dto.getPageCurrent(), dto.getPageSize());
+        return PageUtil.of(rtnList, PageRequest.of(dto.getPageCurrent(), dto.getPageSize()) ;
     }
 }`} />
         </details>
