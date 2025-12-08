@@ -10,7 +10,7 @@ const xmlHighlight = (code: string): string => {
   const placeholderMap = new Map<string, string>();
   let idx = 0;
 
-  // Step 1: 保護 CDATA、註解（最優先）
+  // 保護 CDATA、註解（最優先）
   html = html.replace(/(<!\[CDATA\[[\s\S]*?\]\]>)/g, (match) => {
     const key = `__CDATA_${idx++}__`;
     placeholderMap.set(key, `<span class="xml-cdata">${match}</span>`);
@@ -23,14 +23,14 @@ const xmlHighlight = (code: string): string => {
     return key;
   });
 
-  // Step 2: 處理 <?xml ... ?> 宣告
+  // 處理 <?xml ... ?> 宣告
   html = html.replace(/(&lt;\?xml[^?]*\?>)/g, (match, content) => {
     const processed = content
       .replace(/([a-zA-Z\-]+)=/g, '<span class="xml-attr-name">$1</span>=');
     return `<span class="xml-proc-instr">${processed}</span>`;
   });
 
-  // Step 3: 處理 <Tag ...> 和 </Tag>
+  // 處理 <Tag ...> 和 </Tag>
   html = html.replace(/(&lt;\/?)([A-Za-z][\w:\-]*)([^&]*?)(&gt;)/g, (match, open, tagName, attrs, close) => {
     // 屬性高亮
     const highlightedAttrs = attrs.replace(
@@ -45,7 +45,7 @@ const xmlHighlight = (code: string): string => {
       `<span class="xml-bracket">${close}</span>`;
   });
 
-  // Step 4: 處理獨立標籤 <br/> <img ... />
+  // 處理獨立標籤 <br/> <img ... />
   html = html.replace(/(&lt;[A-Za-z][\w:\-]*[^&]*\/&gt;)/g, (match) => {
     return match.replace(
       /([a-zA-Z][\w:\-]*)=(["'])(.*?)\2/g,
@@ -53,7 +53,7 @@ const xmlHighlight = (code: string): string => {
     );
   });
 
-  // Step 5: 還原 CDATA 和註解
+  // 還原 CDATA 和註解
   for (const [key, value] of placeholderMap) {
     html = html.replace(new RegExp(key, 'g'), value);
   }

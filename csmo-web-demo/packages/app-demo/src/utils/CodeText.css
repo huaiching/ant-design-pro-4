@@ -1,4 +1,4 @@
-.code-yaml-highlighter {
+.code-text-highlighter {
   background: #1e1e1e;
   border-radius: 0 0 6px 6px;
   overflow-x: auto;
@@ -6,7 +6,7 @@
   font-size: 14px;
 }
 
-.yaml-code {
+.text-code {
   margin: 0;
   padding: 16px !important;
   color: #d4d4d4;
@@ -14,14 +14,14 @@
   tab-size: 2;
 }
 
-.yaml-key       { color: #9cdcfe; }
-.yaml-string    { color: #ce9178; }
-.yaml-number    { color: #b5cea8; }
-.yaml-boolean   { color: #569cd6; font-weight: bold; }
-.yaml-datetime  { color: #b5cea8; }
-.yaml-anchor    { color: #c586c0; }
-.yaml-alias     { color: #c586c0; font-style: italic; }
-.yaml-dash      { color: #808080; }
-.yaml-comment   { color: #6a9955; opacity: 0.85; }
-.yaml-multiline { color: #ce9178; white-space: pre; }
-.yaml-docsep    { color: #808080; font-weight: bold; }
+.text-key       { color: #9cdcfe; }
+.text-string    { color: #ce9178; }
+.text-number    { color: #b5cea8; }
+.text-boolean   { color: #569cd6; font-weight: bold; }
+.text-datetime  { color: #b5cea8; }
+.text-anchor    { color: #c586c0; }
+.text-alias     { color: #c586c0; font-style: italic; }
+.text-dash      { color: #808080; }
+.text-comment   { color: #6a9955; opacity: 0.85; }
+.text-multiline { color: #ce9178; white-space: pre; }
+.text-docsep    { color: #808080; font-weight: bold; }
