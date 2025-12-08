@@ -1,6 +1,6 @@
 import { PageContainer } from '@ant-design/pro-components'
 import { Divider, Typography } from 'antd'
-import CodeJava from '@/utils/CodeJava'
+import CodeJava from '@/utils/CodePre/CodeJava'
 
 const { Title, Paragraph } = Typography
 

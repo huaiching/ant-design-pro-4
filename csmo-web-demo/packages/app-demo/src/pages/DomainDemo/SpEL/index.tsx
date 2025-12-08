@@ -1,4 +1,4 @@
-import CodeJava from '@/utils/CodeJava'
+import CodeJava from '@/utils/CodePre/CodeJava'
 import { PageContainer } from '@ant-design/pro-components'
 import { Divider, Table, Typography } from 'antd'
 

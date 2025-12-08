@@ -1,8 +1,8 @@
 import { PageContainer } from "@ant-design/pro-components"
-import CodeJava from '@/utils/CodeJava'
-import CodeSQL from '@/utils/CodeSQL'
+import CodeJava from '@/utils/CodePre/CodeJava'
+import CodeSQL from '@/utils/CodePre/CodeSQL'
 import { Typography } from "antd"
-import CodeTsx from "@/utils/CodeTsx"
+import CodeTsx from "@/utils/CodePre/CodeTsx"
 
 const { Title, Paragraph } = Typography
 

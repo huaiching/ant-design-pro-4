@@ -1,5 +1,6 @@
+
+import CodeJava from "@/utils/CodePre/CodeJava"
 import { PageContainer } from "@ant-design/pro-components"
-import CodeJava from '@/utils/CodeJava'
 import { Typography } from "antd"
 const { Title, Paragraph } = Typography
 

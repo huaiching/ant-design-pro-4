@@ -1,6 +1,6 @@
 import { PageContainer } from '@ant-design/pro-components'
 import { Typography } from 'antd'
-import CodeTsx from '@/utils/CodeTsx';
+import CodeTsx from '@/utils/CodePre/CodeTsx';
 
 const { Paragraph, Title } = Typography;
 
