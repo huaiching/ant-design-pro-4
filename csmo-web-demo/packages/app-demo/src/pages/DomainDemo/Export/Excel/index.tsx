@@ -132,7 +132,23 @@ context.putVar("addr", addrList);`} />
           ]}
           pagination={false}
         />
-        <CodeJava code={`/**
+        <CodeJava code={`
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jxls.common.Context;
+import org.jxls.util.JxlsHelper;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.CollectionUtils;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+
+/**
  * Excel 匯出工具
  */
 public class ExcelUtil {

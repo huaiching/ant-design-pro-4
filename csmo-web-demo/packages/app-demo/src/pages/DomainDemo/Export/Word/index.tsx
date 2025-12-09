@@ -132,7 +132,25 @@ context.put("addr", addrList);`} />
           ]}
           pagination={false}
         />
-        <CodeJava code={`/**
+        <CodeJava code={`
+import com.deepoove.poi.XWPFTemplate;
+import com.deepoove.poi.config.Configure;
+import com.deepoove.poi.xwpf.NiceXWPFDocument;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.xwpf.usermodel.BreakType;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.CollectionUtils;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+
+/**
  * Word 匯出工具
  */
 public class WordUtil {

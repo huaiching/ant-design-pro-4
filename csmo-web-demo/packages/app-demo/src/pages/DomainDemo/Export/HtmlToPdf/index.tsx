@@ -118,11 +118,13 @@ private TemplateEngine templateEngine;`} />
           pagination={false}
         />
 
-        <CodeJava code={`import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
+        <CodeJava code={`package com.example.demo.util;
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
+import org.springframework.core.io.ClassPathResource;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 /**
