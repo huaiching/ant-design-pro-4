@@ -66,7 +66,7 @@ const Excel: React.FC = () => {
           <br />
           resources  <br />
           ├─ 📁 templates  <br />
-          │　　├─ 📄 樣板檔.docx
+          │　　├─ 📄 樣板檔.xlsx
         </Paragraph>
 
         <hr />
@@ -382,7 +382,7 @@ public class ExcelUtil {
           />
           <Title level={4}>樣版檔</Title>
           <Paragraph>
-            於 <code>/resources/templates/</code> 新增 Excel檔案 <code>sampleEach.docx</code> <br />
+            於 <code>/resources/templates/</code> 新增 Excel檔案 <code>sampleEach.xlsx</code> <br />
             並 根據下圖方式，設定樣版檔
           </Paragraph>
           <ul>
@@ -469,7 +469,7 @@ orderBy="a.addrInd ASC" lastCell="C4")`} />
           />
           <Title level={4}>樣版檔</Title>
           <Paragraph>
-            於 <code>/resources/templates/</code> 新增 Excel檔案 <code>sampleEach.docx</code> <br />
+            於 <code>/resources/templates/</code> 新增 Excel檔案 <code>sampleEach.xlsx</code> <br />
             並 根據下圖方式，設定樣版檔
           </Paragraph>
           <ul>
@@ -567,7 +567,7 @@ orderBy="a.addrInd ASC" lastCell="C4")`} />
           />
           <Title level={4}>樣版檔</Title>
           <Paragraph>
-            於 <code>/resources/templates/</code> 新增 Excel檔案 <code>sampleGrid.docx</code> <br />
+            於 <code>/resources/templates/</code> 新增 Excel檔案 <code>sampleGrid.xlsx</code> <br />
             並 根據下圖方式，設定樣版檔
           </Paragraph>
           <ul>
