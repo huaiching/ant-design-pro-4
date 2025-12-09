@@ -366,8 +366,32 @@ public class Demo1Service {
 
         <Divider />
 
+        {/* ---------- 集合 ---------- */}
+        <Title level={3}>6. 選擇運算子</Title>
+        <ul>
+          <li>遍歷集合</li>
+          <li>篩選符合條件的元素</li>
+          <li>回傳子集合</li>
+        </ul>
+
+        <Table
+          size="small"
+          bordered
+          columns={[
+            { title: '用法', dataIndex: 'usage', width: 200 },
+            { title: '說明', dataIndex: 'desc', width: 200 },
+            { title: '範例', dataIndex: 'example' }
+          ]}
+          dataSource={[
+            { key: 1, usage: '集合變數.?[檢核條件]', desc: '對集合內元素遍歷進行檢核，會回傳命中的集合清單', example: "#changeNew.?[functionInd MATCHES '[YX]' AND (flatRatingAmt > 0 OR multiRating1 > 0)]" }
+          ]}
+          pagination={false}
+        />
+
+        <Divider />
+
         {/* ---------- 函式 ---------- */}
-        <Title level={3}>6. 函式</Title>
+        <Title level={3}>7. 函式</Title>
         <Table
           size="small"
           bordered
@@ -412,7 +436,7 @@ public class Demo1Service {
 
         {/* ======================== 物件資料 ======================== */}
 
-        <Title level={3}>7. 物件資料</Title>
+        <Title level={3}>8. 物件資料</Title>
         <Paragraph>
           SpEL 不僅可操作基本型別，也能直接使用 <code>物件 (DTO)</code> 中的屬性。 <br />
           當變數為物件時，可透過 <code>#變數.屬性</code> 方式存取屬性值，甚至支援 巢狀屬性存取（如{' '}
@@ -483,7 +507,7 @@ System.out.println(result); // 輸出：同部門`}
 
         {/* ======================== 數值運算 ======================== */}
 
-        <Title level={3}>8. 數值計算</Title>
+        <Title level={3}>9. 數值計算</Title>
         <Paragraph>spEL 表達式 可以用來進行 數值計算，並且 可以使用 JAVA 的函式</Paragraph>
 
         <Title level={4}>語法</Title>
@@ -583,7 +607,7 @@ public class Demo3Service {
 
         {/* ======================== 自製函式 ======================== */}
 
-        <Title level={3}>9. 使用 自製函式</Title>
+        <Title level={3}>10. 使用 自製函式</Title>
         <Paragraph>
           spEL 表達式 可以使用 自製的函式，但需要進行函式註冊，且 需要 <code>try-catch</code>。{' '}
           <br />
