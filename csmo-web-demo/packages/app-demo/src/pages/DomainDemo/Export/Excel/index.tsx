@@ -437,37 +437,30 @@ public class ExcelUtil {
             <li>最後透過 工具 產生 Excel。</li>
           </ul>
           <CodeJava code={`public byte[] sampleEach(String clientId) {
-        // 基本資料
-        String clntSql = "SELECT * FROM clnt " +
-                "WHERE client_id = :clientId ";
-
-        Map<String, Object> clntParams = new HashMap<>();
-        clntParams.put("clientId", clientId);
-
-        List<ClntVo> clntVoList = namedParameterJdbcTemplate.query(clntSql, clntParams, new BeanPropertyRowMapper<>(ClntVo.class));
-        String names = "";
-        if (!CollectionUtils.isEmpty(clntVoList)) {
-            names = clntVoList.get(0).getNames();
-        }
-        
-        // 地址資料
-        String addrSql = "SELECT * FROM addr " +
-                "WHERE client_id = :clientId ";
-
-        Map<String, Object> addrParams = new HashMap<>();
-        addrParams.put("clientId", clientId);
-
-        List<AddrVo> addrVoList = namedParameterJdbcTemplate.query(addrSql, addrParams, new BeanPropertyRowMapper<>(AddrVo.class));
-
-
-        // 設定 資料內容
-        Context context = new Context();
-        context.putVar("clientId", clientId);
-        context.putVar("names", names);
-        context.putVar("addr", addrVoList);
-
-        return ExcelUtil.generateExcel("sampleEach.xlsx", context);
-    }`} />
+    // 基本資料
+    String clntSql = "SELECT * FROM clnt " +
+            "WHERE client_id = :clientId ";
+    Map<String, Object> clntParams = new HashMap<>();
+    clntParams.put("clientId", clientId);
+    List<ClntVo> clntVoList = namedParameterJdbcTemplate.query(clntSql, clntParams, new BeanPropertyRowMapper<>(ClntVo.class));
+    String names = "";
+    if (!CollectionUtils.isEmpty(clntVoList)) {
+        names = clntVoList.get(0).getNames();
+    }
+    
+    // 地址資料
+    String addrSql = "SELECT * FROM addr " +
+            "WHERE client_id = :clientId ";
+    Map<String, Object> addrParams = new HashMap<>();
+    addrParams.put("clientId", clientId);
+    List<AddrVo> addrVoList = namedParameterJdbcTemplate.query(addrSql, addrParams, new BeanPropertyRowMapper<>(AddrVo.class));
+    // 設定 資料內容
+    Context context = new Context();
+    context.putVar("clientId", clientId);
+    context.putVar("names", names);
+    context.putVar("addr", addrVoList);
+    return ExcelUtil.generateExcel("sampleEach.xlsx", context);
+}`} />
         </details>
 
         <hr />
@@ -542,43 +535,34 @@ public class ExcelUtil {
             <li>最後透過 工具 產生 Excel。</li>
           </ul>
           <CodeJava code={`public byte[] sampleEachList(List<ClientIdDto> clientIdDtoList) {
-        Map<String, Context> dataMap = new HashMap<>();
-        for (ClientIdDto clientIdDto : clientIdDtoList) {
-            String clientId = clientIdDto.getClientId();
-            // 基本資料
-            String clntSql = "SELECT * FROM clnt " +
-                    "WHERE client_id = :clientId ";
-
-            Map<String, Object> clntParams = new HashMap<>();
-            clntParams.put("clientId", clientId);
-
-            List<ClntVo> clntVoList = namedParameterJdbcTemplate.query(clntSql, clntParams, new BeanPropertyRowMapper<>(ClntVo.class));
-            String names = "";
-            if (!CollectionUtils.isEmpty(clntVoList)) {
-                names = clntVoList.get(0).getNames();
-            }
-
-            // 地址資料
-            String addrSql = "SELECT * FROM addr " +
-                    "WHERE client_id = :clientId ";
-
-            Map<String, Object> addrParams = new HashMap<>();
-            addrParams.put("clientId", clientId);
-
-            List<AddrVo> addrVoList = namedParameterJdbcTemplate.query(addrSql, addrParams, new BeanPropertyRowMapper<>(AddrVo.class));
-
-
-            // 設定 資料內容
-            Context context = new Context();
-            context.putVar("clientId", clientId);
-            context.putVar("names", names);
-            context.putVar("addr", addrVoList);
-
-            dataMap.put(clientId, context);
+    Map<String, Context> dataMap = new HashMap<>();
+    for (ClientIdDto clientIdDto : clientIdDtoList) {
+        String clientId = clientIdDto.getClientId();
+        // 基本資料
+        String clntSql = "SELECT * FROM clnt " +
+                "WHERE client_id = :clientId ";
+        Map<String, Object> clntParams = new HashMap<>();
+        clntParams.put("clientId", clientId);
+        List<ClntVo> clntVoList = namedParameterJdbcTemplate.query(clntSql, clntParams, new BeanPropertyRowMapper<>(ClntVo.class));
+        String names = "";
+        if (!CollectionUtils.isEmpty(clntVoList)) {
+            names = clntVoList.get(0).getNames();
         }
-
-        return ExcelUtil.generateExcelList("sampleEach.xlsx", dataMap);
-    }`} />
+        // 地址資料
+        String addrSql = "SELECT * FROM addr " +
+                "WHERE client_id = :clientId ";
+        Map<String, Object> addrParams = new HashMap<>();
+        addrParams.put("clientId", clientId);
+        List<AddrVo> addrVoList = namedParameterJdbcTemplate.query(addrSql, addrParams, new BeanPropertyRowMapper<>(AddrVo.class));
+        // 設定 資料內容
+        Context context = new Context();
+        context.putVar("clientId", clientId);
+        context.putVar("names", names);
+        context.putVar("addr", addrVoList);
+        dataMap.put(clientId, context);
+    }
+    return ExcelUtil.generateExcelList("sampleEach.xlsx", dataMap);
+}`} />
         </details>
 
         <hr />
@@ -648,39 +632,35 @@ data="dataList" areas=["A2:A2","A3:A3"])")`} />
             <li>最後透過 工具 產生 Excel。</li>
           </ul>
           <CodeJava code={`public byte[] excelGrid(List<ClientIdDto> clientIdDtoList) {
-        // 設定 headers
-        List<String> headers = Arrays.asList("姓名", "客戶證號", "性別");
-        // 設定 數據
-        List<List<Object>> dataList = new ArrayList<>();
-        for (ClientIdDto clientIdDto : clientIdDtoList) {
-            String clientId = clientIdDto.getClientId();
-            // 基本資料
-            String clntSql = "SELECT * FROM clnt " +
-                    "WHERE client_id = :clientId ";
-
-            Map<String, Object> clntParams = new HashMap<>();
-            clntParams.put("clientId", clientId);
-
-            List<ClntVo> clntVoList = namedParameterJdbcTemplate.query(clntSql, clntParams, new BeanPropertyRowMapper<>(ClntVo.class));
-            if (!CollectionUtils.isEmpty(clntVoList)) {
-                for (ClntVo clntVo : clntVoList) {
-                    List<Object> data = new ArrayList<>();
-                    data.add(clntVo.getNames());
-                    data.add(clntVo.getClientId());
-                    data.add(SexEnum.getDescByCode(clntVo.getSex()));
-                    dataList.add(data);
-                }
+    // 設定 headers
+    List<String> headers = Arrays.asList("姓名", "客戶證號", "性別");
+    // 設定 數據
+    List<List<Object>> dataList = new ArrayList<>();
+    for (ClientIdDto clientIdDto : clientIdDtoList) {
+        String clientId = clientIdDto.getClientId();
+        // 基本資料
+        String clntSql = "SELECT * FROM clnt " +
+                "WHERE client_id = :clientId ";
+        Map<String, Object> clntParams = new HashMap<>();
+        clntParams.put("clientId", clientId);
+        List<ClntVo> clntVoList = namedParameterJdbcTemplate.query(clntSql, clntParams, new BeanPropertyRowMapper<>(ClntVo.class));
+        if (!CollectionUtils.isEmpty(clntVoList)) {
+            for (ClntVo clntVo : clntVoList) {
+                List<Object> data = new ArrayList<>();
+                data.add(clntVo.getNames());
+                data.add(clntVo.getClientId());
+                data.add(SexEnum.getDescByCode(clntVo.getSex()));
+                dataList.add(data);
             }
         }
-
-        // 設定 資料內容
-        Context context = new Context();
-        context.putVar("title", "Grid 測試表格");
-        context.putVar("headers", headers);
-        context.putVar("dataList", dataList);
-
-        return ExcelUtil.generateExcel("sampleGrid.xlsx", context);
-    }`} />
+    }
+    // 設定 資料內容
+    Context context = new Context();
+    context.putVar("title", "Grid 測試表格");
+    context.putVar("headers", headers);
+    context.putVar("dataList", dataList);
+    return ExcelUtil.generateExcel("sampleGrid.xlsx", context);
+}`} />
         </details>
 
       </Typography>

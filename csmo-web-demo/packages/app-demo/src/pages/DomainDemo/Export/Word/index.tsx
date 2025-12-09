@@ -345,16 +345,20 @@ public class WordUtil {
             <li>取得 來源資料 後，根據 樣版檔 的設定，將對應資料 寫入 <code>context</code> 中。</li>
             <li>最後透過 工具 產生 Word。</li>
           </ul>
-          <CodeJava code={`public byte[] generateWord() {
-    String userId = "A123456789";
-    String userName = "測試人員";
-    String userSex = "男性";
-
+          <CodeJava code={`public byte[] generateWord(String clientId) {
+    String clntSql = "SELECT * FROM clnt " +
+            "WHERE client_id = :clientId ";
+    Map<String, Object> clntParams = new HashMap<>();
+    clntParams.put("clientId", clientId);
+    List<ClntVo> clntVoList = namedParameterJdbcTemplate.query(clntSql, clntParams, new BeanPropertyRowMapper<>(ClntVo.class));
+    if (CollectionUtils.isEmpty(clntVoList)) {
+        throw new BusinessException(HttpStatus.INTERNAL_SERVER_ERROR, "資料不存在");
+    }
+    ClntVo clntVo = clntVoList.get(0);
     Map<String, Object> context = new HashMap<>();
-    context.put("names", userName);
-    context.put("clientId", userId);
-    context.put("sex", userSex);
-
+    context.put("names", clntVo.getNames());
+    context.put("clientId", clntVo.getClientId());
+    context.put("sex", SexEnum.getDescByCode(clntVo.getSex()));
     return WordUtil.generateWord("sample.docx", context);
 }`} />
         </details>
@@ -388,22 +392,26 @@ public class WordUtil {
             <li>因為是 多筆資料，所以 要整理成 <code>{`List<Map<String, Object>>`}</code>。</li>
             <li>最後透過 工具 產生 Word。</li>
           </ul>
-          <CodeJava code={`public byte[] generateWordMerge() {
+          <CodeJava code={`public byte[] generateWordMerge(List<ClientIdDto> clientIdDtoList) {
     List<Map<String, Object>> contextList = new ArrayList<>();
-
-    for (int i = 1; i <= 5; i++) {
-        String userId = "TEST00" + i;
-        String userName = "測試人員" + i;
-        String userSex = "男性";
-
+    for (ClientIdDto clientIdDto : clientIdDtoList) {
+        String clientId = clientIdDto.getClientId();
+        // 基本資料
+        String clntSql = "SELECT * FROM clnt " +
+                "WHERE client_id = :clientId ";
+        Map<String, Object> clntParams = new HashMap<>();
+        clntParams.put("clientId", clientId);
+        List<ClntVo> clntVoList = namedParameterJdbcTemplate.query(clntSql, clntParams, new BeanPropertyRowMapper<>(ClntVo.class));
+        if (CollectionUtils.isEmpty(clntVoList)) {
+            throw new BusinessException(HttpStatus.INTERNAL_SERVER_ERROR, "資料不存在");
+        }
+        ClntVo clntVo = clntVoList.get(0);
         Map<String, Object> context = new HashMap<>();
-        context.put("names", userName);
-        context.put("clientId", userId);
-        context.put("sex", userSex);
-
+        context.put("names", clntVo.getNames());
+        context.put("clientId", clntVo.getNames());
+        context.put("sex", SexEnum.getDescByCode(clntVo.getSex()));
         contextList.add(context);
     }
-
     return WordUtil.generateWordMerge("sample.docx", contextList);
 }`} />
 
@@ -447,8 +455,7 @@ public class WordUtil {
             <li>
               針對 陣列類型 的資料，要設定渲染規則，讓 poi-tl 能夠知道 這個變數要使用 列表渲染。 <br/>
               有多筆的話，就設定 多個  <code>{`.bind()`}</code>。
-              <CodeJava code={`LoopRowTableRenderPolicy policy = new LoopRowTableRenderPolicy();
-Configure configure = Configure.builder().bind("addr", policy).build();`} />
+              <CodeJava code={`Configure configure = Configure.builder().bind("addr", new LoopRowTableRenderPolicy()).build();`} />
             </li>
             <li>
               取得 來源資料 後，根據 樣版檔 的設定，將對應資料 寫入 <code>context</code> 中。
@@ -457,34 +464,38 @@ Configure configure = Configure.builder().bind("addr", policy).build();`} />
               最後透過 工具 產生 Word。
             </li>
           </ul>
-          <CodeJava code={`public byte[] generateWordList() {
-    String userId = "A123456789";
-    String userName = "測試人員";
-
+          <CodeJava code={`public byte[] generateWordList(String clientId) {
+    // 基本資料
+    String clntSql = "SELECT * FROM clnt " +
+            "WHERE client_id = :clientId ";
+    Map<String, Object> clntParams = new HashMap<>();
+    clntParams.put("clientId", clientId);
+    List<ClntVo> clntVoList = namedParameterJdbcTemplate.query(clntSql, clntParams, new BeanPropertyRowMapper<>(ClntVo.class));
+    if (CollectionUtils.isEmpty(clntVoList)) {
+        throw new BusinessException(HttpStatus.INTERNAL_SERVER_ERROR, "clnt 資料不存在");
+    }
+    ClntVo clntVo = clntVoList.get(0);
+    // 地址資料
+    String addrSql = "SELECT * FROM addr " +
+            "WHERE client_id = :clientId ";
+    Map<String, Object> addrParams = new HashMap<>();
+    addrParams.put("clientId", clientId);
+    List<AddrVo> addrVoList = namedParameterJdbcTemplate.query(addrSql, addrParams, new BeanPropertyRowMapper<>(AddrVo.class));
     List<Map<String, Object>> addrList = new ArrayList<>();
-    for (int j = 1; j <= 9; j++) {
-        AddrDTO addrDTO = new AddrDTO();
-        addrDTO.setAddrInd(String.valueOf(j));
-        addrDTO.setAddress("台北市內湖區石潭路58號" + j + "樓");
-        addrDTO.setTel("02-23455511");
-
+    for (AddrVo addrVo : addrVoList) {
         Map<String, Object> addr = new HashMap<>();
-        addr.put("addrInd", addrDTO.getAddrInd());
-        addr.put("address", addrDTO.getAddress());
-        addr.put("tel", addrDTO.getTel());
+        addr.put("addrInd", addrVo.getAddrInd());
+        addr.put("address", addrVo.getAddress());
+        addr.put("tel", addrVo.getTel());
         addrList.add(addr);
     }
-
     // 設定 列表規則
-    LoopRowTableRenderPolicy policy = new LoopRowTableRenderPolicy();
-    Configure configure = Configure.builder().bind("addr", policy).build();
-
+    Configure configure = Configure.builder().bind("addr", new LoopRowTableRenderPolicy()).build();
     // 設定 資料內容
     Map<String, Object> context = new HashMap<>();
-    context.put("clientId", userId);
-    context.put("names", userName);
+    context.put("clientId", clntVo.getClientId());
+    context.put("names", clntVo.getNames());
     context.put("addr", addrList);
-
     return WordUtil.generateWordList("sampleList.docx", configure, context);
 }`} />
 
