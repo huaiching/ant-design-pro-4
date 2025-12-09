@@ -46,7 +46,7 @@ import java.util.List;
 /**
  * PDF 匯出工具
  */
-public class MergePdrUtil {
+public class MergePdfUtil {
     /**
      * PDF 檔案合併
      *
