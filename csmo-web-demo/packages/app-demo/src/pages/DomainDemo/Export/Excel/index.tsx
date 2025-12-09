@@ -402,8 +402,7 @@ public class ExcelUtil {
             </li>
             <li>
               A4 儲存格：設定 遞迴表格
-              <CodeText code={`jx:each(items="addr" var="a" 
-orderBy="a.addrInd ASC" lastCell="C4")`} />
+              <CodeText code={`jx:each(items="addr" var="a" orderBy="a.addrInd ASC" lastCell="C4")`} />
             </li>
             <li>
               <code>jx:each(...)</code>：遞迴表格 的語法
@@ -437,26 +436,38 @@ orderBy="a.addrInd ASC" lastCell="C4")`} />
             <li>取得 來源資料 後，根據 樣版檔 的設定，將對應資料 寫入 <code>context</code> 中。</li>
             <li>最後透過 工具 產生 Excel。</li>
           </ul>
-          <CodeJava code={`public byte[] excelEach() {
-    String userId = "A123456789";
-    String userName = "測試人員";
-    List<AddrDTO> addrList = new ArrayList<>();
-    for (int i = 1 ; i <= 9 ; i++) {
-        AddrDTO addr = new AddrDTO();
-        addr.setAddrInd(String.valueOf(i));
-        addr.setAddress("台北市內湖區石潭路58號"+i+"樓");
-        addr.setTel("02-23455511");
-        addrList.add(addr);
-    }
+          <CodeJava code={`public byte[] sampleEach(String clientId) {
+        // 基本資料
+        String clntSql = "SELECT * FROM clnt " +
+                "WHERE client_id = :clientId ";
 
-    // 設定 資料內容
-    Context context = new Context();
-    context.putVar("clientId", userId);
-    context.putVar("names", userName);
-    context.putVar("addr", addrList);
+        Map<String, Object> clntParams = new HashMap<>();
+        clntParams.put("clientId", clientId);
 
-    return ExcelUtil.generateExcel("sampleEach.xlsx", context);
-}`} />
+        List<ClntVo> clntVoList = namedParameterJdbcTemplate.query(clntSql, clntParams, new BeanPropertyRowMapper<>(ClntVo.class));
+        String names = "";
+        if (!CollectionUtils.isEmpty(clntVoList)) {
+            names = clntVoList.get(0).getNames();
+        }
+        
+        // 地址資料
+        String addrSql = "SELECT * FROM addr " +
+                "WHERE client_id = :clientId ";
+
+        Map<String, Object> addrParams = new HashMap<>();
+        addrParams.put("clientId", clientId);
+
+        List<AddrVo> addrVoList = namedParameterJdbcTemplate.query(addrSql, addrParams, new BeanPropertyRowMapper<>(AddrVo.class));
+
+
+        // 設定 資料內容
+        Context context = new Context();
+        context.putVar("clientId", clientId);
+        context.putVar("names", names);
+        context.putVar("addr", addrVoList);
+
+        return ExcelUtil.generateExcel("sampleEach.xlsx", context);
+    }`} />
         </details>
 
         <hr />
@@ -489,8 +500,7 @@ orderBy="a.addrInd ASC" lastCell="C4")`} />
             </li>
             <li>
               A4 儲存格：設定 遞迴表格
-              <CodeText code={`jx:each(items="addr" var="a" 
-orderBy="a.addrInd ASC" lastCell="C4")`} />
+              <CodeText code={`jx:each(items="addr" var="a" orderBy="a.addrInd ASC" lastCell="C4")`} />
             </li>
             <li>
               <code>jx:each(...)</code>：遞迴表格 的語法
@@ -531,30 +541,44 @@ orderBy="a.addrInd ASC" lastCell="C4")`} />
             </li>
             <li>最後透過 工具 產生 Excel。</li>
           </ul>
-          <CodeJava code={`public byte[] excelEachAll() {
-    Map<String, Context> dataMap = new HashMap<>();
-    for (int i = 1 ; i <= 5 ; i++) {
-        String userId = "TEST00"+i;
-        String userName = "測試人員"+i;
-        List<AddrDTO> addrList = new ArrayList<>();
-        for (int j = 1 ; j <= 9 ; j++) {
-            AddrDTO addr = new AddrDTO();
-            addr.setAddrInd(String.valueOf(j));
-            addr.setAddress("台北市內湖區石潭路58號"+j+"樓");
-            addr.setTel("02-23455511");
-            addrList.add(addr);
+          <CodeJava code={`public byte[] sampleEachList(List<ClientIdDto> clientIdDtoList) {
+        Map<String, Context> dataMap = new HashMap<>();
+        for (ClientIdDto clientIdDto : clientIdDtoList) {
+            String clientId = clientIdDto.getClientId();
+            // 基本資料
+            String clntSql = "SELECT * FROM clnt " +
+                    "WHERE client_id = :clientId ";
+
+            Map<String, Object> clntParams = new HashMap<>();
+            clntParams.put("clientId", clientId);
+
+            List<ClntVo> clntVoList = namedParameterJdbcTemplate.query(clntSql, clntParams, new BeanPropertyRowMapper<>(ClntVo.class));
+            String names = "";
+            if (!CollectionUtils.isEmpty(clntVoList)) {
+                names = clntVoList.get(0).getNames();
+            }
+
+            // 地址資料
+            String addrSql = "SELECT * FROM addr " +
+                    "WHERE client_id = :clientId ";
+
+            Map<String, Object> addrParams = new HashMap<>();
+            addrParams.put("clientId", clientId);
+
+            List<AddrVo> addrVoList = namedParameterJdbcTemplate.query(addrSql, addrParams, new BeanPropertyRowMapper<>(AddrVo.class));
+
+
+            // 設定 資料內容
+            Context context = new Context();
+            context.putVar("clientId", clientId);
+            context.putVar("names", names);
+            context.putVar("addr", addrVoList);
+
+            dataMap.put(clientId, context);
         }
-        // 設定 資料內容
-        Context context = new Context();
-        context.putVar("clientId", userId);
-        context.putVar("names", userName);
-        context.putVar("addr", addrList);
 
-        dataMap.put(userId, context);
-    }
-
-    return ExcelUtil.generateExcelList("sampleEach.xlsx", dataMap);
-}`} />
+        return ExcelUtil.generateExcelList("sampleEach.xlsx", dataMap);
+    }`} />
         </details>
 
         <hr />
@@ -618,37 +642,45 @@ data="dataList" areas=["A2:A2","A3:A3"])")`} />
               需要設定 報表名稱、標題、資料內容，這三個部分。
               <ul>
                 <li><code>標題</code>：對應 <code>樣本的 headers</code>，格式為 <code>{`List<String>`}</code>。</li>
-                <li><code>資料內容：</code>：對應 <code>樣本的 dataList</code>，格式為 <code>{`List<List<Object>>`}</code>。</li>
+                <li><code>資料內容</code>：對應 <code>樣本的 dataList</code>，格式為 <code>{`List<List<Object>>`}</code>。</li>
               </ul>
             </li>
             <li>最後透過 工具 產生 Excel。</li>
           </ul>
-          <CodeJava code={`public byte[] excelGrid() {
-  // 設定 headers
-  List<String> headers = Arrays.asList("姓名", "客戶證號", "性別");
-  // 設定 數據集合: 使用 List<List<Object>> 封裝
-  // List<Object> 的寫入順序，對應 headers 的欄位順序
-  List<List<Object>> dataList = new ArrayList<>();
-  for (int i = 1 ; i <= 9 ; i++) {
-      List<Object> data = new ArrayList<>();
-      String userName = "測試人員"+i;
-      String userId = "TEST00"+i;
-      String userSex = "男性";
-      data.add(userName);
-      data.add(userId);
-      data.add(userSex);
-      dataList.add(data);
+          <CodeJava code={`public byte[] excelGrid(List<ClientIdDto> clientIdDtoList) {
+        // 設定 headers
+        List<String> headers = Arrays.asList("姓名", "客戶證號", "性別");
+        // 設定 數據
+        List<List<Object>> dataList = new ArrayList<>();
+        for (ClientIdDto clientIdDto : clientIdDtoList) {
+            String clientId = clientIdDto.getClientId();
+            // 基本資料
+            String clntSql = "SELECT * FROM clnt " +
+                    "WHERE client_id = :clientId ";
 
-  }
+            Map<String, Object> clntParams = new HashMap<>();
+            clntParams.put("clientId", clientId);
 
-  // 設定 資料內容
-  Context context = new Context();
-  context.putVar("title", "Grid 測試表格");
-  context.putVar("headers", headers);
-  context.putVar("dataList", dataList);
+            List<ClntVo> clntVoList = namedParameterJdbcTemplate.query(clntSql, clntParams, new BeanPropertyRowMapper<>(ClntVo.class));
+            if (!CollectionUtils.isEmpty(clntVoList)) {
+                for (ClntVo clntVo : clntVoList) {
+                    List<Object> data = new ArrayList<>();
+                    data.add(clntVo.getNames());
+                    data.add(clntVo.getClientId());
+                    data.add(SexEnum.getDescByCode(clntVo.getSex()));
+                    dataList.add(data);
+                }
+            }
+        }
 
-  return ExcelUtil.generateExcel("sampleGrid.xlsx", context);
-}`} />
+        // 設定 資料內容
+        Context context = new Context();
+        context.putVar("title", "Grid 測試表格");
+        context.putVar("headers", headers);
+        context.putVar("dataList", dataList);
+
+        return ExcelUtil.generateExcel("sampleGrid.xlsx", context);
+    }`} />
         </details>
 
       </Typography>
