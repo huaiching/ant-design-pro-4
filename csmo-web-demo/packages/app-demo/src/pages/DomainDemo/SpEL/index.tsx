@@ -359,7 +359,7 @@ public class Demo1Service {
             { key: 1, usage: '集合變數[index]', desc: '取得指定索引的元素', example: '#list[0]' },
             { key: 2, usage: 'size()', desc: '取得集合長度', example: '#list.size()' },
             { key: 3, usage: 'contains()', desc: '是否包含元素', example: "#list.contains('A')" },
-            { key: 4, usage: '集合變數[檢核條件]', desc: '對集合內元素遍歷進行檢核，會回傳命中的集合清單', example: "#changeNew.?[functionInd MATCHES '[YX]' AND (flatRatingAmt > 0 OR multiRating1 > 0)]" }
+            { key: 4, usage: '集合變數.?[檢核條件]', desc: '對集合內元素遍歷進行檢核，會回傳命中的集合清單', example: "#changeNew.?[functionInd MATCHES '[YX]' AND (flatRatingAmt > 0 OR multiRating1 > 0)]" }
           ]}
           pagination={false}
         />
