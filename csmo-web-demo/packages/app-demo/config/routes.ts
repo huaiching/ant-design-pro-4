@@ -343,6 +343,37 @@
         ],
       },
       {
+        // 報表製作
+        name: 'export',
+        path: 'export',
+        routes: [
+          {
+            // Excel
+            path: 'Excel',
+            name: 'Excel',
+            component: './DomainDemo/Export/Excel'
+          },
+          {
+            // Word
+            path: 'Word',
+            name: 'Word',
+            component: './DomainDemo/Export/Word'
+          },
+          {
+            // Html 轉 Pdf
+            path: 'HtmlToPdf',
+            name: 'HtmlToPdf',
+            component: './DomainDemo/Export/HtmlToPdf'
+          },
+          {
+            // PDF 合併
+            path: 'mergePdf',
+            name: 'mergePdf',
+            component: './DomainDemo/Export/MergePdf'
+          },
+        ]
+      },
+      {
         // 常用工具類
         name: 'utilityCode',
         path: 'utilityCode',
