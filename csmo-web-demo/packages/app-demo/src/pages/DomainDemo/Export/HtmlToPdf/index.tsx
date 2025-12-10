@@ -118,31 +118,25 @@ private TemplateEngine templateEngine;`} />
           pagination={false}
         />
 
-        <CodeJava code={`package com.example.demo.util;
-import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
+        <CodeJava code={`import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import org.springframework.core.io.ClassPathResource;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * PDF 匯出工具
  */
 public class HtmlToPDFUtil {
     /**
-     * Html 轉 PDF
+     * html 轉 PDF
      * @param templateEngine Thymeleaf 的 TemplateEngine，用於解析 HTML 樣板
-     * @param modelFile 樣板檔案 (resources/templates/{templateName}.html)
-     * @param dataList 資料內容
-     * @return
+     * @param modelFile 樣版路徑 (resources/templates/{modelFile})
+     * @param context 資料內容
+     * @return 產出的 PDF 檔案資料流（byte[]）
      */
-    public static byte[] htmlToPdf(TemplateEngine templateEngine, String modelFile, Map<String, Object> dataList) {
-        // 設定變數
-        Context context = new Context();
-        context.setVariables(dataList);
-
+    public static byte[] generate(TemplateEngine templateEngine, String modelFile, Context context) {
         // 生成 HTML
         String html = templateEngine.process(modelFile, context);
 
@@ -632,7 +626,7 @@ tbody tr {
     </tr>
   </thead>
   <tbody th:each="b : \${policyList}">
-    <tr class="color1" th:with="c=\${b.poInfo}">
+    <tr class="color1" th:with="c=\${b.polf}">
       <td colspan="2" th:text="\${c.policyNo}"></td>
       <td colspan="1" th:text="\${c.poStsCode}"></td>
       <td colspan="2" th:text="\${c.poIssueDate}"></td>
@@ -642,7 +636,7 @@ tbody tr {
       <td colspan="1" th:text="\${c.informInd}"></td>
       <td colspan="1" th:text="\${c.weakInd}"></td>
     </tr>
-    <tr th:each="d : \${b.coInfoList}">
+    <tr th:each="d : \${b.colfList}">
       <td colspan="1"></td>
       <td colspan="1" th:text="\${d.clientIdent}"></td>
       <td colspan="2" th:text="\${d.planCode}"></td>
@@ -668,8 +662,7 @@ tbody tr {
 
         <details>
           <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>樣板檔</summary>
-          <CodeTsx code={`
-<!DOCTYPE html>
+          <CodeTsx code={`<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
@@ -838,18 +831,18 @@ tbody tr {
     <col style="width: 28%;"/>
   </colgroup>
   <thead>
-    <tr>
-      <th style="width: 1%;">地址指示</th>
-      <th style="width: 4%;">地址</th>
-      <th style="width: 2%;">電話</th>
-    </tr>
+  <tr>
+    <th style="width: 1%;">地址指示</th>
+    <th style="width: 4%;">地址</th>
+    <th style="width: 2%;">電話</th>
+  </tr>
   </thead>
   <tbody class="color2">
-    <tr th:each="a : \${addrList}">
-      <td style="width: 1%; text-align: center;" th:text="\${a.addrInd}"></td>
-      <td style="width: 4%; text-align: center;" th:text="\${a.address}"></td>
-      <td style="width: 2%; text-align: center;" th:text="\${a.tel}"></td>
-    </tr>
+  <tr th:each="a : \${addrList}">
+    <td style="width: 1%; text-align: center;" th:text="\${a.addrInd}"></td>
+    <td style="width: 4%; text-align: center;" th:text="\${a.address}"></td>
+    <td style="width: 2%; text-align: center;" th:text="\${a.tel}"></td>
+  </tr>
   </tbody>
 </table>
 
@@ -871,47 +864,47 @@ tbody tr {
     <col style="width: 9%;"/>
   </colgroup>
   <thead>
-    <tr>
-      <th colspan="2">保單號碼</th>
-      <th colspan="1">狀態</th>
-      <th colspan="2">生效日期</th>
-      <th colspan="2">繳費日期</th>
-      <th colspan="1">理賠</th>
-      <th colspan="1">批註</th>
-      <th colspan="1">告知</th>
-      <th colspan="1">弱體</th>
-    </tr>
-    <tr>
-      <th colspan="1"></th>
-      <th colspan="1">關係</th>
-      <th colspan="2">險種</th>
-      <th colspan="1">版數</th>
-      <th colspan="2">保額</th>
-      <th colspan="2">生效日期</th>
-      <th colspan="2">變更生效日</th>
-    </tr>
+  <tr>
+    <th colspan="2">保單號碼</th>
+    <th colspan="1">狀態</th>
+    <th colspan="2">生效日期</th>
+    <th colspan="2">繳費日期</th>
+    <th colspan="1">理賠</th>
+    <th colspan="1">批註</th>
+    <th colspan="1">告知</th>
+    <th colspan="1">弱體</th>
+  </tr>
+  <tr>
+    <th colspan="1"></th>
+    <th colspan="1">關係</th>
+    <th colspan="2">險種</th>
+    <th colspan="1">版數</th>
+    <th colspan="2">保額</th>
+    <th colspan="2">生效日期</th>
+    <th colspan="2">變更生效日</th>
+  </tr>
   </thead>
   <tbody th:each="b : \${policyList}">
-    <tr class="color1" th:with="c=\${b.poInfo}">
-      <td colspan="2" th:text="\${c.policyNo}"></td>
-      <td colspan="1" th:text="\${c.poStsCode}"></td>
-      <td colspan="2" th:text="\${c.poIssueDate}"></td>
-      <td colspan="2" th:text="\${c.paidToDate}"></td>
-      <td colspan="1" th:text="\${c.claimInd}"></td>
-      <td colspan="1" th:text="\${c.remarkInd}"></td>
-      <td colspan="1" th:text="\${c.informInd}"></td>
-      <td colspan="1" th:text="\${c.weakInd}"></td>
-    </tr>
-    <tr th:each="d : \${b.coInfoList}">
-      <td colspan="1"></td>
-      <td colspan="1" th:text="\${d.clientIdent}"></td>
-      <td colspan="2" th:text="\${d.planCode}"></td>
-      <td colspan="1" th:text="\${d.rateScale}"></td>
-      <td colspan="2" style="
+  <tr class="color1" th:with="c=\${b.polf}">
+    <td colspan="2" th:text="\${c.policyNo}"></td>
+    <td colspan="1" th:text="\${c.poStsCode}"></td>
+    <td colspan="2" th:text="\${c.poIssueDate}"></td>
+    <td colspan="2" th:text="\${c.paidToDate}"></td>
+    <td colspan="1" th:text="\${c.claimInd}"></td>
+    <td colspan="1" th:text="\${c.remarkInd}"></td>
+    <td colspan="1" th:text="\${c.informInd}"></td>
+    <td colspan="1" th:text="\${c.weakInd}"></td>
+  </tr>
+  <tr th:each="d : \${b.colfList}">
+    <td colspan="1"></td>
+    <td colspan="1" th:text="\${d.clientIdent}"></td>
+    <td colspan="2" th:text="\${d.planCode}"></td>
+    <td colspan="1" th:text="\${d.rateScale}"></td>
+    <td colspan="2" style="
       text-align: right;" th:text="\${#numbers.formatDecimal(d.faceAmt, 0, 'COMMA', 2, 'POINT')}"></td>
-      <td colspan="2" th:text="\${d.coIssueDate}"></td>
-      <td colspan="2" th:text="\${d.coChangeDate}"></td>
-    </tr>
+    <td colspan="2" th:text="\${d.coIssueDate}"></td>
+    <td colspan="2" th:text="\${d.coChangeDate}"></td>
+  </tr>
   </tbody>
 </table>
 
@@ -925,83 +918,89 @@ tbody tr {
         </details>
 
         <details>
-          <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>Service</summary>
-          <CodeJava code={`@Service
-public class PdfService {
-    @Autowired
-    private TemplateEngine templateEngine;
+          <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>DTO</summary>
+          <CodeJava code={`@Schema(description = "保單資訊")
+public class PolicyDTO {
+    @Schema(description = "保單主檔")
+    private PolfEntity polf;
+    @Schema(description = "保障資料檔")
+    private List<ColfEntity> colfList;
 
-    public byte[] generatePolicyPdf() {
-        // 模擬資料
-        // 基本資料
-        String names = "測試員 A123456789";
-        String sex = "男性";
-        Integer age = 25;
-        // 聯絡資料
-        List<AddrDTO> addrList = new ArrayList<>();
-        for (int i = 1 ; i <= 10 ; i++) {
-            AddrDTO addr = new AddrDTO();
-            addr.setAddrInd(String.valueOf(i));
-            addr.setAddress("台北市內湖區石潭路58號"+i+"樓");
-            addr.setTel("02-23455511");
-            addrList.add(addr);
-        }
-        // 保單資料
-        List<PolicyDTO> policyList = new ArrayList<>();
-        for (int i = 0 ; i < 5 ; i++) {
-            PolicyDTO policyDTO = new PolicyDTO();
-            // 保單
-            PoInfoDTO poInfo = new PoInfoDTO();
-            poInfo.setPolicyNo("10000000000"+i);
-            poInfo.setPoStsCode("42");
-            poInfo.setPoIssueDate("100/01/10");
-            poInfo.setPaidToDate("115/01/10");
-            poInfo.setClaimInd("N");
-            poInfo.setRemarkInd("N");
-            poInfo.setInformInd("N");
-            poInfo.setWeakInd("N");
-            policyDTO.setPoInfo(poInfo);
-            // 保障
-            List<CoInfoDTO> coInfoList = new ArrayList<>();
-            for (int j = 1 ; j <= 3 ; j++) {
-                CoInfoDTO coInfo = new CoInfoDTO();
-                coInfo.setClientIdent("I1");
-                coInfo.setPlanCode("ABCD"+i);
-                coInfo.setRateScale("0");
-                coInfo.setFaceAmt(1000000.00);
-                coInfo.setCoIssueDate("100/01/10");
-                coInfo.setCoChangeDate("100/01/20");
-                coInfoList.add(coInfo);
-            }
-            policyDTO.setCoInfoList(coInfoList);
-            policyList.add(policyDTO);
-        }
+    public PolfEntity getPolf() {
+        return polf;
+    }
 
-        // 設定變數
-        Context context = new Context();
-        context.setVariable("names", names);
-        context.setVariable("sex", sex);
-        context.setVariable("age", age);
-        context.setVariable("addrList", addrList);
-        context.setVariable("policyList", policyList);
+    public void setPolf(PolfEntity polf) {
+        this.polf = polf;
+    }
 
-        return HtmlToPDFUtil.htmlToPdf(templateEngine, "客戶資料表.html", context);
+    public List<ColfEntity> getColfList() {
+        return colfList;
+    }
+
+    public void setColfList(List<ColfEntity> colfList) {
+        this.colfList = colfList;
     }
 }`} />
         </details>
 
         <details>
-          <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>Controller</summary>
-          <CodeJava code={`@RestController
-public class PdfController {
-
+          <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>Service</summary>
+          <CodeJava code={`@Service
+public class HtmlToPdfService {
     @Autowired
-    private PdfService pdfService;
+    private ClntRepository clntRepository;
+    @Autowired
+    private PolfRepository polfRepository;
+    @Autowired
+    private ColfRepository colfRepository;
+    @Autowired
+    private TemplateEngine templateEngine;
+    @Autowired
+    private AddrService addrService;
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    @GetMapping("/policy/pdf")
-    public ResponseEntity<Resource> generatePdf() {
-        var file = pdfService.generatePolicyPdf();
-        return ExportReponseUtil.responseEntity("policy.pdf", file);
+    /**
+     * Html 轉 PDF
+     * @param clientId 客戶證號
+     * @return
+     */
+    public byte[] generateHtmlToPdf(String clientId) {
+        // clnt
+        ClntEntity clntEntity = new ClntEntity();
+        Optional<ClntEntity> clntOptional = clntRepository.findById(clientId);
+        if (clntOptional.isPresent()) {
+            clntEntity = clntOptional.get();
+        }
+        // addr
+        List<AddrVo> addrVoList = addrService.queryAddrByClientId(clientId);
+        // polf
+        List<PolfEntity> polfEntityList = polfRepository.findAll();
+        // colf
+        List<ColfEntity> colfEntityList = colfRepository.findAll();
+        // PolicyNo
+        List<PolicyDTO> policyDTOList = new ArrayList<>();
+        for (PolfEntity polfEntity : polfEntityList) {
+            List<ColfEntity> colfList = colfEntityList.stream()
+                    .filter(colf -> colf.getPolicyNo().equals(polfEntity.getPolicyNo()))
+                    .collect(Collectors.toList());
+
+            PolicyDTO policyDTO = new PolicyDTO();
+            policyDTO.setPolf(polfEntity);
+            policyDTO.setColfList(colfList);
+            policyDTOList.add(policyDTO);
+        }
+
+        // 設定變數
+        Context context = new Context();
+        context.setVariable("names", clntEntity.getNames());
+        context.setVariable("sex", SexEnum.getDescByCode(clntEntity.getSex()));
+        context.setVariable("age", clntEntity.getAge());
+        context.setVariable("addrList", addrVoList);
+        context.setVariable("policyList", policyDTOList);
+
+        return HtmlToPDFUtil.generate(templateEngine, "客戶資料表.html", context);
     }
 }`} />
         </details>

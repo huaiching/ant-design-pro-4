@@ -171,18 +171,42 @@ public class SwaggerDocConfig {
         </Paragraph>
         <CodeSQL sql={`-- 客戶資料檔
 CREATE TABLE IF NOT EXISTS clnt (
-    client_id   CHAR(10),   -- 客戶證號
-    names       CHAR(40),   -- 客戶姓名
-    sex         CHAR(1),    -- 客戶性別
+    client_id   VARCHAR(10),   -- 客戶證號
+    names       VARCHAR(40),   -- 客戶姓名
+    sex         VARCHAR(1),    -- 客戶性別
     age         INTEGER     -- 客戶年齡
 );
 
 -- 客戶地址檔
 CREATE TABLE IF NOT EXISTS addr (
-    client_id   CHAR(10),   -- 客戶姓名
-    addr_ind    CHAR(1),    -- 地址指示
-    address     CHAR(72),   -- 地址
-    tel         CHAR(11)    -- 電話
+    client_id   VARCHAR(10),   -- 客戶姓名
+    addr_ind    VARCHAR(1),    -- 地址指示
+    address     VARCHAR(72),   -- 地址
+    tel         VARCHAR(11)    -- 電話
+);
+
+-- 保單主檔
+CREATE TABLE IF NOT EXISTS polf (
+    policy_no       VARCHAR(12),    -- 保單號碼
+    po_sts_code     VARCHAR(2),     -- 狀態
+    po_issue_date   VARCHAR(9),     -- 保單生效日期
+    paid_to_date    VARCHAR(9),     -- 繳費日期
+    claim_ind       VARCHAR(1),     -- 有無理賠
+    remark_ind      VARCHAR(1),     -- 有無批註
+    inform_ind      VARCHAR(1),     -- 有無告知
+    weak_ind        VARCHAR(1)      -- 有無弱體
+);
+
+-- 保障資料檔
+CREATE TABLE IF NOT EXISTS colf (
+    policy_no       VARCHAR(12),    -- 保單號碼
+    coverage_no     SMALLINT,       -- 保障號碼
+    plan_code       VARCHAR(12),    -- 險種代碼
+    rate_scale      VARCHAR(1),     -- 險種版數
+    client_ident    VARCHAR(2),
+    face_amt        FLOAT,          -- 保額
+    co_issue_date   VARCHAR(9),     -- 保障生效日
+    co_change_date  VARCHAR(9)      -- 變更生效日
 );`} />
 
         <Title level={3}>6. 專案啟動</Title>
