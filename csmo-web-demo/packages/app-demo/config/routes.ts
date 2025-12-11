@@ -396,6 +396,12 @@
             name: 'ZipUtil',
             component: './DomainDemo/UtilityCode/ZipUtil'
           },
+          {
+            // 物件欄位比較工具
+            path: 'FieldComparerUtil',
+            name: 'FieldComparerUtil',
+            component: './DomainDemo/UtilityCode/FieldComparerUtil'
+          },
         ]
       },
       {
