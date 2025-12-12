@@ -125,8 +125,8 @@ context.put("addr", addrList);`} />
             { title: '函式', dataIndex: 'method' }
           ]}
           dataSource={[
-            { name: '產生 Word 檔案 (單筆資料)', method: 'generateWord(String modelFile, Map<String, Object> context)' },
-            { name: '產生 Word 檔案 (相同樣板 + 多筆資料)', method: 'generateWordList(String modelFile, Configure configure, Map<String, Object> context)' },
+            { name: '產生 Word 檔案 (簡單樣板)', method: 'generateWord(String modelFile, Map<String, Object> context)' },
+            { name: '產生 Word 檔案 (陣列樣板)', method: 'generateWordList(String modelFile, Configure configure, Map<String, Object> context)' },
             { name: '產生 Word 檔案 (合併列印)', method: 'generateWordMerge(String modelFile, List<Map<String, Object>> contextList)' },
             { name: 'Word 多檔合併', method: 'mergeWord(List<byte[]> wordFileList)' },
           ]}
@@ -155,7 +155,7 @@ import java.util.Map;
  */
 public class WordUtil {
     /**
-     * 產生 Word 檔案 (單筆資料)
+     * 產生 Word 檔案 (簡單樣板)
      *
      * @param modelFile 樣版路徑 (resources/templates/{modelFile})
      * @param context   資料內容（Map 對應樣版中 {{key}} 欄位）
@@ -192,7 +192,7 @@ public class WordUtil {
     }
 
     /**
-     * 產生 Word 檔案 (相同樣板 + 多筆資料)
+     * 產生 Word 檔案 (陣列樣板)
      *
      * @param modelFile 樣版路徑 (resources/templates/{modelFile})
      * @param configure 列表渲染設定
