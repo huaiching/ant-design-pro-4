@@ -95,8 +95,7 @@ public class FieldComparerUtil {
                 log.error("無法存取欄位: {}", fieldName, e);
             }
         }
-
-        // 所有共同欄位的值都相同
+            
         return diffFieldList;
     }
 
