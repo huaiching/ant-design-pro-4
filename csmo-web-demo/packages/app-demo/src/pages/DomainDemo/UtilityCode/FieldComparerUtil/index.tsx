@@ -56,10 +56,11 @@ public class FieldComparerUtil {
      * @param obj2 第二個物件
      * @return 第一個數值不同的欄位名稱，如果全部相同則返回空字串
      */
-    public static String equals(Object obj1, Object obj2) {
+    public static List<String> equals(Object obj1, Object obj2) {
+        List<String> diffFieldList = new ArrayList<>();
         if (obj1 == null || obj2 == null) {
             log.warn("比較物件為 null");
-            return "";
+            return diffFieldList;
         }
 
         // 取得兩個物件的所有欄位
@@ -88,7 +89,7 @@ public class FieldComparerUtil {
 
                 // 比較兩個值
                 if (!areValuesEqual(value1, value2)) {
-                    return fieldName;
+                    diffFieldList.add(fieldName);
                 }
             } catch (IllegalAccessException e) {
                 log.error("無法存取欄位: {}", fieldName, e);
@@ -96,7 +97,7 @@ public class FieldComparerUtil {
         }
 
         // 所有共同欄位的值都相同
-        return "";
+        return diffFieldList;
     }
 
     /**
