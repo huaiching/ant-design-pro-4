@@ -126,14 +126,12 @@ context.put("addr", addrList);`} />
           ]}
           dataSource={[
             { name: '產生 Word 檔案 (簡單樣板)', method: 'generateWord(String modelFile, Map<String, Object> context)' },
-            { name: '產生 Word 檔案 (陣列樣板)', method: 'generateWordList(String modelFile, Configure configure, Map<String, Object> context)' },
-            { name: '產生 Word 檔案 (合併列印)', method: 'generateWordMerge(String modelFile, List<Map<String, Object>> contextList)' },
+            { name: '產生 Word 檔案 (陣列樣板)', method: 'generateWord(String modelFile, Map<String, Object> context, Configure configure)' },
             { name: 'Word 多檔合併', method: 'mergeWord(List<byte[]> wordFileList)' },
           ]}
           pagination={false}
         />
-        <CodeJava code={`
-import com.deepoove.poi.XWPFTemplate;
+        <CodeJava code={`import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.config.Configure;
 import com.deepoove.poi.xwpf.NiceXWPFDocument;
 import org.apache.commons.lang3.StringUtils;
@@ -141,7 +139,7 @@ import org.apache.poi.xwpf.usermodel.BreakType;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.CollectionUtils;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -162,44 +160,18 @@ public class WordUtil {
      * @return 產出的 Word 檔案資料流（byte[]）
      */
     public static byte[] generateWord(String modelFile, Map<String, Object> context) {
-        // 參數驗證
-        if (StringUtils.isEmpty(modelFile)) {
-            throw new RuntimeException("樣版路徑 不可空白!!");
-        }
-        if (context == null) {
-            throw new RuntimeException("資料內容 不可空白!!");
-        }
-
-        // 樣板位置
-        String model = "/templates/" + modelFile;
-
-        // 產生檔案
-        try (
-                InputStream inputStream = new ClassPathResource(model).getInputStream();
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream()
-        ) {
-            // 載入樣版並填入資料
-            XWPFTemplate template = XWPFTemplate.compile(inputStream).render(context);
-
-            // 將結果寫入 outputStream 並關閉資源
-            template.writeAndClose(outputStream);
-
-            return outputStream.toByteArray();
-
-        } catch (Exception e) {
-            throw new RuntimeException("Word 產生失敗，樣版路徑：" + modelFile, e);
-        }
+        return generateWord(modelFile, null, context);
     }
 
     /**
      * 產生 Word 檔案 (陣列樣板)
      *
      * @param modelFile 樣版路徑 (resources/templates/{modelFile})
-     * @param configure 列表渲染設定
      * @param context 資料內容（Map 對應樣版中 {{key}} 欄位）
+     * @param configure 列表渲染設定
      * @return 產出的 Word 檔案資料流（byte[]）
      */
-    public static byte[] generateWordList(String modelFile, Configure configure, Map<String, Object> context) {
+    public static byte[] generateWord(String modelFile, Map<String, Object> context, Configure configure) {
         // 參數驗證
         if (StringUtils.isEmpty(modelFile)) {
             throw new RuntimeException("樣版路徑 不可空白!!");
@@ -217,63 +189,15 @@ public class WordUtil {
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream()
         ) {
             // 載入樣版並填入資料
-            XWPFTemplate template = XWPFTemplate.compile(inputStream, configure).render(context);
+            XWPFTemplate template = (configure == null) ?
+                    XWPFTemplate.compile(inputStream).render(context) :
+                    XWPFTemplate.compile(inputStream, configure).render(context);
 
             // 將結果寫入 outputStream 並關閉資源
             template.writeAndClose(outputStream);
 
             return outputStream.toByteArray();
-
         } catch (Exception e) {
-            throw new RuntimeException("Word 產生失敗，樣版路徑：" + modelFile, e);
-        }
-    }
-
-    /**
-     * 產生 Word 檔案 (合併列印)
-     *
-     * @param modelFile 樣版路徑 (resources/templates/{modelFile})
-     * @param contextList   資料內容 清單（Map 對應樣版中 {{key}} 欄位）
-     * @return 產出的 Word 檔案資料流（byte[]）
-     */
-    public static byte[] generateWordMerge(String modelFile, List<Map<String, Object>> contextList) {
-        // 參數驗證
-        if (StringUtils.isEmpty(modelFile)) {
-            throw new RuntimeException("樣版路徑 不可空白!!");
-        }
-        if (CollectionUtils.isEmpty(contextList)) {
-            throw new RuntimeException("資料內容 不可空白!!");
-        }
-
-        // 產生檔案
-        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-            // 使用第一個文件作為基礎
-            var firstWord = generateWord(modelFile, contextList.get(0));
-            NiceXWPFDocument mainWord = new NiceXWPFDocument(new ByteArrayInputStream(firstWord));
-
-            try {
-                // 合併後續文件
-                for (int i = 1; i < contextList.size(); i++) {
-                    // 在合併前先加入分頁符
-                    XWPFParagraph paragraph = mainWord.createParagraph();
-                    XWPFRun run = paragraph.createRun();
-                    run.addBreak(BreakType.PAGE);
-                    // 產出 並 合併 後續文件
-                    var tmpWord = generateWord(modelFile, contextList.get(i));
-                    NiceXWPFDocument subWord = new NiceXWPFDocument(new ByteArrayInputStream(tmpWord));
-                    mainWord = mainWord.merge(subWord);
-                    subWord.close();
-                }
-
-                mainWord.write(outputStream);
-                return outputStream.toByteArray();
-
-            } catch (Exception e) {
-                throw new RuntimeException("Word 合併失敗：", e);
-            } finally {
-                mainWord.close();
-            }
-        } catch (IOException e) {
             throw new RuntimeException("Word 產生失敗，樣版路徑：" + modelFile, e);
         }
     }
@@ -314,7 +238,6 @@ public class WordUtil {
         } catch (IOException e) {
             throw new RuntimeException("Word 產生失敗", e);
         }
-
     }
 }`} />
         <hr />
@@ -394,7 +317,9 @@ public class WordUtil {
           </ul>
           <CodeJava code={`public byte[] generateWordMerge(List<ClientIdDto> clientIdDtoList) {
     List<Map<String, Object>> contextList = new ArrayList<>();
-    for (ClientIdDto clientIdDto : clientIdDtoList) {
+    List<byte[]> fileList = new ArrayList<>();
+    for (int i = 0; i < clientIdDtoList.size(); i++) {
+        ClientIdDto clientIdDto = clientIdDtoList.get(i);
         String clientId = clientIdDto.getClientId();
         // 基本資料
         String clntSql = "SELECT * FROM clnt " +
@@ -410,9 +335,11 @@ public class WordUtil {
         context.put("names", clntVo.getNames());
         context.put("clientId", clntVo.getNames());
         context.put("sex", SexEnum.getDescByCode(clntVo.getSex()));
-        contextList.add(context);
+        // 產生 word
+        byte[] file = WordUtil.generateWord("sample.docx", context);
+        fileList.add(file);
     }
-    return WordUtil.generateWordMerge("sample.docx", contextList);
+    return WordUtil.mergeWord(fileList);
 }`} />
 
         </details>
@@ -496,7 +423,7 @@ public class WordUtil {
     context.put("clientId", clntVo.getClientId());
     context.put("names", clntVo.getNames());
     context.put("addr", addrList);
-    return WordUtil.generateWordList("sampleList.docx", configure, context);
+    return WordUtil.generateWord("sampleList.docx", context, configure);
 }`} />
 
         </details>
