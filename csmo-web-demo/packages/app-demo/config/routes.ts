@@ -367,9 +367,15 @@
           },
           {
             // PDF 合併
-            path: 'mergePdf',
-            name: 'mergePdf',
+            path: 'MergePdf',
+            name: 'MergePdf',
             component: './DomainDemo/Export/MergePdf'
+          },
+          {
+            // Tif 套印 生成 PDF
+            path: 'TifToPdf',
+            name: 'TifToPdf',
+            component: './DomainDemo/Export/TifToPdf'
           },
         ]
       },
