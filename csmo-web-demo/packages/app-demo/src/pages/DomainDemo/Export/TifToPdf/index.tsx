@@ -53,16 +53,24 @@ const MergePdf: React.FC = () => {
           />
 
 
-        <Title level={5}>PDPageContentStream - 文字常用方法</Title>
+        <Title level={5}>PDPageContentStream - 編輯模式 常用方法</Title>
         <Table
           size="small"
           bordered
           columns={[
             { title: '方法', dataIndex: 'name', width: 250 },
-            { title: '函式', dataIndex: 'method' }
+            { title: '函式', dataIndex: 'method', width: 400 },
+            { title: '備註', dataIndex: 'note' }
           ]}
           dataSource={[
-            { name: 'PDF 檔案合併', method: 'mergePDF(List<byte[]> pdfFileList' },
+            { name: '設定 文字顏色', method: 'contentStream.setNonStrokingColor(Color.XXX);', note: '顏色會套用後方所有文字' },
+            { name: '開始 文字模式', method: 'contentStream.beginText();', note: '' },
+            { name: '設定 字體與字型大小', method: 'contentStream.setFont(font, fontSize);', note: '' },
+            { name: '設定 文字起始位置', method: 'contentStream.newLineAtOffset(x, y);', note: '以頁面左下角為 (0,0)' },
+            { name: '設定 要顯示的文字', method: 'contentStream.showText("要顯示的文字");', note: '' },
+            { name: '設定 行距', method: 'contentStream.setLeading(位移量);', note: '' },
+            { name: '移動到下一行', method: 'contentStream.newLine();', note: '需要先設定行句，否則會在同一行疊加文字' },
+            { name: '結束 文字模式', method: 'contentStream.endText();', note: '' },
           ]}
           pagination={false}
         />
@@ -102,7 +110,7 @@ public class TifToPdfService {
     /**
      * Tif 套印 產生 PDF 範例 <br/>
      * 需要多頁，請分別產生後，透過 PDF 合併工具 進行合併 <br/>
-     * tif 只支援 一頁式 的類型
+     * tif 套印 只支援 一頁式 的類型
      * @param clientId 客戶證號
      * @return PDF (byte[])
      */
@@ -168,7 +176,6 @@ public class TifToPdfService {
                 contentStream.newLineAtOffset(pageWidth-160, pageHeight-20);
                 contentStream.showText("(" + pageHeight + ", " + pageHeight + ")．");
                 contentStream.endText();
-
             }
 
             // 儲存到 ByteArrayOutputStream 並返回 byte[]
@@ -242,7 +249,6 @@ public class TifToPdfService {
                 contentStream.newLineAtOffset(20, pageHeight - 240);
                 contentStream.showText("114  " + addrVo.getAddress());
                 contentStream.endText();
-
             }
 
             // 儲存到 ByteArrayOutputStream 並返回 byte[]
