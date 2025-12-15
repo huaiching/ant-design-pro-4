@@ -66,6 +66,7 @@ export default {
   'menu.domain.export.Excel': 'Excel',
   'menu.domain.export.Word': 'Word',
   'menu.domain.export.HtmlToPdf': 'Html 轉 Pdf',
+  'menu.domain.export.WordToPdf': 'Word 轉 PDF',
   'menu.domain.export.MergePdf': 'PDF 合併',
   'menu.domain.export.TifToPdf': 'Tif 套印 生成 PDF',
   'menu.domain.utilityCode': '常用工具類',

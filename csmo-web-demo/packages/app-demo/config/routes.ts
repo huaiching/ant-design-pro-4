@@ -366,6 +366,12 @@
             component: './DomainDemo/Export/HtmlToPdf'
           },
           {
+            // Word 轉 PDF
+            path: 'WordToPdf',
+            name: 'WordToPdf',
+            component: './DomainDemo/Export/WordToPdf'
+          },
+          {
             // PDF 合併
             path: 'MergePdf',
             name: 'MergePdf',
