@@ -1,6 +1,6 @@
+import CodeJava from '@/utils/CodePre/CodeJava'
 import { PageContainer } from '@ant-design/pro-components'
 import { Divider, Typography } from 'antd'
-import CodeJava from '@/utils/CodePre/CodeJava'
 
 const { Title, Paragraph } = Typography
 
@@ -11,99 +11,94 @@ const SqlDemo: React.FC = () => {
         <Title level={2}>1. Criterion：條件設定</Title>
         <Paragraph type="danger">此為 csmo 客製化 工具</Paragraph>
 
-        <Title level={3}>一個變數</Title>
+        <Title level={3}>1.1. 一個變數</Title>
         <pre>Criterion.single(欄位, 運算符號, 數值)</pre>
         <ul>
           <li>
             欄位：使用<code>小駝峰</code>。
           </li>
+        </ul>
+
+        <Title level={4}>常用的運算符號</Title>
+        <ul>
           <li>
-            常用的運算符號
-            <ul>
-              <li>
-                等於：<code>QueryOperator.EQUAL</code>
-              </li>
-              <li>
-                不等於：<code>QueryOperator.NOT_EQUAL</code>
-              </li>
-              <li>
-                小於：<code>QueryOperator.LESS_THAN</code>
-              </li>
-              <li>
-                小於等於：<code>QueryOperator.LESS_THAN_OR_EQUAL</code>
-              </li>
-              <li>
-                大於：<code>QueryOperator.GREATER_THAN</code>
-              </li>
-              <li>
-                大於等於：<code>QueryOperator.GREATER_THAN_OR_EQUAL</code>
-              </li>
-              <li>
-                以指定字串開頭：<code>QueryOperator.START_WITH</code>
-              </li>
-              <li>
-                不以指定字串開頭：<code>QueryOperator.NOT_START_WITH</code>
-              </li>
-              <li>
-                以指定字串結尾：<code>QueryOperator.END_WITH</code>
-              </li>
-              <li>
-                不以指定字串結尾：<code>QueryOperator.NOT_END_WITH</code>
-              </li>
-              <li>
-                包含指定字串：<code>QueryOperator.LIKE</code>
-              </li>
-              <li>
-                不包含指定字串：<code>QueryOperator.NOT_LIKE</code>
-              </li>
-              <li>
-                值為NULL：<code>QueryOperator.NULL</code>
-              </li>
-              <li>
-                值不為NULL：<code>QueryOperator.NOT_NULL</code>
-              </li>
-            </ul>
+            等於：<code>QueryOperator.EQUAL</code>
           </li>
           <li>
-            範例
-            <CodeJava 
-              code={`Criterion criterion =  Criterion.single("clientId", Criterion.QueryOperator.EQUAL, clientId)`} />
+            不等於：<code>QueryOperator.NOT_EQUAL</code>
+          </li>
+          <li>
+            小於：<code>QueryOperator.LESS_THAN</code>
+          </li>
+          <li>
+            小於等於：<code>QueryOperator.LESS_THAN_OR_EQUAL</code>
+          </li>
+          <li>
+            大於：<code>QueryOperator.GREATER_THAN</code>
+          </li>
+          <li>
+            大於等於：<code>QueryOperator.GREATER_THAN_OR_EQUAL</code>
+          </li>
+          <li>
+            以指定字串開頭：<code>QueryOperator.START_WITH</code>
+          </li>
+          <li>
+            不以指定字串開頭：<code>QueryOperator.NOT_START_WITH</code>
+          </li>
+          <li>
+            以指定字串結尾：<code>QueryOperator.END_WITH</code>
+          </li>
+          <li>
+            不以指定字串結尾：<code>QueryOperator.NOT_END_WITH</code>
+          </li>
+          <li>
+            包含指定字串：<code>QueryOperator.LIKE</code>
+          </li>
+          <li>
+            不包含指定字串：<code>QueryOperator.NOT_LIKE</code>
+          </li>
+          <li>
+            值為NULL：<code>QueryOperator.NULL</code>
+          </li>
+          <li>
+            值不為NULL：<code>QueryOperator.NOT_NULL</code>
           </li>
         </ul>
 
-        <Title level={3}>多個變數</Title>
+        <Title level={4}>範例</Title>
+        <CodeJava
+          code={`Criterion criterion =  Criterion.single("clientId", Criterion.QueryOperator.EQUAL, clientId)`}
+        />
+
+        <Title level={3}>1.2. 多個變數</Title>
         <ul>
           <li>{`Criterion.between(欄位, 前數值, 後數值)`}</li>
           <li>{`Criterion.in(欄位, LIST<Object> 數值)`}</li>
           <li>{`Criterion.notIn(欄位, LIST<Object> 數值)`}</li>
         </ul>
-        <ul>
-          <li>
-            範例
-            <CodeJava 
-              code={`List<Object> policyNoList = poclList.stream()
-                .map(PoclEntity::getPolicyNo).distinct().collect(Collectors.toList());
-Criterion criterion =  Criterion.in("policyNo", policyNoList);`} />
-          </li>
-        </ul>
 
-        <Title level={3}>多個條件</Title>
-        <CodeJava 
+        <Title level={4}>範例</Title>
+        <CodeJava
+          code={`List<Object> policyNoList = poclList.stream()
+                .map(PoclEntity::getPolicyNo).distinct().collect(Collectors.toList());
+Criterion criterion =  Criterion.in("policyNo", policyNoList);`}
+        />
+
+        <Title level={3}>1.3. 多個條件</Title>
+        <CodeJava
           code={`Criterion.and(
     Criterion.single(欄位, 運算符號, 數值),
     Criterion.in(欄位, LIST<Object> 數值),
     ......
-)`} />
-        <ul>
-          <li>
-            範例
-            <CodeJava 
-              code={`Criterion criterion = Criterion.and(
+)`}
+        />
+        <Title level={4}>範例</Title>
+        <CodeJava
+          code={`Criterion criterion = Criterion.and(
     Criterion.single("clientId", Criterion.QueryOperator.EQUAL, addrKey.getClientId()),
     Criterion.single("addrInd", Criterion.QueryOperator.EQUAL, addrKey.getAddrInd())
-);`} />
-          </li>
-        </ul>
+);`}
+        />
 
         <Divider />
 
@@ -113,18 +108,24 @@ Criterion criterion =  Criterion.in("policyNo", policyNoList);`} />
           若 entity 的 主鍵欄位 數值有 null 時，不可使用此方法抓取資料。 (抓取的資料會顯示 null)
         </Paragraph>
 
-        <Title level={3}>查詢 - 一筆資料</Title>
+        <Paragraph>
+          相關作業，皆透過 <code>viewQueryService</code> 進行操作，使用前 需要注入：
+        </Paragraph>
+        <CodeJava
+          code={`@Autowired
+private ViewQueryService viewQueryService;`}
+        />
+
+        <Title level={3}>2.1. 查詢 - 一筆資料</Title>
         <Paragraph>
           透過 <code>viewQueryService.findOneSpec</code> 進行查詢，回傳型態為
           <code>{`Optional<?>`}</code>。
         </Paragraph>
-        <CodeJava 
-          code={`Optional<?> 變數 = viewQueryService.findOneSpec(Entity.class, Criterion條件);`} />
+        <CodeJava
+          code={`Optional<?> 變數 = viewQueryService.findOneSpec(Entity.class, Criterion條件);`}
+        />
 
-        <ul>
-          <li>
-            範例
-            <CodeJava 
+            <CodeJava
               code={`@Autowired
 private ViewQueryService viewQueryService;
 
@@ -139,20 +140,20 @@ public ClntEntity queryClntByClientId(String clientId) {
     }
     ClntEntity clntEntity = (ClntEntity)clntOptional.get();
     return clntEntity ;
-}`} />
-          </li>
-        </ul>
+}`}
+            />
 
-        <Title level={3}>查詢 - 多筆資料</Title>
+        <Title level={3}>2.2. 查詢 - 多筆資料</Title>
         <Paragraph>
           透過 <code>viewQueryService.findOneSpec</code> 進行查詢，回傳型態為
           <code>{`List<Entity>`}</code>。
         </Paragraph>
-        <pre>{`List<Entity> 變數 = viewQueryService.findOneSpec(Entity.class, Criterion條件);`}</pre>
-        <ul>
-          <li>
+        <CodeJava
+          code={`List<Entity> 變數 = viewQueryService.findOneSpec(Entity.class, Criterion條件);`}
+        />
+        <Title level={4}>範例</Title>
             範例
-            <CodeJava 
+            <CodeJava
               code={`@Autowired
 private ViewQueryService viewQueryService;
 
@@ -169,9 +170,8 @@ public List<AddrEntity> queryAddrByClientId(String clientId) {
         return null;
     }
     return viewQueryService.querySpec(AddrEntity.class, criterion);
-}`} />
-          </li>
-        </ul>
+}`}
+            />
 
         <Divider />
 
@@ -242,7 +242,7 @@ public List<AddrEntity> queryAddrByClientId(String clientId) {
           </li>
           <li>
             範例
-            <CodeJava 
+            <CodeJava
               code={`@QueryHandler
 @MethodOverloadForbidden
 public class CmntQueryHandler {
@@ -281,7 +281,8 @@ public class CmntQueryHandler {
     public List<QueryCmntMainDTO> queryCmntMain(Criterion criterion) {
         return viewQueryService.executeByServiceMethod(criterion);
     }
-}`} />
+}`}
+            />
           </li>
         </ul>
 
@@ -295,9 +296,10 @@ public class CmntQueryHandler {
         <ol>
           <li>
             注入 <code>NamedParameterJdbcTemplate</code>
-            <CodeJava 
+            <CodeJava
               code={`@Autowired
-private NamedParameterJdbcTemplate namedParameterJdbcTemplate;`} />
+private NamedParameterJdbcTemplate namedParameterJdbcTemplate;`}
+            />
           </li>
           <li>
             撰寫 SQL 語法
@@ -305,7 +307,7 @@ private NamedParameterJdbcTemplate namedParameterJdbcTemplate;`} />
               <li>
                 變數 前面要使用 <code>:</code> 標示，如: <code>:address</code>
               </li>
-              <CodeJava 
+              <CodeJava
                 code={`String sql1 = "SELECT * FROM addr " +
               "WHERE address LIKE :address";
 String sql2 = "UPDATE addr " +
@@ -316,21 +318,24 @@ String sql2 = "UPDATE addr " +
               "WHERE client_id = :clientIdOri " +
               "  AND addr_ind = :addrIndOri " +
               "  AND address = :addressOri " +
-              "  AND tel = :telOri ";`} />
+              "  AND tel = :telOri ";`}
+              />
               <li>
                 若 變數為集合，要使用 <code>( )</code> 包起來
               </li>
             </ul>
-            <CodeJava 
+            <CodeJava
               code={`String sql = "SELECT * FROM gico " +
-           "WHERE client_id IN (:clientIdList)";`} />
+           "WHERE client_id IN (:clientIdList)";`}
+            />
           </li>
           <li>
             透過 Map 設定參數
-            <CodeJava 
+            <CodeJava
               code={`Map<String, Object> params1 = new HashMap<>();
-params1.put("address", "%" + address + "%");`} />
-            <CodeJava 
+params1.put("address", "%" + address + "%");`}
+            />
+            <CodeJava
               code={`Map<String, Object> params2 = new HashMap<>();
 params2.put("clientIdNew", entityNew.getClientId());
 params2.put("addrIndNew", entityNew.getAddrInd());
@@ -339,7 +344,8 @@ params2.put("telNew", entityNew.getTel());
 params2.put("clientIdOri", entityOri.getClientId());
 params2.put("addrIndOri", entityOri.getAddrInd());
 params2.put("addressOri", entityOri.getAddress());
-params2.put("telOri", entityOri.getTel());`} />
+params2.put("telOri", entityOri.getTel());`}
+            />
           </li>
           <li>
             執行 SQL
@@ -347,18 +353,19 @@ params2.put("telOri", entityOri.getTel());`} />
               <li>
                 <code>單筆查詢</code> 透過 <code>namedParameterJdbcTemplate.queryForObject</code>{' '}
                 執行。
-                <CodeJava 
-                  code={`Long count = namedParameterJdbcTemplate.queryForObject(countSql + whereSql, params, Long.class);`} />
+                <CodeJava
+                  code={`Long count = namedParameterJdbcTemplate.queryForObject(countSql + whereSql, params, Long.class);`}
+                />
               </li>
               <li>
                 <code>多筆查詢</code> 透過 <code>`namedParameterJdbcTemplate.query</code> 執行。
-                <CodeJava 
-                  code={`List<Addr> addrList = namedParameterJdbcTemplate.query(sql1, params1, new BeanPropertyRowMapper<>(Addr.class));`} />
+                <CodeJava
+                  code={`List<Addr> addrList = namedParameterJdbcTemplate.query(sql1, params1, new BeanPropertyRowMapper<>(Addr.class));`}
+                />
               </li>
               <li>
                 <code>增刪修</code> 透過 <code>namedParameterJdbcTemplate.update</code> 執行。
-                <CodeJava 
-                  code={`namedParameterJdbcTemplate.update(sql2, params2);`} />
+                <CodeJava code={`namedParameterJdbcTemplate.update(sql2, params2);`} />
               </li>
             </ul>
           </li>
@@ -370,10 +377,11 @@ params2.put("telOri", entityOri.getTel());`} />
         <Paragraph type="danger">此為 csmo 客製化 工具</Paragraph>
         <Paragraph>
           先想辦法 取得 要新增的 entity 資料， <br />
-          再透過 <code>entityWriteService.applyCommand()</code> 和 <code>SystemCommands.createCommand()</code> 執行。 <br />
-          因 新增 可能失敗，所以需要有 <code>try-catch</code>。
+          再透過 <code>entityWriteService.applyCommand()</code> 和{' '}
+          <code>SystemCommands.createCommand()</code> 執行。 <br />因 新增 可能失敗，所以需要有{' '}
+          <code>try-catch</code>。
         </Paragraph>
-        <CodeJava 
+        <CodeJava
           code={`@Autowired
 private EntityWriteService entityWriteService;
 
@@ -383,7 +391,8 @@ public void insertAddr(AddrEntity addrEntity) {
     } catch (Exception e) {
         throw new RuntimeException(e);
     }
-}`} />
+}`}
+        />
 
         <Divider />
 
@@ -391,11 +400,12 @@ public void insertAddr(AddrEntity addrEntity) {
         <Paragraph type="danger">此為 csmo 客製化 工具</Paragraph>
         <Paragraph>
           先想辦法 取得 要新增的 entity 資料， <br />
-          再透過 <code>entityWriteService.applyCommand()</code> 和 <code>SystemCommands.updateCommand()</code> 執行。 <br />
-          執行 修改 時，會根據 entity 設定的 唯一值 修改對應的資料。 <br />
-          因 修改 可能失敗，所以需要有 <code>try-catch</code>。
+          再透過 <code>entityWriteService.applyCommand()</code> 和{' '}
+          <code>SystemCommands.updateCommand()</code> 執行。 <br />
+          執行 修改 時，會根據 entity 設定的 唯一值 修改對應的資料。 <br />因 修改
+          可能失敗，所以需要有 <code>try-catch</code>。
         </Paragraph>
-        <CodeJava 
+        <CodeJava
           code={`@Autowired
 private EntityWriteService entityWriteService;
 
@@ -405,7 +415,8 @@ public void updateAddr(AddrEntity addrEntityNew) {
     } catch (Exception e) {
         throw new RuntimeException(e);
     }
-}`} />
+}`}
+        />
 
         <Divider />
 
@@ -413,11 +424,12 @@ public void updateAddr(AddrEntity addrEntityNew) {
         <Paragraph type="danger">此為 csmo 客製化 工具</Paragraph>
         <Paragraph>
           先想辦法 取得 要新增的 entity 資料， <br />
-          再透過 <code>entityWriteService.applyCommand()</code> 和 <code>SystemCommands.deleteCommand()</code> 執行。 <br />
-          執行 刪除 時，會根據 entity 設定的 唯一值 刪除對應的資料。 <br />
-          因 刪除 可能失敗，所以需要有 <code>try-catch</code>。
+          再透過 <code>entityWriteService.applyCommand()</code> 和{' '}
+          <code>SystemCommands.deleteCommand()</code> 執行。 <br />
+          執行 刪除 時，會根據 entity 設定的 唯一值 刪除對應的資料。 <br />因 刪除
+          可能失敗，所以需要有 <code>try-catch</code>。
         </Paragraph>
-        <CodeJava 
+        <CodeJava
           code={`@Autowired
 private EntityWriteService entityWriteService;
 
@@ -437,7 +449,8 @@ public void deleteAddr(AddrKey addrKey) {
             throw new RuntimeException(e);
         }
     }
-}`} />
+}`}
+        />
       </Typography>
     </PageContainer>
   )
