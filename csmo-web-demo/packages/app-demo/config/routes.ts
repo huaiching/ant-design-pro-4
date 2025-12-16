@@ -372,6 +372,12 @@
             component: './DomainDemo/Export/WordToPdf'
           },
           {
+            // Excel 轉 PDF
+            path: 'ExcelToPdf',
+            name: 'ExcelToPdf',
+            component: './DomainDemo/Export/ExcelToPdf'
+          },
+          {
             // PDF 合併
             path: 'MergePdf',
             name: 'MergePdf',
