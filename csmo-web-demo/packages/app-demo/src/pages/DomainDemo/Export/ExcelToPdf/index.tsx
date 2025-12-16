@@ -28,7 +28,7 @@ const MergePdf: React.FC = () => {
 
         <Paragraph type='danger'>
           此工具 是透過 apache.poi 逐一解析 Excel 儲存格 的 資訊，再逐一寫入 PDF。<br/>
-          不一定支援 過於複雜 的 Excel文件。
+          不支援 字體顏色 (一律使用黑色)、儲存格底色 (一律使用白色) 且 不一定支援 過於複雜 的 Excel文件。
         </Paragraph>
 
         <Paragraph type='danger'>
