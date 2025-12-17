@@ -24,6 +24,10 @@ const MergePdf: React.FC = () => {
     <version>1.0.10</version>
 </dependency>`} />
 
+        <Paragraph type='danger'>
+          CSMO 專案 已包含此套件，不需要設定
+        </Paragraph>
+
         <hr/>
 
         <Paragraph type='danger'>
