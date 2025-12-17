@@ -1,4 +1,4 @@
-﻿export default [
+export default [
   {
     path: '/',
     redirect: '/home'
@@ -354,16 +354,16 @@
             component: './DomainDemo/Export/Excel'
           },
           {
+            // Excel 轉 PDF
+            path: 'ExcelToPdf',
+            name: 'ExcelToPdf',
+            component: './DomainDemo/Export/ExcelToPdf'
+          },
+          {
             // Word
             path: 'Word',
             name: 'Word',
             component: './DomainDemo/Export/Word'
-          },
-          {
-            // Html 轉 Pdf
-            path: 'HtmlToPdf',
-            name: 'HtmlToPdf',
-            component: './DomainDemo/Export/HtmlToPdf'
           },
           {
             // Word 轉 PDF
@@ -372,10 +372,10 @@
             component: './DomainDemo/Export/WordToPdf'
           },
           {
-            // Excel 轉 PDF
-            path: 'ExcelToPdf',
-            name: 'ExcelToPdf',
-            component: './DomainDemo/Export/ExcelToPdf'
+            // Html 轉 Pdf
+            path: 'HtmlToPdf',
+            name: 'HtmlToPdf',
+            component: './DomainDemo/Export/HtmlToPdf'
           },
           {
             // PDF 合併
