@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, Tooltip } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
 import './CodeYAML.css';
+import { codeCopy } from './CodeCopy';
 
 const yamlHighlight = (raw: string): string => {
   let code = raw.trim();
@@ -70,11 +71,6 @@ interface CodeYAMLProps {
 }
 
 const CodeYAML: React.FC<CodeYAMLProps> = ({ yaml, title = 'YAML', copyable = true }) => {
-  const handleCopy = () => {
-    navigator.clipboard.writeText(yaml.trim());
-    const { message } = require('antd');
-    message.success('已複製到剪貼簿');
-  };
 
   return (
     <Card
@@ -84,7 +80,7 @@ const CodeYAML: React.FC<CodeYAMLProps> = ({ yaml, title = 'YAML', copyable = tr
       extra={
         copyable && (
           <Tooltip title="複製">
-            <CopyOutlined style={{ cursor: 'pointer', fontSize: 16 }} onClick={handleCopy} />
+            <CopyOutlined style={{ cursor: 'pointer', fontSize: 16 }} onClick={()=>codeCopy(yaml.trim())} />
           </Tooltip>
         )
       }

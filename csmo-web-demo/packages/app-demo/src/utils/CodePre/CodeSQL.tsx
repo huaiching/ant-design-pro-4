@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Tooltip } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
 import './CodeSQL.css';
+import { codeCopy } from './CodeCopy';
 
 const sqlHighlight = (sql: string): string => {
   let html = sql.trim();
@@ -62,14 +63,6 @@ interface CodeSQLProps {
 const CodeSQL: React.FC<CodeSQLProps> = ({ sql, copyable = true }) => {
   const highlighted = sqlHighlight(sql);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(sql);
-    // antd 的 message 在 Pro v5 專案一定有，直接用就好
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { message } = require('antd');
-    message.success('已複製到剪貼簿');
-  };
-
   return (
     <Card
       bodyStyle={{ padding: 0, margin: '16px 0 16px 0' }}
@@ -80,7 +73,7 @@ const CodeSQL: React.FC<CodeSQLProps> = ({ sql, copyable = true }) => {
           <Tooltip title="複製">
             <CopyOutlined
               style={{ cursor: 'pointer', fontSize: 16 }}
-              onClick={handleCopy}
+              onClick={()=>codeCopy(sql)}
             />
           </Tooltip>
         )

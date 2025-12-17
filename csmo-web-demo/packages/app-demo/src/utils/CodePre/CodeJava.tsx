@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Tooltip } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
 import './CodeJava.css';
+import { codeCopy } from './CodeCopy';
 
 const javaHighlight = (code: string): string => {
   let html = code.trim();
@@ -67,12 +68,6 @@ const CodeJava: React.FC<CodeJavaProps> = ({ code, copyable = true }) => {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(code);
-    const { message } = require('antd');
-    message.success('已複製到剪貼簿');
-  };
-
   return (
     <Card
       bodyStyle={{ padding: 0, margin: '16px 0 16px 0' }}
@@ -81,7 +76,7 @@ const CodeJava: React.FC<CodeJavaProps> = ({ code, copyable = true }) => {
       extra={
         copyable && (
           <Tooltip title="複製">
-            <CopyOutlined style={{ cursor: 'pointer', fontSize: 16 }} onClick={handleCopy} />
+            <CopyOutlined style={{ cursor: 'pointer', fontSize: 16 }} onClick={()=>codeCopy(code)} />
           </Tooltip>
         )
       }

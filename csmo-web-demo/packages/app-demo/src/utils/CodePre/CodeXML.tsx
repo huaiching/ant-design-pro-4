@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, Tooltip } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
 import './CodeXML.css';
+import { codeCopy } from './CodeCopy';
 
 const xmlHighlight = (code: string): string => {
   let html = code.trim();
@@ -73,12 +74,6 @@ const CodeXML: React.FC<CodeXMLProps> = ({ code, title = 'XML', copyable = true 
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(code.trim());
-    const { message } = require('antd');
-    message.success('已複製到剪貼簿');
-  };
-
   return (
     <Card
       bodyStyle={{ padding: 0, margin: '16px 0 16px 0' }}
@@ -87,7 +82,7 @@ const CodeXML: React.FC<CodeXMLProps> = ({ code, title = 'XML', copyable = true 
       extra={
         copyable && (
           <Tooltip title="複製 XML">
-            <CopyOutlined style={{ cursor: 'pointer', fontSize: 16 }} onClick={handleCopy} />
+            <CopyOutlined style={{ cursor: 'pointer', fontSize: 16 }} onClick={()=>codeCopy(code)} />
           </Tooltip>
         )
       }

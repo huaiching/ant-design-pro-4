@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, Tooltip } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
 import './CodeTsx.css';
+import { codeCopy } from './CodeCopy';
 
 const tsxHighlight = (rawCode: string): string => {
   let code = rawCode;
@@ -73,12 +74,6 @@ interface CodeTsxProps {
 }
 
 const CodeTsx: React.FC<CodeTsxProps> = ({ code, title, copyable = true }) => {
-  const handleCopy = () => {
-    navigator.clipboard.writeText(code.trim());
-    const { message } = require('antd');
-    message.success('已複製');
-  };
-
   return (
     <Card
       title={title}
@@ -86,7 +81,7 @@ const CodeTsx: React.FC<CodeTsxProps> = ({ code, title, copyable = true }) => {
       extra={
         copyable && (
           <Tooltip title="複製程式碼">
-            <CopyOutlined onClick={handleCopy} style={{ cursor: 'pointer', fontSize: 16 }} />
+            <CopyOutlined style={{ cursor: 'pointer', fontSize: 16 }} onClick={()=>codeCopy(code)} />
           </Tooltip>
         )
       }
