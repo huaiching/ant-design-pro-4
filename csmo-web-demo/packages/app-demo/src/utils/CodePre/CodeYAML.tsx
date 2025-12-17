@@ -80,7 +80,7 @@ const CodeYAML: React.FC<CodeYAMLProps> = ({ yaml, title = 'YAML', copyable = tr
       extra={
         copyable && (
           <Tooltip title="複製">
-            <CopyOutlined style={{ cursor: 'pointer', fontSize: 16 }} onClick={()=>codeCopy(yaml.trim())} />
+            <CopyOutlined onClick={()=>codeCopy(yaml.trim())} />
           </Tooltip>
         )
       }

@@ -27,7 +27,7 @@ const CodeText: React.FC<CodeTEXTProps> = ({ code, title = 'TEXT', copyable = tr
       extra={
         copyable && (
           <Tooltip title="複製">
-            <CopyOutlined style={{ cursor: 'pointer', fontSize: 16 }} onClick={()=>codeCopy(code)} />
+            <CopyOutlined onClick={()=>codeCopy(code)} />
           </Tooltip>
         )
       }

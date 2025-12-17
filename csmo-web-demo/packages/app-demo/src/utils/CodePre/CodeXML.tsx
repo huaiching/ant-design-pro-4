@@ -81,8 +81,8 @@ const CodeXML: React.FC<CodeXMLProps> = ({ code, title = 'XML', copyable = true 
       variant="borderless"
       extra={
         copyable && (
-          <Tooltip title="複製 XML">
-            <CopyOutlined style={{ cursor: 'pointer', fontSize: 16 }} onClick={()=>codeCopy(code)} />
+          <Tooltip title="複製">
+            <CopyOutlined onClick={()=>codeCopy(code)} />
           </Tooltip>
         )
       }

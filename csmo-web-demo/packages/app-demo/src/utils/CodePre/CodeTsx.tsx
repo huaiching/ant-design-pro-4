@@ -80,8 +80,8 @@ const CodeTsx: React.FC<CodeTsxProps> = ({ code, title, copyable = true }) => {
       bodyStyle={{ padding: 0 }}
       extra={
         copyable && (
-          <Tooltip title="複製程式碼">
-            <CopyOutlined style={{ cursor: 'pointer', fontSize: 16 }} onClick={()=>codeCopy(code)} />
+          <Tooltip title="複製">
+            <CopyOutlined onClick={()=>codeCopy(code)} />
           </Tooltip>
         )
       }

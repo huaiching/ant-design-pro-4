@@ -71,9 +71,7 @@ const CodeSQL: React.FC<CodeSQLProps> = ({ sql, copyable = true }) => {
       extra={
         copyable && (
           <Tooltip title="複製">
-            <CopyOutlined
-              style={{ cursor: 'pointer', fontSize: 16 }}
-              onClick={()=>codeCopy(sql)}
+            <CopyOutlined onClick={()=>codeCopy(sql)}
             />
           </Tooltip>
         )
