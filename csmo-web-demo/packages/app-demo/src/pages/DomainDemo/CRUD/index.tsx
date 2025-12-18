@@ -379,6 +379,9 @@ params2.put("telOri", entityOri.getTel());`}
           <code>EntityManager</code> 為 <code>Spring Data JPA</code> 內建的 Entity 相關方法 <br/>
           當要進行 Entity INSERT 時，在不透過 Repository 的情況下，可以透過 下面的方法，來進行 INSERT 且 自動處理 欄位映射。
         </Paragraph>
+        <Paragraph type='danger'>
+          此方法 是根據 <code>@Id</code> 欄位進行判斷，若 <code>資料已存在</code> 會拋出 <code>EntityExistsException</code>。
+        </Paragraph>
         <Paragraph>
           使用 多線程 的自動注入方式
         </Paragraph>
