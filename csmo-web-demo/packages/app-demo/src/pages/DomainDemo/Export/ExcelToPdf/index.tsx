@@ -32,11 +32,15 @@ const MergePdf: React.FC = () => {
 
         <Paragraph type='danger'>
           此工具 是透過 apache.poi 逐一解析 Excel 儲存格 的 資訊，再逐一寫入 PDF。<br/>
-          不支援 字體顏色 (一律使用黑色)、儲存格底色 (一律使用白色) 且 不一定支援 過於複雜 的 Excel文件。
+          字體使用 標楷體，顏色使用灰階 且 不一定支援 過於複雜 的 Excel文件。
         </Paragraph>
 
         <Paragraph type='danger'>
           <code>難字處理</code>：請於 word 文件產生時，就透過 <code>CSMO 工具</code> 將 <code>自造字</code> 轉換成 <code>難字</code> 後，再透過此工具 轉換為 PDF。
+        </Paragraph>
+
+        <Paragraph type='danger'>
+          使用前，需要先將 標楷體 放入 <code>resources/templates/fonts/kaiu.ttf</code> 路徑底下。
         </Paragraph>
 
         <Table
@@ -49,6 +53,8 @@ const MergePdf: React.FC = () => {
           dataSource={[
             { name: 'Excel 轉 PDF (直式)', method: 'excelToPdf(byte[] excelBytes)' },
             { name: 'Excel 轉 PDF (橫式)', method: 'excelToPdfHorizontal(byte[] excelBytes)' },
+            { name: 'Excel 轉 PDF (直式 + 頁碼)', method: 'excelToPdf(byte[] excelBytes, boolean showPageNumber)' },
+            { name: 'Excel 轉 PDF (橫式 + 頁碼)', method: 'excelToPdfHorizontal(byte[] excelBytes, boolean showPageNumber)' },
           ]}
           pagination={false}
         />
@@ -73,83 +79,113 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Excel 轉 PDF 工具類
- * 支援 .xlsx 格式
+ * Excel 轉 PDF 工具類 <br/>
+ * 支援 .xlsx 格式，包含儲存格底色、動態行高、自動換行、文字垂直置中 <br/>
+ * 顏色 灰階顯示
  */
 public class ExcelToPdfUtil {
 
     private static final Logger log = LoggerFactory.getLogger(ExcelToPdfUtil.class);
 
-    // PDF 設定
-    private static final float MARGIN = 50;
-    private static final float FONT_SIZE = 10;
-    private static final float ROW_HEIGHT = 20;
-    private static final float COLUMN_WIDTH_FACTOR = 0.12f; // Excel 寬度單位轉換係數
+    // PDF 頁面設定
+    private static final float MARGIN = 30;                    // 頁面邊距 (pt)
+    private static final float DEFAULT_FONT_SIZE = 10f;        // 預設字體大小 (pt)
+    private static final float COLUMN_WIDTH_FACTOR = 0.12f;    // Excel 欄寬轉換係數 (pt)
+    private static final float TEXT_PADDING_LEFT_RIGHT = 5f;   // 文字左右內距 (pt)
+    private static final float TEXT_PADDING_TOP_BOTTOM = 10f;  // 文字上下內距 (pt)
+    private static final float MIN_ROW_HEIGHT = 20f;           // 最小行高 (pt)
+    private static final float LINE_SPACING = 2f;              // 行距 (pt)
+    private static final float PAGE_NUMBER_Y = 20f; // 頁碼 Y 座標（從頁面底部起算）
+    private static final float PAGE_NUMBER_FONT_SIZE = 8f; // 頁碼字體大小
 
-    // 私有建構子，防止實例化
     private ExcelToPdfUtil() {
         throw new UnsupportedOperationException("Utility class cannot be instantiated");
     }
 
     /**
-     * 將 Excel byte[] 轉換為 PDF byte[] (直式/Portrait)
-     *
-     * @param excelBytes Excel 檔案的 byte array
-     * @return PDF 檔案的 byte array
-     * @throws IOException 轉換過程中的 IO 異常
+     * 將 Excel byte[] 轉換為 PDF byte[] (直式)
+     * @param excelBytes Excel 檔案的二進位資料
+     * @param showPageNumber 是否顯示頁碼 (T/F)
+     * @return PDF 二進位資料
+     * @throws IOException 轉換過程發生 IO 錯誤
+     */
+    public static byte[] excelToPdf(byte[] excelBytes, boolean showPageNumber) throws IOException {
+        return convertExcelToPdf(excelBytes, false, showPageNumber);
+    }
+
+    /**
+     * 將 Excel byte[] 轉換為 PDF byte[] (橫式)
+     * @param excelBytes Excel 檔案的二進位資料
+     * @param showPageNumber 是否顯示頁碼 (T/F)
+     * @return PDF 二進位資料
+     * @throws IOException 轉換過程發生 IO 錯誤
+     */
+    public static byte[] excelToPdfHorizontal(byte[] excelBytes, boolean showPageNumber) throws IOException {
+        return convertExcelToPdf(excelBytes, true, showPageNumber);
+    }
+
+    /**
+     * 將 Excel byte[] 轉換為 PDF byte[] (直式)
+     * @param excelBytes Excel 檔案的二進位資料
+     * @return PDF 二進位資料
+     * @throws IOException 轉換過程發生 IO 錯誤
      */
     public static byte[] excelToPdf(byte[] excelBytes) throws IOException {
-        return convertExcelToPdf(excelBytes, false);
+        return convertExcelToPdf(excelBytes, false, false);
     }
 
     /**
-     * 將 Excel byte[] 轉換為 PDF byte[] (橫式/Landscape)
-     *
-     * @param excelBytes Excel 檔案的 byte array
-     * @return PDF 檔案的 byte array
-     * @throws IOException 轉換過程中的 IO 異常
+     * 將 Excel byte[] 轉換為 PDF byte[] (橫式)
+     * @param excelBytes Excel 檔案的二進位資料
+     * @return PDF 二進位資料
+     * @throws IOException 轉換過程發生 IO 錯誤
      */
     public static byte[] excelToPdfHorizontal(byte[] excelBytes) throws IOException {
-        return convertExcelToPdf(excelBytes, true);
+        return convertExcelToPdf(excelBytes, true, false);
     }
 
     /**
-     * 將 Excel byte[] 轉換為 PDF byte[] (核心轉換方法)
-     *
-     * @param excelBytes Excel 檔案的 byte array
-     * @param isHorizontal 是否為橫式列印
-     * @return PDF 檔案的 byte array
-     * @throws IOException 轉換過程中的 IO 異常
+     * 核心轉換方法：將 Excel 轉為 PDF
+     * @param excelBytes Excel 二進位資料
+     * @param isHorizontal 是否為橫式頁面 (T/F)
+     * @param showPageNumber 是否顯示頁碼 (T/F)
+     * @return PDF 二進位資料
+     * @throws IOException 轉換過程發生 IO 錯誤
      */
-    private static byte[] convertExcelToPdf(byte[] excelBytes, boolean isHorizontal) throws IOException {
-        log.info("開始轉換 Excel 到 PDF，Excel 大小: {} bytes, 方向: {}", excelBytes.length, isHorizontal ? "橫式" : "直式");
+    private static byte[] convertExcelToPdf(byte[] excelBytes, boolean isHorizontal, boolean showPageNumber) throws IOException {
+        log.info("開始轉換 Excel 到 PDF，Excel 大小: {} bytes, 方向: {}, 顯示頁碼: {}",
+                excelBytes.length, isHorizontal ? "橫式" : "直式", showPageNumber);
 
         try (ByteArrayInputStream bis = new ByteArrayInputStream(excelBytes);
              Workbook workbook = new XSSFWorkbook(bis);
              PDDocument document = new PDDocument();
              ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
 
-            // 載入中文字體到 PDDocument
             FontHolder fontHolder = loadFonts(document);
 
-            // 遍歷所有工作表
+            List<PDPage> allPages = new ArrayList<>();
+
             int numberOfSheets = workbook.getNumberOfSheets();
             log.info("Excel 包含 {} 個工作表", numberOfSheets);
 
             for (int i = 0; i < numberOfSheets; i++) {
                 Sheet sheet = workbook.getSheetAt(i);
                 log.info("處理工作表 [{}]: {}", i, sheet.getSheetName());
-                // 傳遞方向參數給 sheet 轉換方法
-                convertSheetToPdf(document, sheet, fontHolder, isHorizontal);
+                List<PDPage> sheetPages = convertSheetToPdf(document, sheet, workbook, fontHolder, isHorizontal);
+                allPages.addAll(sheetPages);
             }
 
-            // 將 PDF 寫入 ByteArrayOutputStream
+            // 如果需要顯示頁碼，在所有頁面繪製完成後再畫頁碼
+            if (showPageNumber) {
+                drawPageNumbers(document, allPages, fontHolder.font);
+            }
+
             document.save(baos);
             byte[] pdfBytes = baos.toByteArray();
-
             log.info("轉換完成，PDF 大小: {} bytes", pdfBytes.length);
             return pdfBytes;
 
@@ -160,166 +196,160 @@ public class ExcelToPdfUtil {
     }
 
     /**
-     * 載入字體到 PDDocument
+     * 載入中文字體（標楷體）
+     * 若載入失敗則使用預設 Helvetica 字體
+     * @param document PDF 文件物件
+     * @return 字體持有者
+     * @throws IOException 字體載入失敗
      */
     private static FontHolder loadFonts(PDDocument document) throws IOException {
-        PDFont chineseFont;
-        PDFont chineseFontBold;
-
+        PDFont font;
         try {
             ClassPathResource fontResource = new ClassPathResource("templates/fonts/kaiu.ttf");
             try (InputStream fontStream = fontResource.getInputStream()) {
-                chineseFont = PDType0Font.load(document, fontStream);
-                log.info("成功載入中文字體到 PDF Document");
-            }
-
-            // 標題使用相同字體（標楷體沒有 bold 版本，使用同一字體）
-            try (InputStream fontStream = new ClassPathResource("templates/fonts/kaiu.ttf").getInputStream()) {
-                chineseFontBold = PDType0Font.load(document, fontStream);
+                font = PDType0Font.load(document, fontStream);
+                log.info("成功載入中文字體");
             }
         } catch (Exception e) {
             log.warn("載入中文字體失敗，使用預設字體", e);
-            chineseFont = PDType1Font.HELVETICA;
-            chineseFontBold = PDType1Font.HELVETICA_BOLD;
+            font = PDType1Font.HELVETICA;
         }
-
-        return new FontHolder(chineseFont, chineseFontBold);
+        return new FontHolder(font);
     }
 
     /**
-     * 將單個工作表轉換為 PDF 頁面
-     *
-     * @param document PDF 文件對象
-     * @param sheet Excel 工作表
-     * @param fontHolder 字體對象
+     * 將單個工作表轉換為 PDF 頁面（支援跨頁）
+     * @param document     PDF 文件物件
+     * @param sheet        Excel 工作表
+     * @param workbook     Excel 工作簿
+     * @param fontHolder   字體持有者
      * @param isHorizontal 是否為橫式
+     * @throws IOException 繪製過程發生 IO 錯誤
      */
-    private static void convertSheetToPdf(PDDocument document, Sheet sheet, FontHolder fontHolder, boolean isHorizontal) throws IOException {
+    private static List<PDPage> convertSheetToPdf(PDDocument document, Sheet sheet, Workbook workbook,
+                                                  FontHolder fontHolder, boolean isHorizontal) throws IOException {
+        List<PDPage> createdPages = new ArrayList<>();
+
         if (sheet.getPhysicalNumberOfRows() == 0) {
             log.warn("工作表 [{}] 為空，跳過", sheet.getSheetName());
-            return;
+            return createdPages;
         }
 
-        // 根據 isHorizontal 決定頁面尺寸
-        PDRectangle pageSize = PDRectangle.A4;
-        if (isHorizontal) {
-            // 設定橫式：交換 A4 的寬高
-            pageSize = new PDRectangle(PDRectangle.A4.getHeight(), PDRectangle.A4.getWidth());
-        }
+        PDRectangle pageSize = isHorizontal
+                ? new PDRectangle(PDRectangle.A4.getHeight(), PDRectangle.A4.getWidth())
+                : PDRectangle.A4;
+
+        float[] columnWidths = calculateColumnWidths(sheet, pageSize.getWidth());
+        List<CellRangeAddress> mergedRegions = sheet.getMergedRegions();
+        boolean displayGridLines = sheet.isDisplayGridlines();
+
+        float yPosition = pageSize.getHeight() - MARGIN;
 
         PDPage page = new PDPage(pageSize);
         document.addPage(page);
+        createdPages.add(page);
 
-        // 檢查是否顯示格線
-        boolean displayGridLines = sheet.isDisplayGridlines();
-        log.info("工作表 [{}] 格線顯示: {}", sheet.getSheetName(), displayGridLines);
+        PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
-        try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-
-            float yPosition = page.getMediaBox().getHeight() - MARGIN;
-
-            // 計算列寬（傳遞頁面寬度參數，以進行正確的縮放）
-            float[] columnWidths = calculateColumnWidths(sheet, pageSize.getWidth());
-
-            // 取得合併儲存格資訊
-            List<CellRangeAddress> mergedRegions = sheet.getMergedRegions();
-
-            // 遍歷行
+        try {
             int lastRowNum = sheet.getLastRowNum();
             for (int rowIndex = 0; rowIndex <= lastRowNum; rowIndex++) {
                 Row row = sheet.getRow(rowIndex);
+                if (row == null) continue;
 
-                // 檢查是否需要新頁面
-                if (yPosition < MARGIN + ROW_HEIGHT) {
+                float rowHeight = calculateRowHeight(row, columnWidths, fontHolder, mergedRegions, workbook);
+
+                // 預留頁碼空間，避免最後一行被蓋住
+                if (yPosition - rowHeight < MARGIN + PAGE_NUMBER_Y + 20) {
                     contentStream.close();
-
-                    // 換頁時，使用相同的頁面尺寸
                     page = new PDPage(pageSize);
                     document.addPage(page);
-                    PDPageContentStream newContentStream = new PDPageContentStream(document, page);
-                    yPosition = page.getMediaBox().getHeight() - MARGIN;
-                    // 這裡的 return 邏輯是簡化處理，實際應用中應遞迴處理剩餘行。
-                    return;
+                    createdPages.add(page);
+                    contentStream = new PDPageContentStream(document, page);
+                    yPosition = pageSize.getHeight() - MARGIN;
                 }
 
-                if (row != null) {
-                    drawRow(contentStream, row, yPosition, columnWidths, rowIndex, fontHolder,
-                            mergedRegions, displayGridLines);
-                }
+                drawRow(contentStream, row, yPosition, rowHeight, columnWidths, rowIndex,
+                        fontHolder, mergedRegions, displayGridLines, workbook);
 
-                yPosition -= ROW_HEIGHT;
+                yPosition -= rowHeight;
+            }
+        } finally {
+            if (contentStream != null) {
+                contentStream.close();
             }
         }
+
+        return createdPages;
     }
 
     /**
-     * 繪製單行資料
+     * 繪製單行資料（包含底色、邊框、文字）
+     * @param contentStream 內容串流
+     * @param row           當前行
+     * @param yPosition     當前行 Y 座標（頁面頂部起算）
+     * @param rowHeight     當前行高度
+     * @param columnWidths  各欄寬度陣列
+     * @param rowIndex      行索引
+     * @param fontHolder    字體持有者
+     * @param mergedRegions 合併儲存格區域
+     * @param displayGridLines 是否顯示格線
+     * @param workbook      Excel 工作簿
+     * @throws IOException 繪製過程發生 IO 錯誤
      */
     private static void drawRow(PDPageContentStream contentStream, Row row, float yPosition,
-                                float[] columnWidths, int rowIndex, FontHolder fontHolder,
-                                List<CellRangeAddress> mergedRegions, boolean displayGridLines) throws IOException {
-
+                                float rowHeight, float[] columnWidths, int rowIndex,
+                                FontHolder fontHolder, List<CellRangeAddress> mergedRegions,
+                                boolean displayGridLines, Workbook workbook) throws IOException {
         float xPosition = MARGIN;
         int lastCellNum = row.getLastCellNum();
 
-        // 標題行字體設定
-        if (rowIndex == 0) {
-            contentStream.setFont(fontHolder.chineseFontBold, FONT_SIZE);
-        } else {
-            contentStream.setFont(fontHolder.chineseFont, FONT_SIZE);
-        }
+        PDFont font = fontHolder.font;
 
         for (int cellIndex = 0; cellIndex < lastCellNum; cellIndex++) {
-            Cell cell = row.getCell(cellIndex);
+            Cell cell = row.getCell(cellIndex, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+            if (cell == null) {
+                xPosition += columnWidths[cellIndex];
+                continue;
+            }
 
-            // 計算當前單元格寬度
-            float currentWidth = columnWidths[cellIndex];
+            CellStyle style = cell.getCellStyle();
+            float fontSize = DEFAULT_FONT_SIZE;
 
-            // 檢查是否為合併儲存格
-            CellRangeAddress mergedRegion = getMergedRegion(mergedRegions, rowIndex, cellIndex);
-
-            if (mergedRegion != null) {
-                // 只在合併儲存格的左上角進行處理
-                if (mergedRegion.getFirstRow() == rowIndex && mergedRegion.getFirstColumn() == cellIndex) {
-                    // 計算合併儲存格的總寬度
-                    float mergedWidth = 0;
-                    for (int i = mergedRegion.getFirstColumn(); i <= mergedRegion.getLastColumn(); i++) {
-                        mergedWidth += columnWidths[i];
-                    }
-
-                    // 繪製框線 (根據 CellStyle)
-                    drawCellBorders(contentStream, cell, xPosition, yPosition, mergedWidth, ROW_HEIGHT, displayGridLines);
-
-                    // 處理文字
-                    String cellValue = getCellValueAsString(cell);
-                    HorizontalAlignment alignment = getHorizontalAlignment(cell);
-                    if (cellValue != null && !cellValue.isEmpty()) {
-                        float textX = calculateTextXPosition(xPosition, mergedWidth, cellValue, alignment);
-                        contentStream.beginText();
-                        contentStream.newLineAtOffset(textX, yPosition - ROW_HEIGHT + 6);
-                        String displayText = truncateText(cellValue, mergedWidth - 10);
-                        contentStream.showText(displayText);
-                        contentStream.endText();
-                    }
+            // 取得字體大小
+            if (style != null && style.getFontIndexAsInt() >= 0) {
+                org.apache.poi.ss.usermodel.Font excelFont = workbook.getFontAt(style.getFontIndexAsInt());
+                short fontHeight = excelFont.getFontHeightInPoints();
+                if (fontHeight > 0) {
+                    fontSize = fontHeight;
                 }
-                // 若是合併區域的其他部分，僅移動 xPosition，不做繪製
+            }
+
+            float cellWidth;
+            CellRangeAddress merged = getMergedRegion(mergedRegions, rowIndex, cellIndex);
+            if (merged != null && merged.getFirstRow() == rowIndex && merged.getFirstColumn() == cellIndex) {
+                cellWidth = 0;
+                for (int i = merged.getFirstColumn(); i <= merged.getLastColumn(); i++) {
+                    cellWidth += columnWidths[i];
+                }
             } else {
-                // 一般儲存格
+                cellWidth = columnWidths[cellIndex];
+            }
 
-                // 繪製框線 (根據 CellStyle)
-                drawCellBorders(contentStream, cell, xPosition, yPosition, currentWidth, ROW_HEIGHT, displayGridLines);
+            // 1. 繪製底色（背景）
+            drawCellBackground(contentStream, cell, xPosition, yPosition, cellWidth, rowHeight);
 
-                // 處理文字
-                String cellValue = getCellValueAsString(cell);
+            // 2. 繪製邊框（只在合併儲存格起始位置或非合併儲存格）
+            if (merged == null || (merged.getFirstRow() == rowIndex && merged.getFirstColumn() == cellIndex)) {
+                drawCellBorders(contentStream, cell, xPosition, yPosition, cellWidth, rowHeight, displayGridLines);
+            }
+
+            // 3. 繪製文字（確保在最上層）
+            String cellValue = getCellValueAsString(cell);
+            if (!cellValue.isEmpty()) {
                 HorizontalAlignment alignment = getHorizontalAlignment(cell);
-                if (cellValue != null && !cellValue.isEmpty()) {
-                    float textX = calculateTextXPosition(xPosition, currentWidth, cellValue, alignment);
-                    contentStream.beginText();
-                    contentStream.newLineAtOffset(textX, yPosition - ROW_HEIGHT + 6);
-                    String displayText = truncateText(cellValue, currentWidth - 10);
-                    contentStream.showText(displayText);
-                    contentStream.endText();
-                }
+                drawTextWithWrap(contentStream, font, fontSize, cellValue,
+                        xPosition, yPosition, rowHeight, cellWidth, alignment);
             }
 
             xPosition += columnWidths[cellIndex];
@@ -327,156 +357,244 @@ public class ExcelToPdfUtil {
     }
 
     /**
-     * 根據 Excel 樣式繪製邊框
-     * 邏輯：只繪製 Excel 中明確設定的邊框，不繪製預設格線。
+     * 繪製儲存格底色（背景）
+     * @param contentStream 內容串流
+     * @param cell          儲存格
+     * @param x             X 座標
+     * @param y             Y 座標
+     * @param width         寬度
+     * @param height        高度
+     * @throws IOException 繪製過程發生 IO 錯誤
      */
-    private static void drawCellBorders(PDPageContentStream contentStream, Cell cell,
-                                        float x, float y, float width, float height,
-                                        boolean displayGridLines) throws IOException {
-        if (cell == null) {
-            return;
-        }
+    private static void drawCellBackground(PDPageContentStream contentStream, Cell cell,
+                                           float x, float y, float width, float height) throws IOException {
+        if (cell == null) return;
 
         CellStyle style = cell.getCellStyle();
-        if (style == null) {
-            return;
+        if (style == null) return;
+
+        short fgIndex = style.getFillForegroundColor();
+        short bgIndex = style.getFillBackgroundColor();
+
+        // 判斷有無設定底色
+        short finalIndex = bgIndex;
+        if (finalIndex == IndexedColors.AUTOMATIC.getIndex() || finalIndex < 0) {
+            finalIndex = fgIndex;
         }
 
-        // 取得四邊樣式
-        BorderStyle topStyle = style.getBorderTop();
-        BorderStyle bottomStyle = style.getBorderBottom();
-        BorderStyle leftStyle = style.getBorderLeft();
-        BorderStyle rightStyle = style.getBorderRight();
-
-        boolean hasCustomBorder = (topStyle != BorderStyle.NONE || bottomStyle != BorderStyle.NONE ||
-                leftStyle != BorderStyle.NONE || rightStyle != BorderStyle.NONE);
-
-        // 如果沒有任何自定義邊框，則不畫任何線
-        if (!hasCustomBorder) {
-            return;
+        if (finalIndex == IndexedColors.AUTOMATIC.getIndex() || finalIndex < 0) {
+            return; // 無底色
         }
 
-        // 繪製上邊框
-        if (topStyle != BorderStyle.NONE) {
-            // 由於 colorIndex 在此版本中未被使用，這裡僅傳遞一個 placeholder short
-            drawSingleBorderLine(contentStream, x, y, x + width, y, topStyle, style.getTopBorderColor());
-        }
+        // 取得顏色（目前固定淺灰 #D9D9D9）
+        Color bgColor = new Color(217, 217, 217);
 
-        // 繪製下邊框
-        if (bottomStyle != BorderStyle.NONE) {
-            drawSingleBorderLine(contentStream, x, y - height, x + width, y - height, bottomStyle, style.getBottomBorderColor());
-        }
-
-        // 繪製左邊框
-        if (leftStyle != BorderStyle.NONE) {
-            drawSingleBorderLine(contentStream, x, y, x, y - height, leftStyle, style.getLeftBorderColor());
-        }
-
-        // 繪製右邊框
-        if (rightStyle != BorderStyle.NONE) {
-            drawSingleBorderLine(contentStream, x + width, y, x + width, y - height, rightStyle, style.getRightBorderColor());
-        }
+        contentStream.setNonStrokingColor(bgColor);
+        contentStream.fillRect(x, y - height, width, height);
     }
 
     /**
-     * 繪製單一邊框線
+     * 計算行高（根據文字內容自動調整）
+     * @param row           當前行
+     * @param columnWidths  各欄寬度
+     * @param fontHolder    字體持有者
+     * @param mergedRegions 合併儲存格區域
+     * @param workbook      Excel 工作簿
+     * @return 計算出的行高（pt）
+     * @throws IOException 字體計算過程發生 IO 錯誤
      */
-    private static void drawSingleBorderLine(PDPageContentStream contentStream,
-                                             float x1, float y1, float x2, float y2,
-                                             BorderStyle borderStyle, short colorIndex) throws IOException {
+    private static float calculateRowHeight(Row row, float[] columnWidths, FontHolder fontHolder,
+                                            List<CellRangeAddress> mergedRegions, Workbook workbook) throws IOException {
+        float maxHeight = MIN_ROW_HEIGHT;
 
-        // 設定線寬
-        float lineWidth = getBorderWidth(borderStyle);
-        contentStream.setLineWidth(lineWidth);
+        for (int cellIndex = 0; cellIndex < row.getLastCellNum(); cellIndex++) {
+            Cell cell = row.getCell(cellIndex, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+            if (cell == null) continue;
 
-        // 預設為黑色，若需要支援 Excel 顏色，需額外解析 colorIndex
-        contentStream.setStrokingColor(Color.BLACK);
+            CellStyle style = cell.getCellStyle();
+            float fontSize = DEFAULT_FONT_SIZE;
 
-        // 處理虛線 (DASHED, DOTTED)
-        if (borderStyle == BorderStyle.DASHED) {
-            contentStream.setLineDashPattern(new float[]{3, 1}, 0);
-        } else if (borderStyle == BorderStyle.DOTTED) {
-            contentStream.setLineDashPattern(new float[]{1, 1}, 0);
-        } else {
-            contentStream.setLineDashPattern(new float[]{}, 0); // 實線
-        }
-
-        contentStream.moveTo(x1, y1);
-        contentStream.lineTo(x2, y2);
-        contentStream.stroke();
-
-        // 重置為實線，避免影響後續繪製
-        contentStream.setLineDashPattern(new float[]{}, 0);
-    }
-
-    /**
-     * 將 POI BorderStyle 轉換為 PDF 線寬
-     */
-    private static float getBorderWidth(BorderStyle style) {
-        switch (style) {
-            case THICK:
-                return 1.5f;
-            case MEDIUM:
-                return 1.0f;
-            case MEDIUM_DASHED:
-                return 1.0f;
-            case THIN:
-            case DASHED:
-            case DOTTED:
-            case HAIR:
-            default:
-                return 0.5f;
-        }
-    }
-
-
-    /**
-     * 取得儲存格的水平對齊方式
-     */
-    private static HorizontalAlignment getHorizontalAlignment(Cell cell) {
-        if (cell == null) {
-            return HorizontalAlignment.LEFT;
-        }
-
-        CellStyle cellStyle = cell.getCellStyle();
-        if (cellStyle != null) {
-            HorizontalAlignment alignment = cellStyle.getAlignment();
-            // 如果是 GENERAL，根據內容類型決定對齊方式
-            if (alignment == HorizontalAlignment.GENERAL) {
-                CellType cellType = cell.getCellType();
-                if (cellType == CellType.NUMERIC || cellType == CellType.BOOLEAN) {
-                    return HorizontalAlignment.RIGHT;
-                } else {
-                    return HorizontalAlignment.LEFT;
+            if (style != null && style.getFontIndexAsInt() >= 0) {
+                org.apache.poi.ss.usermodel.Font excelFont = workbook.getFontAt(style.getFontIndexAsInt());
+                short fontHeight = excelFont.getFontHeightInPoints();
+                if (fontHeight > 0) {
+                    fontSize = fontHeight;
                 }
             }
-            return alignment;
+
+            String text = getCellValueAsString(cell);
+            if (text.isEmpty()) continue;
+
+            float cellWidth = getCellWidth(columnWidths, mergedRegions, row.getRowNum(), cellIndex);
+            float availableWidth = cellWidth - 2 * TEXT_PADDING_LEFT_RIGHT;
+
+            PDFont font = fontHolder.font;
+            int lineCount = getTextLineCount(font, fontSize, text, availableWidth);
+
+            float lineHeight = fontSize + LINE_SPACING;
+            float cellHeight = lineCount * lineHeight + 2 * TEXT_PADDING_TOP_BOTTOM;
+
+            maxHeight = Math.max(maxHeight, cellHeight);
         }
 
-        return HorizontalAlignment.LEFT;
+        return maxHeight;
     }
 
     /**
-     * 根據對齊方式計算文字的 X 座標
+     * 繪製文字（自動換行 + 垂直置中）
+     * @param contentStream 內容串流
+     * @param font          PDF 字體
+     * @param fontSize      字體大小
+     * @param text          文字內容
+     * @param x             X 座標
+     * @param y             Y 座標（行頂部）
+     * @param rowHeight     行高
+     * @param cellWidth     儲存格寬度
+     * @param alignment     水平對齊方式
+     * @throws IOException 繪製過程發生 IO 錯誤
      */
-    private static float calculateTextXPosition(float cellX, float cellWidth, String text, HorizontalAlignment alignment) {
-        // 估算文字寬度：FONT_SIZE * 0.6 是簡化中文字體寬度的常用係數
-        float textWidth = text.length() * FONT_SIZE * 0.6f;
+    private static void drawTextWithWrap(PDPageContentStream contentStream,
+                                         PDFont font,
+                                         float fontSize,
+                                         String text,
+                                         float x,
+                                         float y,
+                                         float rowHeight,
+                                         float cellWidth,
+                                         HorizontalAlignment alignment) throws IOException {
+        if (text == null || text.isEmpty()) return;
 
-        switch (alignment) {
-            case CENTER:
-                return cellX + (cellWidth - textWidth) / 2;
-            case RIGHT:
-                return cellX + cellWidth - textWidth - 5; // 減 5 留白
-            case LEFT:
-            case GENERAL:
-            default:
-                return cellX + 5; // 加 5 留白
+        float availableWidth = cellWidth - 2 * TEXT_PADDING_LEFT_RIGHT;
+        List<String> lines = splitTextIntoLines(font, fontSize, text, availableWidth);
+
+        float lineHeight = fontSize + LINE_SPACING;
+        float textTotalHeight = lines.size() * lineHeight;
+
+        float startY = y - (rowHeight - textTotalHeight) / 2 - TEXT_PADDING_TOP_BOTTOM;
+
+        // 明確設定文字顏色為黑色（防止繼承底色）
+        contentStream.setNonStrokingColor(Color.BLACK);
+        contentStream.setFont(font, fontSize);
+
+        for (String line : lines) {
+            float lineWidth = font.getStringWidth(line) / 1000f * fontSize;
+            float textX;
+            switch (alignment) {
+                case CENTER:
+                    textX = x + TEXT_PADDING_LEFT_RIGHT + (availableWidth - lineWidth) / 2;
+                    break;
+                case RIGHT:
+                    textX = x + TEXT_PADDING_LEFT_RIGHT + availableWidth - lineWidth;
+                    break;
+                default:
+                    textX = x + TEXT_PADDING_LEFT_RIGHT;
+                    break;
+            }
+
+            contentStream.beginText();
+            contentStream.newLineAtOffset(textX, startY);
+            contentStream.showText(line);
+            contentStream.endText();
+
+            startY -= lineHeight;
         }
     }
 
     /**
-     * 取得儲存格所屬的合併區域
+     * 將文字切割成多行（自動換行）
+     * @param font      PDF 字體
+     * @param fontSize  字體大小
+     * @param text      原始文字
+     * @param maxWidth  可用寬度
+     * @return 切割後的行列表
+     * @throws IOException 字體計算過程發生 IO 錯誤
+     */
+    private static List<String> splitTextIntoLines(PDFont font, float fontSize, String text, float maxWidth) throws IOException {
+        List<String> lines = new ArrayList<>();
+        StringBuilder currentLine = new StringBuilder();
+        float currentWidth = 0;
+
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            float charWidth = font.getStringWidth(String.valueOf(c)) / 1000f * fontSize;
+
+            if (currentWidth + charWidth > maxWidth && currentLine.length() > 0) {
+                lines.add(currentLine.toString());
+                currentLine.setLength(0);
+                currentWidth = 0;
+            }
+
+            currentLine.append(c);
+            currentWidth += charWidth;
+        }
+
+        if (currentLine.length() > 0) {
+            lines.add(currentLine.toString());
+        }
+
+        return lines;
+    }
+
+    /**
+     * 計算文字需要多少行（用於行高計算）
+     * @param font      PDF 字體
+     * @param fontSize  字體大小
+     * @param text      文字內容
+     * @param maxWidth  可用寬度
+     * @return 所需行數
+     * @throws IOException 字體計算過程發生 IO 錯誤
+     */
+    private static int getTextLineCount(PDFont font, float fontSize, String text, float maxWidth) throws IOException {
+        if (text.isEmpty()) return 0;
+
+        int lineCount = 1;
+        StringBuilder currentLine = new StringBuilder();
+        float currentWidth = 0;
+
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            float charWidth = font.getStringWidth(String.valueOf(c)) / 1000f * fontSize;
+
+            if (currentWidth + charWidth > maxWidth && currentLine.length() > 0) {
+                lineCount++;
+                currentLine.setLength(0);
+                currentWidth = 0;
+            }
+
+            currentLine.append(c);
+            currentWidth += charWidth;
+        }
+
+        return lineCount;
+    }
+
+    /**
+     * 取得儲存格實際寬度（考慮合併儲存格）
+     * @param columnWidths  欄寬陣列
+     * @param mergedRegions 合併儲存格區域
+     * @param rowIndex      行索引
+     * @param cellIndex     欄索引
+     * @return 儲存格寬度
+     */
+    private static float getCellWidth(float[] columnWidths, List<CellRangeAddress> mergedRegions,
+                                      int rowIndex, int cellIndex) {
+        CellRangeAddress merged = getMergedRegion(mergedRegions, rowIndex, cellIndex);
+        if (merged != null && merged.getFirstRow() == rowIndex && merged.getFirstColumn() == cellIndex) {
+            float width = 0;
+            for (int i = merged.getFirstColumn(); i <= merged.getLastColumn(); i++) {
+                width += columnWidths[i];
+            }
+            return width;
+        }
+        return columnWidths[cellIndex];
+    }
+
+    /**
+     * 查找儲存格是否屬於合併區域
+     * @param mergedRegions 合併儲存格列表
+     * @param rowIndex      行索引
+     * @param cellIndex     欄索引
+     * @return 合併區域物件，若無則返回 null
      */
     private static CellRangeAddress getMergedRegion(List<CellRangeAddress> mergedRegions,
                                                     int rowIndex, int cellIndex) {
@@ -489,16 +607,156 @@ public class ExcelToPdfUtil {
     }
 
     /**
-     * 計算每列的寬度（根據 Excel 實際寬度），並根據頁面寬度進行等比例縮放
-     *
-     * @param sheet Excel 工作表
-     * @param pageWidth PDF 頁面的實際寬度 (考慮橫式或直式)
-     * @return 每列的寬度陣列
+     * 取得儲存格水平對齊方式
+     * @param cell 儲存格
+     * @return 水平對齊列舉
+     */
+    private static HorizontalAlignment getHorizontalAlignment(Cell cell) {
+        if (cell == null) return HorizontalAlignment.LEFT;
+
+        CellStyle cellStyle = cell.getCellStyle();
+        if (cellStyle != null) {
+            HorizontalAlignment alignment = cellStyle.getAlignment();
+            if (alignment == HorizontalAlignment.GENERAL) {
+                CellType cellType = cell.getCellType();
+                if (cellType == CellType.NUMERIC || cellType == CellType.BOOLEAN) {
+                    return HorizontalAlignment.RIGHT;
+                }
+                return HorizontalAlignment.LEFT;
+            }
+            return alignment;
+        }
+        return HorizontalAlignment.LEFT;
+    }
+
+    /**
+     * 將儲存格值轉為字串
+     * @param cell 儲存格
+     * @return 字串值
+     */
+    private static String getCellValueAsString(Cell cell) {
+        if (cell == null) return "";
+
+        switch (cell.getCellType()) {
+            case STRING:
+                return cell.getStringCellValue();
+            case NUMERIC:
+                return String.valueOf(BigDecimal.valueOf(cell.getNumericCellValue()));
+            case BOOLEAN:
+                return String.valueOf(cell.getBooleanCellValue());
+            case FORMULA:
+                try {
+                    return String.valueOf(BigDecimal.valueOf(cell.getNumericCellValue()));
+                } catch (Exception e) {
+                    return cell.getStringCellValue();
+                }
+            case BLANK:
+            default:
+                return "";
+        }
+    }
+
+    /**
+     * 繪製儲存格邊框
+     * @param contentStream    內容串流
+     * @param cell             儲存格
+     * @param x                X 座標
+     * @param y                Y 座標
+     * @param width            寬度
+     * @param height           高度
+     * @param displayGridLines 是否顯示格線
+     * @throws IOException 繪製過程發生 IO 錯誤
+     */
+    private static void drawCellBorders(PDPageContentStream contentStream, Cell cell,
+                                        float x, float y, float width, float height,
+                                        boolean displayGridLines) throws IOException {
+        if (cell == null) return;
+
+        CellStyle style = cell.getCellStyle();
+        if (style == null) return;
+
+        BorderStyle topStyle = style.getBorderTop();
+        BorderStyle bottomStyle = style.getBorderBottom();
+        BorderStyle leftStyle = style.getBorderLeft();
+        BorderStyle rightStyle = style.getBorderRight();
+
+        boolean hasCustomBorder = (topStyle != BorderStyle.NONE || bottomStyle != BorderStyle.NONE ||
+                leftStyle != BorderStyle.NONE || rightStyle != BorderStyle.NONE);
+
+        if (!hasCustomBorder) return;
+
+        if (topStyle != BorderStyle.NONE) {
+            drawSingleBorderLine(contentStream, x, y, x + width, y, topStyle, style.getTopBorderColor());
+        }
+        if (bottomStyle != BorderStyle.NONE) {
+            drawSingleBorderLine(contentStream, x, y - height, x + width, y - height, bottomStyle, style.getBottomBorderColor());
+        }
+        if (leftStyle != BorderStyle.NONE) {
+            drawSingleBorderLine(contentStream, x, y, x, y - height, leftStyle, style.getLeftBorderColor());
+        }
+        if (rightStyle != BorderStyle.NONE) {
+            drawSingleBorderLine(contentStream, x + width, y, x + width, y - height, rightStyle, style.getRightBorderColor());
+        }
+    }
+
+    /**
+     * 繪製單條邊框線
+     * @param contentStream 內容串流
+     * @param x1            起點 X
+     * @param y1            起點 Y
+     * @param x2            終點 X
+     * @param y2            終點 Y
+     * @param borderStyle   邊框樣式
+     * @param colorIndex    顏色索引
+     * @throws IOException 繪製過程發生 IO 錯誤
+     */
+    private static void drawSingleBorderLine(PDPageContentStream contentStream,
+                                             float x1, float y1, float x2, float y2,
+                                             BorderStyle borderStyle, short colorIndex) throws IOException {
+        float lineWidth = getBorderWidth(borderStyle);
+        contentStream.setLineWidth(lineWidth);
+        contentStream.setStrokingColor(Color.BLACK);
+
+        if (borderStyle == BorderStyle.DASHED) {
+            contentStream.setLineDashPattern(new float[]{3, 1}, 0);
+        } else if (borderStyle == BorderStyle.DOTTED) {
+            contentStream.setLineDashPattern(new float[]{1, 1}, 0);
+        } else {
+            contentStream.setLineDashPattern(new float[]{}, 0);
+        }
+
+        contentStream.moveTo(x1, y1);
+        contentStream.lineTo(x2, y2);
+        contentStream.stroke();
+
+        contentStream.setLineDashPattern(new float[]{}, 0);
+    }
+
+    /**
+     * 取得邊框線寬
+     * @param style 邊框樣式
+     * @return 線寬 (pt)
+     */
+    private static float getBorderWidth(BorderStyle style) {
+        switch (style) {
+            case THICK:
+                return 1.5f;
+            case MEDIUM:
+            case MEDIUM_DASHED:
+                return 1.0f;
+            default:
+                return 0.5f;
+        }
+    }
+
+    /**
+     * 計算各欄寬度（考慮頁面寬度縮放）
+     * @param sheet     Excel 工作表
+     * @param pageWidth 頁面可用寬度
+     * @return 各欄寬度陣列
      */
     private static float[] calculateColumnWidths(Sheet sheet, float pageWidth) {
         int maxColumns = 0;
-
-        // 找出最大列數
         for (Row row : sheet) {
             if (row.getLastCellNum() > maxColumns) {
                 maxColumns = row.getLastCellNum();
@@ -508,18 +766,14 @@ public class ExcelToPdfUtil {
         float[] columnWidths = new float[maxColumns];
         float totalWidth = 0;
 
-        // 取得 Excel 中每列的實際寬度
         for (int i = 0; i < maxColumns; i++) {
-            // Excel 的欄寬單位需要轉換為 PDF 的點（points）
             int excelColumnWidth = sheet.getColumnWidth(i);
             columnWidths[i] = excelColumnWidth * COLUMN_WIDTH_FACTOR;
             totalWidth += columnWidths[i];
         }
 
-        // 檢查總寬度是否超過頁面可用寬度
         float availableWidth = pageWidth - 2 * MARGIN;
         if (totalWidth > availableWidth) {
-            // 等比例縮小所有欄位
             float scaleFactor = availableWidth / totalWidth;
             for (int i = 0; i < maxColumns; i++) {
                 columnWidths[i] *= scaleFactor;
@@ -531,67 +785,43 @@ public class ExcelToPdfUtil {
     }
 
     /**
-     * 取得儲存格值並轉為字串
+     * 頁碼繪製方法
+     * @param document
+     * @param pages
+     * @throws IOException
      */
-    private static String getCellValueAsString(Cell cell) {
-        if (cell == null) {
-            return "";
-        }
+    private static void drawPageNumbers(PDDocument document, List<PDPage> pages, PDFont chineseFont) throws IOException {
+        int totalPages = pages.size();
 
-        switch (cell.getCellType()) {
-            case STRING:
-                return cell.getStringCellValue();
+        for (int i = 0; i < pages.size(); i++) {
+            PDPage page = pages.get(i);
+            try (PDPageContentStream contentStream = new PDPageContentStream(document, page,
+                    PDPageContentStream.AppendMode.APPEND, true, true)) {
 
-            case NUMERIC:
-                // 使用 BigDecimal 處理，避免科學記號表示法
-                return String.valueOf(BigDecimal.valueOf(cell.getNumericCellValue()));
+                String pageText = "第 " + (i + 1) + " 頁 / 共 " + totalPages + " 頁";
 
-            case BOOLEAN:
-                return String.valueOf(cell.getBooleanCellValue());
+                float textWidth = chineseFont.getStringWidth(pageText) / 1000f * PAGE_NUMBER_FONT_SIZE;
+                float x = (page.getMediaBox().getWidth() - textWidth) / 2; // 置中
+                float y = PAGE_NUMBER_Y;
 
-            case FORMULA:
-                try {
-                    // 嘗試以數值形式獲取公式結果
-                    return String.valueOf(BigDecimal.valueOf(cell.getNumericCellValue()));
-                } catch (Exception e) {
-                    // 若公式結果為字串
-                    return cell.getStringCellValue();
-                }
-
-            case BLANK:
-                return "";
-
-            default:
-                return "";
+                contentStream.setNonStrokingColor(Color.BLACK);
+                contentStream.setFont(chineseFont, PAGE_NUMBER_FONT_SIZE);
+                contentStream.beginText();
+                contentStream.newLineAtOffset(x, y);
+                contentStream.showText(pageText);
+                contentStream.endText();
+            }
         }
     }
 
     /**
-     * 截斷過長的文字
-     */
-    private static String truncateText(String text, float maxWidth) {
-        // 估算一個字元佔用的寬度
-        int charWidthEstimate = (int) (FONT_SIZE * 0.6);
-        // 計算最大可容納的字元數 (預留 3 個字元給 "...")
-        int maxChars = (int) (maxWidth / charWidthEstimate);
-
-        if (text.length() > maxChars) {
-            // 截斷並加上省略號
-            return text.substring(0, Math.max(0, maxChars - 3)) + "...";
-        }
-        return text;
-    }
-
-    /**
-     * 字體容器類別
+     * 字體持有者（避免重複載入）
      */
     private static class FontHolder {
-        final PDFont chineseFont;
-        final PDFont chineseFontBold;
+        final PDFont font;
 
-        FontHolder(PDFont chineseFont, PDFont chineseFontBold) {
-            this.chineseFont = chineseFont;
-            this.chineseFontBold = chineseFontBold;
+        FontHolder(PDFont font) {
+            this.font = font;
         }
     }
 }`} />
