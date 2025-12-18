@@ -21,7 +21,7 @@ merge(zhTW.Upload, {
 export const commonLocales = {
   'navBar.lang': '語言',
   'pagination.total.item': '資料筆數：',
-  'layout.header.title': '前端相關範例',
+  'layout.header.title': '前後端相關範例',
   ...component,
   ...common,
   ...microApp

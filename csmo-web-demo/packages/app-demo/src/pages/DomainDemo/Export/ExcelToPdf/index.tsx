@@ -30,16 +30,16 @@ const MergePdf: React.FC = () => {
 
         <hr/>
 
-        <Paragraph type='danger'>
+        <Paragraph>
           此工具 是透過 apache.poi 逐一解析 Excel 儲存格 的 資訊，再逐一寫入 PDF。<br/>
           字體使用 標楷體，顏色使用灰階 且 不一定支援 過於複雜 的 Excel文件。
         </Paragraph>
 
-        <Paragraph type='danger'>
+        <Paragraph>
           <code>難字處理</code>：請於 word 文件產生時，就透過 <code>CSMO 工具</code> 將 <code>自造字</code> 轉換成 <code>難字</code> 後，再透過此工具 轉換為 PDF。
         </Paragraph>
 
-        <Paragraph type='danger'>
+        <Paragraph>
           使用前，需要先將 標楷體 放入 <code>resources/templates/fonts/kaiu.ttf</code> 路徑底下。
         </Paragraph>
 
@@ -99,11 +99,31 @@ public class ExcelToPdfUtil {
     private static final float TEXT_PADDING_TOP_BOTTOM = 10f;  // 文字上下內距 (pt)
     private static final float MIN_ROW_HEIGHT = 20f;           // 最小行高 (pt)
     private static final float LINE_SPACING = 2f;              // 行距 (pt)
-    private static final float PAGE_NUMBER_Y = 20f; // 頁碼 Y 座標（從頁面底部起算）
-    private static final float PAGE_NUMBER_FONT_SIZE = 8f; // 頁碼字體大小
+    private static final float PAGE_NUMBER_Y = 20f;            // 頁碼 Y 座標（從頁面底部起算）
+    private static final float PAGE_NUMBER_FONT_SIZE = 8f;     // 頁碼字體大小
 
     private ExcelToPdfUtil() {
         throw new UnsupportedOperationException("Utility class cannot be instantiated");
+    }
+
+    /**
+     * 將 Excel byte[] 轉換為 PDF byte[] (直式)
+     * @param excelBytes Excel 檔案的二進位資料
+     * @return PDF 二進位資料
+     * @throws IOException 轉換過程發生 IO 錯誤
+     */
+    public static byte[] excelToPdf(byte[] excelBytes) throws IOException {
+        return convertExcelToPdf(excelBytes, false, false);
+    }
+
+    /**
+     * 將 Excel byte[] 轉換為 PDF byte[] (橫式)
+     * @param excelBytes Excel 檔案的二進位資料
+     * @return PDF 二進位資料
+     * @throws IOException 轉換過程發生 IO 錯誤
+     */
+    public static byte[] excelToPdfHorizontal(byte[] excelBytes) throws IOException {
+        return convertExcelToPdf(excelBytes, true, false);
     }
 
     /**
@@ -126,26 +146,6 @@ public class ExcelToPdfUtil {
      */
     public static byte[] excelToPdfHorizontal(byte[] excelBytes, boolean showPageNumber) throws IOException {
         return convertExcelToPdf(excelBytes, true, showPageNumber);
-    }
-
-    /**
-     * 將 Excel byte[] 轉換為 PDF byte[] (直式)
-     * @param excelBytes Excel 檔案的二進位資料
-     * @return PDF 二進位資料
-     * @throws IOException 轉換過程發生 IO 錯誤
-     */
-    public static byte[] excelToPdf(byte[] excelBytes) throws IOException {
-        return convertExcelToPdf(excelBytes, false, false);
-    }
-
-    /**
-     * 將 Excel byte[] 轉換為 PDF byte[] (橫式)
-     * @param excelBytes Excel 檔案的二進位資料
-     * @return PDF 二進位資料
-     * @throws IOException 轉換過程發生 IO 錯誤
-     */
-    public static byte[] excelToPdfHorizontal(byte[] excelBytes) throws IOException {
-        return convertExcelToPdf(excelBytes, true, false);
     }
 
     /**
