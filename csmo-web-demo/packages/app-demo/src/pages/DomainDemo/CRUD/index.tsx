@@ -1,6 +1,6 @@
 import CodeJava from '@/utils/CodePre/CodeJava'
 import { PageContainer } from '@ant-design/pro-components'
-import { Divider, Typography } from 'antd'
+import { Typography } from 'antd'
 
 const { Title, Paragraph } = Typography
 
@@ -100,7 +100,7 @@ Criterion criterion =  Criterion.in("policyNo", policyNoList);`}
 );`}
         />
 
-        <Divider />
+        <hr />
 
         <Title level={2}>2. 簡單的查詢</Title>
         <Paragraph type="danger">此為 csmo 客製化 工具</Paragraph>
@@ -173,7 +173,7 @@ public List<AddrEntity> queryAddrByClientId(String clientId) {
 }`}
             />
 
-        <Divider />
+        <hr />
 
         <Title level={2}>3. 複雜的查詢 - QueryHandler</Title>
         <Paragraph type="danger">此為 csmo 客製化 工具</Paragraph>
@@ -286,7 +286,7 @@ public class CmntQueryHandler {
           </li>
         </ul>
 
-        <Divider />
+        <hr />
 
         <Title level={2}>4. 複雜的查詢 - NamedParameterJdbcTemplate</Title>
         <Paragraph type="success">
@@ -358,7 +358,7 @@ params2.put("telOri", entityOri.getTel());`}
                 />
               </li>
               <li>
-                <code>多筆查詢</code> 透過 <code>`namedParameterJdbcTemplate.query</code> 執行。
+                <code>多筆查詢</code> 透過 <code>namedParameterJdbcTemplate.query</code> 執行。
                 <CodeJava
                   code={`List<Addr> addrList = namedParameterJdbcTemplate.query(sql1, params1, new BeanPropertyRowMapper<>(Addr.class));`}
                 />
@@ -371,9 +371,35 @@ params2.put("telOri", entityOri.getTel());`}
           </li>
         </ol>
 
-        <Divider />
+        <hr />
 
-        <Title level={2}>5. 新增</Title>
+        <Title level={2}>5. 新增 - 透過 EntityManager 處理</Title>
+
+        <Paragraph>
+          <code>EntityManager</code> 為 <code>Spring Data JPA</code> 內建的 Entity 相關方法 <br/>
+          當要進行 Entity INSERT 時，在不透過 Repository 的情況下，可以透過 下面的方法，來進行 INSERT 且 自動處理 欄位映射。
+        </Paragraph>
+        <Paragraph>
+          使用 多線程 的自動注入方式
+        </Paragraph>
+        <CodeJava
+          code={`@PersistenceContext
+private EntityManager entityManager;`}
+        />
+        單筆資料，可使用：
+        <CodeJava
+          code={`entityManager.persist(policyEntity);`}
+        />
+        多筆資料，可使用：
+        <CodeJava
+          code={`policyEntityList.forEach(entityManager::persist);`}
+        />
+
+
+        <hr />
+
+        <Title level={2}>6. CSMO 新增</Title>
+
         <Paragraph type="danger">此為 csmo 客製化 工具</Paragraph>
         <Paragraph>
           先想辦法 取得 要新增的 entity 資料， <br />
@@ -383,9 +409,10 @@ params2.put("telOri", entityOri.getTel());`}
         </Paragraph>
         <CodeJava
           code={`@Autowired
-private EntityWriteService entityWriteService;
-
-public void insertAddr(AddrEntity addrEntity) {
+private EntityWriteService entityWriteService;`}
+        />
+        <CodeJava
+          code={`public void insertAddr(AddrEntity addrEntity) {
     try {
         entityWriteService.applyCommand(SystemCommands.createCommand("AddrEntity", addrEntity));
     } catch (Exception e) {
@@ -394,9 +421,10 @@ public void insertAddr(AddrEntity addrEntity) {
 }`}
         />
 
-        <Divider />
+        <hr />
 
-        <Title level={2}>6. 修改</Title>
+        <Title level={2}>7. CSMO 修改</Title>
+
         <Paragraph type="danger">此為 csmo 客製化 工具</Paragraph>
         <Paragraph>
           先想辦法 取得 要新增的 entity 資料， <br />
@@ -407,9 +435,10 @@ public void insertAddr(AddrEntity addrEntity) {
         </Paragraph>
         <CodeJava
           code={`@Autowired
-private EntityWriteService entityWriteService;
-
-public void updateAddr(AddrEntity addrEntityNew) {
+private EntityWriteService entityWriteService;`}
+        />
+        <CodeJava
+          code={`public void updateAddr(AddrEntity addrEntityNew) {
     try {
         entityWriteService.applyCommand(SystemCommands.updateCommand("AddrEntity", addrEntityNew));
     } catch (Exception e) {
@@ -418,9 +447,10 @@ public void updateAddr(AddrEntity addrEntityNew) {
 }`}
         />
 
-        <Divider />
+        <hr />
 
-        <Title level={2}>7. 刪除</Title>
+        <Title level={2}>8. CSMO 刪除</Title>
+
         <Paragraph type="danger">此為 csmo 客製化 工具</Paragraph>
         <Paragraph>
           先想辦法 取得 要新增的 entity 資料， <br />
@@ -431,9 +461,10 @@ public void updateAddr(AddrEntity addrEntityNew) {
         </Paragraph>
         <CodeJava
           code={`@Autowired
-private EntityWriteService entityWriteService;
-
-public void deleteAddr(AddrKey addrKey) {
+private EntityWriteService entityWriteService;`}
+        />
+        <CodeJava
+          code={`public void deleteAddr(AddrKey addrKey) {
     // 根據 AddrKey 取得 要刪除的 Addr 資料
     Criterion criterion = Criterion.and(
             Criterion.single("clientId", Criterion.QueryOperator.EQUAL, addrKey.getClientId()),
