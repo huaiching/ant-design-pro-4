@@ -100,7 +100,7 @@ public class ExcelToPdfUtil {
     private static final float MIN_ROW_HEIGHT = 20f;           // 最小行高 (pt)
     private static final float LINE_SPACING = 2f;              // 行距 (pt)
     private static final float PAGE_NUMBER_Y = 20f;            // 頁碼 Y 座標（從頁面底部起算）
-    private static final float PAGE_NUMBER_FONT_SIZE = 8f;     // 頁碼字體大小
+    private static final float PAGE_NUMBER_FONT_SIZE = 10f;     // 頁碼字體大小
 
     private ExcelToPdfUtil() {
         throw new UnsupportedOperationException("Utility class cannot be instantiated");
