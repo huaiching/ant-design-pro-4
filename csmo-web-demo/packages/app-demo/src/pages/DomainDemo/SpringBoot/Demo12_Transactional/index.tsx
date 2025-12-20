@@ -19,6 +19,9 @@ const Transactional = () => {
         <Paragraph type="danger" strong>
           只要 Service 方法內有任一資料庫寫入操作（insert / update / delete），<strong>必須加上 @Transactional</strong>
         </Paragraph>
+        <Paragraph type="danger" strong>
+          不要進行 <code>非同步</code> 的資料庫寫入操作，否則事務無法正確回滾！
+        </Paragraph>
 
         <ul>
           <li>加在 <code>public</code> 的 Service 方法上</li>
