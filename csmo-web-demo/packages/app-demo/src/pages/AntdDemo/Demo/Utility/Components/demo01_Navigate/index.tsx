@@ -27,7 +27,7 @@ const Navigate: React.FC = () => {
         {/* 3. 新開分頁 */}
         <Button
           type='primary'
-          onClick={() => window.open('/reactDemo/demo01', '_blank')}
+          onClick={() => window.open('/container/demo/reactDemo/demo01', '_blank')}
         >
           新開分頁
         </Button>
@@ -50,7 +50,7 @@ const Navigate: React.FC = () => {
           onClick={() => {
             const data = { name: 'Tom', age: 20 }
             sessionStorage.setItem('params', JSON.stringify(data))
-            window.open('/antdDemo/sessionStorage', '_blank')
+            window.open('/container/demo/antdDemo/sessionStorage', '_blank')
           }}
         >
           新開分頁 + 傳送參數: name=Tom, age=20

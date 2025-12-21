@@ -183,55 +183,63 @@ export default [
     path: '/antdDemo',  // 路徑
     routes: [
       {
-        // Ant Design 組件介紹與說明
-        name: 'antdDemoComponents',
-        path: '/antdDemo/navigate',
-        component: './AntdDemo/Components/Navigate',
+        // 頁面導引
+        name: 'Link',
+        path: '/antdDemo/Link',
+        component: './AntdDemo/Link',
       },
       {
-        name: 'antdDemoRoutes',
-        path: '/antdDemo/routes',
-        component: './AntdDemo/Components/Routes',
+        // 路由設定
+        name: 'Routes',
+        path: '/antdDemo/Routes',
+        component: './AntdDemo/Routes',
       },
       {
         // Ant Design 組件介紹與說明
-        name: 'antdDemo',
-        path: '/antdDemo/demo',
+        name: 'Demo',
+        path: '/antdDemo/Demo',
         routes: [
           {
+            // 表單輸入元件 (Form)
             name: 'Form',
-            path: '/antdDemo/demo/Form',
-            component: './AntdDemo/Components/Form'
+            path: '/antdDemo/Demo/Form',
+            component: './AntdDemo/Demo/Form'
           },
           {
+            // 表單容器 (Container)
             name: 'Container',
-            path: '/antdDemo/demo/Container',
-            component: './AntdDemo/Components/Container'
+            path: '/antdDemo/Demo/Container',
+            component: './AntdDemo/Demo/Container'
           },
           {
+            // 表格 (Table)
             name: 'Table',
-            path: '/antdDemo/demo/Table',
-            component: './AntdDemo/Components/Table'
+            path: '/antdDemo/Demo/Table',
+            component: './AntdDemo/Demo/Table'
           },
           {
+            // 佈局與視覺元件 (LayoutUi)
             name: 'LayoutUi',
-            path: '/antdDemo/demo/LayoutUi',
-            component: './AntdDemo/Components/LayoutUi'
+            path: '/antdDemo/Demo/LayoutUi',
+            component: './AntdDemo/Demo/LayoutUi'
           },
           {
+            // 資料顯示元件 (DataDisplay)
             name: 'DataDisplay',
-            path: '/antdDemo/demo/DataDisplay',
-            component: './AntdDemo/Components/DataDisplay'
+            path: '/antdDemo/Demo/DataDisplay',
+            component: './AntdDemo/Demo/DataDisplay'
           },
           {
+            // 工具類與整合範例 (Utility)
             name: 'Utility',
-            path: '/antdDemo/demo/Utility',
-            component: './AntdDemo/Components/Utility'
+            path: '/antdDemo/Demo/Utility',
+            component: './AntdDemo/Demo/Utility'
           },
           {
+            // 頁面樣板 (PageTemplates)
             name: 'PageTemplates',
-            path: '/antdDemo/demo/PageTemplates',
-            component: './AntdDemo/Components/PageTemplates'
+            path: '/antdDemo/Demo/PageTemplates',
+            component: './AntdDemo/Demo/PageTemplates'
           }
         ]
       }
@@ -239,23 +247,23 @@ export default [
   },
   {
     path: '/antdDemo/demo/PageTemplates/Query',
-    component: './AntdDemo/Components/PageTemplates/Components/demo02_EditForm',
+    component: './AntdDemo/Demo/PageTemplates/Components/demo02_EditForm',
   },
   {
     path: '/antdDemo/demo/PageTemplates/Edit',
-    component: './AntdDemo/Components/PageTemplates/Components/demo02_EditForm',
+    component: './AntdDemo/Demo/PageTemplates/Components/demo02_EditForm',
   },
   {
     path: '/antdDemo/demo/PageTemplates/Create',
-    component: './AntdDemo/Components/PageTemplates/Components/demo02_EditForm',
+    component: './AntdDemo/Demo/PageTemplates/Components/demo02_EditForm',
   },
   {
     path: '/antdDemo/navigate',
-    component: './AntdDemo/Components/Utility/Components/demo01_Navigate/Components/Navigate'
+    component: './AntdDemo/Demo/Utility/Components/demo01_Navigate/Components/Navigate'
   },
   {
     path: '/antdDemo/sessionStorage',
-    component: './AntdDemo/Components/Utility/Components/demo01_Navigate/Components/SessionStorage'
+    component: './AntdDemo/Demo/Utility/Components/demo01_Navigate/Components/SessionStorage'
   },
   //後端開發
   {
