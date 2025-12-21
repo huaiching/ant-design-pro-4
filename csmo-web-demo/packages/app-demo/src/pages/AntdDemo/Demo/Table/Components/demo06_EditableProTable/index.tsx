@@ -155,7 +155,7 @@ const MyForm: React.FC = () => {
             index === Number(rowKey) ? { ...item, birthDate: parseRocDate(value) } : item
           )
           // 資料更新
-          formRef.current?.setFieldsValue({ editTable: newData })
+          formRef.current?.setFieldValue('editTable', newData )
         }
       })
     },

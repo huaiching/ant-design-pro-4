@@ -242,7 +242,20 @@ export default [
             component: './AntdDemo/Demo/PageTemplates'
           }
         ]
-      }
+      },
+      {
+        // 小工具
+        name: 'Utility',
+        path: '/antdDemo/Utility',
+        routes: [
+          {
+            // 民國年日期工具
+            name: 'rocDateUtils',
+            path: '/antdDemo/Utility/rocDateUtils',
+            component: './AntdDemo/Utility/RocDateUtils'
+          },
+        ]
+      },
     ]
   },
   {
