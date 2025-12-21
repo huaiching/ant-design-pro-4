@@ -20,7 +20,7 @@ const DateUtile: React.FC = () => {
       >
         <Typography>
           <Paragraph>
-            透過 此工具 為 Antd 日期套件 的 擴展工具，透過此工具 可以讓 Antd 日期套件 支援 民國年手動輸入 達成 <code>YYYMMDD</code> 轉換為 <code>YYY/MM/DD</code>。
+            透過 此工具 為 <code>Antd 日期套件</code> 的 擴展工具，透過此工具 可以讓 <code>Antd 日期套件</code> 支援 <code>民國年手動輸入</code> 達成 <code>1141201</code> 轉換為 <code>114/12/01</code>。
           </Paragraph>
 
           <hr />
@@ -178,6 +178,7 @@ export const parseRocDateMonth = (input: string): Dayjs | null => {
 
           <hr />
 
+          <br/>
           <MliFormRow>
             <ProFormDatePicker
               name="date"
@@ -211,6 +212,7 @@ export const parseRocDateMonth = (input: string): Dayjs | null => {
 
           <hr />
 
+          <br/>
           <MliFormRow>
             <ProFormDatePicker.Month
               name="dateMonth"
@@ -245,6 +247,7 @@ export const parseRocDateMonth = (input: string): Dayjs | null => {
 
           <hr />
 
+          <br/>
           <MliFormRow>
             <ProFormDateRangePicker
               name="dateRange"
@@ -301,6 +304,7 @@ export const parseRocDateMonth = (input: string): Dayjs | null => {
 
           <hr />
 
+          <br/>
           <Paragraph>
             <code>ProTable</code> 的 <code>search</code> 中，<code>valueType: 'date'</code> 欄位，亦可使用此工具進行 民國年手動輸入 轉換。
           </Paragraph>
@@ -320,6 +324,7 @@ export const parseRocDateMonth = (input: string): Dayjs | null => {
 
           <hr />
 
+          <br/>
           <Paragraph>
             <code>EditableProTable</code> 的 <code>valueType: 'date'</code> 欄位，亦可使用此工具進行 民國年手動輸入 轉換。
           </Paragraph>
