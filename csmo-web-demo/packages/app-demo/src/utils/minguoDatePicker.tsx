@@ -5,8 +5,8 @@ import { DatePickerProps } from 'antd/lib/date-picker'
 import dayjs from 'dayjs'
 import 'dayjs/locale/zh-tw'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import minguoEra from '@mli-csmo/base/utils/dayjs/minguoEra'
-import minguoEraParse from '@mli-csmo/base/utils/dayjs/minguoEraParse'
+import minguoEra from '@mli-csmo/base/dist/lib/utils/dayjs/minguoEra'
+import minguoEraParse from '@mli-csmo/base/dist/lib/utils/dayjs/minguoEraParse'
 
 dayjs.locale('zh-tw')
 dayjs.extend(customParseFormat)
