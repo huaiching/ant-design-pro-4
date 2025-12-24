@@ -51,9 +51,22 @@ const Navigate: React.FC = () => {
             const data = { name: 'Tom', age: 20 }
             sessionStorage.setItem('params', JSON.stringify(data))
             window.open('/container/demo/antdDemo/sessionStorage', '_blank')
+            sessionStorage.removeItem('params');
           }}
         >
           新開分頁 + 傳送參數: name=Tom, age=20
+        </Button>
+
+        <Button
+          type='primary'
+          onClick={() => {
+            const data = { name: '測試用戶', age: 25 }
+            sessionStorage.setItem('params', JSON.stringify(data))
+            window.open('/container/demo/antdDemo/sessionStorage', '_blank')
+            sessionStorage.removeItem('params');
+          }}
+        >
+          新開分頁 + 傳送參數: name=測試用戶, age=25
         </Button>
       </Space>
     </div>
