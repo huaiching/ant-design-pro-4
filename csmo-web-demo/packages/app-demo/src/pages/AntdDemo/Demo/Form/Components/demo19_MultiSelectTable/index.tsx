@@ -3,6 +3,7 @@ import { MliFormCol, MliFormRow } from '@mli-csmo/base'
 import { Button, message, Typography } from 'antd'
 import React, { useEffect, useRef } from 'react'
 import MultiSelectTable from './Components/MultiSelectTable'
+import MultiSelectEditTable from './Components/MultiSelectEditTable'
 import { log } from 'console'
 import { debounce } from 'lodash'
 
@@ -20,6 +21,13 @@ const optionsData = [
 const column = [
   { title: '代碼', dataIndex: 'code', valueType: 'text' },
   { title: '文字', dataIndex: 'text', valueType: 'text' }
+]
+
+
+const columnEdit = [
+  { title: '代碼', dataIndex: 'code', valueType: 'text', readonly: true },
+  { title: '文字', dataIndex: 'text', valueType: 'text', readonly: true },
+  { title: '備註', dataIndex: 'note', valueType: 'text' }
 ]
 
 const SelectTable: React.FC = () => {
@@ -40,7 +48,7 @@ const SelectTable: React.FC = () => {
           <Button
             type="primary"
             onClick={async () => {
-              log('表單數據', data)
+              log('表單數據', formRef.current?.getFieldsValue())
               formRef.current?.validateFields().then(() => {
                 message.success('表單提交成功！')
               })
@@ -95,6 +103,20 @@ const SelectTable: React.FC = () => {
               name="symptom"
               formRef={formRef}
               column={column}
+              optionsData={optionsData}
+              required
+              validator={validateMaxThree}
+              onChange={(value) => {
+                message.info('資料筆數：' + value.length)
+              }}
+            />
+          </MliFormCol>
+          <MliFormCol colSize={2}>
+            <MultiSelectEditTable
+              label="症狀"
+              name="symptomEdit"
+              formRef={formRef}
+              column={columnEdit}
               optionsData={optionsData}
               required
               validator={validateMaxThree}

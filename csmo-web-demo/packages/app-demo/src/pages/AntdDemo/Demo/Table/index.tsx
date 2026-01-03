@@ -11,7 +11,6 @@ import Demo09 from './Components/demo09_DragSortTable'
 import Demo10 from './Components/demo10_EditableAmountTable'
 import Demo11 from './Components/demo11_CaseSearchTable'
 import Demo12 from './Components/demo12_BatchEditablePolicyTable'
-import Demo13 from './Components/demo13_Test'
 import { Splitter, Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import { useNavigate, useSearchParams } from '@umijs/max'
@@ -83,11 +82,6 @@ const AsstManagement: React.FC = () => {
       key: 'BatchEditablePolicyTable',
       title: '批量新增資料表格(BatchEditablePolicyTable)',
       component: <Demo12 />
-    },
-    {
-      key: 'Test',
-      title: '測試中(Text)',
-      component: <Demo13 />
     },
   ]
 

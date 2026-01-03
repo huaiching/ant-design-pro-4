@@ -87,11 +87,12 @@ const MultiSelectTable: React.FC<Props> = ({
   const handleAdd = () => {
     const found = optionsData.find((item) => Object.values(item).join(' ') === inputValue)
     if (!found) {
-      message.error('輸入資料不存在')
+      message.error('找不到對應的資料')
       return
     }
     if (selectedOptions.some((item) => item.code === found.code)) {
       message.warning('資料已存在')
+      setInputValue('');
       return
     }
     syncChange([...selectedOptions, found])
@@ -130,7 +131,7 @@ const MultiSelectTable: React.FC<Props> = ({
         {
           validator: async (_: any, value: any[]) => {
             if (!value || value.length === 0) {
-              return Promise.reject(new Error(`${label}為必填`))
+              return Promise.reject(new Error(`${label} 為必填欄位`))
             }
             return Promise.resolve()
           }
@@ -173,6 +174,7 @@ const MultiSelectTable: React.FC<Props> = ({
             dataSource={selectedOptions}
             columns={columns}
             rowKey="code"
+            size="small"
           />
         )}
       </>
