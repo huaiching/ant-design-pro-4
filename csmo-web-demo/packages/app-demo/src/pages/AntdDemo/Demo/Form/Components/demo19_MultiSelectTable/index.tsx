@@ -27,7 +27,15 @@ const column = [
 const columnEdit = [
   { title: '代碼', dataIndex: 'code', valueType: 'text', readonly: true },
   { title: '文字', dataIndex: 'text', valueType: 'text', readonly: true },
-  { title: '備註', dataIndex: 'note', valueType: 'text' }
+  {
+    title: '處方', dataIndex: 'prescription', valueType: 'select', fieldProps: {
+      options: [
+        { label: 'A 吃藥', value: 'A' },
+        { label: 'B 打針', value: 'B' },
+        { label: 'C 住院', value: 'C' },
+      ]
+    }
+  }
 ]
 
 const SelectTable: React.FC = () => {
