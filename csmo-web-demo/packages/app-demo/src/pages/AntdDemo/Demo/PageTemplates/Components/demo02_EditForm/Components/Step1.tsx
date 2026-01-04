@@ -2,8 +2,6 @@
  * 第一頁 基本資料輸入
  * 變數透過 mobx 管理，可以減少資料傳遞的麻煩
  */
-
-import { parseRocDate } from '@/utils/rocDateUtils'
 import {
   FooterToolbar,
   ProForm,
@@ -108,12 +106,7 @@ const Step1Form: React.FC<Props> = ({ handleStep, state }) => {
             rules={[{ required: true, message: '日期為必填項' }]}
             fieldProps={{
               format: 'TTT/MM/DD',
-              style: { width: '100%' },
-              onBlur: (e: any) => {
-                if (e.target?.value) {
-                  formRef.current?.setFieldValue('receiveDate', parseRocDate(e.target?.value))
-                }
-              }
+              style: { width: '100%' }
             }}
           />
           <ProFormDatePicker
@@ -124,12 +117,7 @@ const Step1Form: React.FC<Props> = ({ handleStep, state }) => {
             rules={[{ required: true, message: '日期為必填項' }]}
             fieldProps={{
               format: 'TTT/MM/DD',
-              style: { width: '100%' },
-              onBlur: (e: any) => {
-                if (e.target?.value) {
-                  formRef.current?.setFieldValue('chgDate', parseRocDate(e.target?.value))
-                }
-              }
+              style: { width: '100%' }
             }}
           />
           <ProFormSelect

@@ -11,15 +11,12 @@
  * 5. tableAlertOptionRender 顯示「取消勾選」按鈕
  * 6. 日期格式統一使用 'TTT/MM/DD' (民國年)，前端 string 轉 dayjs，導出轉回 string
  */
-
-import { parseRocDate } from '@/utils/rocDateUtils'
 import { ProFormInstance } from '@ant-design/pro-form'
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table'
 import { Button, List, message } from 'antd'
 import dayjs from 'dayjs'
 import React, { useRef, useState } from 'react'
 import * as userApi from './store/userApi'
-import Typography from 'antd/es/typography/Typography'
 
 const ProTableDemo: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -78,11 +75,6 @@ const ProTableDemo: React.FC = () => {
       valueType: 'date',
       fieldProps: {
         format: 'TTT/MM/DD',
-        onBlur: (e: any) => {
-          if (e.target?.value) {
-            formRef.current?.setFieldValue('birthDate', parseRocDate(e.target.value))
-          }
-        }
       }
     }
   ]
@@ -116,7 +108,7 @@ const ProTableDemo: React.FC = () => {
         // }}
         // 請求數據
         request={async (params) => {
-          console.log('params',params)
+          console.log('params', params)
           const res = await userApi.fetchAllData(params)
           const chgData = res.data.map((e) => ({
             ...e,
@@ -160,13 +152,13 @@ const ProTableDemo: React.FC = () => {
           onChange: (keys) => setSelectedRowKeys(keys),
           selections: true
         }}
-        /** ✅ 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
+        /** 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
         tableAlertRender={() => (
           <Button color="danger" variant="filled" onClick={handleExport}>
             導出數據(console)
           </Button>
         )}
-        /** ✅ 使用 tableAlertOptionRender 顯示取消勾選資料 */
+        /**　使用 tableAlertOptionRender 顯示取消勾選資料 */
         tableAlertOptionRender={() => (
           <Button color="cyan" variant="filled" onClick={handleCancel}>
             取消勾選
@@ -178,7 +170,10 @@ const ProTableDemo: React.FC = () => {
         size="small"
         dataSource={[
           "1. Date: 日期格式 fieldProps.format 設定為 'TTT/MM/DD' (民國年)。",
-          "2. 前端日期資料 (string) 要轉換為 dayjs 物件時，請使用 dayjs(XXX, 'TTT/MM/DD') 進行格式轉換。",
+          "2. 前端資料 日期為 字串(string) 時，需轉換為 Dayjs 格式才可使用，請使用：",
+          "　dayjs(stringDate, 'TTT/MM/DD').isValid() ? dayjs(stringDate, 'TTT/MM/DD') : null",
+          "　dayjs(stringDate, 'TTT/MM').isValid() ? dayjs(stringDate, 'TTT/MM') : null",
+          "　或是 小工具 中的 rocStringToDayjs(stringDate) 與 rocStringToDayjsMonth(stringDate)",
           "3. 導出數據時，要使用 dayjs(XXX).format('TTT/MM/DD') 來將日期轉回字串。"
         ]}
         renderItem={(item) => <List.Item>{item}</List.Item>}

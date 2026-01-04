@@ -1,4 +1,3 @@
-import { parseRocDate } from '@/utils/rocDateUtils'
 import {
   AppstoreOutlined,
   ClearOutlined,
@@ -108,11 +107,6 @@ const SearchForm: React.FC = () => {
       fieldProps: {
         format: 'TTT/MM/DD',
         style: { width: '100%' },
-        onBlur: (e: any) => {
-          if (e.target?.value) {
-            formRef.current?.setFieldValue('receiveDate', parseRocDate(e.target?.value))
-          }
-        }
       }
     },
     {
@@ -122,11 +116,6 @@ const SearchForm: React.FC = () => {
       fieldProps: {
         format: 'TTT/MM/DD',
         style: { width: '100%' },
-        onBlur: (e: any) => {
-          if (e.target?.value) {
-            formRef.current?.setFieldValue('chgDate', parseRocDate(e.target?.value))
-          }
-        }
       }
     },
     {

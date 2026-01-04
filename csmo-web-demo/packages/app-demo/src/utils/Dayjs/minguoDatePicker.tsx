@@ -1,4 +1,3 @@
-// src/components/MliDatePicker.tsx
 import React from 'react'
 import { DatePicker } from 'antd'
 import { DatePickerProps } from 'antd/lib/date-picker'
@@ -13,7 +12,7 @@ dayjs.extend(customParseFormat)
 dayjs.extend(minguoEra)
 dayjs.extend(minguoEraParse)
 
-// ✅ 這段是關鍵：覆寫 AntD 使用的 dayjs 年顯示邏輯
+// 覆寫 AntD 使用的 dayjs 年顯示邏輯
 const overrideYearDisplay = () => {
   const originalFormat = dayjs.prototype.format
   dayjs.prototype.format = function (formatStr: string) {

@@ -6,10 +6,9 @@
 import type { ActionType, ProFormInstance } from '@ant-design/pro-components'
 import { ProForm, ProTable } from '@ant-design/pro-components'
 import { Button, Input, List, message } from 'antd'
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as poApi from './store/poApi'
-import { filter } from 'lodash'
 
 // 主表格欄位（保單）
 const policyColumns: any[] = [
@@ -153,13 +152,13 @@ const NestedProTable: React.FC = () => {
         //     value={searchText}
         //   />
         // ]}
-        /** ✅ 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
+        /** 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
         tableAlertRender={() => (
           <Button color="danger" variant="filled" onClick={handleExport}>
             導出數據(console)
           </Button>
         )}
-        /** ✅ 使用 tableAlertOptionRender 顯示取消勾選資料 */
+        /** 使用 tableAlertOptionRender 顯示取消勾選資料 */
         tableAlertOptionRender={() => (
           <Button color="cyan" variant="filled" onClick={handleCancel}>
             取消勾選
@@ -170,7 +169,10 @@ const NestedProTable: React.FC = () => {
         size="small"
         dataSource={[
           "1. Date: 日期格式 fieldProps.format 設定為 'TTT/MM/DD' (民國年)。",
-          "2. 前端日期資料 (string) 要轉換為 dayjs 物件時，請使用 dayjs(XXX, 'TTT/MM/DD') 進行格式轉換。",
+          "2. 前端資料 日期為 字串(string) 時，需轉換為 Dayjs 格式才可使用，請使用：",
+          "　dayjs(stringDate, 'TTT/MM/DD').isValid() ? dayjs(stringDate, 'TTT/MM/DD') : null",
+          "　dayjs(stringDate, 'TTT/MM').isValid() ? dayjs(stringDate, 'TTT/MM') : null",
+          "　或是 小工具 中的 rocStringToDayjs(stringDate) 與 rocStringToDayjsMonth(stringDate)",
           "3. 導出數據時，要使用 dayjs(XXX).format('TTT/MM/DD') 來將 日期 轉換為 string"
         ]}
         renderItem={(item) => <List.Item>{item}</List.Item>}

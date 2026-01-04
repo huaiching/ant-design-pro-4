@@ -119,3 +119,21 @@ export const parseRocDateMonth = (input: string): Dayjs | null => {
   const date = dayjs(dateStr, 'TTT/MM')
   return date.isValid() ? date : null
 }
+
+/**
+ * 日期字串 轉 Dayjs
+ * @param input 日期字串 (年月日)
+ * @returns 
+ */
+export const rocStringToDayjs = (input: string): Dayjs | null => {
+  return dayjs(input, 'TTT/MM/DD').isValid() ? dayjs(input, 'TTT/MM/DD') : null
+}
+
+/**
+ * 日期字串 轉 Dayjs
+ * @param input 日期字串 (年月)
+ * @returns 
+ */
+export const rocStringToDayjsMonth = (input: string): Dayjs | null => {
+  return dayjs(input, 'TTT/MM').isValid() ? dayjs(input, 'TTT/MM') : null
+}

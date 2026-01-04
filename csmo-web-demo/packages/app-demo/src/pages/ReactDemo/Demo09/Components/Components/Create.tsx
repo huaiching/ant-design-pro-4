@@ -7,7 +7,6 @@ import { Typography } from 'antd'
 import { useSyncExternalStore } from 'react'
 import { userStore } from '../Store/userStore'
 import { MliFormRow } from '@mli-csmo/base'
-import { parseRocDate } from '@/utils/rocDateUtils'
 import dayjs from 'dayjs'
 
 const Create: React.FC = () => {
@@ -76,15 +75,6 @@ const Create: React.FC = () => {
           fieldProps={{
             format: 'TTT/MM/DD',
             style: { width: '100%' },
-            onBlur: (e: any) => {
-              if (e.target?.value) {
-                const date = parseRocDate(e.target?.value)
-                formRef.current?.setFieldValue('calcDate', date)
-                onValuesChange({
-                  calcDate: dayjs(date).format('TTT/MM/DD')
-                })
-              }
-            }
           }}
         />
       </MliFormRow>

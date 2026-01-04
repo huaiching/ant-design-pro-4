@@ -1,4 +1,3 @@
-import { parseRocDate } from '@/utils/rocDateUtils'
 import { DeleteOutlined } from '@ant-design/icons'
 import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
@@ -143,20 +142,6 @@ const MyForm: React.FC = () => {
       valueType: 'date',
       fieldProps: (form, row) => ({
         format: 'TTT/MM/DD',
-        onBlur: (e: any) => {
-          // 取得 欄位資料
-          const value = e.target?.value
-          // 取得 該行 index
-          let rowKey = row?.rowKey ? row.rowKey[1] : row?.rowKey
-          // 取得 table 資料
-          const tableData = formRef.current?.getFieldValue('editTable') || []
-          // 更新該行資料 並進行 日期格式化
-          const newData = tableData.map((item: any, index: number) =>
-            index === Number(rowKey) ? { ...item, birthDate: parseRocDate(value) } : item
-          )
-          // 資料更新
-          formRef.current?.setFieldValue('editTable', newData )
-        }
       })
     },
     {

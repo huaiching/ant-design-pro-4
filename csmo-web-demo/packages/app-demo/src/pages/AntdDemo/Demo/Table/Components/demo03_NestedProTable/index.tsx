@@ -5,7 +5,7 @@
 
 import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components'
 import { ProForm, ProTable } from '@ant-design/pro-components'
-import { Button, Input, List, message, Typography } from 'antd'
+import { Button, Input, List, message } from 'antd'
 import dayjs from 'dayjs'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as poApi from './store/poApi'
@@ -60,7 +60,7 @@ const NestedProTable: React.FC = () => {
   const [searchText, setSearchText] = useState('') // 快速搜尋輸入文字狀態
   const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]) // 控制展開列
 
-  // ✅ 頁面初始化：取得資料並設定到 form 與畫面
+  // 頁面初始化：取得資料並設定到 form 與畫面
   useEffect(() => {
     poApi.fetchAllData().then((data: any[]) => {
       // 日期格式轉換
@@ -142,14 +142,14 @@ const NestedProTable: React.FC = () => {
         rowClassName={() => 'custom-selected-row'}  // 設定表格底色: 透過 CSS 設定
 
         rowSelection={{
-          // ✅ 開啟勾選功能
+          // 開啟勾選功能
           selectedRowKeys,
           onChange: (keys) => setSelectedRowKeys(keys)
         }}
         expandable={{
-          // ✅ 展開子表格
+          // 展開子表格
           expandedRowRender: (record) => (
-            // ✅ 子表格：使用 ProTable 顯示該保單的保障資料
+            // 子表格：使用 ProTable 顯示該保單的保障資料
             <ProTable
               rowKey="key" // 每筆保障資料的唯一 key
               columns={coverageColumns} // 子表格欄位（保障序號、險種代碼等）
@@ -163,13 +163,13 @@ const NestedProTable: React.FC = () => {
           onExpandedRowsChange: (keys: any) => setExpandedRowKeys(keys) // 更新展開狀態
         }}
         headerTitle="保單清單"
-        /** ✅ 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
+        /** 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
         tableAlertRender={() => (
           <Button color="danger" variant="filled" onClick={handleExport}>
             導出數據(console)
           </Button>
         )}
-        /** ✅ 使用 tableAlertOptionRender 顯示取消勾選資料 */
+        /** 使用 tableAlertOptionRender 顯示取消勾選資料 */
         tableAlertOptionRender={() => (
           <Button color="cyan" variant="filled" onClick={handleCancel}>
             取消勾選
@@ -189,7 +189,10 @@ const NestedProTable: React.FC = () => {
         size='small'
         dataSource={[
           '1. Date: 日期格式 fieldProps.format 設定為 \'TTT/MM/DD\' (民國年)。',
-          '2. 前端日期資料 (string) 要轉換為 dayjs 物件時，請使用 dayjs(XXX, \'TTT/MM/DD\') 進行格式轉換。',
+          "2. 前端資料 日期為 字串(string) 時，需轉換為 Dayjs 格式才可使用，請使用：",
+          "　dayjs(stringDate, 'TTT/MM/DD').isValid() ? dayjs(stringDate, 'TTT/MM/DD') : null",
+          "　dayjs(stringDate, 'TTT/MM').isValid() ? dayjs(stringDate, 'TTT/MM') : null",
+          "　或是 小工具 中的 rocStringToDayjs(stringDate) 與 rocStringToDayjsMonth(stringDate)",
           '3. 導出數據時，要使用 dayjs(XXX).format(\'TTT/MM/DD\') 來將 日期 轉換為 string',
         ]}
         renderItem={item => <List.Item>{item}</List.Item>}

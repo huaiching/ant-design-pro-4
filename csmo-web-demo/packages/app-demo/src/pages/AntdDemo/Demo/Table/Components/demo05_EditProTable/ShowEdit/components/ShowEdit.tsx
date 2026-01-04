@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react'
 import { ProForm, ProFormText, ProFormDatePicker, ProCard, ProFormInstance } from '@ant-design/pro-components'
 import { Button, Space, Typography } from 'antd'
 import { MliFormRow } from '@mli-csmo/base'
-import { parseRocDate } from '@/utils/rocDateUtils'
 
 interface Props {
   mode: 'create' | 'edit'
@@ -83,11 +82,6 @@ const ShowEdit: React.FC<Props> = ({
             fieldProps={{
               format: 'TTT/MM/DD',
               style: { width: '100%' },
-              onBlur: (e: any) => {
-                if (e.target?.value) {
-                  formRef.current?.setFieldValue('poIssueDate', parseRocDate(e.target?.value))
-                }
-              }
             }}
           />
           <ProFormText

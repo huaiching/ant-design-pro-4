@@ -1,4 +1,4 @@
-import { parseRocDate, parseRocDateMonth } from '@/utils/rocDateUtils'
+import { rocStringToDayjs, rocStringToDayjsMonth } from '@/utils/rocDateUtils'
 import ProForm, {
   ProFormDatePicker,
   ProFormDateRangePicker,
@@ -15,8 +15,8 @@ import React, { useEffect, useRef } from 'react'
 
 // 模擬數據
 let data = {
-  chkDate: '112/05/01',
-  chkDateYYMM: '112/05',
+  chkDate: '',
+  chkDateYYMM: '114/12',
   chkDateRange: ['112/05/01', '112/05/15'],
   chkDateMulti: ['112/05/01', '112/05/03', '112/05/05'],
   dateList: [
@@ -33,15 +33,15 @@ const MyForm: React.FC = () => {
     formRef.current?.setFieldsValue({
       ...data,
       // 日期欄位 轉 dayjs 格式
-      chkDate: parseRocDate(data?.chkDate) as Dayjs,
-      chkDateYYMM: parseRocDateMonth(data?.chkDateYYMM) as Dayjs,
+      chkDate: rocStringToDayjs(data?.chkDate),
+      chkDateYYMM: rocStringToDayjsMonth(data?.chkDateYYMM),
       chkDateRange: [
-        parseRocDate(data.chkDateRange[0]) as Dayjs,
-        parseRocDate(data.chkDateRange[1]) as Dayjs
+        rocStringToDayjs(data.chkDateRange[0]),
+        rocStringToDayjs(data.chkDateRange[1])
       ],
-      chkDateMulti: (data.chkDateMulti as string[]).map((item) => parseRocDate(item) as Dayjs),
+      chkDateMulti: (data.chkDateMulti as string[]).map((item) => rocStringToDayjs(item)),
       dateList: data.dateList.map((item) => ({
-        dateRange: [parseRocDate(item.start) as Dayjs, parseRocDate(item.end) as Dayjs]
+        dateRange: [rocStringToDayjs(item.start), rocStringToDayjs(item.end)]
       }))
     })
   }, [])
@@ -133,12 +133,6 @@ const MyForm: React.FC = () => {
               format: 'TTT/MM/DD',
               style: { width: '100%' },
               inputReadOnly: false,
-              onBlur: (e: any) => {
-                if (e.target?.value) {
-                  formRef.current?.setFieldValue('chkDate', parseRocDate(e.target?.value))
-                  handleValueChange()
-                }
-              }
             }}
           />
           <ProFormDatePicker.Month
@@ -149,12 +143,6 @@ const MyForm: React.FC = () => {
             fieldProps={{
               format: 'TTT/MM',
               style: { width: '100%' },
-              onBlur: (e: any) => {
-                if (e.target?.value) {
-                  formRef.current?.setFieldValue('chkDateYYMM', parseRocDateMonth(e.target?.value))
-                  handleValueChange()
-                }
-              }
             }}
           />
           <ProFormDateRangePicker
@@ -164,25 +152,6 @@ const MyForm: React.FC = () => {
             fieldProps={{
               format: 'TTT/MM/DD',
               style: { width: '100%' },
-              onBlur: (e: any) => {
-                if (e.target?.value) {
-                  const root = e.target?.closest('.ant-picker-range')
-                  if (!root) return
-
-                  // 抓兩個 input 的原始字串
-                  const inputs = root.querySelectorAll('input')
-                  const startRaw = inputs?.[0]?.value ?? ''
-                  const endRaw = inputs?.[1]?.value ?? ''
-
-                  // 日期格式化
-                  const start = parseRocDate(startRaw)
-                  const end = parseRocDate(endRaw)
-
-                  // 回寫到表單
-                  formRef.current?.setFieldValue('chkDateRange', [start, end])
-                  handleValueChange()
-                }
-              }
             }}
           />
           {/* 多選日期 */}
@@ -220,31 +189,6 @@ const MyForm: React.FC = () => {
                   fieldProps={{
                     format: 'TTT/MM/DD',
                     style: { width: '100%' },
-                    onBlur: (e: any) => {
-                      const target = e.target as HTMLInputElement
-                      const root = target?.closest('.ant-picker-range')
-                      if (!root) return
-
-                      // 抓兩個 input 的原始字串
-                      const inputs = root.querySelectorAll('input')
-                      const startRaw = inputs?.[0]?.value?.trim() ?? ''
-                      const endRaw = inputs?.[1]?.value?.trim() ?? ''
-
-                      // 起日 或 契日 其中一個有值時，進行轉換
-                      if (startRaw || endRaw) {
-                        // 日期格式化
-                        const start = parseRocDate(startRaw)
-                        const end = parseRocDate(endRaw)
-
-                        if (start || end) {
-                          formRef.current?.setFieldValue(
-                            ['dateList', index, 'dateRange'],
-                            [start, end]
-                          )
-                          handleValueChange()
-                        }
-                      }
-                    }
                   }}
                 />
               )}
@@ -255,7 +199,10 @@ const MyForm: React.FC = () => {
           size="small"
           dataSource={[
             "1. Date: 日期格式 fieldProps.format 設定為 'TTT/MM/DD' (民國年)。",
-            "2. 前端日期資料 (string) 要轉換為 dayjs 物件時，請使用 dayjs(XXX, 'TTT/MM/DD') 進行格式轉換。",
+            "2. 前端資料 日期為 字串(string) 時，需轉換為 Dayjs 格式才可使用，請使用：",
+            "　dayjs(stringDate, 'TTT/MM/DD').isValid() ? dayjs(stringDate, 'TTT/MM/DD') : null",
+            "　dayjs(stringDate, 'TTT/MM').isValid() ? dayjs(stringDate, 'TTT/MM') : null",
+            "　或是 小工具 中的 rocStringToDayjs(stringDate) 與 rocStringToDayjsMonth(stringDate)",
             "3. 導出數據時，要使用 dayjs(XXX).format('TTT/MM/DD') 來將 日期 轉換為 string"
           ]}
           renderItem={(item) => <List.Item>{item}</List.Item>}

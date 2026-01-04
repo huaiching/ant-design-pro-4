@@ -1,4 +1,3 @@
-import { parseRocDate } from '@/utils/rocDateUtils'
 import {
   AppstoreOutlined,
   DownOutlined,
@@ -126,11 +125,6 @@ const ManagerMe: React.FC = () => {
       fieldProps: {
         format: 'TTT/MM/DD',
         style: { width: '100%' },
-        onBlur: (e: any) => {
-          if (e.target?.value) {
-            formRef.current?.setFieldValue('receiveDate', parseRocDate(e.target?.value))
-          }
-        }
       }
     },
     {
@@ -140,11 +134,6 @@ const ManagerMe: React.FC = () => {
       fieldProps: {
         format: 'TTT/MM/DD',
         style: { width: '100%' },
-        onBlur: (e: any) => {
-          if (e.target?.value) {
-            formRef.current?.setFieldValue('chgDate', parseRocDate(e.target?.value))
-          }
-        }
       }
     },
     {
@@ -329,11 +318,6 @@ const ManagerMe: React.FC = () => {
                     placeholder=""
                     format="TTT/MM/DD"
                     value={receiveDate}
-                    onBlur={(e: any) => {
-                      if (e.target?.value) {
-                        setReceiveDate(parseRocDate(e.target?.value))
-                      }
-                    }}
                   />
                 </ProForm.Item>
               </MliFormCol>
@@ -344,11 +328,6 @@ const ManagerMe: React.FC = () => {
                     placeholder=""
                     format="TTT/MM/DD"
                     value={chgDate}
-                    onBlur={(e: any) => {
-                      if (e.target?.value) {
-                        setChgDate(parseRocDate(e.target?.value))
-                      }
-                    }}
                   />
                 </ProForm.Item>
               </MliFormCol>

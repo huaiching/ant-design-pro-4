@@ -12,6 +12,8 @@ import { clearTableSessionStorage, getPathName, MENU_LOCALE_BEGIN, request } fro
 import { FormattedMessage } from 'react-intl'
 import type { RunTimeLayoutConfig } from 'umi'
 import { formatMessage, history, matchRoutes, setLocale } from 'umi'
+// 日期元件格式化 - 支援手動輸入日期不用「/」
+import '@/utils/Dayjs/enhanceDatePicker'
 
 export const qiankun = {
   async bootstrap() {},
