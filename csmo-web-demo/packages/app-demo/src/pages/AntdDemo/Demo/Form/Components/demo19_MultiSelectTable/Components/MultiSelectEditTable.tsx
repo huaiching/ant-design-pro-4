@@ -153,7 +153,7 @@ const MultiSelectEditTable: React.FC<Props> = ({
           placeholder={placeholder}
           allowClear
         />
-        <Button type="default" icon={<PlusOutlined />} onClick={handleAdd} />
+        <Button color="primary" variant="filled" icon={<PlusOutlined />} onClick={handleAdd} />
       </Space.Compact>
 
       {dataSource.length > 0 &&

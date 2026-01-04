@@ -162,7 +162,7 @@ const MultiSelectTable: React.FC<Props> = ({
               !!option && option.value.toLowerCase().includes(inputVal.toLowerCase())
             }
           />
-          <Button shape="default" icon={<PlusOutlined />} onClick={handleAdd} />
+          <Button color="primary" variant="filled" icon={<PlusOutlined />} onClick={handleAdd} />
         </Space.Compact>
 
         {selectedOptions.length > 0 && (
