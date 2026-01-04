@@ -161,6 +161,14 @@ const MultiSelectEditTable: React.FC<Props> = ({
           rowKey="code"
           controlled // 重要：讓我們自己控制 dataSource 與 editableKeys
           recordCreatorProps={false} // 不允許底部新增
+          columns={tableColumns}
+          value={dataSource}
+          search={false}
+          pagination={false}
+          options={false}
+          toolBarRender={false}
+          bordered
+          size="small"
           editable={{
             type: 'multiple',
             editableKeys,
@@ -180,14 +188,6 @@ const MultiSelectEditTable: React.FC<Props> = ({
               ];
             },
           }}
-          columns={tableColumns}
-          value={dataSource}
-          search={false}
-          pagination={false}
-          options={false}
-          toolBarRender={false}
-          bordered
-          size="small"
         />
       }
     </ProForm.Item>
