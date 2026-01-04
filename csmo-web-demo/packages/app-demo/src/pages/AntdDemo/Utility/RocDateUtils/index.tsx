@@ -11,7 +11,7 @@ const DateUtile: React.FC = () => {
 
 
   return (
-    <PageContainer>
+    <PageContainer title={false}>
       <ProForm
         grid
         layout="vertical"
@@ -19,14 +19,14 @@ const DateUtile: React.FC = () => {
         submitter={false}
       >
         <Typography>
+          <Title level={3}>dayjs 日期工具</Title>
           <Paragraph>
-            透過 此工具 為 <code>Antd 日期套件</code> 的 擴展工具，透過此工具 可以讓 <code>Antd 日期套件</code> 支援 <code>民國年手動輸入</code> 達成 <code>1141201</code> 轉換為 <code>114/12/01</code>。
+            此工具為 <code>dayjs</code> 的 相關工具，包含 <code>日期格式檢核</code> 與 <code>民國年日期字串 轉 Dayjs 的日期格式轉換</code>。
           </Paragraph>
-
-          <hr />
-
-          <details>
-            <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>工具程式碼</summary>
+          <Paragraph type='success'>
+            <code>parseRocDate</code> 和 <code>parseRocDateMonth</code> 可提供 <code>6 碼 民國年 的 日期格式轉換</code>，如：<code>950101</code> 轉為 <code>095/01/01</code>。<br/>
+            <code>rocStringToDayjs</code> 和 <code>rocStringToDayjsMonth</code> 可提供 <code>API 的 民國字串日期</code> 轉為 <code>Dayjs 格式</code> 使用。
+          </Paragraph>
             <Table
               size="small"
               bordered
@@ -43,6 +43,9 @@ const DateUtile: React.FC = () => {
               ]}
               pagination={false}
             />
+          
+          <details>
+            <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>工具程式碼</summary>
             <CodeTsx code={`import { message } from 'antd'
 import dayjs, { Dayjs } from 'dayjs'
 
@@ -187,13 +190,25 @@ export const rocStringToDayjsMonth = (input: string): Dayjs | null => {
 
           <hr />
 
-          <Title level={3}>日期元件 手動輸入 免 <code>/</code></Title>
+          <Title level={3}>日期元件 手動輸入 免輸入 <code>/</code></Title>
           <Paragraph>
             先根據 下面程式碼，建立 <code>util</code> 工具，如：<code>src/utils/Dayjs/enhanceDatePicker.ts</code> <br/>
             再於 <code>App.tsx</code> 中 import 即可。
           </Paragraph>
-          <CodeTsx code={`import '@/utils/Dayjs/enhanceDatePicker'`} />
+          <Paragraph type='danger'>
 
+          </Paragraph>
+          <CodeTsx code={`import '@/utils/Dayjs/enhanceDatePicker'`} />
+          <br/>
+          <Paragraph type='danger'>
+            此方式為 <code>全域設定</code>，會自動在所有 <code>日期元件</code> 中生效。<br/>
+            使用後，會支援 <code>7 碼</code> 民國年的日期轉換。 <br/>
+            如：<code>1150104</code> 自動轉為 <code>115/01/04</code> <br/>
+            　　<code>0950104</code> 自動轉為 <code>095/01/04</code>。<br/>
+            <br/>
+            不支援 <code>6 碼</code> 的民國年日期轉換，如：不支援 <code>950104</code> 的日期格式轉換。<br/>
+            如有此類需求，可參考 下方使用方式，透過 <code>onBlur</code> 來手動透過 <code>parseRocDate</code> 或 <code>parseRocDateMonth</code> 執行日期轉換。
+          </Paragraph>
           <details>
             <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>工具程式碼</summary>
             <CodeTsx code={`import { message } from "antd"
@@ -323,10 +338,10 @@ dayjs.extend(minguoEraParse)`} />
 
           <Title level={3}>使用方式</Title>
           <Paragraph>
-            若有使用 <code>日期元件 手動輸入 免 /</code>，即可 按照一般正常方式使用 日期元件，僅需要注意 格式須為 <code>TTT/MM/DD</code>。
+            若有使用 <code>日期元件 手動輸入 免輸入 /</code>，當 日期格式為 <code>TTT/MM/DD</code> 或 <code>TTT/MM</code>，即可 自動將 <code>7 碼 民國年</code> 自動轉換為 <code>dayjs 日期</code>，日期元件無須特殊設定。
           </Paragraph>
           <Paragraph>
-            若沒有，則 需要在 日期元件 的 <code>onBlur</code> 事件中，呼叫 <code>parseRocDate</code> 或 <code>parseRocDateMonth</code> 方法，將使用者輸入的民國日期字串 轉換為 dayjs 物件，並透過 <code>formRef.current?.setFieldValue()</code> 來更新表單欄位的值。
+            若無使用 或是 有 <code>6 碼</code> 民國年日期輸入需求，則 需要在 日期元件 的 <code>onBlur</code> 事件中，呼叫 <code>parseRocDate</code> 或 <code>parseRocDateMonth</code> 方法，將使用者輸入的民國日期字串 轉換為 dayjs 物件，並透過 <code>formRef.current?.setFieldValue()</code> 來更新表單欄位的值。
           </Paragraph>
           <Paragraph type='danger'>
             由於是透過 <code>formRef.current?.setFieldValue()</code> 直接更新表單數值。 <br />
