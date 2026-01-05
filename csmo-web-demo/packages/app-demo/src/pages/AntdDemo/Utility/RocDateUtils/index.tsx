@@ -202,17 +202,20 @@ export const rocStringToDayjsMonth = (input: string): Dayjs | null => {
           <br/>
           <Paragraph type='danger'>
             此方式為 <code>全域設定</code>，會自動在所有 <code>日期元件</code> 中生效。<br/>
-            使用後，會支援 <code>7 碼</code> 民國年的日期轉換。 <br/>
+            使用後，會支援 <code>7 碼</code> 民國年的日期轉換。 (年月格式，支援 <code>5 碼</code>) <br/>
             如：<code>1150104</code> 自動轉為 <code>115/01/04</code> <br/>
-            　　<code>0950104</code> 自動轉為 <code>095/01/04</code>。<br/>
+            　　<code>0950104</code> 自動轉為 <code>095/01/04</code> <br/>
+            　　<code>11501</code> 自動轉為 <code>115/01/04</code>  (年月格式) <br/>
+            也支援 <code>西元年</code> 自動轉為 <code>民國年</code><br/>
+            如：<code>2026/01/04</code> 或 <code>20260104</code> 自動轉為 <code>115/01/04</code> <br/>
+            　　<code>2026/01</code> 或 <code>202601</code> 自動轉為 <code>115/01</code>  (年月格式) <br/>
             <br/>
             不支援 <code>6 碼</code> 的民國年日期轉換，如：不支援 <code>950104</code> 的日期格式轉換。<br/>
             如有此類需求，可參考 下方使用方式，透過 <code>onBlur</code> 來手動透過 <code>parseRocDate</code> 或 <code>parseRocDateMonth</code> 執行日期轉換。
           </Paragraph>
           <details>
             <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>工具程式碼</summary>
-            <CodeTsx code={`import { message } from "antd"
-import dayjs from "dayjs"
+            <CodeTsx code={`import dayjs from "dayjs"
 
 const YEAR_BIAS = 1911
 
@@ -223,7 +226,7 @@ export const minguoEraParse = (option: any, dayjsClass: any) => {
   prototype.parse = function (cfg: any) {
     const { date, args } = cfg
 
-    // 空輸入直接走原生（Antd 會視為 null）
+    // 空輸入，不處理
     if (
       !date ||
       date === null ||
@@ -245,8 +248,21 @@ export const minguoEraParse = (option: any, dayjsClass: any) => {
 
     const input = date.trim()
 
-    // ===== 關鍵：一律提取純數字進行判斷 =====
-    const digitsOnly = input.replace(/\D/g, '')
+    // 提取純數字進行判斷
+    let digitsOnly = input.replace(/\D/g, '')
+
+    // 輸入西元年 轉換為 民國年
+    if (format === 'TTT/MM/DD' && digitsOnly.length === 8) {
+      const year = parseInt(digitsOnly.slice(0, 4), 10) - 1911
+      const month = parseInt(digitsOnly.slice(4, 6), 10)
+      const day = parseInt(digitsOnly.slice(6, 8), 10)
+      digitsOnly = String(year).padStart(3, '0') + String(month).padStart(2, '0') + String(day).padStart(2, '0')
+    }
+    if (format === 'TTT/MM' && digitsOnly.length === 6) {
+      const year = parseInt(digitsOnly.slice(0, 4), 10) - 1911
+      const month = parseInt(digitsOnly.slice(4, 6), 10)
+      digitsOnly = String(year).padStart(3, '0') + String(month).padStart(2, '0')
+    }
 
     // 是否為年月格式（用於決定補日與輸出格式）
     const isMonthPicker = format.includes('TTT/MM') && !format.includes('DD')
@@ -255,13 +271,13 @@ export const minguoEraParse = (option: any, dayjsClass: any) => {
     let isValidInput = false
 
     if (isMonthPicker) {
-      // 年月選擇器：接受 5 位純數字（如 11412）或任何帶分隔符的輸入（只要數字正確）
+      // 年月選擇器：接受 5 位純數字（如 11412）
       if (digitsOnly.length === 5) {
         targetDigits = digitsOnly + '01'  // 補日為 01 → 變成 7 位處理
         isValidInput = true
       }
     } else {
-      // 一般日期選擇器：只接受 7 位純數字
+      // 一般日期選擇器：接受 7 位純數字（如 1141231）
       if (digitsOnly.length === 7) {
         targetDigits = digitsOnly
         isValidInput = true
@@ -296,12 +312,7 @@ export const minguoEraParse = (option: any, dayjsClass: any) => {
           args: [gregorianDateStr, newFormat],
         })
       } else {
-        // ===== 日期無效：顯示錯誤 + 強制回傳 invalid → onChange 收到 null =====
-        message.error(
-          isMonthPicker
-            ? '月份格式錯誤，請檢查民國年月'
-            : '日期格式錯誤，請檢查年月日是否正確'
-        )
+        // ===== 日期無效：回傳 空白日期 =====
         this.$d = new Date(NaN)
         this.$invalid = true
         return this

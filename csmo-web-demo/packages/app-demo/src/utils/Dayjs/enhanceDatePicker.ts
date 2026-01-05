@@ -1,4 +1,3 @@
-import { message } from "antd"
 import dayjs from "dayjs"
 
 const YEAR_BIAS = 1911
@@ -10,7 +9,7 @@ export const minguoEraParse = (option: any, dayjsClass: any) => {
   prototype.parse = function (cfg: any) {
     const { date, args } = cfg
 
-    // 空輸入直接走原生（Antd 會視為 null）
+    // 空輸入，不處理
     if (
       !date ||
       date === null ||
@@ -32,8 +31,21 @@ export const minguoEraParse = (option: any, dayjsClass: any) => {
 
     const input = date.trim()
 
-    // ===== 關鍵：一律提取純數字進行判斷 =====
-    const digitsOnly = input.replace(/\D/g, '')
+    // 提取純數字進行判斷
+    let digitsOnly = input.replace(/\D/g, '')
+
+    // 輸入西元年 轉換為 民國年
+    if (format === 'TTT/MM/DD' && digitsOnly.length === 8) {
+      const year = parseInt(digitsOnly.slice(0, 4), 10) - 1911
+      const month = parseInt(digitsOnly.slice(4, 6), 10)
+      const day = parseInt(digitsOnly.slice(6, 8), 10)
+      digitsOnly = String(year).padStart(3, '0') + String(month).padStart(2, '0') + String(day).padStart(2, '0')
+    }
+    if (format === 'TTT/MM' && digitsOnly.length === 6) {
+      const year = parseInt(digitsOnly.slice(0, 4), 10) - 1911
+      const month = parseInt(digitsOnly.slice(4, 6), 10)
+      digitsOnly = String(year).padStart(3, '0') + String(month).padStart(2, '0')
+    }
 
     // 是否為年月格式（用於決定補日與輸出格式）
     const isMonthPicker = format.includes('TTT/MM') && !format.includes('DD')
@@ -42,13 +54,13 @@ export const minguoEraParse = (option: any, dayjsClass: any) => {
     let isValidInput = false
 
     if (isMonthPicker) {
-      // 年月選擇器：接受 5 位純數字（如 11412）或任何帶分隔符的輸入（只要數字正確）
+      // 年月選擇器：接受 5 位純數字（如 11412）
       if (digitsOnly.length === 5) {
         targetDigits = digitsOnly + '01'  // 補日為 01 → 變成 7 位處理
         isValidInput = true
       }
     } else {
-      // 一般日期選擇器：只接受 7 位純數字
+      // 一般日期選擇器：接受 7 位純數字（如 1141231）
       if (digitsOnly.length === 7) {
         targetDigits = digitsOnly
         isValidInput = true
@@ -83,12 +95,7 @@ export const minguoEraParse = (option: any, dayjsClass: any) => {
           args: [gregorianDateStr, newFormat],
         })
       } else {
-        // ===== 日期無效：顯示錯誤 + 強制回傳 invalid → onChange 收到 null =====
-        message.error(
-          isMonthPicker
-            ? '月份格式錯誤，請檢查民國年月'
-            : '日期格式錯誤，請檢查年月日是否正確'
-        )
+        // ===== 日期無效：回傳 空白日期 =====
         this.$d = new Date(NaN)
         this.$invalid = true
         return this
