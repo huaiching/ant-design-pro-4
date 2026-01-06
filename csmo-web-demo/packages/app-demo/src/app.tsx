@@ -13,7 +13,7 @@ import { FormattedMessage } from 'react-intl'
 import type { RunTimeLayoutConfig } from 'umi'
 import { formatMessage, history, matchRoutes, setLocale } from 'umi'
 // 日期元件格式化 - 支援手動輸入日期不用「/」
-import '@/utils/Dayjs/enhanceDatePicker'
+import '@/utils/Dayjs/minguoParse'
 
 export const qiankun = {
   async bootstrap() {},
@@ -105,7 +105,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
       {
         path: '/home',
         base: '/',
-        breadcrumbName: <FormattedMessage id='demo.home' />
+        breadcrumbName: formatMessage({ id: 'demo.home' })
       },
       ...routers
     ],
@@ -114,7 +114,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   }
 }
 
-export function onRouteChange({ clientRoutes, location, basename, routes }) {
+export function onRouteChange({ clientRoutes, location, basename, routes }: { clientRoutes: any; location: any; basename: string; routes: any }) {
   const route = matchRoutes(clientRoutes, location.pathname.replace(basename, ''))?.pop()?.route
   if (route) {
     const pathName = getPathName(route, routes)

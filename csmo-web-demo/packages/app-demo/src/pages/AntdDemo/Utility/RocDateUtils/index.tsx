@@ -192,13 +192,13 @@ export const rocStringToDayjsMonth = (input: string): Dayjs | null => {
 
           <Title level={3}>日期元件 手動輸入 免輸入 <code>/</code></Title>
           <Paragraph>
-            先根據 下面程式碼，建立 <code>util</code> 工具，如：<code>src/utils/Dayjs/enhanceDatePicker.ts</code> <br/>
+            先根據 下面程式碼，建立 <code>util</code> 工具，如：<code>src/utils/Dayjs/minguoParse.ts</code> <br/>
             再於 <code>App.tsx</code> 中 import 即可。
           </Paragraph>
           <Paragraph type='danger'>
 
           </Paragraph>
-          <CodeTsx code={`import '@/utils/Dayjs/enhanceDatePicker'`} />
+          <CodeTsx code={`import '@/utils/Dayjs/minguoParse'`} />
           <br/>
           <Paragraph type='danger'>
             此方式為 <code>全域設定</code>，會自動在所有 <code>日期元件</code> 中生效。<br/>
@@ -219,7 +219,10 @@ export const rocStringToDayjsMonth = (input: string): Dayjs | null => {
 
 const YEAR_BIAS = 1911
 
-export const minguoEraParse = (option: any, dayjsClass: any) => {
+/**
+ * 解析插件：負責將使用者輸入的民國年轉換為 Day.js 可理解的西元年格式
+ */
+export const minguoParse = (option: any, dayjsClass: any) => {
   const prototype = dayjsClass.prototype
   const oldParse = prototype.parse
 
@@ -341,10 +344,30 @@ export const isValidDate = (date: string): boolean => {
   return day <= dayjs(\`\${year}-\${month}\`, 'YYYY-M').daysInMonth()
 }
 
-dayjs.extend(minguoEraParse)`} />
+dayjs.extend(minguoParse)`} />
 
           </details>
 
+          <MliFormRow>
+            <ProFormDatePicker
+              name="autoDate"
+              label="輸入日期(年月日)"
+              placeholder="可手動輸入日期"
+              fieldProps={{
+                format: 'TTT/MM/DD',
+                style: { width: '100%' },
+              }}
+            />
+            <ProFormDatePicker.Month
+              name="autoDateMonth"
+              label="輸入日期(年月)"
+              placeholder="可手動輸入日期"
+              fieldProps={{
+                format: 'TTT/MM',
+                style: { width: '100%' },
+              }}
+            />
+          </MliFormRow>
           <hr />
 
           <Title level={3}>使用方式</Title>

@@ -2,7 +2,10 @@ import dayjs from "dayjs"
 
 const YEAR_BIAS = 1911
 
-export const minguoEraParse = (option: any, dayjsClass: any) => {
+/**
+ * 解析插件：負責將使用者輸入的民國年轉換為 Day.js 可理解的西元年格式
+ */
+export const minguoParse = (option: any, dayjsClass: any) => {
   const prototype = dayjsClass.prototype
   const oldParse = prototype.parse
 
@@ -124,4 +127,4 @@ export const isValidDate = (date: string): boolean => {
   return day <= dayjs(`${year}-${month}`, 'YYYY-M').daysInMonth()
 }
 
-dayjs.extend(minguoEraParse)
+dayjs.extend(minguoParse)
