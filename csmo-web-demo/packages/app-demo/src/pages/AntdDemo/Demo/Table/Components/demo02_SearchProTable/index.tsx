@@ -174,7 +174,8 @@ const ProTableDemo: React.FC = () => {
           "　dayjs(stringDate, 'TTT/MM/DD').isValid() ? dayjs(stringDate, 'TTT/MM/DD') : null",
           "　dayjs(stringDate, 'TTT/MM').isValid() ? dayjs(stringDate, 'TTT/MM') : null",
           "　或是 小工具 中的 rocStringToDayjs(stringDate) 與 rocStringToDayjsMonth(stringDate)",
-          "3. 導出數據時，要使用 dayjs(XXX).format('TTT/MM/DD') 來將日期轉回字串。"
+          "3. 導出數據時，要使用 dayjs(XXX).format('TTT/MM/DD') 來將 日期 轉換為 string",
+          "　或是 小工具 中的 dayjsToRocString(dayjsDate) 與 dayjsToRocStringMonth(dayjsDate)"
         ]}
         renderItem={(item) => <List.Item>{item}</List.Item>}
       />

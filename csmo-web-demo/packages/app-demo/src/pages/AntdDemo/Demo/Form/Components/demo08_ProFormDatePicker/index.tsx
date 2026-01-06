@@ -1,4 +1,4 @@
-import { rocStringToDayjs, rocStringToDayjsMonth } from '@/utils/rocDateUtils'
+import { dayjsToRocString, dayjsToRocStringMonth, rocStringToDayjs, rocStringToDayjsMonth } from '@/utils/rocDateUtils'
 import ProForm, {
   ProFormDatePicker,
   ProFormDateRangePicker,
@@ -9,7 +9,7 @@ import { FooterToolbar } from '@ant-design/pro-layout'
 import { MliFormCol, MliFormRow } from '@mli-csmo/base'
 import { Button, DatePicker, List, message } from 'antd'
 import { log } from 'console'
-import dayjs, { Dayjs } from 'dayjs'
+import { Dayjs } from 'dayjs'
 import { debounce } from 'lodash'
 import React, { useEffect, useRef } from 'react'
 
@@ -51,24 +51,23 @@ const MyForm: React.FC = () => {
     // 取得表單變更資料
     const values = formRef.current?.getFieldsValue()
     // 日期格式轉換
-    const chkDate = dayjs(values.chkDate).isValid() ? dayjs(values.chkDate).format('TTT/MM/DD') : ''
-    const chkDateYYMM = dayjs(values.chkDateYYMM).isValid() ? dayjs(values.chkDateYYMM).format('TTT/MM') : ''
+    const chkDate = dayjsToRocString(values.chkDate)
+    const chkDateYYMM = dayjsToRocStringMonth(values.chkDateYYMM)
     const chkDateRange = () => {
       const chkDateRange = values?.chkDateRange || ['', '']
       return [
-        dayjs(chkDateRange[0] || '').isValid() ? dayjs(chkDateRange[0] || '').format('TTT/MM/DD') : '',
-        dayjs(chkDateRange[1] || '').isValid() ? dayjs(chkDateRange[1] || '').format('TTT/MM/DD') : ''
+        dayjsToRocString(chkDateRange[0]), dayjsToRocString(chkDateRange[1])
       ]
     }
     const chkDateMulti = values?.chkDateMulti
-      ? (values.chkDateMulti as Dayjs[]).map((item) => dayjs(item).format('TTT/MM/DD'))
+      ? (values.chkDateMulti as Dayjs[]).map((item) => dayjsToRocString(item))
       : []
     const dateList = values?.dateList
       ? (values.dateList as any[]).map((item) => {
           const dateRange = item?.dateRange || ['', '']
           return {
-            start: dayjs(dateRange[0] || '').isValid() ? dayjs(dateRange[0]).format('TTT/MM/DD') : '',
-            end: dayjs(dateRange[1] || '').isValid() ? dayjs(dateRange[1]).format('TTT/MM/DD') : ''
+            start: dayjsToRocString(dateRange[0]),
+            end: dayjsToRocString(dateRange[1])
           }
         })
       : []
@@ -203,7 +202,8 @@ const MyForm: React.FC = () => {
             "　dayjs(stringDate, 'TTT/MM/DD').isValid() ? dayjs(stringDate, 'TTT/MM/DD') : null",
             "　dayjs(stringDate, 'TTT/MM').isValid() ? dayjs(stringDate, 'TTT/MM') : null",
             "　或是 小工具 中的 rocStringToDayjs(stringDate) 與 rocStringToDayjsMonth(stringDate)",
-            "3. 導出數據時，要使用 dayjs(XXX).format('TTT/MM/DD') 來將 日期 轉換為 string"
+            "3. 導出數據時，要使用 dayjs(XXX).format('TTT/MM/DD') 來將 日期 轉換為 string",
+            "　或是 小工具 中的 dayjsToRocString(dayjsDate) 與 dayjsToRocStringMonth(dayjsDate)"
           ]}
           renderItem={(item) => <List.Item>{item}</List.Item>}
         />

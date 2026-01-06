@@ -36,10 +36,12 @@ const DateUtile: React.FC = () => {
               ]}
               dataSource={[
                 { name: '檢查傳入的年月日是否為合法日期', method: 'isValidDate' },
-                { name: '民國日期字串 轉 Dayjs (年月日) (含檢核)', method: 'parseRocDate' },
-                { name: '民國日期字串 轉 Dayjs (年月) (含檢核)', method: 'parseRocDateMonth' },
+                { name: '民國年日期字串解析 為 Dayjs (年月日)', method: 'parseRocDate' },
+                { name: '民國年日期字串解析 為 Dayjs (年月)', method: 'parseRocDateMonth' },
                 { name: '民國日期字串 轉 Dayjs (年月日) ', method: 'rocStringToDayjs' },
                 { name: '民國日期字串 轉 Dayjs (年月) ', method: 'rocStringToDayjsMonth' },
+                { name: 'Dayjs 轉 民國日期字串 (年月日) ', method: 'dayjsToRocString' },
+                { name: 'Dayjs 轉 民國日期字串 (年月) ', method: 'dayjsToRocStringMonth' },
               ]}
               pagination={false}
             />
@@ -169,21 +171,39 @@ export const parseRocDateMonth = (input: string): Dayjs | null => {
 }
 
 /**
- * 日期字串 轉 Dayjs
+ * 民國日期字串 轉 Dayjs
  * @param input 日期字串 (年月日)
- * @returns 
+ * @returns Dayjs
  */
 export const rocStringToDayjs = (input: string): Dayjs | null => {
   return dayjs(input, 'TTT/MM/DD').isValid() ? dayjs(input, 'TTT/MM/DD') : null
 }
 
 /**
- * 日期字串 轉 Dayjs
+ * 民國日期字串 轉 Dayjs
  * @param input 日期字串 (年月)
- * @returns 
+ * @returns Dayjs
  */
 export const rocStringToDayjsMonth = (input: string): Dayjs | null => {
   return dayjs(input, 'TTT/MM').isValid() ? dayjs(input, 'TTT/MM') : null
+}
+
+/**
+ * Dayjs 轉 民國日期字串
+ * @param input Dayjs
+ * @returns 日期字串 (年月日)
+ */
+export const dayjsToRocString = (input: Dayjs | null) => {
+  return dayjs(input).isValid() ? dayjs(input).format('TTT/MM/DD') : ''
+}
+
+/**
+ * Dayjs 轉 民國日期字串
+ * @param input Dayjs
+ * @returns 日期字串 (年月)
+ */
+export const dayjsToRocStringMonth = (input: Dayjs | null) => {
+  return dayjs(input).isValid() ? dayjs(input).format('TTT/MM') : ''
 }`} />
 
           </details>

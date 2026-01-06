@@ -41,11 +41,17 @@ export const isValidDate = (date: string): boolean => {
   return day <= maxDay
 }
 
-
 /**
- * 將民國日期字串 轉換為 dayjs 物件
- * @param input 民國 年月日 字串
- * @returns Dayjs | null
+ * 將各種常見格式的日期字串解析為 Dayjs 物件（以民國年為主）
+ * 支援格式：
+ *   - 西元年 8 位數字：YYYYMMDD（如 20250106）
+ *   - 民國年 7 位數字：YYYMMDD（如 1140106）
+ *   - 民國年 6 位數字：YYMMDD（如 140106，會自動補前導零成為 1140106）
+ *   - 帶分隔符的字串（如 114/01/06、114-01-06 等，會先移除非數字）
+ * 若格式或日期無效會顯示錯誤訊息並回傳 null
+ * 
+ * @param input 日期字串（年月日）
+ * @returns Dayjs 物件，若解析失敗則回傳 null
  */
 export const parseRocDate = (input: string): Dayjs | null => {
   // 有資料才處理
@@ -80,11 +86,17 @@ export const parseRocDate = (input: string): Dayjs | null => {
   return date.isValid() ? date : null
 }
 
-
 /**
- * 將民國日期字串 轉換為 dayjs 物件
- * @param input 民國 年月 字串
- * @returns Dayjs | null
+ * 將各種常見格式的年月字串解析為 Dayjs 物件（以民國年為主）
+ * 支援格式：
+ *   - 西元年 6 位數字：YYYYMM（如 202501）
+ *   - 民國年 5 位數字：YYYMM（如 11401）
+ *   - 民國年 4 位數字：YYMM（如 1401，會自動補前導零成為 11401）
+ *   - 帶分隔符的字串（如 114/01、114-01 等，會先移除非數字）
+ * 若格式或月份無效會顯示錯誤訊息並回傳 null
+ * 
+ * @param input 年月字串
+ * @returns Dayjs 物件（日期會設定為該月第一天），若解析失敗則回傳 null
  */
 export const parseRocDateMonth = (input: string): Dayjs | null => {
   // 有資料才處理
@@ -121,19 +133,37 @@ export const parseRocDateMonth = (input: string): Dayjs | null => {
 }
 
 /**
- * 日期字串 轉 Dayjs
+ * 民國日期字串 轉 Dayjs
  * @param input 日期字串 (年月日)
- * @returns 
+ * @returns Dayjs
  */
 export const rocStringToDayjs = (input: string): Dayjs | null => {
   return dayjs(input, 'TTT/MM/DD').isValid() ? dayjs(input, 'TTT/MM/DD') : null
 }
 
 /**
- * 日期字串 轉 Dayjs
+ * 民國日期字串 轉 Dayjs
  * @param input 日期字串 (年月)
- * @returns 
+ * @returns Dayjs
  */
 export const rocStringToDayjsMonth = (input: string): Dayjs | null => {
   return dayjs(input, 'TTT/MM').isValid() ? dayjs(input, 'TTT/MM') : null
+}
+
+/**
+ * Dayjs 轉 民國日期字串
+ * @param input Dayjs
+ * @returns 日期字串 (年月日)
+ */
+export const dayjsToRocString = (input: Dayjs | null) => {
+  return dayjs(input).isValid() ? dayjs(input).format('TTT/MM/DD') : ''
+}
+
+/**
+ * Dayjs 轉 民國日期字串
+ * @param input Dayjs
+ * @returns 日期字串 (年月)
+ */
+export const dayjsToRocStringMonth = (input: Dayjs | null) => {
+  return dayjs(input).isValid() ? dayjs(input).format('TTT/MM') : ''
 }
