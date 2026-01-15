@@ -171,11 +171,6 @@ const MultiSelectEditTable: React.FC<Props> = ({
               handleAdd(value)
             }
           }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && buttonType) {
-              handleAdd(inputValue)
-            }
-          }}
         />
         {buttonType && (
           <Button color="primary" variant="filled" icon={<PlusOutlined />} onClick={() => handleAdd(inputValue)} />
