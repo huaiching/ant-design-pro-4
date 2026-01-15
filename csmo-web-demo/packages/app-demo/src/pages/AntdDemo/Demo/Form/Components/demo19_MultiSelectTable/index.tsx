@@ -34,7 +34,10 @@ const columnEdit = [
         { label: 'B 打針', value: 'B' },
         { label: 'C 住院', value: 'C' },
       ]
-    }
+    },
+    formItemProps: {
+      rules: [{ required: true, message: '不可空白' }]
+    },
   }
 ]
 
