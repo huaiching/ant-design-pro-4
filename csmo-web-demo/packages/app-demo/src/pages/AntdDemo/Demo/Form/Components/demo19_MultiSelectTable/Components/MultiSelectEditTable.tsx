@@ -154,9 +154,14 @@ const MultiSelectEditTable: React.FC<Props> = ({
           value={inputValue}
           placeholder={placeholder}
           onChange={(value) => {
-             setInputValue(value)
+            setInputValue(value)
             if (!buttonType) {
               handleAdd(value)
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && buttonType) {
+              handleAdd(inputValue)
             }
           }}
         />
