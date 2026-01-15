@@ -130,6 +130,18 @@ const MultiSelectTable: React.FC<Props> = ({
 
   /** 驗證規則 */
   const rules = [
+    ...(inputValue.length > 0
+      ? [
+        {
+          validator: async (_: any, value: any[]) => {
+            if (value && value.length > 0) {
+              return Promise.reject(new Error('選擇後，請點擊新增按鈕'))
+            }
+            return Promise.resolve()
+          }
+        }
+      ]
+      : []),
     ...(required
       ? [
         {
@@ -161,7 +173,7 @@ const MultiSelectTable: React.FC<Props> = ({
             options={autoOptions}
             value={inputValue}
             placeholder={placeholder}
-            onChange={(value)=> {
+            onChange={(value) => {
               setInputValue(value)
               if (!buttonType) {
                 handleAdd(value)
@@ -170,7 +182,7 @@ const MultiSelectTable: React.FC<Props> = ({
             onKeyDown={(e) => {
               if (e.key === 'Enter' && buttonType) {
                 handleAdd(inputValue)
-              } 
+              }
             }}
           />
           {buttonType && (

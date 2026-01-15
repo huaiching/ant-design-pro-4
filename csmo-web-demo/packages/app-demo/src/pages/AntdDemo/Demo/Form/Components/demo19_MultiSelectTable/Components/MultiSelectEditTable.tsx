@@ -126,6 +126,18 @@ const MultiSelectEditTable: React.FC<Props> = ({
 
   /** 表單驗證規則 */
   const rules = [
+    ...(inputValue.length > 0
+      ? [
+        {
+          validator: async (_: any, value: any[]) => {
+            if (value && value.length > 0) {
+              return Promise.reject(new Error('選擇後，請點擊新增按鈕'))
+            }
+            return Promise.resolve()
+          }
+        }
+      ]
+      : []),
     ...(required
       ? [
         {
