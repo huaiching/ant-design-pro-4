@@ -175,14 +175,14 @@ const MultiSelectTable: React.FC<Props> = ({
 
         {selectedOptions.length > 0 && (
           <ProTable
+            rowKey="code"
+            columns={columns}
+            dataSource={selectedOptions}
+            size="small"
             search={false}
             options={false}
             pagination={false}
             toolBarRender={false}
-            dataSource={selectedOptions}
-            columns={columns}
-            rowKey="code"
-            size="small"
           />
         )}
       </>
