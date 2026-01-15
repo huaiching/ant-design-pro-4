@@ -107,12 +107,13 @@ const SelectTable: React.FC = () => {
         <MliFormRow gutter={8} style={{ width: '100%' }}>
           <MliFormCol colSize={4 / 3}>
             <MultiSelectTable
-              label="症狀"
-              name="symptom"
+              label="無編輯表格"
+              name="symptom1"
               formRef={formRef}
               column={column}
               optionsData={optionsData}
               required
+              // buttonType
               validator={validateMaxThree}
               onChange={(value) => {
                 message.info('資料筆數：' + value.length)
@@ -121,12 +122,45 @@ const SelectTable: React.FC = () => {
           </MliFormCol>
           <MliFormCol colSize={2}>
             <MultiSelectEditTable
-              label="症狀"
-              name="symptomEdit"
+              label="有編輯表格"
+              name="symptomEdit1"
               formRef={formRef}
               column={columnEdit}
               optionsData={optionsData}
               required
+              // buttonType
+              validator={validateMaxThree}
+              onChange={(value) => {
+                message.info('資料筆數：' + value.length)
+              }}
+            />
+          </MliFormCol>
+        </MliFormRow>
+        <MliFormRow gutter={8} style={{ width: '100%' }}>
+          <MliFormCol colSize={4 / 3}>
+            <MultiSelectTable
+              label="無編輯表格 (按鈕樣式)"
+              name="symptom2"
+              formRef={formRef}
+              column={column}
+              optionsData={optionsData}
+              required
+              buttonType
+              validator={validateMaxThree}
+              onChange={(value) => {
+                message.info('資料筆數：' + value.length)
+              }}
+            />
+          </MliFormCol>
+          <MliFormCol colSize={2}>
+            <MultiSelectEditTable
+              label="有編輯表格 (按鈕樣式)"
+              name="symptomEdit2"
+              formRef={formRef}
+              column={columnEdit}
+              optionsData={optionsData}
+              required
+              buttonType
               validator={validateMaxThree}
               onChange={(value) => {
                 message.info('資料筆數：' + value.length)

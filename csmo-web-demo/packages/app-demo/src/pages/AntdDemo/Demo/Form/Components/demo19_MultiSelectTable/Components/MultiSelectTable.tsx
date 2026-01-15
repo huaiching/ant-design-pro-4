@@ -30,6 +30,9 @@ interface Props {
   /** 是否必填，若為 true 則會檢核至少需輸入一筆資料 */
   required?: boolean
 
+  /** 按鈕類型，true 表示顯示新增按鈕，false 表示不顯示 */
+  buttonType?: true | false
+
   /** 資料異動函式 */
   onChange?: (value: any) => void
 
@@ -60,9 +63,10 @@ const MultiSelectTable: React.FC<Props> = ({
   label,
   name,
   column,
-  placeholder,
+  placeholder = '請選擇',
   formRef,
-  required,
+  required = false,
+  buttonType = false,
   onChange,
   validator
 }) => {
@@ -84,8 +88,8 @@ const MultiSelectTable: React.FC<Props> = ({
   }
 
   /** 新增資料 */
-  const handleAdd = () => {
-    const found = optionsData.find((item) => Object.values(item).join(' ') === inputValue)
+  const handleAdd = (currentInput: string) => {
+    const found = optionsData.find((item) => Object.values(item).join(' ') === currentInput)
     if (!found) {
       message.error('找不到對應的資料')
       return
@@ -156,13 +160,17 @@ const MultiSelectTable: React.FC<Props> = ({
           <AutoComplete
             options={autoOptions}
             value={inputValue}
-            onChange={setInputValue}
             placeholder={placeholder}
-            filterOption={(inputVal, option) =>
-              !!option && option.value.toLowerCase().includes(inputVal.toLowerCase())
-            }
+            onChange={(value)=> {
+              setInputValue(value)
+              if (!buttonType) {
+                handleAdd(value)
+              }
+            }}
           />
-          <Button color="primary" variant="filled" icon={<PlusOutlined />} onClick={handleAdd} />
+          {buttonType && (
+            <Button color="primary" variant="filled" icon={<PlusOutlined />} onClick={() => handleAdd(inputValue)} />
+          )}
         </Space.Compact>
 
         {selectedOptions.length > 0 && (
