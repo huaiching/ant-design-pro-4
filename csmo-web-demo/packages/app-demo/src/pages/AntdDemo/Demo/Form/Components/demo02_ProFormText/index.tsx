@@ -156,7 +156,13 @@ const MyForm: React.FC = () => {
           {/* 案例4 */}
           <ProFormText
             name='receiveNo'
-            label='受理號碼'
+            // label='受理號碼'
+            label={
+              <span>
+                受理號碼
+                <Typography.Text style={{ color: 'blue' }}>（按 F6 或 圖標 查詢）</Typography.Text>
+              </span>
+            }
             placeholder='請輸入受理號碼'
             rules={[
               {
@@ -164,14 +170,22 @@ const MyForm: React.FC = () => {
                 message: '必填'
               }
             ]}
-            fieldProps={{       // 透過 後置圖標 設定 查詢按鈕
+            fieldProps={{
+              // 透過 後置圖標 設定 查詢按鈕  
               suffix: (
                 <Tooltip title='查詢'>
                   <SearchOutlined
                     onClick={() => setShowModal(true)}
                   />
                 </Tooltip>
-              )
+              ),
+              // 監聽鍵盤事件
+              onKeyDown: (e) => {
+                if (e.key === 'F6') {
+                  e.preventDefault(); // 防止 F6 的瀏覽器預設行為
+                  setShowModal(true);
+                }
+              },
             }}
           />
           <OptionReceiveNo
