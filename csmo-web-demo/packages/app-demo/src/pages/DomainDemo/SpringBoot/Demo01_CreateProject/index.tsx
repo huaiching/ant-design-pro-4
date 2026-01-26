@@ -50,7 +50,7 @@ const CreateProject = () => {
             Language 選擇 <code>Java</code>
           </li>
           <li>
-            版本隨便選擇，之後要降版 為 2.7.18
+            版本隨便選擇，之後要手動調整
           </li>
           <li>
             Project Metadata 可依需求調整
@@ -62,28 +62,30 @@ const CreateProject = () => {
           透過 IDE 開啟專案後，調整 <code>pom.xml</code> 內容如下：
         </Paragraph>
 
-        <ol>
-          <li>
-            調降 Spring Boot 的版本
-            <ul>
-              <li>
-                將 <code>spring-boot-starter-parent</code> 版本調降為 <code>2.7.18</code>。
-                <CodeXML code={`<groupId>org.springframework.boot</groupId>
+        <details>
+          <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>Spring Boot 2.7.18</summary>
+          <ol>
+            <li>
+              調降 Spring Boot 的版本
+              <ul>
+                <li>
+                  將 <code>spring-boot-starter-parent</code> 版本調整為 <code>2.7.18</code>。
+                  <CodeXML code={`<groupId>org.springframework.boot</groupId>
 <artifactId>spring-boot-starter-parent</artifactId>
 <version>2.7.18</version>`} />
-              </li>
-              <li>
-                將 <code>Java</code> 調降為 <code>11</code>。
-                <CodeXML code={`<properties>
+                </li>
+                <li>
+                  將 <code>Java</code> 調降為 <code>11</code>。
+                  <CodeXML code={`<properties>
   <java.version>11</java.version>
 </properties>`} />
-              </li>
-            </ul>
-          </li>
-          <li>
-            安裝 <code>swagger</code> <br />
-            在 <code>dependencies</code> 中，加入以下內容：
-            <CodeXML code={`<dependency>
+                </li>
+              </ul>
+            </li>
+            <li>
+              安裝 <code>swagger</code> <br />
+              在 <code>dependencies</code> 中，加入以下內容：
+              <CodeXML code={`<dependency>
     <groupId>org.springdoc</groupId>
     <artifactId>springdoc-openapi-ui</artifactId>
     <version>1.8.0</version>
@@ -93,8 +95,43 @@ const CreateProject = () => {
     <artifactId>swagger-ui</artifactId>
     <version>5.11.10</version>
 </dependency>`} />
-          </li>
-        </ol>
+            </li>
+          </ol>
+        </details>
+
+
+        <details>
+          <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>Spring Boot 3.5.9</summary>
+          <ol>
+            <li>
+              調整 Spring Boot 的版本
+              <ul>
+                <li>
+                  將 <code>spring-boot-starter-parent</code> 版本調整為 <code>3.5.9</code>。
+                  <CodeXML code={`<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-parent</artifactId>
+<version>3.5.9</version>`} />
+                </li>
+                <li>
+                  將 <code>Java</code> 調降為 <code>21</code>。
+                  <CodeXML code={`<properties>
+  <java.version>21</java.version>
+</properties>`} />
+                </li>
+              </ul>
+            </li>
+            <li>
+              安裝 <code>swagger</code> <br />
+              在 <code>dependencies</code> 中，加入以下內容：
+              <CodeXML code={`<dependency>
+	<groupId>org.springdoc</groupId>
+	<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+	<version>2.8.3</version>
+</dependency>`} />
+            </li>
+          </ol>
+
+        </details>
 
         <Title level={3}>3. 設定環境變數 application 文件</Title>
         <Paragraph>
@@ -146,7 +183,7 @@ springdoc:
         <Paragraph>
           於 <code>Application</code> 主程式同目錄下，新增資料夾 <code>config</code>，並在其中 新增檔案 <code>SpringDocConfig.java</code> ，並加入以下內容：
         </Paragraph>
-        <CodeJava  code={`import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+        <CodeJava code={`import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
