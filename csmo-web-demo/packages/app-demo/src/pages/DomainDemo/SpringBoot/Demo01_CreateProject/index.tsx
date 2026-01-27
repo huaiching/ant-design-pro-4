@@ -126,7 +126,7 @@ const CreateProject = () => {
               <CodeXML code={`<dependency>
 	<groupId>org.springdoc</groupId>
 	<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-	<version>2.8.3</version>
+	<version>2.8.6</version>
 </dependency>`} />
             </li>
           </ol>
