@@ -8,7 +8,7 @@ import { debounce } from 'lodash'
 import { log } from 'console'
 import { SearchOutlined } from '@ant-design/icons'
 import OptionReceiveNo from './Components/optionRecevieNo'
-import { toHalfWidth } from '@/utils/StringUtil/StringUtil'
+import { toFullWidth, toHalfWidth } from '@/utils/StringUtil/StringUtil'
 
 // 模擬數據
 let data = {}
@@ -194,11 +194,6 @@ const MyForm: React.FC = () => {
                   setShowModal(true);
                 }
               },
-              // 失去焦點時，將全形字元轉為半形
-              onBlur: (e) => {
-                const value = e.target.value;
-                formRef?.current?.setFieldsValue({ receiveNo: toHalfWidth(value) });
-              }
             }}
           />
           <OptionReceiveNo
@@ -206,6 +201,36 @@ const MyForm: React.FC = () => {
             showModal={showModal}
             setShowModal={setShowModal}
             handleValueChange={handleValueChange}
+          />
+        </MliFormRow>
+        <MliFormRow>
+          {/* 案例 5 */}
+          <ProFormText
+            name='halfWidth'
+            label='半形測試'
+            placeholder=''
+            fieldProps={{ 
+              maxLength: 200,
+              // 失去焦點時，將全形字元轉為半形
+              onBlur: (e) => {
+                const value = e.target.value;
+                formRef?.current?.setFieldsValue({ halfWidth: toHalfWidth(value) });
+              }
+            }}
+          />
+          {/* 案例 6 */}
+          <ProFormText
+            name='fullWidth'
+            label='全形測試'
+            placeholder=''
+            fieldProps={{ 
+              maxLength: 200,
+              // 失去焦點時，將全形字元轉為半形
+              onBlur: (e) => {
+                const value = e.target.value;
+                formRef?.current?.setFieldsValue({ fullWidth: toFullWidth(value) });
+              }
+            }}
           />
         </MliFormRow>
       </ProForm>
