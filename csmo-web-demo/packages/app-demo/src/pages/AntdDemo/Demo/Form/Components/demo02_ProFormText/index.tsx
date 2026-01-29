@@ -8,6 +8,7 @@ import { debounce } from 'lodash'
 import { log } from 'console'
 import { SearchOutlined } from '@ant-design/icons'
 import OptionReceiveNo from './Components/optionRecevieNo'
+import { toHalfWidth } from '@/utils/StringUtil/StringUtil'
 
 // 模擬數據
 let data = {}
@@ -122,7 +123,14 @@ const MyForm: React.FC = () => {
                   noStyle
                   rules={[{ required: true, message: '請輸入地址' }]}
                 >
-                  <Input placeholder="地址" style={{ flex: 3 }} />
+                  <Input
+                    placeholder="地址" style={{ flex: 3 }}
+                    // 失去焦點時，將全形字元轉為半形
+                    onBlur={(e) => {
+                      const value = e.target.value;
+                      formRef?.current?.setFieldsValue({ address: toHalfWidth(value) });
+                    }}
+                  />
                 </ProForm.Item>
               </Space.Compact>
             </ProForm.Item>
@@ -186,6 +194,11 @@ const MyForm: React.FC = () => {
                   setShowModal(true);
                 }
               },
+              // 失去焦點時，將全形字元轉為半形
+              onBlur: (e) => {
+                const value = e.target.value;
+                formRef?.current?.setFieldsValue({ receiveNo: toHalfWidth(value) });
+              }
             }}
           />
           <OptionReceiveNo
