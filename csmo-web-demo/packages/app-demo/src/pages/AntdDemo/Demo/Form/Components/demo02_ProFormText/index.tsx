@@ -8,7 +8,7 @@ import { debounce } from 'lodash'
 import { log } from 'console'
 import { SearchOutlined } from '@ant-design/icons'
 import OptionReceiveNo from './Components/optionRecevieNo'
-import { toFullWidth, toHalfWidth } from '@/utils/StringUtil/StringUtil'
+import { onlyAlnum, toFullWidth, toHalfWidth } from '@/utils/StringUtil/StringUtil'
 
 // 模擬數據
 let data = {}
@@ -229,6 +229,20 @@ const MyForm: React.FC = () => {
               onBlur: (e) => {
                 const value = e.target.value;
                 formRef?.current?.setFieldsValue({ fullWidth: toFullWidth(value) });
+              }
+            }}
+          />
+          {/* 案例 7 */}
+          <ProFormText
+            name='alnum'
+            label='保留英數'
+            placeholder=''
+            fieldProps={{ 
+              maxLength: 200,
+              // 失去焦點時，保留英數 字元，並轉大寫
+              onBlur: (e) => {
+                const value = e.target.value;
+                formRef?.current?.setFieldsValue({ alnum: onlyAlnum(value, true) });
               }
             }}
           />
