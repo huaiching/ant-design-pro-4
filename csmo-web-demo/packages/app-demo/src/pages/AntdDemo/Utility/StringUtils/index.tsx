@@ -12,11 +12,12 @@ const DateUtile: React.FC = () => {
   return (
     <PageContainer title={false}>
       <ProForm grid layout="vertical" formRef={formRef} submitter={false}>
-        <Typography>
+        <Typography style={{ width: '100%' }}>
           <Title level={3}>字串 工具</Title>
           <Paragraph>
             此工具為 <code>字串</code> 的 相關工具，提供 <code>全形半形轉換</code>、
-            <code>僅英文數字</code>、<code>僅數字</code> 等相關工具。<br/>
+            <code>僅英文數字</code>、<code>僅數字</code> 等相關工具。
+            <br />
             使用時，可直接於 Antd 相關元件中，使用 <code>fieldProps 引用方法</code>。
           </Paragraph>
           <Title level={5}>轉換方法</Title>
@@ -239,6 +240,21 @@ export const createTransformProps = (transformFn: (value: string) => string) => 
                 ...halfWidthProps
               }}
             />
+          </MliFormRow>
+
+          <CodeTsx code={`<ProFormText
+  name="halfWidth"
+  label="半形測試"
+  placeholder=""
+  fieldProps={{
+    maxLength: 200,
+    ...halfWidthProps
+  }}
+/>`} />
+
+          <hr />
+
+          <MliFormRow>
             <ProFormText
               name="fullWidth"
               label="全形測試"
@@ -248,6 +264,21 @@ export const createTransformProps = (transformFn: (value: string) => string) => 
                 ...fullWidthProps
               }}
             />
+          </MliFormRow>
+
+          <CodeTsx code={`<ProFormText
+  name="fullWidth"
+  label="全形測試"
+  placeholder=""
+  fieldProps={{
+    maxLength: 200,
+    ...fullWidthProps
+  }}
+/>`} />
+
+          <hr />
+
+          <MliFormRow>
             <ProFormText
               name="alnum"
               label="保留英數"
@@ -257,6 +288,21 @@ export const createTransformProps = (transformFn: (value: string) => string) => 
                 ...alnumProps
               }}
             />
+          </MliFormRow>
+
+          <CodeTsx code={`<ProFormText
+  name="alnum"
+  label="保留英數"
+  placeholder=""
+  fieldProps={{
+    maxLength: 200,
+    ...alnumProps
+  }}
+/>`} />
+
+          <hr />
+
+          <MliFormRow>
             <ProFormText
               name="num"
               label="僅輸入數字"
@@ -267,6 +313,16 @@ export const createTransformProps = (transformFn: (value: string) => string) => 
               }}
             />
           </MliFormRow>
+
+          <CodeTsx code={`<ProFormText
+  name="num"
+  label="僅輸入數字"
+  placeholder=""
+  fieldProps={{
+    maxLength: 200,
+    ...numProps
+  }}
+/>`} />
         </Typography>
       </ProForm>
     </PageContainer>
