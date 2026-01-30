@@ -254,6 +254,12 @@ export default [
             path: '/antdDemo/Utility/rocDateUtils',
             component: './AntdDemo/Utility/RocDateUtils'
           },
+          {
+            // 民國年日期工具
+            name: 'stringUtils',
+            path: '/antdDemo/Utility/stringUtils',
+            component: './AntdDemo/Utility/StringUtils'
+          },
         ]
       },
     ]
