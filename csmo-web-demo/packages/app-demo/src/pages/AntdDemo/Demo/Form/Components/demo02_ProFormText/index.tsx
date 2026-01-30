@@ -1,4 +1,4 @@
-import { halfWidthProps, alnumProps, fullWidthProps } from '@/utils/StringUtil/StringUtil'
+import { halfWidthProps, alnumProps, numProps, fullWidthProps } from '@/utils/StringUtil/StringUtil'
 import { SearchOutlined } from '@ant-design/icons'
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
@@ -228,6 +228,16 @@ const MyForm: React.FC = () => {
             fieldProps={{
               maxLength: 200,
               ...alnumProps
+            }}
+          />
+          {/* 案例 8 */}
+          <ProFormText
+            name="num"
+            label="僅輸入數字"
+            placeholder=""
+            fieldProps={{
+              maxLength: 200,
+              ...numProps
             }}
           />
         </MliFormRow>
