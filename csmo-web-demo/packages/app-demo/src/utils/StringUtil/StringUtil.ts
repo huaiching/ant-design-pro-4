@@ -1,7 +1,9 @@
+// src/utils/formInputUtils.ts
+
+import { FormInstance } from 'antd';
+
 /**
  * 文字轉為半形
- * @param str 要處理的字串
- * @returns 轉換後字串 (全形 轉 半形)
  */
 export const toHalfWidth = (str: string): string => {
   let result = '';
@@ -18,8 +20,6 @@ export const toHalfWidth = (str: string): string => {
 
 /**
  * 文字轉為全形
- * @param str 要處理的字串
- * @returns 轉換後字串 (半形 轉 全形)
  */
 export const toFullWidth = (str: string): string => {
   let result = '';
@@ -35,15 +35,91 @@ export const toFullWidth = (str: string): string => {
 }
 
 /**
- * 僅保留英數字（a-z A-Z 0-9），其他字元全部移除
- * @param str 要處理的字串
- * @param toUpper 是否轉成全大寫（預設 false）
- * @returns 只包含英數字的新字串
+ * 僅保留英數字
  */
 export const onlyAlnum = (input: unknown, toUpper: boolean = false): string => {
-  // 強制轉為字串，處理 null/undefined/非字串情況
-  const str = String(input ?? '');  // null/undefined 轉成空字串
-
+  const str = String(input ?? '');
   const cleaned = str.replace(/[^a-zA-Z0-9]/g, '');
   return toUpper ? cleaned.toUpperCase() : cleaned;
+};
+
+/**
+ * 觸發原生 input 事件，讓 React/Antd Form 同步
+ */
+const triggerInputChange = (element: HTMLInputElement, value: string) => {
+  const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLInputElement.prototype,
+    'value'
+  )?.set;
+
+  nativeInputValueSetter?.call(element, value);
+
+  // 觸發 input 事件
+  const inputEvent = new Event('input', { bubbles: true });
+  element.dispatchEvent(inputEvent);
+
+  // 觸發 change 事件
+  const changeEvent = new Event('change', { bubbles: true });
+  element.dispatchEvent(changeEvent);
+};
+
+/**
+ * 建立自動轉換的 fieldProps
+ */
+const createAutoTransformProps = (transformFn: (value: string) => string) => {
+  let isComposing = false;
+
+  return {
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (isComposing) return;
+      const transformed = transformFn(e.target.value);
+      if (e.target.value !== transformed) {
+        triggerInputChange(e.target, transformed);
+      }
+    },
+    onCompositionStart: () => {
+      isComposing = true;
+    },
+    onCompositionEnd: (e: React.CompositionEvent<HTMLInputElement>) => {
+      isComposing = false;
+      const target = e.target as HTMLInputElement;
+      const transformed = transformFn(target.value);
+      if (target.value !== transformed) {
+        triggerInputChange(target, transformed);
+      }
+    },
+    onBlur: (e: React.FocusEvent<HTMLInputElement>) => {
+      const transformed = transformFn(e.target.value);
+      if (e.target.value !== transformed) {
+        triggerInputChange(e.target, transformed);
+      }
+    },
+  };
+};
+
+/**
+ * 半形轉換 fieldProps
+ */
+export const halfWidthProps = createAutoTransformProps(toHalfWidth);
+
+/**
+ * 全形轉換 fieldProps
+ */
+export const fullWidthProps = createAutoTransformProps(toFullWidth);
+
+/**
+ * 純英數字 fieldProps
+ */
+export const alnumProps = createAutoTransformProps((val) => onlyAlnum(val, false));
+
+/**
+ * 純英數字（大寫）fieldProps
+ */
+export const alnumUpperProps = createAutoTransformProps((val) => onlyAlnum(val, true));
+
+/**
+ * 建立自訂轉換 fieldProps
+ */
+export const createTransformProps = (transformFn: (value: string) => string) => {
+  return createAutoTransformProps(transformFn);
 };
