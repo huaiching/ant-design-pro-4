@@ -45,11 +45,11 @@ const DateUtile: React.FC = () => {
               { title: '函式', dataIndex: 'method' }
             ]}
             dataSource={[
-              { name: '半形轉換 fieldProps', method: 'toFullWidth' },
-              { name: '全形轉換 fieldProps', method: 'toFullWidth' },
-              { name: '保留英文與數字 fieldProps', method: 'toFullWidth' },
-              { name: '保留英文與數字（大寫）fieldProps', method: 'toFullWidth' },
-              { name: '保留數字 fieldProps', method: 'toFullWidth' }
+              { name: '半形轉換 fieldProps', method: 'halfWidthProps' },
+              { name: '全形轉換 fieldProps', method: 'fullWidthProps' },
+              { name: '保留英文與數字 fieldProps', method: 'alnumProps' },
+              { name: '保留英文與數字（大寫）fieldProps', method: 'alnumUpperProps' },
+              { name: '保留數字 fieldProps', method: 'numProps' }
             ]}
             pagination={false}
           />
