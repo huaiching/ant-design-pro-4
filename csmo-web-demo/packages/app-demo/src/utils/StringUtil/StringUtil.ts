@@ -1,7 +1,3 @@
-// src/utils/formInputUtils.ts
-
-import { FormInstance } from 'antd';
-
 /**
  * 文字轉為半形
  */
@@ -11,6 +7,9 @@ export const toHalfWidth = (str: string): string => {
     const charCode = str.charCodeAt(i);
     if (charCode >= 0xFF01 && charCode <= 0xFF5E) {
       result += String.fromCharCode(charCode - 0xFEE0);
+    } else if (charCode === 0x3000) {
+      // 全形空格轉半形
+      result += ' ';
     } else {
       result += str[i];
     }
@@ -25,7 +24,11 @@ export const toFullWidth = (str: string): string => {
   let result = '';
   for (let i = 0; i < str.length; i++) {
     const charCode = str.charCodeAt(i);
-    if (charCode >= 0x21 && charCode <= 0x7E) {
+    if (charCode === 0x20) {
+      // 半形空格轉全形
+      result += String.fromCharCode(0x3000);
+    } else if (charCode >= 0x21 && charCode <= 0x7E) {
+      // 半形符號和字母轉全形
       result += String.fromCharCode(charCode + 0xFEE0);
     } else {
       result += str[i];
@@ -70,11 +73,24 @@ const createAutoTransformProps = (transformFn: (value: string) => string) => {
   let isComposing = false;
 
   return {
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+    onInput: (e: React.FormEvent<HTMLInputElement>) => {
       if (isComposing) return;
-      const transformed = transformFn(e.target.value);
-      if (e.target.value !== transformed) {
-        triggerInputChange(e.target, transformed);
+
+      const target = e.target as HTMLInputElement;
+      const currentValue = target.value;
+      const transformed = transformFn(currentValue);
+
+      if (currentValue !== transformed) {
+        const start = target.selectionStart ?? 0;
+        const end = target.selectionEnd ?? 0;
+
+        // 設置新值
+        triggerInputChange(target, transformed);
+
+        // 恢復光標位置
+        requestAnimationFrame(() => {
+          target.setSelectionRange(start, end);
+        });
       }
     },
     onCompositionStart: () => {
@@ -83,14 +99,26 @@ const createAutoTransformProps = (transformFn: (value: string) => string) => {
     onCompositionEnd: (e: React.CompositionEvent<HTMLInputElement>) => {
       isComposing = false;
       const target = e.target as HTMLInputElement;
-      const transformed = transformFn(target.value);
-      if (target.value !== transformed) {
-        triggerInputChange(target, transformed);
+      const currentValue = target.value;
+      const transformed = transformFn(currentValue);
+
+      if (currentValue !== transformed) {
+        setTimeout(() => {
+          const start = target.selectionStart ?? 0;
+          triggerInputChange(target, transformed);
+
+          // 恢復光標位置
+          requestAnimationFrame(() => {
+            target.setSelectionRange(start, start);
+          });
+        }, 0);
       }
     },
     onBlur: (e: React.FocusEvent<HTMLInputElement>) => {
-      const transformed = transformFn(e.target.value);
-      if (e.target.value !== transformed) {
+      const currentValue = e.target.value;
+      const transformed = transformFn(currentValue);
+
+      if (currentValue !== transformed) {
         triggerInputChange(e.target, transformed);
       }
     },
