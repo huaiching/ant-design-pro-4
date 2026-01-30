@@ -42,6 +42,7 @@ export default {
   'menu.antd.Demo.PageTemplates': '頁面樣板 (PageTemplates)',
   'menu.antd.Utility': '小工具',
   'menu.antd.Utility.rocDateUtils': '民國年日期工具',
+  'menu.antd.Utility.stringUtils': '字串工具',
 
   'menu.mobXDemo': 'Mobx 使用範例',
   'menu.mobXDemo.demo01': '使用說明',
