@@ -1,5 +1,5 @@
 /**
- * 文字轉為半形
+ * 半形轉換
  */
 export const toHalfWidth = (str: string): string => {
   let result = '';
@@ -18,7 +18,7 @@ export const toHalfWidth = (str: string): string => {
 }
 
 /**
- * 文字轉為全形
+ * 全形轉換
  */
 export const toFullWidth = (str: string): string => {
   let result = '';
@@ -38,7 +38,7 @@ export const toFullWidth = (str: string): string => {
 }
 
 /**
- * 僅保留英數字
+ * 保留英文與數字
  */
 export const onlyAlnum = (input: unknown, toUpper: boolean = false): string => {
   const str = String(input ?? '');
@@ -47,7 +47,7 @@ export const onlyAlnum = (input: unknown, toUpper: boolean = false): string => {
 };
 
 /**
- * 僅保留數字
+ * 保留數字
  */
 export const onlyNum = (input: unknown): string => {
   const str = String(input ?? '');
@@ -145,23 +145,16 @@ export const halfWidthProps = createAutoTransformProps(toHalfWidth);
 export const fullWidthProps = createAutoTransformProps(toFullWidth);
 
 /**
- * 純英數字 fieldProps
+ * 保留英文與數字 fieldProps
  */
 export const alnumProps = createAutoTransformProps((val) => onlyAlnum(val, false));
 
 /**
- * 純英數字（大寫）fieldProps
+ * 保留英文與數字（大寫）fieldProps
  */
 export const alnumUpperProps = createAutoTransformProps((val) => onlyAlnum(val, true));
 
 /**
- * 純英數字 fieldProps
+ * 保留數字 fieldProps
  */
 export const numProps = createAutoTransformProps((val) => onlyNum(val));
-
-/**
- * 建立自訂轉換 fieldProps
- */
-export const createTransformProps = (transformFn: (value: string) => string) => {
-  return createAutoTransformProps(transformFn);
-};
