@@ -51,7 +51,7 @@ export const onlyAlnum = (input: unknown, toUpper: boolean = false): string => {
  */
 export const onlyNum = (input: unknown): string => {
   const str = String(input ?? '');
-  const cleaned = toHalfWidth(str).replace(/[^a-zA-Z0-9]/g, '');
+  const cleaned = toHalfWidth(str).replace(/[^0-9]/g, '');
   return cleaned;
 };
 
