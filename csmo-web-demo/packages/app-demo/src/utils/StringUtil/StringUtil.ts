@@ -42,8 +42,17 @@ export const toFullWidth = (str: string): string => {
  */
 export const onlyAlnum = (input: unknown, toUpper: boolean = false): string => {
   const str = String(input ?? '');
-  const cleaned = str.replace(/[^a-zA-Z0-9]/g, '');
+  const cleaned = toHalfWidth(str).replace(/[^a-zA-Z0-9]/g, '');
   return toUpper ? cleaned.toUpperCase() : cleaned;
+};
+
+/**
+ * 僅保留數字
+ */
+export const onlyNum = (input: unknown): string => {
+  const str = String(input ?? '');
+  const cleaned = toHalfWidth(str).replace(/[^a-zA-Z0-9]/g, '');
+  return cleaned;
 };
 
 /**
@@ -144,6 +153,11 @@ export const alnumProps = createAutoTransformProps((val) => onlyAlnum(val, false
  * 純英數字（大寫）fieldProps
  */
 export const alnumUpperProps = createAutoTransformProps((val) => onlyAlnum(val, true));
+
+/**
+ * 純英數字 fieldProps
+ */
+export const numProps = createAutoTransformProps((val) => onlyNum(val));
 
 /**
  * 建立自訂轉換 fieldProps
