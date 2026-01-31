@@ -18,7 +18,7 @@ interface CodeTEXTProps {
   copyable?: boolean;
 }
 
-const CodeText: React.FC<CodeTEXTProps> = ({ code, title = 'TEXT', copyable = true }) => {
+const CodeText: React.FC<CodeTEXTProps> = ({ code, title, copyable = true }) => {
   return (
     <Card
       bodyStyle={{ padding: 0, margin: '16px 0 16px 0' }}

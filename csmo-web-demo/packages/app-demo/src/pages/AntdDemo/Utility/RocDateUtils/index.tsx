@@ -48,7 +48,9 @@ const DateUtile: React.FC = () => {
           
           <details>
             <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>工具程式碼</summary>
-            <CodeTsx code={`import { message } from 'antd'
+            <CodeTsx 
+              title="rocDateUtils.ts"
+              code={`import { message } from 'antd'
 import dayjs, { Dayjs } from 'dayjs'
 
 /**
@@ -247,7 +249,9 @@ export const dayjsToRocStringMonth = (input: Dayjs | null) => {
           </Paragraph>
           <details>
             <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>工具程式碼</summary>
-            <CodeTsx code={`import dayjs from "dayjs"
+            <CodeTsx 
+              title="minguoParse.ts"
+              code={`import dayjs from "dayjs"
 
 const YEAR_BIAS = 1911
 

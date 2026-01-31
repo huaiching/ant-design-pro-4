@@ -68,7 +68,7 @@ interface CodeXMLProps {
   copyable?: boolean;
 }
 
-const CodeXML: React.FC<CodeXMLProps> = ({ code, copyable = true }) => {
+const CodeXML: React.FC<CodeXMLProps> = ({ code, title, copyable = true }) => {
   const escaped = code
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')

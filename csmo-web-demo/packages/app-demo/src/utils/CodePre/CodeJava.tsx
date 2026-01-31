@@ -62,7 +62,7 @@ interface CodeJavaProps {
   copyable?: boolean;
 }
 
-const CodeJava: React.FC<CodeJavaProps> = ({ code, copyable = true }) => {
+const CodeJava: React.FC<CodeJavaProps> = ({ code, title, copyable = true }) => {
   const escaped = code
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -70,6 +70,7 @@ const CodeJava: React.FC<CodeJavaProps> = ({ code, copyable = true }) => {
 
   return (
     <Card
+      title={title}
       bodyStyle={{ padding: 0, margin: '16px 0 16px 0' }}
       size='small'
       variant="borderless"

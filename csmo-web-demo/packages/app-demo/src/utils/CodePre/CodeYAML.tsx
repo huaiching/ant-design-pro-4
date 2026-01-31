@@ -70,7 +70,7 @@ interface CodeYAMLProps {
   copyable?: boolean;
 }
 
-const CodeYAML: React.FC<CodeYAMLProps> = ({ yaml, title = 'YAML', copyable = true }) => {
+const CodeYAML: React.FC<CodeYAMLProps> = ({ yaml, title, copyable = true }) => {
 
   return (
     <Card

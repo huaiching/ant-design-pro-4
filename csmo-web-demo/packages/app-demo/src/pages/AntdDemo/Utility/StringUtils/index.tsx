@@ -1,5 +1,5 @@
 import CodeTsx from '@/utils/CodePre/CodeTsx'
-import { alnumProps, fullWidthProps, halfWidthProps, numProps } from '@/utils/StringUtil/StringUtil'
+import { alnumProps, fullWidthProps, halfWidthProps, numProps } from '@/utils/FieldUtil/StringUtil'
 import { PageContainer, ProForm, ProFormInstance, ProFormText } from '@ant-design/pro-components'
 import { MliFormRow } from '@mli-csmo/base'
 import { Table, Typography } from 'antd'
@@ -57,6 +57,7 @@ const DateUtile: React.FC = () => {
           <details>
             <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>工具程式碼</summary>
             <CodeTsx
+              title='StringUtil.ts'
               code={`/**
  * 文字轉為半形
  */

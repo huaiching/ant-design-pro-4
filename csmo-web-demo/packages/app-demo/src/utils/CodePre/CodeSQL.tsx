@@ -60,7 +60,7 @@ interface CodeSQLProps {
   copyable?: boolean; // 預設開啟複製
 }
 
-const CodeSQL: React.FC<CodeSQLProps> = ({ sql, copyable = true }) => {
+const CodeSQL: React.FC<CodeSQLProps> = ({ sql, title, copyable = true }) => {
   const highlighted = sqlHighlight(sql);
 
   return (

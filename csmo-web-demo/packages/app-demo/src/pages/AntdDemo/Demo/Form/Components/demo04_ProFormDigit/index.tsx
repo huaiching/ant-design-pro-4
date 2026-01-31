@@ -5,6 +5,7 @@ import { Button, Input, InputNumber, message, Select, Space, Typography } from '
 import React, { useEffect, useRef, useState } from 'react'
 import { log } from 'console'
 import { debounce } from 'lodash'
+import { currencyProps, currencySelectProps, separatorProps } from '@/utils/FieldUtil/DigitUtil'
 
 // 模擬數據
 let data = {}
@@ -84,13 +85,29 @@ const MyForm: React.FC = () => {
       >
         <MliFormRow>
           <ProFormDigit
+            name='faceAmt'
+            label='保額'
+            placeholder='保額'
+            colSize={1}
+            fieldProps={{
+              max: 1000000,
+              min: 0,
+              ...separatorProps,      // 千分位格式化
+              ...currencyProps(currency),  // 幣別精度設定
+              ...currencySelectProps(currency, setCurrency),  // 幣別選擇器
+            }}
+            rules={[
+              { required: true, message: '必填' }
+            ]}
+          />
+          <ProFormDigit
             name='amt'
             label='工本費'
             tooltip='這是收據的工本費'
             placeholder='請輸入工本費'
             colSize={1}
             fieldProps={{
-              max: 100,
+              max: 1000,
               min: 0,
               step: currency === 'TWD' ? 1 : 0.01,      // 每次改變的數值
               precision: currency === 'TWD' ? 0 : 2,    // 數值經度
@@ -103,7 +120,6 @@ const MyForm: React.FC = () => {
               { required: true, message: '必填' }
             ]}
           />
-
           <MliFormCol colSize={1}>
             <ProForm.Item label="比例" required>
               <Space.Compact>

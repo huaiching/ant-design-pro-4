@@ -1,4 +1,4 @@
-import { halfWidthProps, alnumProps, numProps, fullWidthProps } from '@/utils/StringUtil/StringUtil'
+import { halfWidthProps, alnumProps, numProps, fullWidthProps } from '@/utils/FieldUtil/StringUtil'
 import { SearchOutlined } from '@ant-design/icons'
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
