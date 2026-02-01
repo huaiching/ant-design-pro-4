@@ -1,13 +1,22 @@
 import { Select } from "antd";
 
 /**
+ * 將數字轉成千分位格式的字串
+ * @param value 數字
+ * @returns 千分位逗號格式的字串
+ */
+export const toSeprator = (value: number | undefined): string => {
+  if (value == null) return '';
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+/**
  * 顯示千分位逗號的 ProFormDigit 欄位屬性設定
  */
 export const separatorProps = {
   // 顯示格式化：數字 → 帶千分位逗號
   formatter: (value?: number) => {
-    if (value == null) return '';
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return toSeprator(value);
   },
 
   // 解析輸入：移除逗號，轉成 number

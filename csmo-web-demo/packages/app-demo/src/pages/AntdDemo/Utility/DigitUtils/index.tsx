@@ -25,6 +25,7 @@ const DateUtile: React.FC = () => {
             <br />
             使用時，可直接於 Antd 相關元件中，使用 <code>fieldProps 引用方法</code>。
           </Paragraph>
+          <Title level={5}>轉換方法</Title>
           <Table
             size="small"
             bordered
@@ -33,7 +34,20 @@ const DateUtile: React.FC = () => {
               { title: '函式', dataIndex: 'method' }
             ]}
             dataSource={[
-              { name: '顯示千分位逗號', method: 'separatorProps' },
+              { name: '數字轉成千分位格式的字串', method: 'toSeprator' }
+            ]}
+            pagination={false}
+          />
+          <Title level={5}>fieldProps 引用方法</Title>
+          <Table
+            size="small"
+            bordered
+            columns={[
+              { title: '方法', dataIndex: 'name', width: 300 },
+              { title: '函式', dataIndex: 'method' }
+            ]}
+            dataSource={[
+              { name: '顯示千分位', method: 'separatorProps' },
               { name: '依照 台/外幣 動態設定 數值精度', method: 'currencyProps' },
               { name: '前置幣別選擇器', method: 'currencySelectProps' }
             ]}
