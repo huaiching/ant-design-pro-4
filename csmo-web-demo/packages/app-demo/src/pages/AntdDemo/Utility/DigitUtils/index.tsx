@@ -1,7 +1,6 @@
 import CodeTsx from '@/utils/CodePre/CodeTsx'
 import { separatorProps, currencyProps, currencySelectProps } from '@/utils/FieldUtil/DigitUtil'
-import { alnumProps, fullWidthProps, halfWidthProps, numProps } from '@/utils/FieldUtil/StringUtil'
-import { PageContainer, ProForm, ProFormDigit, ProFormInstance, ProFormText } from '@ant-design/pro-components'
+import { PageContainer, ProForm, ProFormDigit, ProFormInstance } from '@ant-design/pro-components'
 import { MliFormRow } from '@mli-csmo/base'
 import { Table, Typography } from 'antd'
 import { useEffect, useRef, useState } from 'react'
