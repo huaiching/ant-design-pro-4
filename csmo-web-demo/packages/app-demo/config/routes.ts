@@ -260,6 +260,12 @@ export default [
             path: '/antdDemo/Utility/stringUtils',
             component: './AntdDemo/Utility/StringUtils'
           },
+          {
+            // 民國年日期工具
+            name: 'digitUtils',
+            path: '/antdDemo/Utility/digitUtils',
+            component: './AntdDemo/Utility/DigitUtils'
+          },
         ]
       },
     ]
