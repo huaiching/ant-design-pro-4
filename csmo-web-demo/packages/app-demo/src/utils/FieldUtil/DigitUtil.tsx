@@ -54,6 +54,11 @@ export const currencySelectProps = (currency: string = 'TWD', setCurrency: (valu
       <Select value={currency} onChange={setCurrency} style={{ width: 90 }}>
         <Select.Option value="TWD">新台幣</Select.Option>
         <Select.Option value="USD">美元</Select.Option>
+        <Select.Option value="AUD">澳幣</Select.Option>
+        <Select.Option value="CNY">人民幣</Select.Option>
+        <Select.Option value="EUR">歐元</Select.Option>
+        <Select.Option value="NZD">紐幣</Select.Option>
+        <Select.Option value="ZAR">南非幣</Select.Option>
       </Select>
     ),
   }
