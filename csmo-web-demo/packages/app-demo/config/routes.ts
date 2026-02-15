@@ -453,6 +453,12 @@ export default [
             name: 'FieldComparerUtil',
             component: './DomainDemo/UtilityCode/FieldComparerUtil'
           },
+          {
+            // Excel 讀取工具
+            path: 'LoadExcelUtil',
+            name: 'LoadExcelUtil',
+            component: './DomainDemo/UtilityCode/LoadExcelUtil'
+          },
         ]
       },
       {
