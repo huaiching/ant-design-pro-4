@@ -31,6 +31,7 @@ const LoadExcelUtil = () => {
           CSMO 專案 已包含此套件，不需要設定
         </Paragraph>
 
+        <Title level={3}>工具程式</Title>
         <Table
           size="small"
           bordered
@@ -39,7 +40,6 @@ const LoadExcelUtil = () => {
             { title: '函式', dataIndex: 'method' }
           ]}
           dataSource={[
-            { name: '從前端上傳的檔案讀取 Excel 資料', method: 'loadExcelFromMultipartFile(MultipartFile file, boolean hasHeader)' },
             { name: '從 resources 資料夾讀取 Excel 檔案', method: 'loadExcelFromResources(String resourcePath, boolean hasHeader)' },
           ]}
           pagination={false}
@@ -61,36 +61,23 @@ import java.util.List;
 
 public class LoadExcelUtil {
     /**
-     * 從前端上傳的檔案讀取 Excel 資料
-     *
-     * @param file      Excel檔案
-     * @param hasHeader true.存在標題列 / false.不存在標題列 (標題列不會讀取)
-     */
-    public static List<Object[]> loadExcelFromMultipartFile(MultipartFile file, boolean hasHeader)
-            throws IOException, InvalidFormatException {
-        try (InputStream inputStream = file.getInputStream()) {
-            return readExcel(inputStream, hasHeader);
-        }
-    }
-
-    /**
      * 從 resources 資料夾讀取 Excel 檔案
      *
      * @param resourcePath Excel檔案 (路徑)
      * @param hasHeader    true.存在標題列 / false.不存在標題列 (標題列不會讀取)
      */
-    public static List<Object[]> loadExcelFromResources(String resourcePath, boolean hasHeader)
+    public static List<Object[]> loadExcel(String resourcePath, boolean hasHeader)
             throws IOException, InvalidFormatException {
         ClassPathResource resource = new ClassPathResource(resourcePath);
         try (InputStream inputStream = resource.getInputStream()) {
-            return readExcel(inputStream, hasHeader);
+            return loadExcel(inputStream, hasHeader);
         }
     }
 
     /**
      * 核心讀取邏輯：統一每行長度為整個 sheet 的最大欄數
      */
-    private static List<Object[]> readExcel(InputStream inputStream, boolean hasHeader)
+    private static List<Object[]> loadExcel(InputStream inputStream, boolean hasHeader)
             throws IOException, InvalidFormatException {
         Workbook workbook = WorkbookFactory.create(inputStream);
         Sheet sheet = workbook.getSheetAt(0);
@@ -175,10 +162,32 @@ public class LoadExcelUtil {
             }
             case BOOLEAN -> cell.getBooleanCellValue();
             case BLANK -> null;
-            default -> cell.toString().trim();  // 保險
+            default -> cell.toString().trim();
         };
     }
 }`} />
+
+        <hr />
+
+        <Title level={3}>使用範例</Title>
+        <CodeJava code={`private List<RuleExpressionDTO> getRuleExpression() {
+    List<RuleExpressionDTO> ruleExpressionList = new ArrayList<>();
+    try {
+        List<Object[]> loadDataList = MliLoadExcelUtil.loadExcelFromResources("templates/RuleExpression.xlsx", true);
+        for (Object[] data : loadDataList) {
+            RuleExpressionDTO ruleExpressionDTO = new RuleExpressionDTO();
+            ruleExpressionDTO.setNbErrCode(String.valueOf(data[0]));
+            ruleExpressionDTO.setGroupCode(String.valueOf(data[1]));
+            ruleExpressionDTO.setRuleModel(String.valueOf(data[2]));
+            ruleExpressionDTO.setExpression(String.valueOf(data[3]));
+            ruleExpressionList.add(ruleExpressionDTO);
+        }
+    } catch (IOException | InvalidFormatException e) {
+        throw new MliException(HttpStatus.INTERNAL_SERVER_ERROR, "規則表 Excel 讀取失敗:" + e.getMessage());
+    }
+    return ruleExpressionList;
+}`} />
+
 
       </Typography>
     </PageContainer>
