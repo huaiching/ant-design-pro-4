@@ -27,7 +27,7 @@ const Big5Util = () => {
           pagination={false}
         />
 
-        <CodeJava code={`public class Big5Util {
+        <CodeJava title="Big5Util" code={`public class Big5Util {
     /**
      * 計算字串長度 (全形 佔 2) <br/>
      * - 英文、數字、符號 = 1 <br/>

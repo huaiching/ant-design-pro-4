@@ -71,7 +71,10 @@ const CodeJava: React.FC<CodeJavaProps> = ({ code, title, copyable = true }) => 
   return (
     <Card
       title={title}
-      bodyStyle={{ padding: 0, margin: '16px 0 16px 0' }}
+      style={{  margin: '30px 0' }}
+      styles={{
+        body: {padding: 0, margin: '16px 0 16px 0'}
+      }}
       size='small'
       variant="borderless"
       extra={

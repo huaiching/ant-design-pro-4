@@ -31,7 +31,7 @@ const ZipUtil = () => {
           pagination={false}
         />
 
-        <CodeJava code={`import org.slf4j.Logger;
+        <CodeJava title="FieldComparerUtil" code={`import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
