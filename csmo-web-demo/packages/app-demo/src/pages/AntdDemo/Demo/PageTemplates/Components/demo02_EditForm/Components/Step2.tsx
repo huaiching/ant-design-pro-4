@@ -1,6 +1,7 @@
 /**
  * 第二頁 編輯資料頁面
  * 變數透過 mobx 設定 可以減少透過 props 傳遞的麻煩
+ * 透過 Mobx 定義 formRef 來保存不同頁簽的資料
  */
 
 import {
@@ -17,11 +18,12 @@ import { observer } from 'mobx-react'
 import React, { useEffect, useState } from 'react'
 import basicStore from '../Mobx/basicStore'
 import formRefStore from '../Mobx/formRefStore'
-import poTableStore from '../Mobx/poTableStore'
+import poTableStore from '../Mobx/tab2Store'
 import tabRefStore from '../Mobx/tabRefStore'
 import InfoForm from './Components/InfoForm'
 import TabContent1 from './Components/TabContent1'
 import TabContent2 from './Components/TabContent2'
+import tab1Store from '../Mobx/tab1Store'
 
 interface Props {
   handleStep: (step: number) => void
@@ -92,7 +94,7 @@ const Step2Form: React.FC<Props> = ({ handleStep, state }) => {
         [activeTab]: 'valid'
       }))
       setActiveTab(key)
-      // 👉 新增呼叫進入事件
+      // 呼叫進入事件
       setTimeout(() => {
         tabRefStore.runTabEnterFn(key)
       }, 0) // setTimeout 避免和狀態更新衝突
@@ -135,7 +137,7 @@ const Step2Form: React.FC<Props> = ({ handleStep, state }) => {
       }
       // 全部檢核皆通過，進行 完成處理
       log('basicData', basicData)
-      log('tab1', formRef.current?.getFieldValue('tab1'))
+      log('tab1', tab1Store.getTab1)
       log('tab2', poTableStore.getPoTableList)
       message.success('送出成功')
     } else {

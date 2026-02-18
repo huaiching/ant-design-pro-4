@@ -268,6 +268,25 @@ export default [
           },
         ]
       },
+      {
+        // 開發模板
+        name: 'Sample',
+        path: '/antdDemo/Sample',
+        routes: [
+          {
+            // 主流程
+            name: 'Main',
+            path: '/antdDemo/Sample/Main',
+            component: './AntdDemo/Sample/Main'
+          },
+          {
+            // 編輯子頁面
+            name: 'Edit',
+            path: '/antdDemo/Sample/Edit',
+            component: './AntdDemo/Sample/Edit'
+          },
+        ]
+      },
     ]
   },
   {

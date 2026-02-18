@@ -18,6 +18,7 @@ import React, { useEffect, useState } from 'react'
 import basicStore from '../Mobx/basicStore'
 import formRefStore from '../Mobx/formRefStore'
 import optionsStore from '../Mobx/optionStore'
+import { toUpperProps } from '@/utils/FieldUtil/StringUtil'
 
 interface Props {
   handleStep: (step: number) => void
@@ -91,11 +92,7 @@ const Step1Form: React.FC<Props> = ({ handleStep, state }) => {
             colSize={1}
             rules={[{ required: true }]}
             fieldProps={{
-              onChange: (e) => {
-                // 強制將值設為大寫
-                const upperCaseValue = e.target.value.toUpperCase()
-                formRef.current?.setFieldsValue({ receiveNo: upperCaseValue })
-              }
+              ...toUpperProps
             }}
           />
           <ProFormDatePicker

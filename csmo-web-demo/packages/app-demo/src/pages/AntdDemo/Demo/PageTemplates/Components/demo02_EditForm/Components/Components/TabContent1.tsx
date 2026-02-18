@@ -4,18 +4,19 @@
  * 如果 僅需要塞值，可以不用將 formRef 引入
  */
 
-import React, { useEffect } from 'react'
-import { ProFormText } from '@ant-design/pro-components'
+import React, { useEffect, useRef } from 'react'
+import { ProForm, ProFormInstance, ProFormText } from '@ant-design/pro-components'
 import { observer } from 'mobx-react'
-import formRefStore from '../../Mobx/formRefStore'
 import { message } from 'antd'
 import tabRefStore from '../../Mobx/tabRefStore'
+import tab1Store from '../../Mobx/tab1Store'
 
 const TabContent1: React.FC = () => {
-  const formRef = formRefStore.getFormRef
+  const formRef = useRef<ProFormInstance>()
+  const tab1Data = tab1Store.getTab1
 
   useEffect(() => {
-    // 註冊 tab1 的切換前事件，做表單驗證
+    // 註冊 頁簽 的切換前事件，做表單驗證
     tabRefStore.setTabLeaveFn('tab1', async () => {
       message.info('Tab1 切換')
       const valid = await formRef.current?.validateFields()
@@ -32,18 +33,33 @@ const TabContent1: React.FC = () => {
     })
   }, [])
 
+  // 頁籤初次載入時，將 mainForm 的資料帶入
+  useEffect(() => {
+    formRef.current?.setFieldsValue(tab1Data)
+  }, [])
+
+  // 表單值變更處理，使用 debounce 限制觸發頻率
+  const handleValueChange = () => {
+    // 取得表單變更資料
+    const values = formRef.current?.getFieldsValue()
+    tab1Store.setTab1(values)
+  }
+
   return (
-    <>
+    <ProForm
+      formRef={formRef} submitter={false} layout="vertical"
+      onValuesChange={handleValueChange}
+    >
       <ProFormText
-        name={['tab1', 'addrss']}
+        name={'address'}
         label='地址'
         rules={[{ required: true }]} />
       <ProFormText
-        name={['tab1', 'phone']}
+        name={'phone'}
         label='電話'
         rules={[{ required: true }]} />
       <div style={{ height: '1000px' }}>長內容區域...</div>
-    </>
+    </ProForm>
   )
 }
 

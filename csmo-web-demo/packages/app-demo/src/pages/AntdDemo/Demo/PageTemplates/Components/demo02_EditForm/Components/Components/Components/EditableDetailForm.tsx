@@ -59,7 +59,7 @@ const EditableDetailForm: React.FC<EditableDetailFormProps> = ({
             name='poIssueDate'
             label='保單生效日'
             fieldProps={{
-              format: 'YYYY/MM/DD',
+              format: 'TTT/MM/DD',
               style: { width: '100%' }
             }}
           />

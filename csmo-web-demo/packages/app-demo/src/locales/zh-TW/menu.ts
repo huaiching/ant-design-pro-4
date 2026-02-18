@@ -44,6 +44,9 @@ export default {
   'menu.antd.Utility.rocDateUtils': '民國年日期工具',
   'menu.antd.Utility.stringUtils': '字串工具',
   'menu.antd.Utility.digitUtils': '數字工具',
+  'menu.antd.Sample': '開發模板',
+  'menu.antd.Sample.Main': '主流程',
+  'menu.antd.Sample.Edit': '編輯子頁面',
 
   'menu.mobXDemo': 'Mobx 使用範例',
   'menu.mobXDemo.demo01': '使用說明',

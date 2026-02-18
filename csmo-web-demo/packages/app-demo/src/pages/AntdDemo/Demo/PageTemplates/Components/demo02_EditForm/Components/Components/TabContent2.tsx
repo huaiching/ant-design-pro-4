@@ -9,7 +9,7 @@ import { ProTable, ActionType, ProColumns, ProCard } from '@ant-design/pro-compo
 import { Button, message } from 'antd'
 import EditableDetailForm from './Components/EditableDetailForm'
 import { observer } from 'mobx-react'
-import poTableStore, { PoTable } from '../../Mobx/poTableStore'
+import poTableStore, { PoTable } from '../../Mobx/tab2Store'
 import formRefStore from '../../Mobx/formRefStore'
 import tabRefStore from '../../Mobx/tabRefStore'
 
@@ -20,7 +20,7 @@ const TabContent2: React.FC = () => {
   const [editableRow, setEditableRow] = useState<PoTable | undefined>() // 目前正在編輯的資料列
 
   useEffect(() => {
-    // 註冊 tab1 的切換前事件，做表單驗證
+    // 註冊 頁簽 的切換前事件，做表單驗證
     tabRefStore.setTabLeaveFn('tab2', async () => {
       message.info('Tab2 切換')
       const valid = await formRef.current?.validateFields()

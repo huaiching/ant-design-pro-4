@@ -10,7 +10,7 @@ import { makeAutoObservable } from 'mobx'
 
 class TabRefStore {
   tabLeaveFns = new Map<string, () => Promise<boolean>>()
-  tabEnterFns = new Map<string, () => void>() // 👉 新增 tab 進入時的事件
+  tabEnterFns = new Map<string, () => void>() // tab 進入時的事件
 
   constructor() {
     makeAutoObservable(this)
