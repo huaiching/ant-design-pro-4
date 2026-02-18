@@ -4,7 +4,10 @@ import { Button, FloatButton } from 'antd';
 import { observer } from 'mobx-react';
 import React, { useEffect, useRef } from 'react'
 
-const myExample: React.FC = () => {
+/**
+ * 主流程 的 頁面結構範例
+ */
+const SampleMain: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
 
   useEffect(() => {
@@ -15,11 +18,11 @@ const myExample: React.FC = () => {
   }, []);
 
   const initData = () => {
-    // 資料初始化
+    // 資料初始化: 呼叫 子頁面的 mobx init 方法 進行資料初始化
   }
 
   const readData = () => {
-    // 讀取資料
+    // 讀取資料: 如果需要呼叫 API 取得資料 就在這裡進行
   }
 
   return (
@@ -42,7 +45,6 @@ const myExample: React.FC = () => {
         >
           <FloatButton
             icon={<VerticalAlignTopOutlined />}
-            // tooltip='回頂部'
             onClick={() => {
               window.scrollTo({
                 top: 0,
@@ -57,7 +59,6 @@ const myExample: React.FC = () => {
           />
           <FloatButton
             icon={<VerticalAlignBottomOutlined />}
-            // tooltip='到底部'
             onClick={() => {
               window.scrollTo({
                 top: document.documentElement.scrollHeight,
@@ -81,4 +82,4 @@ const myExample: React.FC = () => {
   )
 }
 
-export default observer(myExample)
+export default observer(SampleMain)
