@@ -41,6 +41,10 @@ const SampleMain: React.FC = () => {
     initData()
     // 讀取資料
     readData()
+    
+    return () => {
+      // 離開頁面前的處理
+    }
   }, []);
 
   const initData = () => {
