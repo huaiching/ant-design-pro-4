@@ -1,5 +1,5 @@
 import CodeTsx from '@/utils/CodePre/CodeTsx'
-import { alnumProps, fullWidthProps, halfWidthProps, numProps } from '@/utils/FieldUtil/StringUtil'
+import { alnumProps, fullWidthProps, halfWidthProps, numProps, toUpperProps } from '@/utils/FieldUtil/StringUtil'
 import { PageContainer, ProForm, ProFormInstance, ProFormText } from '@ant-design/pro-components'
 import { MliFormRow } from '@mli-csmo/base'
 import { Table, Typography } from 'antd'
@@ -30,7 +30,8 @@ const DateUtile: React.FC = () => {
               { name: '半形轉換', method: 'toHalfWidth' },
               { name: '全形轉換', method: 'toFullWidth' },
               { name: '保留英文與數字', method: 'onlyAlnum' },
-              { name: '保留數字', method: 'onlyNum' }
+              { name: '保留數字', method: 'onlyNum' },
+              { name: '文字轉大寫', method: 'toUpper' },
             ]}
             pagination={false}
           />
@@ -47,7 +48,8 @@ const DateUtile: React.FC = () => {
               { name: '全形轉換 fieldProps', method: 'fullWidthProps' },
               { name: '保留英文與數字 fieldProps', method: 'alnumProps' },
               { name: '保留英文與數字（大寫）fieldProps', method: 'alnumUpperProps' },
-              { name: '保留數字 fieldProps', method: 'numProps' }
+              { name: '保留數字 fieldProps', method: 'numProps' },
+              { name: '文字轉大寫 fieldProps', method: 'toUpperProps' },
             ]}
             pagination={false}
           />
@@ -57,7 +59,7 @@ const DateUtile: React.FC = () => {
             <CodeTsx
               title='StringUtil.ts'
               code={`/**
- * 文字轉為半形
+ * 半形轉換
  */
 export const toHalfWidth = (str: string): string => {
   let result = '';
@@ -76,7 +78,7 @@ export const toHalfWidth = (str: string): string => {
 }
 
 /**
- * 文字轉為全形
+ * 全形轉換
  */
 export const toFullWidth = (str: string): string => {
   let result = '';
@@ -96,7 +98,7 @@ export const toFullWidth = (str: string): string => {
 }
 
 /**
- * 僅保留英數字
+ * 保留英文與數字
  */
 export const onlyAlnum = (input: unknown, toUpper: boolean = false): string => {
   const str = String(input ?? '');
@@ -105,11 +107,19 @@ export const onlyAlnum = (input: unknown, toUpper: boolean = false): string => {
 };
 
 /**
- * 僅保留數字
+ * 文字轉大寫
+ */
+export const toUpper = (input: unknown): string => {
+  const str = String(input ?? '');
+  return str.toUpperCase();
+};
+
+/**
+ * 保留數字
  */
 export const onlyNum = (input: unknown): string => {
   const str = String(input ?? '');
-  const cleaned = toHalfWidth(str).replace(/[^a-zA-Z0-9]/g, '');
+  const cleaned = toHalfWidth(str).replace(/[^0-9]/g, '');
   return cleaned;
 };
 
@@ -203,26 +213,25 @@ export const halfWidthProps = createAutoTransformProps(toHalfWidth);
 export const fullWidthProps = createAutoTransformProps(toFullWidth);
 
 /**
- * 純英數字 fieldProps
+ * 保留英文與數字 fieldProps
  */
 export const alnumProps = createAutoTransformProps((val) => onlyAlnum(val, false));
 
 /**
- * 純英數字（大寫）fieldProps
+ * 保留英文與數字（大寫）fieldProps
  */
 export const alnumUpperProps = createAutoTransformProps((val) => onlyAlnum(val, true));
 
 /**
- * 純英數字 fieldProps
+ * 文字轉大寫 fieldProps
  */
-export const numProps = createAutoTransformProps((val) => onlyNum(val));
+export const toUpperProps = createAutoTransformProps(toUpper);
 
 /**
- * 建立自訂轉換 fieldProps
+ * 保留數字 fieldProps
  */
-export const createTransformProps = (transformFn: (value: string) => string) => {
-  return createAutoTransformProps(transformFn);
-};`}
+export const numProps = createAutoTransformProps((val) => onlyNum(val));
+`}
             />
           </details>
 
@@ -322,6 +331,31 @@ export const createTransformProps = (transformFn: (value: string) => string) => 
     ...numProps
   }}
 />`} />
+
+          <hr />
+
+          <MliFormRow>
+            <ProFormText
+              name="toUpper"
+              label="文字轉大寫"
+              placeholder=""
+              fieldProps={{
+                maxLength: 200,
+                ...toUpperProps
+              }}
+            />
+          </MliFormRow>
+
+          <CodeTsx code={`<ProFormText
+  name="toUpper"
+  label="文字轉大寫"
+  placeholder=""
+  fieldProps={{
+    maxLength: 200,
+    ...toUpperProps
+  }}
+/>`} />
+          
         </Typography>
       </ProForm>
     </PageContainer>

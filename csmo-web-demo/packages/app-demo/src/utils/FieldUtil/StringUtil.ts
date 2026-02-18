@@ -47,6 +47,14 @@ export const onlyAlnum = (input: unknown, toUpper: boolean = false): string => {
 };
 
 /**
+ * 文字轉大寫
+ */
+export const toUpper = (input: unknown): string => {
+  const str = String(input ?? '');
+  return str.toUpperCase();
+};
+
+/**
  * 保留數字
  */
 export const onlyNum = (input: unknown): string => {
@@ -153,6 +161,11 @@ export const alnumProps = createAutoTransformProps((val) => onlyAlnum(val, false
  * 保留英文與數字（大寫）fieldProps
  */
 export const alnumUpperProps = createAutoTransformProps((val) => onlyAlnum(val, true));
+
+/**
+ * 文字轉大寫 fieldProps
+ */
+export const toUpperProps = createAutoTransformProps(toUpper);
 
 /**
  * 保留數字 fieldProps

@@ -1,4 +1,4 @@
-import { halfWidthProps, alnumProps, numProps, fullWidthProps } from '@/utils/FieldUtil/StringUtil'
+import { halfWidthProps, alnumProps, numProps, fullWidthProps, toUpperProps } from '@/utils/FieldUtil/StringUtil'
 import { SearchOutlined } from '@ant-design/icons'
 import ProForm, { ProFormInstance, ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
@@ -20,7 +20,6 @@ let data = {}
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
   const [showModal, setShowModal] = useState(false) // modal 開關
-  const [lock, setLock] = React.useState(false)
 
   useEffect(() => {
     // 預設帶入表單資料
@@ -177,6 +176,7 @@ const MyForm: React.FC = () => {
               }
             ]}
             fieldProps={{
+              ...toUpperProps,
               // 透過 後置圖標 設定 查詢按鈕
               suffix: (
                 <Tooltip title="查詢">
