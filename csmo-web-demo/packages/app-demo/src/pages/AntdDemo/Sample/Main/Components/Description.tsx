@@ -1,4 +1,3 @@
-import CodeText from '@/utils/CodePre/CodeText'
 import CodeTsx from '@/utils/CodePre/CodeTsx'
 import { Typography } from 'antd'
 import React from 'react'
@@ -8,14 +7,22 @@ const { Title, Paragraph } = Typography
 const myExample: React.FC = () => {
   return (
     <Typography>
-        <Paragraph>
-          此樣板 為 主頁面的 範例結構，包含以下內容： <br/>
-          1. 使用 useEffect 進行 頁面初始化 的行為設定。 <br/>
-          2. 使用 PageContainer 作為 頁面容器，以便自動根據 菜單 顯示 麵包屑導航。 <br/>
-          3. 使用 ProForm 作為 表單容器，並透過 formRef 來控制表單行為。 <br/>
-          4. 浮層功能區 透過 FloatButton.Group 實現，包含 回頂部 和 到底部 的按鈕 (依需求新增)。 <br/>
-          5. 底部功能區 透過 FooterToolbar 實現，放置主要操作按鈕。
-        </Paragraph>
+      <Paragraph>
+        此樣板 為 主頁面的 範例結構，包含以下內容： <br />
+        1. 使用 useEffect 進行 頁面初始化 的行為設定。 <br />
+        2. 使用 PageContainer 作為 頁面容器，以便自動根據 菜單 顯示 麵包屑導航。 <br />
+        3. 使用 ProForm 作為 表單容器，並透過 formRef 來控制表單行為。 <br />
+        4. 浮層功能區 透過 FloatButton.Group 實現，包含 回頂部 和 到底部 的按鈕 (依需求新增)。 <br />
+        5. 底部功能區 透過 FooterToolbar 實現，放置主要操作按鈕。
+      </Paragraph>
+
+      <Paragraph type='warning'>
+        主流程頁面，只負責 <code>頁面的布局結構設定</code>、<code>資料初始化設定</code> 等 頁面的共通行為，實際的頁面內容、功能邏輯等，則由 子頁面 來實現。
+      </Paragraph>
+
+      <Paragraph type='danger'>
+        僅為 程式基本結構，實際使用 請參考 <code>元件範例</code> 來進行開發，並根據實際需求進行調整。
+      </Paragraph>
 
       <CodeTsx code={`import { AppstoreOutlined, VerticalAlignTopOutlined, VerticalAlignBottomOutlined } from '@ant-design/icons';
 import { FooterToolbar, PageContainer, ProForm, ProFormInstance } from '@ant-design/pro-components'
