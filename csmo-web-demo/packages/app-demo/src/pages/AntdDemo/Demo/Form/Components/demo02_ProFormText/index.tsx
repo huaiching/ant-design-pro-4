@@ -170,10 +170,7 @@ const MyForm: React.FC = () => {
             }
             placeholder="請輸入受理號碼"
             rules={[
-              {
-                required: true,
-                message: '必填'
-              }
+              { required: true, message: '必填' }
             ]}
             fieldProps={{
               ...toUpperProps,
