@@ -35,6 +35,11 @@ const TabContent2: React.FC = () => {
     tabRefStore.setTabEnterFn('tab2', () => {
       message.info('進入 Tab2')
     })
+
+    return () => {
+      // 離開頁面時，要觸發的事件
+      message.info('離開頁面')
+    }
   }, [])
 
   // 定義表格欄位

@@ -4,7 +4,7 @@ import React from 'react'
 
 const { Title, Paragraph } = Typography
 
-const myExample: React.FC = () => {
+const SampleMain: React.FC = () => {
   return (
     <Typography>
       <Paragraph>
@@ -114,4 +114,4 @@ export default observer(SampleMain)`}
   )
 }
 
-export default myExample
+export default SampleMain

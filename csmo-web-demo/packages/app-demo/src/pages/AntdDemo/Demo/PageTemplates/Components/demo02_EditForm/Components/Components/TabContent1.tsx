@@ -27,10 +27,16 @@ const TabContent1: React.FC = () => {
         return false
       }
     })
-    // 👉 註冊進入頁籤事件
+    // 註冊進入頁籤事件
     tabRefStore.setTabEnterFn('tab1', () => {
       message.info('進入 Tab1')
     })
+
+    return () => {
+      // 離開頁面時，要觸發的事件
+      handleValueChange() // 離開頁面前先將資料塞回 store
+      message.info('離開頁面')
+    }
   }, [])
 
   // 頁籤初次載入時，將 mainForm 的資料帶入
