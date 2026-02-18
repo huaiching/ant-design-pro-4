@@ -9,7 +9,7 @@ import { ProTable, ActionType, ProColumns, ProCard } from '@ant-design/pro-compo
 import { Button, message } from 'antd'
 import EditableDetailForm from './Components/EditableDetailForm'
 import { observer } from 'mobx-react'
-import poTableStore, { PoTable } from '../../Mobx/tab2Store'
+import tab2Store, { PoTable } from '../../Mobx/tab2Store'
 import formRefStore from '../../Mobx/formRefStore'
 import tabRefStore from '../../Mobx/tabRefStore'
 
@@ -49,11 +49,11 @@ const TabContent2: React.FC = () => {
   const handleSave = (updated: PoTable) => {
     if (formMode === 'edit') {
       // 編輯模式：更新資料
-      poTableStore.updatePoTable(updated)
+      tab2Store.updatePoTable(updated)
       message.success('修改成功')
     } else {
       // 新增模式：加入新資料
-      poTableStore.addPoTable(updated)
+      tab2Store.addPoTable(updated)
       message.success('新增成功')
     }
     // 關閉編輯表單
@@ -64,7 +64,7 @@ const TabContent2: React.FC = () => {
     <ProCard ghost>
       <ProTable<PoTable>
         columns={columns} // 表格欄位
-        dataSource={poTableStore.getPoTableList} // 使用 MobX 資料
+        dataSource={tab2Store.getPoTableList} // 使用 MobX 資料
         actionRef={actionRef}
         rowKey='policyNo'
         search={false}

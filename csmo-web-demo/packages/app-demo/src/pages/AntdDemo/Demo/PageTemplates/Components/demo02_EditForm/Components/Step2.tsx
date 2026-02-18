@@ -38,6 +38,12 @@ const Step2Form: React.FC<Props> = ({ handleStep, state }) => {
   // 查詢模式判斷
   const isQuery = formRef.current?.getFieldValue('isQuery')
 
+  // 資料初始化
+  useEffect(() => {
+    tab1Store.init()
+    poTableStore.init()
+  }, [])
+
   // TAB 資料設定 //
   // 目前的 tab 標籤
   const [activeTab, setActiveTab] = useState('tab1')

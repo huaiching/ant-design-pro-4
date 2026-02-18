@@ -19,7 +19,7 @@ export interface PoTable {
 }
 
 // MobX 儲存庫：用於集中管理保單列表狀態
-class PoTableStore {
+class Tab2Store {
   // 保單清單（observable 狀態）
   poTableList: PoTable[] = []
 
@@ -31,7 +31,7 @@ class PoTableStore {
   /**
    * 初始化保單清單（通常在頁面切換或重設時使用）
    */
-  initPoTableList() {
+  init() {
     this.poTableList = []
   }
 
@@ -72,5 +72,5 @@ class PoTableStore {
 }
 
 // 匯出單例供全應用共用
-const poTableStore = new PoTableStore()
-export default poTableStore
+const tab2Store = new Tab2Store()
+export default tab2Store
