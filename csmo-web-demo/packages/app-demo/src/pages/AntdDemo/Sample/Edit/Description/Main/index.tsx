@@ -17,7 +17,12 @@ const SampleMain: React.FC = () => {
       </Paragraph>
 
       <Paragraph type='warning'>
-        主流程頁面，只負責 <code>頁面的布局結構設定</code>、<code>資料初始化設定</code> 等 頁面的共通行為，實際的頁面內容、功能邏輯等，則由 子頁面 來實現。
+        主流程頁面，只負責 <code>頁面的布局結構設定</code>、<code>資料初始化設定</code> 等 頁面的共通行為，實際的頁面內容、功能邏輯等，則由 子頁面 來實現。<br />
+        由於 編輯頁面 會透過 Mobx 進行資料管理，因此 主頁面 初次載入時，必須呼叫 子頁面 Mobx 的 init 方法 來進行資料初始化，並在需要讀取資料時呼叫 readData 方法 來取得資料。
+      </Paragraph>
+
+      <Paragraph type='warning'>
+        為了確保 <code>從 API 讀取資料</code> 只會進行一次，建議將<code>從 API 讀取資料</code> 的行為，在 主頁面的初次載入時，執行此動作。
       </Paragraph>
 
       <Paragraph type='danger'>
