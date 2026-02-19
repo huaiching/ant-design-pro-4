@@ -274,13 +274,13 @@ export default [
         path: '/antdDemo/Sample',
         routes: [
           {
-            // 主流程
-            name: 'Main',
-            path: '/antdDemo/Sample/Main',
-            component: './AntdDemo/Sample/Main'
+            // 一般模板
+            name: 'Normal',
+            path: '/antdDemo/Sample/Normal',
+            component: './AntdDemo/Sample/Normal'
           },
           {
-            // 編輯子頁面
+            // 編輯模板
             name: 'Edit',
             path: '/antdDemo/Sample/Edit',
             component: './AntdDemo/Sample/Edit'

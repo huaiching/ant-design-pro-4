@@ -44,7 +44,7 @@ const TabContent1: React.FC = () => {
     formRef.current?.setFieldsValue(tab1Data)
   }, [])
 
-  // 表單值變更處理，使用 debounce 限制觸發頻率
+  // 表單值變更處理: 同步更新 Mobx 資料
   const handleValueChange = () => {
     // 取得表單變更資料
     const values = formRef.current?.getFieldsValue()
@@ -57,11 +57,11 @@ const TabContent1: React.FC = () => {
       onValuesChange={handleValueChange}
     >
       <ProFormText
-        name={'address'}
+        name='address'
         label='地址'
         rules={[{ required: true }]} />
       <ProFormText
-        name={'phone'}
+        name='phone'
         label='電話'
         rules={[{ required: true }]} />
       <div style={{ height: '1000px' }}>長內容區域...</div>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import Description from './Components/Description'
-import Example from './Components/Example'
+import Description from './Description'
+import Example from './Example'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import { useNavigate, useSearchParams } from '@umijs/max'
