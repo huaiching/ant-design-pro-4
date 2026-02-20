@@ -7,16 +7,23 @@ import { MliFormRow } from "@mli-csmo/base"
 const SubEdit: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
 
+  // 初始載入時的設定
   useEffect(() => {
     // 讀取資料
     readData()
 
+    // 離開頁面前的處理
     return () => {
-      // 離開頁面前的處理
       // 離開頁面前先將資料塞回 mobx
       handleValueChange()
     }
   }, []);
+
+  // mobx 資料異動時的處理
+  useEffect(() => {
+    // 當 mobx 的資料變更時，將資料帶入表單
+    readData()
+  }, [subEditStore.getData]);
 
   // 頁籤初次載入時，將 mobx 的資料帶入
   const readData = () => {

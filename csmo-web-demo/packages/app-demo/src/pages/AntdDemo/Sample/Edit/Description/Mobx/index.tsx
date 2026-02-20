@@ -19,7 +19,7 @@ const SampleMobx: React.FC = () => {
       </Paragraph>
 
       <Paragraph type='danger'>
-        <code>readData</code> 方法中的資料讀取，實際上應該是透過 API 來取得後端資料，這邊先寫死一筆資料來示範結構，請根據實際需求來實現資料的讀取邏輯。
+        <code>readData</code> 方法中的資料讀取，實際上應該是透過 API 來取得後端資料，請根據實際需求來實現資料的讀取邏輯。
       </Paragraph>
 
       <CodeTsx title='SubEditStroe.ts' code={`/**
@@ -27,6 +27,7 @@ const SampleMobx: React.FC = () => {
  */
 
 import { makeAutoObservable } from "mobx"
+import { getAllData } from "../Api/EditDemoController"
 
 // 定義保單資料型別
 export interface props {
@@ -50,11 +51,9 @@ class SubEditStore {
   }
 
   // 從 API 讀取資料: 主頁面 初次載入時，執行此方法來讀取資料
-  readData() {
+  async readData() {
     // 這邊先寫死，實際上要 透過 API 抓取後端資料
-    const data = {
-      sampleText: '示範輸入'
-    }
+    const data = await getAllData()
     this.data = data
   }
 
@@ -68,8 +67,7 @@ class SubEditStore {
 
 }
 const subEditStore = new SubEditStore()
-export default subEditStore
-`}
+export default subEditStore`}
       />
     </Typography>
   )
