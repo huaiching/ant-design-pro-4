@@ -23,9 +23,9 @@ const SampleSub: React.FC = () => {
       <Title level={5}>查詢 API</Title>
       <Paragraph>
         查詢 API 的設定，透過 request 屬性來進行設定，這裡 透過 requestApi 方法 來實現與 API 的對接，並在 requestApi 方法中，根據清除模式的開關，來決定是回傳空資料還是從 API 抓取資料。 <br />
-        1. 清除模式: 當清除模式開啟時，回傳空資料，並關閉清除模式。 <br />
-        2. 資料抓取: 當清除模式關閉時，從 API 抓取資料，並進行資料格式轉換，最後回傳資料給 ProTable 進行顯示。 <br />
-        3. 資料格式轉換: 如果 API 回傳的資料中有 日期 資料，需要將其轉為 Dayjs 格式，才能正確顯示在 ProTable 的 date 欄位中。
+        1. 清除模式：當清除模式開啟時，回傳空資料，並關閉清除模式。 <br />
+        2. 資料抓取：當清除模式關閉時，從 API 抓取資料，並進行資料格式轉換，最後回傳資料給 ProTable 進行顯示。 <br />
+        3. 資料格式轉換：如果 API 回傳的資料中有 日期 資料，需要將其轉為 Dayjs 格式，才能正確顯示在 ProTable 的 date 欄位中。
       </Paragraph>
 
       <Title level={5}>頁面跳轉</Title>
@@ -33,22 +33,22 @@ const SampleSub: React.FC = () => {
         在查詢結果列表中，通常會有一些操作按鈕，例如 新增、修改、查詢 等，這些按鈕的功能是跳轉到對應的頁面，並將當前行的資料傳遞過去。 <br />
         這裡透過 pageJump 方法來實現頁面跳轉，根據不同的操作類型，來決定跳轉的路徑，並將資料傳遞過去。 <br />
         在頁面跳轉的實現上，提供了兩種方式，<code>原頁面跳轉</code> 和 <code>新開分頁</code>。 <br />
-        1. 原頁面跳轉: 直接使用 navigate 進行頁面跳轉，資料透過 state 傳遞。 <br />
-        2. 新開分頁: 將資料暫存到 sessionStorage 中，使用 window.open 開啟新頁面，並在新頁面中從 sessionStorage 中取出資料，最後移除 sessionStorage 中的資料。
-        請依照需求 來選擇適合的跳轉方式，跳轉後的頁面 要如何獲取 參數，可以參考 <code>元件範例 / 工具類與整合範例 / 頁面跳轉</code> 中的實現方式。
+        1. 原頁面跳轉：直接使用 navigate 進行頁面跳轉，資料透過 state 傳遞。 <br />
+        2. 新開分頁：將資料暫存到 sessionStorage 中，使用 window.open 開啟新頁面，並在新頁面中從 sessionStorage 中取出資料，最後移除 sessionStorage 中的資料。
+        請 依照需求 來選擇適合的跳轉方式，跳轉後的頁面 要如何 獲取參數，可以參考 <code>元件範例 / 工具類與整合範例 / 頁面跳轉</code> 中的實現方式。
       </Paragraph>
       
       <Title level={5}>欄位設定</Title>
       <Paragraph>
         columns 屬性用於設定 ProTable 的欄位，這裡定義了幾個欄位，包括 操作、保單號碼、受理號碼、受理日期、變更生效日、變更選項 等。 <br />
-        1. 操作欄位: 定義了一個操作欄位，包含修改和查詢兩個按鈕，點擊後會觸發 pageJump 方法進行頁面跳轉。 <br />
-        2. 其他欄位: 定義了保單號碼、受理號碼、受理日期、變更生效日、變更選項等欄位，並根據需求設定了 valueType、fieldProps 等屬性來控制欄位的顯示和行為。 <br />
-        3. 變更生效日 欄位: 設定了 hideInSearch: true，表示在查詢表單中隱藏該欄位，因為變更生效日通常不會作為查詢條件。
+        1. 操作欄位：定義了一個操作欄位，包含修改和查詢兩個按鈕，點擊後會觸發 pageJump 方法進行頁面跳轉。 <br />
+        2. 其他欄位：定義了保單號碼、受理號碼、受理日期、變更生效日、變更選項等欄位，並根據需求設定了 valueType、fieldProps 等屬性來控制欄位的顯示和行為。 <br />
+        3. 變更生效日 欄位：設定了 hideInSearch: true，表示在查詢表單中隱藏該欄位，因為變更生效日通常不會作為查詢條件。
       </Paragraph>
       <Paragraph>
         formRef 和 actionRef 是 ProTable 提供的兩個 Ref，用於 <code>操作查詢表單</code> 和 <code>操作表格</code> 的行為。 <br />
-        1. formRef: 用於獲取 查詢表單 的實例，可以通過 formRef.current 來訪問查詢表單的方法和屬性，例如獲取表單的值、重置表單等行為。 <br />
-        2. actionRef: 用於獲取 表格 的實例，可以通過 actionRef.current 來訪問表格的方法和屬性，例如觸發表格的刷新、重置等行為。 <br />
+        1. formRef：用於獲取 查詢表單 的實例，可以通過 formRef.current 來訪問查詢表單的方法和屬性，例如獲取表單的值、重置表單等行為。 <br />
+        2. actionRef：用於獲取 表格 的實例，可以通過 actionRef.current 來訪問表格的方法和屬性，例如觸發表格的刷新、重置等行為。
       </Paragraph>
 
       <Paragraph type='warning'>
