@@ -48,7 +48,7 @@ const SampleSub: React.FC = () => {
       <Paragraph>
         formRef 和 actionRef 是 ProTable 提供的兩個 Ref，用於 <code>操作查詢表單</code> 和 <code>操作表格</code> 的行為。 <br />
         1. formRef: 用於獲取 查詢表單 的實例，可以通過 formRef.current 來訪問查詢表單的方法和屬性，例如獲取表單的值、重置表單等行為。 <br />
-        2. actionRef: 用於獲取表格的實例，可以通過 actionRef.current 來訪問表格的方法和屬性，例如觸發表格的刷新、重置等行為。 <br />
+        2. actionRef: 用於獲取 表格 的實例，可以通過 actionRef.current 來訪問表格的方法和屬性，例如觸發表格的刷新、重置等行為。 <br />
       </Paragraph>
 
       <Paragraph type='warning'>
