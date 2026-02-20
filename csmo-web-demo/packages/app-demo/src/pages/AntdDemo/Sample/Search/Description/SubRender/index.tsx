@@ -8,8 +8,14 @@ const SampleSub: React.FC = () => {
   return (
     <Typography>
       <Paragraph>
-        查詢 使用 ProTable 作為 查詢結果列表 的呈現元件，並透過 request 屬性來實現與 API 的對接。 <br />
+        查詢 使用 ProTable 作為 查詢結果列表 的呈現元件，並透過 <code>request 屬性</code> 來實現與 API 的對接。 <br />
         根據需求，可能會包含一些額外的功能按鈕，例如 新增、匯出 等，這些按鈕通常會放在工具欄 (toolBarRender) 中。
+      </Paragraph>
+
+      <Paragraph type='danger'>
+        透過 request 來獲取數據的方式，其獲得的數據 <code>不會對外暴露</code>，因此在 request 中獲取的數據 <code>無法直接在頁面中使用</code>。 <br />
+        僅能在 columns 中 透過 render 屬性，來進行一些簡單的處理，如：操作欄位的頁面跳轉。
+        如果 需要取得全部數據 進行進階作業，請改用 dataSource 屬性來獲取數據，並配合 useEffect 來實現與 API 的對接。
       </Paragraph>
 
       <Title level={5}>分頁設定</Title>

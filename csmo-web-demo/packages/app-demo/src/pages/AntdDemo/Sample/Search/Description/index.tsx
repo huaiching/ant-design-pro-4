@@ -3,7 +3,7 @@ import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import { PageContainer } from '@ant-design/pro-components'
 import Main from './Main'
-import Sub from './Sub'
+import SubRender from './SubRender'
 
 //asstManagement 主功能名稱
 const Demo: React.FC = () => {
@@ -17,8 +17,8 @@ const Demo: React.FC = () => {
     },
     {
       key: 'Sub',
-      title: '查詢子頁面',
-      component: <Sub />
+      title: '查詢子頁面 (render)',
+      component: <SubRender />
     },
   ]
 

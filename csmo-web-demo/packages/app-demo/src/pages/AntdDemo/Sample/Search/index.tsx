@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Description from './Description'
-import Example from './Example'
+import ExampleRender from './ExampleRender'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import { useNavigate, useSearchParams } from '@umijs/max'
@@ -19,9 +19,9 @@ const Demo: React.FC = () => {
       component: <Description />
     },
     {
-      key: 'Example',
-      title: '範例',
-      component: <Example />
+      key: 'Example (render)',
+      title: '範例 (render)',
+      component: <ExampleRender />
     },
   ]
 
