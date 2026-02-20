@@ -47,6 +47,7 @@ export default {
   'menu.antd.Sample': '開發模板',
   'menu.antd.Sample.Normal': '一般模板',
   'menu.antd.Sample.Edit': '編輯模板',
+  'menu.antd.Sample.Search': '查詢模板',
 
   'menu.mobXDemo': 'Mobx 使用範例',
   'menu.mobXDemo.demo01': '使用說明',

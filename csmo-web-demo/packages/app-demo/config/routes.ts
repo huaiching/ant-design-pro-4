@@ -285,6 +285,12 @@ export default [
             path: '/antdDemo/Sample/Edit',
             component: './AntdDemo/Sample/Edit'
           },
+          {
+            // 查詢模板
+            name: 'Search',
+            path: '/antdDemo/Sample/Search',
+            component: './AntdDemo/Sample/Search'
+          },
         ]
       },
     ]

@@ -1,6 +1,5 @@
 import { PageContainer } from '@ant-design/pro-components'
 import { useLocation } from '@umijs/max'
-import { message } from 'antd'
 import { observer } from 'mobx-react'
 import React, { useEffect, useState } from 'react'
 import Step1Form from './Components/Step1'
@@ -23,7 +22,17 @@ const EditForm: React.FC = () => {
 
   // 使用 useLocation 來獲取傳遞的 state 參數
   const location = useLocation()
-  const state = location.state as LocationState
+  let state = {} as LocationState
+  if (!location.pathname.match('.*Create.*')) {
+    if (location.state) {
+      state = location.state as LocationState
+    } else {
+      const params = sessionStorage.getItem('state')
+      if (params) {
+        state = JSON.parse(params)
+      }
+    }
+  }
 
   useEffect(() => {
     // 載入 option
