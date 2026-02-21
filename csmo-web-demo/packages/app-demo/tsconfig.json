@@ -5,7 +5,6 @@
     "baseUrl": ".",
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
-    "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "paths": {
