@@ -203,43 +203,330 @@ export default [
             // 表單輸入元件 (Form)
             name: 'Form',
             path: '/antdDemo/Demo/Form',
-            component: './AntdDemo/Demo/Form'
+            routes: [
+              {
+                name: 'MliFormRow',
+                path: '/antdDemo/Demo/Form/MliFormRow',
+                component: './AntdDemo/Demo/Form/demo01_MliFormRow',
+              },
+              {
+                name: 'ProFormText',
+                path: '/antdDemo/Demo/Form/ProFormText',
+                component: './AntdDemo/Demo/Form/demo02_ProFormText',
+              },
+              {
+                name: 'ProFormTextArea',
+                path: '/antdDemo/Demo/Form/ProFormTextArea',
+                component: './AntdDemo/Demo/Form/demo03_ProFormTextArea',
+              },
+              {
+                name: 'ProFormDigit',
+                path: '/antdDemo/Demo/Form/ProFormDigit',
+                component: './AntdDemo/Demo/Form/demo04_ProFormDigit',
+              },
+              {
+                name: 'ProFormSelect',
+                path: '/antdDemo/Demo/Form/ProFormSelect',
+                component: './AntdDemo/Demo/Form/demo05_ProFormSelect',
+              },
+              {
+                name: 'ProFormCascader',
+                path: '/antdDemo/Demo/Form/ProFormCascader',
+                component: './AntdDemo/Demo/Form/demo06_ProFormCascader',
+              },
+              {
+                name: 'ProFormTreeSelect',
+                path: '/antdDemo/Demo/Form/ProFormTreeSelect',
+                component: './AntdDemo/Demo/Form/demo07_ProFormTreeSelect',
+              },
+              {
+                name: 'ProFormDatePicker',
+                path: '/antdDemo/Demo/Form/ProFormDatePicker',
+                component: './AntdDemo/Demo/Form/demo08_ProFormDatePicker',
+              },
+              {
+                name: 'ProFormTimePicker',
+                path: '/antdDemo/Demo/Form/ProFormTimePicker',
+                component: './AntdDemo/Demo/Form/demo09_ProFormTimePicker',
+              },
+              {
+                name: 'ProFormSwitch',
+                path: '/antdDemo/Demo/Form/ProFormSwitch',
+                component: './AntdDemo/Demo/Form/demo10_ProFormSwitch',
+              },
+              {
+                name: 'ProFormRadio',
+                path: '/antdDemo/Demo/Form/ProFormRadio',
+                component: './AntdDemo/Demo/Form/demo11_ProFormRadio',
+              },
+              {
+                name: 'ProFormCheckbox',
+                path: '/antdDemo/Demo/Form/ProFormCheckbox',
+                component: './AntdDemo/Demo/Form/demo12_ProFormCheckbox',
+              },
+              {
+                name: 'ProFormUploadButton',
+                path: '/antdDemo/Demo/Form/ProFormUploadButton',
+                component: './AntdDemo/Demo/Form/demo13_ProFormUploadButton',
+              },
+              {
+                name: 'ProFormGroup',
+                path: '/antdDemo/Demo/Form/ProFormGroup',
+                component: './AntdDemo/Demo/Form/demo14_ProFormGroup',
+              },
+              {
+                name: 'ProFormitem',
+                path: '/antdDemo/Demo/Form/ProFormitem',
+                component: './AntdDemo/Demo/Form/demo15_ProFormitem',
+              },
+              {
+                name: 'AutoComplete',
+                path: '/antdDemo/Demo/Form/AutoComplete',
+                component: './AntdDemo/Demo/Form/demo16_AutoComplete',
+              },
+              {
+                name: 'ProFormList',
+                path: '/antdDemo/Demo/Form/ProFormList',
+                component: './AntdDemo/Demo/Form/demo17_ProFormList',
+              },
+              {
+                name: 'CaseFlow',
+                path: '/antdDemo/Demo/Form/CaseFlow',
+                component: './AntdDemo/Demo/Form/demo18_CaseFlow',
+              },
+              {
+                name: 'MultiSelectTable',
+                path: '/antdDemo/Demo/Form/MultiSelectTable',
+                component: './AntdDemo/Demo/Form/demo19_MultiSelectTable',
+              },
+              {
+                name: 'Typography',
+                path: '/antdDemo/Demo/Form/Typography',
+                component: './AntdDemo/Demo/Form/demo20_Typography',
+              },
+              {
+                name: 'FloatButton',
+                path: '/antdDemo/Demo/Form/FloatButton',
+                component: './AntdDemo/Demo/Form/demo21_FloatButton',
+              },
+            ]
           },
           {
             // 表單容器 (Container)
             name: 'Container',
             path: '/antdDemo/Demo/Container',
-            component: './AntdDemo/Demo/Container'
+            routes: [
+              {
+                name: 'ModalForm',
+                path: '/antdDemo/Demo/Container/ModalForm',
+                component: './AntdDemo/Demo/Container/demo01_ModalForm'
+              },
+              {
+                name: 'DrawerForm',
+                path: '/antdDemo/Demo/Container/DrawerForm',
+                component: './AntdDemo/Demo/Container/demo02_DrawerForm'
+              },
+              {
+                name: 'StepsForm',
+                path: '/antdDemo/Demo/Container/StepsForm',
+                component: './AntdDemo/Demo/Container/demo03_StepsForm'
+              },
+            ]
           },
           {
             // 表格 (Table)
             name: 'Table',
             path: '/antdDemo/Demo/Table',
-            component: './AntdDemo/Demo/Table'
+            routes: [
+              {
+                name: 'ProTable',
+                path: '/antdDemo/Demo/Table/ProTable',
+                component: './AntdDemo/Demo/Table/demo01_ProTable'
+              },
+              {
+                name: 'SearchProTable',
+                path: '/antdDemo/Demo/Table/SearchProTable',
+                component: './AntdDemo/Demo/Table/demo02_SearchProTable'
+              },
+              {
+                name: 'NestedProTable',
+                path: '/antdDemo/Demo/Table/NestedProTable',
+                component: './AntdDemo/Demo/Table/demo03_NestedProTable'
+              },
+              {
+                name: 'ShowRowProTable',
+                path: '/antdDemo/Demo/Table/ShowRowProTable',
+                component: './AntdDemo/Demo/Table/demo04_ShowRowProTable'
+              },
+              {
+                name: 'EditProTable',
+                path: '/antdDemo/Demo/Table/EditProTable',
+                component: './AntdDemo/Demo/Table/demo05_EditProTable'
+              },
+              {
+                name: 'EditableProTable',
+                path: '/antdDemo/Demo/Table/EditableProTable',
+                component: './AntdDemo/Demo/Table/demo06_EditableProTable'
+              },
+              {
+                name: 'InputEditableProTable',
+                path: '/antdDemo/Demo/Table/InputEditableProTable',
+                component: './AntdDemo/Demo/Table/demo07_InputEditableProTable'
+              },
+              {
+                name: 'NestedEditableProTable',
+                path: '/antdDemo/Demo/Table/NestedEditableProTable',
+                component: './AntdDemo/Demo/Table/demo08_NestedEditableProTable'
+              },
+              {
+                name: 'DragSortTable',
+                path: '/antdDemo/Demo/Table/DragSortTable',
+                component: './AntdDemo/Demo/Table/demo09_DragSortTable'
+              },
+              {
+                name: 'EditableAmountTable',
+                path: '/antdDemo/Demo/Table/EditableAmountTable',
+                component: './AntdDemo/Demo/Table/demo10_EditableAmountTable'
+              },
+              {
+                name: 'CaseSearchTable',
+                path: '/antdDemo/Demo/Table/CaseSearchTable',
+                component: './AntdDemo/Demo/Table/demo11_CaseSearchTable'
+              },
+              {
+                name: 'BatchEditablePolicyTable',
+                path: '/antdDemo/Demo/Table/BatchEditablePolicyTable',
+                component: './AntdDemo/Demo/Table/demo12_BatchEditablePolicyTable'
+              },
+            ]
           },
           {
             // 佈局與視覺元件 (LayoutUi)
             name: 'LayoutUi',
             path: '/antdDemo/Demo/LayoutUi',
-            component: './AntdDemo/Demo/LayoutUi'
+            routes: [
+              {
+                name: 'ProCard',
+                path: '/antdDemo/Demo/LayoutUi/ProCard',
+                component: './AntdDemo/Demo/LayoutUi/demo01_ProCard'
+              },
+              {
+                name: 'Notification',
+                path: '/antdDemo/Demo/LayoutUi/Notification',
+                component: './AntdDemo/Demo/LayoutUi/demo02_Notification'
+              },
+              {
+                name: 'Modal',
+                path: '/antdDemo/Demo/LayoutUi/Modal',
+                component: './AntdDemo/Demo/LayoutUi/demo03_Modal'
+              },
+              {
+                name: 'MliForPageContainermRow',
+                path: '/antdDemo/Demo/LayoutUi/PageContainer',
+                component: './AntdDemo/Demo/LayoutUi/demo04_PageContainer'
+              },
+              {
+                name: 'BackTop',
+                path: '/antdDemo/Demo/LayoutUi/BackTop',
+                component: './AntdDemo/Demo/LayoutUi/demo05_BackTop'
+              },
+              {
+                name: 'Splitter',
+                path: '/antdDemo/Demo/LayoutUi/Splitter',
+                component: './AntdDemo/Demo/LayoutUi/demo06_Splitter'
+              },
+              {
+                name: 'Space',
+                path: '/antdDemo/Demo/LayoutUi/Space',
+                component: './AntdDemo/Demo/LayoutUi/demo07_Space'
+              },
+              {
+                name: 'Flex',
+                path: '/antdDemo/Demo/LayoutUi/Flex',
+                component: './AntdDemo/Demo/LayoutUi/demo08_Flex'
+              },
+              {
+                name: 'ConfigProvider',
+                path: '/antdDemo/Demo/LayoutUi/ConfigProvider',
+                component: './AntdDemo/Demo/LayoutUi/demo09_ConfigProvider'
+              },
+              {
+                name: 'PopoverImage',
+                path: '/antdDemo/Demo/LayoutUi/PopoverImage',
+                component: './AntdDemo/Demo/LayoutUi/demo10_PopoverImage'
+              },
+            ]
           },
           {
             // 資料顯示元件 (DataDisplay)
             name: 'DataDisplay',
             path: '/antdDemo/Demo/DataDisplay',
-            component: './AntdDemo/Demo/DataDisplay'
+            routes: [
+              {
+                name: 'List',
+                path: '/antdDemo/Demo/DataDisplay/List',
+                component: './AntdDemo/Demo/DataDisplay/demo01_List'
+              },
+              {
+                name: 'Descriptions',
+                path: '/antdDemo/Demo/DataDisplay/Descriptions',
+                component: './AntdDemo/Demo/DataDisplay/demo02_Descriptions'
+              },
+            ]
           },
           {
             // 工具類與整合範例 (Utility)
             name: 'Utility',
             path: '/antdDemo/Demo/Utility',
-            component: './AntdDemo/Demo/Utility'
+            routes: [
+              {
+                name: 'Navigate',
+                path: '/antdDemo/Demo/Utility/Navigate',
+                component: './AntdDemo/Demo/Utility/demo01_Navigate'
+              },
+              {
+                name: 'xlsx',
+                path: '/antdDemo/Demo/Utility/xlsx',
+                component: './AntdDemo/Demo/Utility/demo02_xlsx'
+              },
+              {
+                name: 'EditGuard',
+                path: '/antdDemo/Demo/Utility/EditGuard',
+                component: './AntdDemo/Demo/Utility/demo03_EditGuard'
+              },
+              {
+                name: 'DistributeToData',
+                path: '/antdDemo/Demo/Utility/DistributeToData',
+                component: './AntdDemo/Demo/Utility/demo04_DistributeToData'
+              },
+            ]
           },
           {
             // 頁面樣板 (PageTemplates)
             name: 'PageTemplates',
             path: '/antdDemo/Demo/PageTemplates',
-            component: './AntdDemo/Demo/PageTemplates'
+            routes: [
+              {
+                name: 'Worklist',
+                path: '/antdDemo/Demo/PageTemplates/Worklist',
+                component: './AntdDemo/Demo/PageTemplates/demo01_Worklist'
+              },
+              {
+                name: 'EditForm',
+                path: '/antdDemo/Demo/PageTemplates/EditForm',
+                component: './AntdDemo/Demo/PageTemplates/demo02_EditForm'
+              },
+              {
+                name: 'SearchForm',
+                path: '/antdDemo/Demo/PageTemplates/SearchForm',
+                component: './AntdDemo/Demo/PageTemplates/demo03_SearchForm'
+              },
+              {
+                name: 'SearchTagCard',
+                path: '/antdDemo/Demo/PageTemplates/SearchTagCard',
+                component: './AntdDemo/Demo/PageTemplates/demo04_SearchTagCard'
+              },
+            ]
           }
         ]
       },
@@ -297,23 +584,23 @@ export default [
   },
   {
     path: '/antdDemo/demo/PageTemplates/Query',
-    component: './AntdDemo/Demo/PageTemplates/Components/demo02_EditForm',
+    component: './AntdDemo/Demo/PageTemplates/demo02_EditForm',
   },
   {
     path: '/antdDemo/demo/PageTemplates/Edit',
-    component: './AntdDemo/Demo/PageTemplates/Components/demo02_EditForm',
+    component: './AntdDemo/Demo/PageTemplates/demo02_EditForm',
   },
   {
     path: '/antdDemo/demo/PageTemplates/Create',
-    component: './AntdDemo/Demo/PageTemplates/Components/demo02_EditForm',
+    component: './AntdDemo/Demo/PageTemplates/demo02_EditForm',
   },
   {
     path: '/antdDemo/navigate',
-    component: './AntdDemo/Demo/Utility/Components/demo01_Navigate/Components/Navigate'
+    component: './AntdDemo/Demo/Utility/demo01_Navigate/Components/Navigate'
   },
   {
     path: '/antdDemo/sessionStorage',
-    component: './AntdDemo/Demo/Utility/Components/demo01_Navigate/Components/SessionStorage'
+    component: './AntdDemo/Demo/Utility/demo01_Navigate/Components/SessionStorage'
   },
   //後端開發
   {
