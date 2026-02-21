@@ -6,27 +6,23 @@ import {
   VerticalAlignTopOutlined
 } from '@ant-design/icons'
 import {
-  ActionType,
   PageContainer,
-  ProCard,
   ProColumns,
   ProForm,
+  ProFormInstance,
   ProTable
 } from '@ant-design/pro-components'
-import { MliFormCol, MliFormRow } from '@mli-csmo/base'
 import { useNavigate } from '@umijs/max'
-import { Button, Card, FloatButton, Space, Tooltip } from 'antd'
-import { Dayjs } from 'dayjs'
+import { Button, FloatButton, Space, Tooltip } from 'antd'
 import { observer } from 'mobx-react'
 import React, { useMemo, useRef, useState } from 'react'
-import formStore from './Mobx/formRefStore'
 import { poChgApi } from './Store/poChgApi'
 import { dayjsToRocString, rocStringToDayjs } from '@/utils/Dayjs/rocDateUtils'
 import { toUpperProps } from '@/utils/FieldUtil/StringUtil'
+import SearchTagCard, { TagGroupConfig } from './Components/SearchTagCard'
 
 const ManagerMe: React.FC = () => {
-  const formRef = formStore.getFormRef
-  const actionRef = useRef<ActionType>()
+  const formRef = useRef<ProFormInstance>()
 
   // ProTable 的 分頁控制
   const pageSizeOptions = ['5', '10', '20', '50', '100']
@@ -34,7 +30,7 @@ const ManagerMe: React.FC = () => {
     current: 1,
     pageSize: 10
   })
-  
+
   const [searchKeys, setSearchKeys] = useState<string[]>(['all']) // 選中的標籤
 
   // 數據源
@@ -184,65 +180,38 @@ const ManagerMe: React.FC = () => {
   ]
 
   // 動態計算各篩選條件的數量
-  const caseSearch = useMemo(() => {
-    const counts = {
-      all: dataSource.length,
-      chgType0: dataSource.filter((e) => e.chgType === '0').length,
-      chgType1: dataSource.filter((e) => e.chgType === '1').length,
-      chgType2: dataSource.filter((e) => e.chgType === '2').length
+  const tagGroups: TagGroupConfig[] = [
+    {
+      key: 'chgType',
+      title: '變更選項',
+      children: [
+        { key: 'all', title: '全部', color: 'rgba(150, 150, 150, 1)' },
+        { key: '0', title: '首期契變', color : 'rgba(255, 0, 0, 1)', filter: (e) => e.chgType === '0' },
+        { key: '1', title: '一般契變', color : 'rgba(0, 150, 0, 1)', filter: (e) => e.chgType === '1' },
+        { key: '2', title: '復效', color : 'rgba(0, 150, 255, 1)', filter: (e) => e.chgType === '2' }
+      ]
     }
-
-    return [
-      {
-        key: 'chgType',
-        title: '變更選項',
-        children: [
-          { key: 'all', title: '全部', colore: 'rgba(150, 150, 150, 1)', count: counts.all },
-          {
-            key: 'chgType0',
-            title: '首期契變',
-            colore: 'rgba(255, 0, 0, 1)',
-            count: counts.chgType0
-          },
-          {
-            key: 'chgType1',
-            title: '一般契變',
-            colore: 'rgba(0, 150, 0, 1)',
-            count: counts.chgType1
-          },
-          {
-            key: 'chgType2',
-            title: '復效',
-            colore: 'rgba(0, 150, 255, 1)',
-            count: counts.chgType2
-          }
-        ]
-      }
-    ]
-  }, [dataSource])
+  ]
 
   // 資料篩選
   const filteredData = useMemo(() => {
-    // 如果沒有選擇標籤，自動選上 'all'
-    if (searchKeys.length === 0) setSearchKeys(['all'])
-    // 開始篩選
-    let result = dataSource
-    // 標籤篩選
-    if (searchKeys.length > 0) {
-      // 變更選項
-      const chgTypeList =
-        caseSearch.find((c) => c.key === 'chgType')?.children?.map((child) => child.key) || []
-      if (searchKeys.some((key) => chgTypeList.includes(key))) {
-        result = result.filter((item) => {
-          if (searchKeys.includes('all')) return true
-          if (searchKeys.includes('chgType0') && item.chgType === '0') return true
-          if (searchKeys.includes('chgType1') && item.chgType === '1') return true
-          if (searchKeys.includes('chgType2') && item.chgType === '2') return true
-          return false
-        })
-      }
+    if (searchKeys.length === 0) {
+      setSearchKeys(['all'])
+      return dataSource
     }
-    return result
+
+    // 收集所有 tagGroups 裡有 filter 的項目
+    const allChildren = tagGroups.flatMap((g) => g.children)
+
+    // 找出目前選中且有 filter 的 tag
+    const activeFilters = allChildren
+      .filter((c) => searchKeys.includes(c.key) && c.filter)
+      .map((c) => c.filter!)
+
+    // 沒有任何 filter 條件（例如選了 'all'）→ 回傳全部
+    if (activeFilters.length === 0) return dataSource
+
+    return dataSource.filter((item) => activeFilters.some((f) => f(item)))
   }, [searchKeys, dataSource])
 
   return (
@@ -254,47 +223,13 @@ const ManagerMe: React.FC = () => {
     >
       <ProForm grid layout="vertical" submitter={false}>
         {/* 搜尋標籤 */}
-        <ProCard ghost>
-          <MliFormRow gutter={8} style={{ width: '100%' }}>
-            {caseSearch.map((caseData) => (
-              <MliFormCol key={caseData.key} colSize={4 / caseSearch.length}>
-                <Card
-                  title={<span style={{ fontSize: 18 }}>{caseData.title}</span>}
-                  type="inner"
-                  style={{ textAlign: 'center', height: '100%' }}
-                >
-                  <Space wrap>
-                    {caseData.children?.map((children) => {
-                      const isSelected = searchKeys.includes(children.key)
-                      return (
-                        <Button
-                          key={children.key}
-                          type={isSelected ? 'primary' : 'text'}
-                          style={{
-                            // 用透明度 辨識 有無選擇
-                            backgroundColor: isSelected
-                              ? children.colore
-                              : children.colore.replace('1)', '0.1)')
-                          }}
-                          onClick={() => {
-                            // 多選
-                            // setSearchKeys((prev) =>
-                            //   isSelected ? prev.filter((k) => k !== children.key) : [...prev, children.key]
-                            // )
-                            // 單選
-                            setSearchKeys(isSelected ? [] : [children.key])
-                          }}
-                        >
-                          {children.title} ({children.count})
-                        </Button>
-                      )
-                    })}
-                  </Space>
-                </Card>
-              </MliFormCol>
-            ))}
-          </MliFormRow>
-        </ProCard>
+        <SearchTagCard
+          tagGroups={tagGroups}
+          dataSource={dataSource}
+          selectedKeys={searchKeys}
+          onChange={setSearchKeys}
+        // multiple  // 如需多選開啟此行
+        />
 
         {/* 表格資料 */}
         <ProTable
