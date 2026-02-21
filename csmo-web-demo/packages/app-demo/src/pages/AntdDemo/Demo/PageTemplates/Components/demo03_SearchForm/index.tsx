@@ -1,6 +1,5 @@
 import {
   AppstoreOutlined,
-  ClearOutlined,
   FormOutlined,
   SearchOutlined,
   VerticalAlignBottomOutlined,
@@ -9,7 +8,6 @@ import {
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components'
 import { useNavigate } from '@umijs/max'
 import { Button, FloatButton, Space, Tooltip } from 'antd'
-import dayjs from 'dayjs'
 import { observer } from 'mobx-react'
 import React, { useEffect, useRef, useState } from 'react'
 import formStore from './Mobx/formRefStore'
@@ -70,13 +68,13 @@ const SearchForm: React.FC = () => {
     let path = ''
     switch (type) {
       case 'create':
-        path = '/container/demo/antdDemo/demo/PageTemplates/Create'
+        path = '/antdDemo/demo/PageTemplates/Create'
         break
       case 'edit':
-        path = '/container/demo/antdDemo/demo/PageTemplates/Edit'
+        path = '/antdDemo/demo/PageTemplates/Edit'
         break
       case 'query':
-        path = '/container/demo/antdDemo/demo/PageTemplates/Query'
+        path = '/antdDemo/demo/PageTemplates/Query'
         break
       default:
         return
