@@ -100,7 +100,7 @@ const ProTableDemo: React.FC = () => {
         ghost: true
       }}
     >
-      <ProForm submitter={false} layout="vertical">
+      <ProForm submitter={false} layout="vertical">``
         <ProTable
           rowKey="id"
           name="userTable"
