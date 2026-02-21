@@ -1,9 +1,7 @@
 import {
   AppstoreOutlined,
-  DownOutlined,
   FormOutlined,
   SearchOutlined,
-  UpOutlined,
   VerticalAlignBottomOutlined,
   VerticalAlignTopOutlined
 } from '@ant-design/icons'
@@ -17,43 +15,109 @@ import {
 } from '@ant-design/pro-components'
 import { MliFormCol, MliFormRow } from '@mli-csmo/base'
 import { useNavigate } from '@umijs/max'
-import { Button, Card, DatePicker, FloatButton, Input, Select, Space, Tooltip } from 'antd'
-import dayjs, { Dayjs } from 'dayjs'
+import { Button, Card, FloatButton, Space, Tooltip } from 'antd'
+import { Dayjs } from 'dayjs'
 import { observer } from 'mobx-react'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import formStore from './Mobx/formRefStore'
-import optionsStore from './Mobx/optionStore'
 import { poChgApi } from './Store/poChgApi'
+import { dayjsToRocString, rocStringToDayjs } from '@/utils/Dayjs/rocDateUtils'
+import { toUpperProps } from '@/utils/FieldUtil/StringUtil'
 
 const ManagerMe: React.FC = () => {
   const formRef = formStore.getFormRef
   const actionRef = useRef<ActionType>()
-  const navigate = useNavigate()
+
   // ProTable 的 分頁控制
+  const pageSizeOptions = ['5', '10', '20', '50', '100']
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 5
+    pageSize: 10
   })
-  const [cleared, setCleared] = useState(false) // 清除資料 開關
+  
   const [searchKeys, setSearchKeys] = useState<string[]>(['all']) // 選中的標籤
-  const [dataSource, setDataSource] = useState<any[]>([]) // 主表資料
-  // 快速搜尋 輸入資料
-  const [policyNo, setPolicyNo] = useState<string>('')
-  const [receiveNo, setReceiveNo] = useState<string>('')
-  const [receiveDate, setReceiveDate] = useState<Dayjs | null>(null)
-  const [chgDate, setChgDate] = useState<Dayjs | null>(null)
-  const [chgType, setChgType] = useState<string>('')
-  // 快速搜尋 開關
-  const [showSearch, setShowSearch] = useState<boolean>(false)
 
-  // 載入 option
-  useEffect(() => {
-    optionsStore.setOptions('chgType', [
-      { label: '0 首期契變', value: '0' },
-      { label: '1 一般契變', value: '1' },
-      { label: '2 復效', value: '2' }
-    ])
-  }, [])
+  // 數據源
+  const [dataSource, setDataSource] = useState<any[]>([])
+
+  // 清除資料
+  const reload = () => {
+    formRef.current?.resetFields()
+    setDataSource([])
+    setPagination({ current: 1, pageSize: 10 })
+  }
+
+  // 查詢 API 設定
+  const requestApi = async () => {
+    // 獲取數據
+    const formValues = formRef.current?.getFieldsValue()
+    // 整理數據
+    const input = {
+      ...formValues,
+      receiveDate: dayjsToRocString(formValues.receiveDate),
+    }
+    const res = await poChgApi(input)
+    // 資料格式轉換: 如果有 日期 資料，要轉為 Dayjs 格式，才能正確顯示在 ProTable 的 date 欄位
+    const output = res.map((e: any) => ({
+      ...e,
+      receiveDate: rocStringToDayjs(e.receiveDate),
+      chgDate: rocStringToDayjs(e.chgDate)
+    }))
+    setDataSource(output)
+    setPagination(prev => ({ ...prev, current: 1 }))
+  }
+
+  // 頁面跳轉
+  const navigate = useNavigate()
+  const pageJump = (type: string, rowData: any) => {
+    // 設定 路徑
+    let path = ''
+    switch (type) {
+      case 'create':
+        path = '/antdDemo/demo/PageTemplates/Create'
+        break
+      case 'edit':
+        path = '/antdDemo/demo/PageTemplates/Edit'
+        break
+      case 'query':
+        path = '/antdDemo/demo/PageTemplates/Query'
+        break
+      default:
+        return
+    }
+    // 設定 參數
+    let data = {}
+    if (rowData) {
+      data = {
+        ...rowData,
+        receiveDate: dayjsToRocString(rowData?.receiveDate),
+        chgDate: dayjsToRocString(rowData?.chgDate)
+      }
+    }
+    /* 原頁面跳轉 */
+    navigate(path, {
+      state: data
+    })
+  }
+
+  // 工具欄
+  const toolBarRender = () => [
+    <Space>
+      <Button
+        color="purple" variant="solid"
+        onClick={() => pageJump('create', null)}
+      >
+        新增
+      </Button>
+    </Space>
+  ]
+
+  // 下拉選單定義
+  const chgTypeOption = [
+    { label: '0 首期契變', value: '0' },
+    { label: '1 一般契變', value: '1' },
+    { label: '2 復效', value: '2' }
+  ]
 
   // 表格欄位定義
   const columns: ProColumns<any>[] = [
@@ -62,43 +126,23 @@ const ManagerMe: React.FC = () => {
       dataIndex: 'option',
       valueType: 'option',
       width: 80,
-      render: (dom, entity) => [
-        <>
+      render: (dom, rowData) => [
+        <div>
           <Tooltip title="修改">
             <Button
               type="link"
               icon={<FormOutlined />}
-              onClick={() => {
-                entity = {
-                  ...entity,
-                  receiveDate: dayjs(entity.receiveDate).format('TTT/MM/DD'),
-                  chgDate: dayjs(entity.chgDate).format('TTT/MM/DD')
-                }
-                console.log('entity', entity)
-                navigate('/antdDemo/demo/PageTemplates/Edit', {
-                  state: entity
-                })
-              }}
+              onClick={() => pageJump('edit', rowData)}
             />
           </Tooltip>
           <Tooltip title="查詢">
             <Button
               type="link"
               icon={<SearchOutlined />}
-              onClick={() => {
-                entity = {
-                  ...entity,
-                  receiveDate: dayjs(entity.receiveDate).format('TTT/MM/DD'),
-                  chgDate: dayjs(entity.chgDate).format('TTT/MM/DD')
-                }
-                console.log('entity', entity)
-                navigate('/antdDemo/demo/PageTemplates/Query', {
-                  state: entity
-                })
-              }}
+              onClick={() => pageJump('query', rowData)}
             />
           </Tooltip>
-        </>
+        </div>
       ]
     },
     {
@@ -110,13 +154,7 @@ const ManagerMe: React.FC = () => {
       title: '受理號碼',
       dataIndex: 'receiveNo',
       valueType: 'text',
-      fieldProps: {
-        onChange: (e) => {
-          // 強制將值設為大寫
-          const upperCaseValue = e.target.value.toUpperCase()
-          formRef.current?.setFieldsValue({ receiveNo: upperCaseValue })
-        }
-      }
+      fieldProps: { ...toUpperProps }
     },
     {
       title: '受理日期',
@@ -131,6 +169,7 @@ const ManagerMe: React.FC = () => {
       title: '變更生效日',
       dataIndex: 'chgDate',
       valueType: 'date',
+      hideInSearch: true,
       fieldProps: {
         format: 'TTT/MM/DD',
         style: { width: '100%' },
@@ -140,9 +179,7 @@ const ManagerMe: React.FC = () => {
       title: '變更選項',
       dataIndex: 'chgType',
       valueType: 'select',
-      fieldProps: {
-        options: optionsStore.getOptions('chgType')
-      }
+      fieldProps: { options: chgTypeOption }
     }
   ]
 
@@ -190,34 +227,6 @@ const ManagerMe: React.FC = () => {
     if (searchKeys.length === 0) setSearchKeys(['all'])
     // 開始篩選
     let result = dataSource
-    // 保單號碼
-    if (policyNo) {
-      const lowerSearch = policyNo.toLowerCase()
-      result = result.filter((item) => item.policyNo?.toLowerCase().includes(lowerSearch))
-    }
-    // 受理號碼
-    if (receiveNo) {
-      const lowerSearch = receiveNo.toLowerCase()
-      result = result.filter((item) => item.receiveNo?.toLowerCase().includes(lowerSearch))
-    }
-    // 受理日期
-    if (receiveDate) {
-      result = result.filter((item) => {
-        return item.receiveDate?.isSame(receiveDate, 'day') // 比較年月日是否相同
-      })
-    }
-    // 變更生效日
-    if (chgDate) {
-      result = result.filter((item) => {
-        return item.chgDate?.isSame(chgDate, 'day') // 比較年月日是否相同
-      })
-    }
-    // 變更選項
-    if (chgType) {
-      const lowerSearch = chgType.toLowerCase()
-      result = result.filter((item) => item.chgType?.toLowerCase().includes(lowerSearch))
-    }
-
     // 標籤篩選
     if (searchKeys.length > 0) {
       // 變更選項
@@ -234,7 +243,7 @@ const ManagerMe: React.FC = () => {
       }
     }
     return result
-  }, [policyNo, receiveNo, receiveDate, chgDate, chgType, searchKeys, dataSource])
+  }, [searchKeys, dataSource])
 
   return (
     <PageContainer
@@ -287,131 +296,30 @@ const ManagerMe: React.FC = () => {
           </MliFormRow>
         </ProCard>
 
-        {/* 快速查詢 */}
-        {showSearch && (
-          <ProCard ghost>
-            <MliFormRow gutter={8} style={{ width: '100%' }}>
-              <MliFormCol>
-                <ProForm.Item label="保單號碼">
-                  <Input
-                    style={{ width: '100%' }}
-                    placeholder=""
-                    value={policyNo}
-                    onChange={(e) => setPolicyNo(e.target.value)}
-                  />
-                </ProForm.Item>
-              </MliFormCol>
-              <MliFormCol>
-                <ProForm.Item label="受理號碼">
-                  <Input
-                    style={{ width: '100%' }}
-                    placeholder=""
-                    value={receiveNo}
-                    onChange={(e) => setReceiveNo(e.target.value)}
-                  />
-                </ProForm.Item>
-              </MliFormCol>
-              <MliFormCol colSize={2 / 3}>
-                <ProForm.Item label="受理日期">
-                  <DatePicker
-                    style={{ width: '100%' }}
-                    placeholder=""
-                    format="TTT/MM/DD"
-                    value={receiveDate}
-                  />
-                </ProForm.Item>
-              </MliFormCol>
-              <MliFormCol colSize={2 / 3}>
-                <ProForm.Item label="變更生效日">
-                  <DatePicker
-                    style={{ width: '100%' }}
-                    placeholder=""
-                    format="TTT/MM/DD"
-                    value={chgDate}
-                  />
-                </ProForm.Item>
-              </MliFormCol>
-              <MliFormCol colSize={2 / 3}>
-                <ProForm.Item label="變更選項">
-                  <Select
-                    style={{ width: '100%' }}
-                    placeholder=""
-                    options={optionsStore.getOptions('chgType')}
-                    value={chgType}
-                    onChange={setChgType}
-                  />
-                </ProForm.Item>
-              </MliFormCol>
-            </MliFormRow>
-            <Button
-              type="primary"
-              onClick={() => {
-                setPolicyNo('')
-                setReceiveNo('')
-                setReceiveDate(null)
-                setChgDate(null)
-                setChgType('')
-              }}
-            >
-              清除搜尋條件
-            </Button>
-          </ProCard>
-        )}
-
         {/* 表格資料 */}
         <ProTable
           rowKey="receiveNo"
           columns={columns}
           formRef={formRef}
-          actionRef={actionRef}
           dataSource={filteredData}
           style={{ width: '100%' }}
-          headerTitle={
-            <Button
-              type="default"
-              icon={showSearch ? <DownOutlined /> : <UpOutlined />}
-              onClick={() => setShowSearch(!showSearch)}
-            >
-              {showSearch ? '收合搜尋' : '展開搜尋'}
-            </Button>
-          }
-          cardProps={false} // 移除外層 Card
-          // 請求數據
-          request={async (params: any) => {
-            // 清除模式: 回傳空資料
-            if (cleared) {
-              setCleared(false)
-              return { data: [], success: true, total: 0 }
-            }
-            // 資料抓取
-            const res = await poChgApi(params)
-            const chgData = res.map((e) => ({
-              ...e,
-              receiveDate: dayjs(e.receiveDate, 'TTT/MM/DD'),
-              chgDate: dayjs(e.chgDate, 'TTT/MM/DD')
-            }))
-            setDataSource(chgData)
-            return { data: chgData, success: true, total: chgData.length }
-          }}
-          // 表格配置
-          options={{
-            density: true, // 列表密度
-            fullScreen: true, // 全螢幕
-            reload: true, // 重新載入
-            setting: true // 設定
-          }}
+          // 搜尋列 查詢 的行為
+          onSubmit={requestApi}
+          // 搜尋列 重置 的行為
+          onReset={reload}
           // 分頁
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,
             showQuickJumper: true,
             showSizeChanger: true,
-            pageSizeOptions: ['5', '10', '20', '50', '100'],
+            pageSizeOptions: pageSizeOptions,
             onChange: (page, pageSize) => {
               setPagination({ current: page, pageSize })
             }
           }}
-          search={false} // 關閉搜尋欄
+          // 工具欄
+          toolBarRender={toolBarRender}
         />
 
         {/* 懸浮按鈕 */}
