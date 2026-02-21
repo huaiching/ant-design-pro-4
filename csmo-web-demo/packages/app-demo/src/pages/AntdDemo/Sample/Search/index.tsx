@@ -4,6 +4,7 @@ import ExampleRender from './ExampleRender'
 import { Tabs } from 'antd'
 import TabPane from 'antd/es/tabs/TabPane'
 import { useNavigate, useSearchParams } from '@umijs/max'
+import ExampleDataSource from './ExampleDataSource'
 
 //asstManagement 主功能名稱
 const Demo: React.FC = () => {
@@ -19,9 +20,14 @@ const Demo: React.FC = () => {
       component: <Description />
     },
     {
-      key: 'Example (render)',
+      key: 'ExampleRender',
       title: '範例 (render)',
       component: <ExampleRender />
+    },
+    {
+      key: 'ExampleDataSource',
+      title: '範例 (dataSource)',
+      component: <ExampleDataSource />
     },
   ]
 

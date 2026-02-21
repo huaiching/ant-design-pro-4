@@ -1,47 +1,49 @@
-import { ActionType, ProColumns, ProFormInstance, ProTable } from "@ant-design/pro-components"
+import { ProColumns, ProFormInstance, ProTable } from "@ant-design/pro-components"
 import { observer } from "mobx-react"
 import { useRef, useState } from "react"
 import { useNavigate } from "@umijs/max"
 import { toUpperProps } from "@/utils/FieldUtil/StringUtil"
 import { FormOutlined, SearchOutlined } from "@ant-design/icons"
-import { Tooltip, Button, Space, message } from "antd"
+import { Tooltip, Button, Space } from "antd"
 import { getSearchApi } from "../Api/SearchDemoController"
 import { dayjsToRocString, rocStringToDayjs } from "@/utils/Dayjs/rocDateUtils"
 
 const SubSearch: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
-  const actionRef = useRef<ActionType>()
 
   // ProTable 的 分頁控制
   const pageSizeOptions = ['5', '10', '20', '50', '100']
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 10 // 初始每頁數量
+    pageSize: 10
   })
 
-  // 清除資料 開關
-  const [cleared, setCleared] = useState<boolean>(false)
+  // 數據源
+  const [dataSource, setDataSource] = useState<any[]>([])
+
+  // 清除資料
   const reload = () => {
-    setCleared(true) // 開啟清除模式
-    actionRef.current?.reload() // 啟動重新刷新
+    formRef.current?.resetFields()
+    setDataSource([])
+    setPagination({ current: 1, pageSize: 10 })
   }
 
   // 查詢 API 設定
-  const requestApi = async (params: any) => {
-    // 清除模式: 回傳空資料
-    if (cleared) {
-      setCleared(false)
-      return { data: [], success: true, total: 0 }
+  const requestApi = async () => {
+    const formValues = formRef.current?.getFieldsValue()
+    const input = {
+      ...formValues,
+      receiveDate: dayjsToRocString(formValues.receiveDate),
     }
-    // 資料抓取
-    const res = await getSearchApi(params)
+    const res = await getSearchApi(input)
     // 資料格式轉換: 如果有 日期 資料，要轉為 Dayjs 格式，才能正確顯示在 ProTable 的 date 欄位
     const output = res.map((e: any) => ({
       ...e,
       receiveDate: rocStringToDayjs(e.receiveDate),
       chgDate: rocStringToDayjs(e.chgDate)
     }))
-    return { data: output, success: true, total: output.length }
+    setDataSource(output)
+    setPagination(prev => ({ ...prev, current: 1 }))
   }
 
   // 頁面跳轉
@@ -136,9 +138,7 @@ const SubSearch: React.FC = () => {
       title: '受理號碼',
       dataIndex: 'receiveNo',
       valueType: 'text',
-      fieldProps: {
-        ...toUpperProps
-      }
+      fieldProps: { ...toUpperProps }
     },
     {
       title: '受理日期',
@@ -146,7 +146,7 @@ const SubSearch: React.FC = () => {
       valueType: 'date',
       fieldProps: {
         format: 'TTT/MM/DD',
-        style: { width: '100%' },
+        style: { width: '100%' }
       }
     },
     {
@@ -156,42 +156,38 @@ const SubSearch: React.FC = () => {
       hideInSearch: true,
       fieldProps: {
         format: 'TTT/MM/DD',
-        style: { width: '100%' },
+        style: { width: '100%' }
       }
     },
     {
       title: '變更選項',
       dataIndex: 'chgType',
       valueType: 'select',
-      fieldProps: {
-        options: chgTypeOption
-      }
+      fieldProps: { options: chgTypeOption }
     }
   ]
-
 
   return (
     <ProTable
       rowKey="receiveNo"
       columns={columns}
       formRef={formRef}
-      actionRef={actionRef}
       cardProps={false} // 移除外層 Card
       form={{
         component: false // 移除查詢表單的 Card
       }}
       size='small'
-      // 請求數據
-      request={requestApi}
-      // 手動請求
-      manualRequest={true}
+      // 數據源
+      dataSource={dataSource}
       // 表格配置
       options={{
         density: true, // 列表密度
         fullScreen: true, // 全螢幕
-        reload: true, // 重新載入
+        reload: requestApi, // 重新載入
         setting: true // 設定
       }}
+      // 搜尋列 查詢 的行為
+      onSubmit={requestApi}
       // 搜尋列 重置 的行為
       onReset={reload}
       // 分頁

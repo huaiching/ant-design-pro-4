@@ -155,8 +155,13 @@ export const rocStringToDayjsMonth = (input: string): Dayjs | null => {
  * @param input Dayjs
  * @returns 日期字串 (年月日)
  */
-export const dayjsToRocString = (input: Dayjs | null) => {
-  return dayjs(input).isValid() ? dayjs(input).format('TTT/MM/DD') : ''
+export const dayjsToRocString = (input: Dayjs | null | undefined) => {
+  if (input) {
+    return dayjs(input).isValid() ? dayjs(input).format('TTT/MM/DD') : ''
+  } else {
+    return ''
+  }
+  
 }
 
 /**
@@ -164,6 +169,10 @@ export const dayjsToRocString = (input: Dayjs | null) => {
  * @param input Dayjs
  * @returns 日期字串 (年月)
  */
-export const dayjsToRocStringMonth = (input: Dayjs | null) => {
-  return dayjs(input).isValid() ? dayjs(input).format('TTT/MM') : ''
+export const dayjsToRocStringMonth = (input: Dayjs | null | undefined) => {
+  if (input) {
+    return dayjs(input).isValid() ? dayjs(input).format('TTT/MM') : ''
+  } else {
+    return ''
+  }
 }

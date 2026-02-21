@@ -4,6 +4,7 @@ import TabPane from 'antd/es/tabs/TabPane'
 import { PageContainer } from '@ant-design/pro-components'
 import Main from './Main'
 import SubRender from './SubRender'
+import SubDataSource from './SubDataSource'
 
 //asstManagement 主功能名稱
 const Demo: React.FC = () => {
@@ -16,9 +17,14 @@ const Demo: React.FC = () => {
       component: <Main />
     },
     {
-      key: 'Sub',
+      key: 'SubRender',
       title: '查詢子頁面 (render)',
       component: <SubRender />
+    },
+    {
+      key: 'SubDataSource',
+      title: '查詢子頁面 (dataSource)',
+      component: <SubDataSource />
     },
   ]
 

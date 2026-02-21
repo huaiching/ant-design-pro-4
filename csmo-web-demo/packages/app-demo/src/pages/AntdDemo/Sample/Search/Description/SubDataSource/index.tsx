@@ -13,9 +13,11 @@ const SampleSub: React.FC = () => {
       </Paragraph>
 
       <Paragraph type='danger'>
-        此頁面 透過 <code>request</code> 來獲取數據的方式，其獲得的數據 <code>不會對外暴露</code>，因此在 request 中獲取的數據 <code>無法直接在頁面中使用</code>。 <br />
-        僅能在 columns 中，透過 <code>render 屬性</code> 來獲得 該行數據，並進行一些簡單的處理，如：操作欄位的頁面跳轉。 <br />
-        如果 需要取得全部數據 進行進階作業，請改用 dataSource 屬性來獲取數據，並配合 useEffect 來實現與 API 的對接。
+        此頁面 透過 <code>dataSource</code> 來獲取數據的方式，運作時 透過 自定義 <code>dataSource 狀態機</code> 來保存資料， <br />
+        使用時，必須自定義 資料相關操作，並且 <code>只能一次獲取全部資料</code>，無法使用 <code>Page API</code>。
+        在 需要取得全部數據 的進階作業，可透過此方式進行頁面設定。 <br />
+        依然能夠在 columns 中，透過 <code>render 屬性</code> 來獲得 該行數據，並進行一些簡單的處理，如：操作欄位的頁面跳轉。 <br />
+        如果 作業上 無需對全部數據進行處理，可改用 request 屬性 來實現與 API 的對接，設定上會比較簡單。
       </Paragraph>
 
       <Title level={5}>分頁設定</Title>
@@ -37,23 +39,30 @@ const SampleSub: React.FC = () => {
         ProTable 提供 formRef 用於儲存 搜尋列 的相關數據。 <br />
         使用時 透過 <code>formRef.current?.getFieldsValue()</code> 即可獲取 搜尋列 的欄位數據。
       </Paragraph>
-      <Paragraph>
-        ProTable 提供 actionRef 用於進行 操作表格的行為。 <br />
-        使用時 透過 <code>actionRef.current?.reload()</code> 即可觸發 表格的刷新。
-      </Paragraph>
 
       <Title level={5}>查詢 API</Title>
       <Paragraph>
-        此範例 統一透過 <code>requestApi 方法</code> 來進行 資料獲取作業，並在 ProTable 中，透過 request 屬性，執行此方法 進行 API 的對接， <br />
-        執行時，根據 清除模式的開關，來決定是 <code>回傳空資料</code> 還是 <code>從 API 抓取資料</code>。 <br />
-        1. 清除模式：當清除模式開啟時，回傳空資料，並關閉清除模式。 <br />
-        2. 資料抓取：當清除模式關閉時，從 API 抓取資料，並進行資料格式轉換，最後回傳資料給 ProTable 進行顯示。 <br/>
-        <code>requestApi 方法</code> 的 <code>params</code> 參數，可取得 <code>當前的分頁資訊</code> 及 <code>搜尋列數據</code>，且 搜尋列的日期欄位會自動轉為 String 格式。
+        此範例 統一透過 <code>requestApi 方法</code> 來進行 資料獲取作業。 <br />
+        執行時，透過 從 formRef 獲取 搜尋列數據，並透過 API 來獲取資料數據。 <br />
+        資料數據 取得後，必須手動將資料 寫入 dataSource 中，並設定 分頁資訊。 <br />
+        並且 ProTable 的設定上，需要設定 <code>onSubmit</code> 與 <code>options.requestApi</code> 觸發 <code>requestApi 方法</code>。
+      </Paragraph>
+
+      <Paragraph type='danger'>
+        如果 搜尋列數據 中有 日期 資料，需要將其轉為 String 格式，才能將數據正確傳遞給 API。 <br />
+        透過 民國年日期工具 的 <code>dayjsToRocString</code> 與 <code>dayjsToRocStringMonth</code> 可快速進行轉換。
       </Paragraph>
 
       <Paragraph type='danger'>
         如果 API 回傳的資料 中有 日期 資料，需要將其轉為 Dayjs 格式，才能正確顯示在 ProTable 的 date 欄位中。 <br />
         透過 民國年日期工具 的 <code>rocStringToDayjs</code> 與 <code>rocStringToDayjsMonth</code> 可快速進行轉換。
+      </Paragraph>
+
+      <Title level={5}>清除資料</Title>
+      <Paragraph>
+        此範例 統一透過 <code>reload 方法</code> 來進行 資料清除作業。 <br />
+        執行時，手動清空 <code>dataSource</code> 和 <code>重置 分頁資訊</code>。
+        並且 ProTable 的設定上，需要設定 <code>onReset</code>  觸發 <code>reload 方法</code>。
       </Paragraph>
 
       <Title level={5}>頁面跳轉</Title>
@@ -80,50 +89,52 @@ const SampleSub: React.FC = () => {
         僅為 程式基本結構，實際使用 請參考 <code>元件範例</code> 來進行開發，並根據實際需求進行調整。
       </Paragraph>
 
-      <CodeTsx title='Search.tsx' code={`import { ActionType, ProColumns, ProFormInstance, ProTable } from "@ant-design/pro-components"
+      <CodeTsx title='Search.tsx' code={`import { ProColumns, ProFormInstance, ProTable } from "@ant-design/pro-components"
 import { observer } from "mobx-react"
 import { useRef, useState } from "react"
 import { useNavigate } from "@umijs/max"
 import { toUpperProps } from "@/utils/FieldUtil/StringUtil"
 import { FormOutlined, SearchOutlined } from "@ant-design/icons"
-import { Tooltip, Button, Space, message } from "antd"
+import { Tooltip, Button, Space } from "antd"
 import { getSearchApi } from "../Api/SearchDemoController"
 import { dayjsToRocString, rocStringToDayjs } from "@/utils/Dayjs/rocDateUtils"
 
 const SubSearch: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
-  const actionRef = useRef<ActionType>()
 
   // ProTable 的 分頁控制
   const pageSizeOptions = ['5', '10', '20', '50', '100']
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 10 // 初始每頁數量
+    pageSize: 10
   })
 
-  // 清除資料 開關
-  const [cleared, setCleared] = useState<boolean>(false)
+  // 數據源
+  const [dataSource, setDataSource] = useState<any[]>([])
+
+  // 清除資料
   const reload = () => {
-    setCleared(true) // 開啟清除模式
-    actionRef.current?.reload() // 啟動重新刷新
+    formRef.current?.resetFields()
+    setDataSource([])
+    setPagination({ current: 1, pageSize: 10 })
   }
 
   // 查詢 API 設定
-  const requestApi = async (params: any) => {
-    // 清除模式: 回傳空資料
-    if (cleared) {
-      setCleared(false)
-      return { data: [], success: true, total: 0 }
+  const requestApi = async () => {
+    const formValues = formRef.current?.getFieldsValue()
+    const input = {
+      ...formValues,
+      receiveDate: dayjsToRocString(formValues.receiveDate),
     }
-    // 資料抓取
-    const res = await getSearchApi(params)
+    const res = await getSearchApi(input)
     // 資料格式轉換: 如果有 日期 資料，要轉為 Dayjs 格式，才能正確顯示在 ProTable 的 date 欄位
     const output = res.map((e: any) => ({
       ...e,
       receiveDate: rocStringToDayjs(e.receiveDate),
       chgDate: rocStringToDayjs(e.chgDate)
     }))
-    return { data: output, success: true, total: output.length }
+    setDataSource(output)
+    setPagination(prev => ({ ...prev, current: 1 }))
   }
 
   // 頁面跳轉
@@ -218,9 +229,7 @@ const SubSearch: React.FC = () => {
       title: '受理號碼',
       dataIndex: 'receiveNo',
       valueType: 'text',
-      fieldProps: {
-        ...toUpperProps
-      }
+      fieldProps: { ...toUpperProps }
     },
     {
       title: '受理日期',
@@ -228,7 +237,7 @@ const SubSearch: React.FC = () => {
       valueType: 'date',
       fieldProps: {
         format: 'TTT/MM/DD',
-        style: { width: '100%' },
+        style: { width: '100%' }
       }
     },
     {
@@ -238,42 +247,38 @@ const SubSearch: React.FC = () => {
       hideInSearch: true,
       fieldProps: {
         format: 'TTT/MM/DD',
-        style: { width: '100%' },
+        style: { width: '100%' }
       }
     },
     {
       title: '變更選項',
       dataIndex: 'chgType',
       valueType: 'select',
-      fieldProps: {
-        options: chgTypeOption
-      }
+      fieldProps: { options: chgTypeOption }
     }
   ]
-
 
   return (
     <ProTable
       rowKey="receiveNo"
       columns={columns}
       formRef={formRef}
-      actionRef={actionRef}
       cardProps={false} // 移除外層 Card
       form={{
         component: false // 移除查詢表單的 Card
       }}
       size='small'
-      // 請求數據
-      request={requestApi}
-      // 手動請求
-      manualRequest={true}
+      // 數據源
+      dataSource={dataSource}
       // 表格配置
       options={{
         density: true, // 列表密度
         fullScreen: true, // 全螢幕
-        reload: true, // 重新載入
+        reload: requestApi, // 重新載入
         setting: true // 設定
       }}
+      // 搜尋列 查詢 的行為
+      onSubmit={requestApi}
       // 搜尋列 重置 的行為
       onReset={reload}
       // 分頁
