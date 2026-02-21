@@ -1,3 +1,4 @@
+import { PageContainer, ProForm } from '@ant-design/pro-components';
 import { MliFormRow, MliFormCol } from '@mli-csmo/base';
 import { Card } from 'antd';
 import React from 'react';
@@ -35,27 +36,35 @@ const Navigate: React.FC = () => {
       url: 'https://developer.mozilla.org/zh-CN/docs/Web/JavaScript'
     }
   ]
-  
+
 
   // 計算欄位寬度，一行最多四個
   const colSize = (4 / navigateList.length < 1) ? 1 : (4 / navigateList.length)
 
   return (
-    <MliFormRow gutter={[8,8]}>
-      {navigateList.map((navigate, index) => (
-        <MliFormCol colSize={colSize} key={navigate.key}>
-          <Card
-            title={<span style={{ fontSize: 18 }}>{navigate.title}</span>}
-            type="inner"
-            hoverable
-            style={{ textAlign: 'center', height: 150 }}
-            onClick={() => window.open(navigate.url, '_blank')}
-          >
-            {navigate.desc}
-          </Card>
-        </MliFormCol>
-      ))}
-    </MliFormRow>
+    <PageContainer
+      header={{
+        ghost: true
+      }}
+    >
+      <ProForm submitter={false} layout="vertical">
+        <MliFormRow gutter={[8, 8]}>
+          {navigateList.map((navigate, index) => (
+            <MliFormCol colSize={colSize} key={navigate.key}>
+              <Card
+                title={<span style={{ fontSize: 18 }}>{navigate.title}</span>}
+                type="inner"
+                hoverable
+                style={{ textAlign: 'center', height: 150 }}
+                onClick={() => window.open(navigate.url, '_blank')}
+              >
+                {navigate.desc}
+              </Card>
+            </MliFormCol>
+          ))}
+        </MliFormRow>
+      </ProForm>
+    </PageContainer >
   )
 }
 

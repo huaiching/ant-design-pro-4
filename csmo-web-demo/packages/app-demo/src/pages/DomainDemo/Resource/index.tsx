@@ -1,12 +1,13 @@
+import { ProForm, PageContainer } from '@ant-design/pro-components';
 import { MliFormRow, MliFormCol } from '@mli-csmo/base';
 import { Card } from 'antd';
 import React from 'react';
 
 const Navigate: React.FC = () => {
   const publicPath = (window as any).__INJECTED_PUBLIC_PATH_BY_QIANKUN__;
-  
+
   const javaUrl = `${publicPath}pdf/JavaSE.pdf`;
-  
+
 
   const navigateList = [
     {
@@ -22,21 +23,29 @@ const Navigate: React.FC = () => {
   const colSize = (4 / navigateList.length < 1) ? 1 : (4 / navigateList.length)
 
   return (
-    <MliFormRow gutter={[8, 8]}>
-      {navigateList.map((navigate, index) => (
-        <MliFormCol colSize={colSize} key={navigate.key}>
-          <Card
-            title={<span style={{ fontSize: 18 }}>{navigate.title}</span>}
-            type="inner"
-            hoverable
-            style={{ textAlign: 'center', height: 150 }}
-            onClick={() => window.open(navigate.url, '_blank')}
-          >
-            {navigate.desc}
-          </Card>
-        </MliFormCol>
-      ))}
-    </MliFormRow>
+    <PageContainer
+      header={{
+        ghost: true
+      }}
+    >
+      <ProForm submitter={false} layout="vertical">
+        <MliFormRow gutter={[8, 8]}>
+          {navigateList.map((navigate, index) => (
+            <MliFormCol colSize={colSize} key={navigate.key}>
+              <Card
+                title={<span style={{ fontSize: 18 }}>{navigate.title}</span>}
+                type="inner"
+                hoverable
+                style={{ textAlign: 'center', height: 150 }}
+                onClick={() => window.open(navigate.url, '_blank')}
+              >
+                {navigate.desc}
+              </Card>
+            </MliFormCol>
+          ))}
+        </MliFormRow>
+      </ProForm>
+    </PageContainer >
   )
 }
 
