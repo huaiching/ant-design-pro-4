@@ -421,7 +421,7 @@ export default [
                 component: './AntdDemo/Demo/LayoutUi/demo03_Modal'
               },
               {
-                name: 'MliForPageContainermRow',
+                name: 'PageContainer',
                 path: '/antdDemo/Demo/LayoutUi/PageContainer',
                 component: './AntdDemo/Demo/LayoutUi/demo04_PageContainer'
               },
