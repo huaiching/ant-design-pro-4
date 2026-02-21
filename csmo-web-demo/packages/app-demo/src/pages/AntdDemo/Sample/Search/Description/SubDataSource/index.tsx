@@ -121,7 +121,9 @@ const SubSearch: React.FC = () => {
 
   // 查詢 API 設定
   const requestApi = async () => {
+    // 獲取數據
     const formValues = formRef.current?.getFieldsValue()
+    // 整理數據
     const input = {
       ...formValues,
       receiveDate: dayjsToRocString(formValues.receiveDate),

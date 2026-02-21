@@ -8,25 +8,51 @@ import {
 } from '@ant-design/icons'
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components'
 import { useNavigate } from '@umijs/max'
-import { Button, FloatButton, Tooltip } from 'antd'
+import { Button, FloatButton, Space, Tooltip } from 'antd'
 import dayjs from 'dayjs'
 import { observer } from 'mobx-react'
 import React, { useEffect, useRef, useState } from 'react'
 import formStore from './Mobx/formRefStore'
 import optionsStore from './Mobx/optionStore'
 import { poChgApi } from './Store/poChgApi'
+import { toUpperProps } from '@/utils/FieldUtil/StringUtil'
+import { dayjsToRocString, rocStringToDayjs } from '@/utils/Dayjs/rocDateUtils'
 
 const SearchForm: React.FC = () => {
   const formRef = formStore.getFormRef
   const actionRef = useRef<ActionType>()
-  const navigate = useNavigate()
+
   // ProTable 的 分頁控制
+  const pageSizeOptions = ['5', '10', '20', '50', '100']
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 5
+    pageSize: 10 // 初始每頁數量
   })
+
   // 清除資料 開關
-  const [cleared, setCleared] = useState(false)
+  const [cleared, setCleared] = useState<boolean>(false)
+  const reload = () => {
+    setCleared(true) // 開啟清除模式
+    actionRef.current?.reload() // 啟動重新刷新
+  }
+
+  // 查詢 API 設定
+  const requestApi = async (params: any) => {
+    // 清除模式: 回傳空資料
+    if (cleared) {
+      setCleared(false)
+      return { data: [], success: true, total: 0 }
+    }
+    // 資料抓取
+    const res = await poChgApi(params)
+    // 資料格式轉換: 如果有 日期 資料，要轉為 Dayjs 格式，才能正確顯示在 ProTable 的 date 欄位
+    const output = res.map((e: any) => ({
+      ...e,
+      receiveDate: rocStringToDayjs(e.receiveDate),
+      chgDate: rocStringToDayjs(e.chgDate)
+    }))
+    return { data: output, success: true, total: output.length }
+  }
 
   // 載入 option
   useEffect(() => {
@@ -37,6 +63,51 @@ const SearchForm: React.FC = () => {
     ])
   }, [])
 
+  // 頁面跳轉
+  const navigate = useNavigate()
+  const pageJump = (type: string, rowData: any) => {
+    // 設定 路徑
+    let path = ''
+    switch (type) {
+      case 'create':
+        path = '/container/demo/antdDemo/demo/PageTemplates/Create'
+        break
+      case 'edit':
+        path = '/container/demo/antdDemo/demo/PageTemplates/Edit'
+        break
+      case 'query':
+        path = '/container/demo/antdDemo/demo/PageTemplates/Query'
+        break
+      default:
+        return
+    }
+    // 設定 參數
+    let data = {}
+    if (rowData) {
+      data = {
+        ...rowData,
+        receiveDate: dayjsToRocString(rowData?.receiveDate),
+        chgDate: dayjsToRocString(rowData?.chgDate)
+      }
+    }
+    /* 原頁面跳轉 */
+    navigate(path, {
+      state: data
+    })
+  }
+
+  // 工具欄
+  const toolBarRender = () => [
+    <Space>
+      <Button
+        color="purple" variant="solid"
+        onClick={() => pageJump('create', null)}
+      >
+        新增
+      </Button>
+    </Space>
+  ]
+
   // 表格欄位定義
   const columns: ProColumns<any>[] = [
     {
@@ -44,43 +115,23 @@ const SearchForm: React.FC = () => {
       dataIndex: 'option',
       valueType: 'option',
       width: 80,
-      render: (dom, entity) => [
-        <>
+      render: (dom, rowData) => [
+        <div>
           <Tooltip title="修改">
             <Button
               type="link"
               icon={<FormOutlined />}
-              onClick={() => {
-                entity = {
-                  ...entity,
-                  receiveDate: dayjs(entity.receiveDate).format('TTT/MM/DD'),
-                  chgDate: dayjs(entity.chgDate).format('TTT/MM/DD')
-                }
-                console.log('entity', entity)
-                navigate('/antdDemo/demo/PageTemplates/Edit', {
-                  state: entity
-                })
-              }}
+              onClick={() => pageJump('edit', rowData)}
             />
           </Tooltip>
           <Tooltip title="查詢">
             <Button
               type="link"
               icon={<SearchOutlined />}
-              onClick={() => {
-                entity = {
-                  ...entity,
-                  receiveDate: dayjs(entity.receiveDate).format('TTT/MM/DD'),
-                  chgDate: dayjs(entity.chgDate).format('TTT/MM/DD')
-                }
-                console.log('entity', entity)
-                navigate('/antdDemo/demo/PageTemplates/Query', {
-                  state: entity
-                })
-              }}
+              onClick={() => pageJump('query', rowData)}
             />
           </Tooltip>
-        </>
+        </div>
       ]
     },
     {
@@ -93,11 +144,7 @@ const SearchForm: React.FC = () => {
       dataIndex: 'receiveNo',
       valueType: 'text',
       fieldProps: {
-        onChange: (e) => {
-          // 強制將值設為大寫
-          const upperCaseValue = e.target.value.toUpperCase()
-          formRef.current?.setFieldsValue({ receiveNo: upperCaseValue })
-        }
+        ...toUpperProps
       }
     },
     {
@@ -145,22 +192,7 @@ const SearchForm: React.FC = () => {
           component: false // 移除查詢表單的 Card
         }}
         // 請求數據
-        request={async (params: any) => {
-          // 清除模式: 回傳空資料
-          if (cleared) {
-            setCleared(false)
-            return { data: [], success: true, total: 0 }
-          }
-          // 資料抓取
-          const res = await poChgApi(params)
-          const chgData = res.map((e) => ({
-            ...e,
-            receiveDate: dayjs(e.receiveDate, 'TTT/MM/DD'),
-            chgDate: dayjs(e.chgDate, 'TTT/MM/DD')
-          }))
-          console.log('chgData', chgData)
-          return { data: chgData, success: true, total: chgData.length }
-        }}
+        request={requestApi}
         // 手動請求
         manualRequest={true}
         // 表格配置
@@ -170,39 +202,21 @@ const SearchForm: React.FC = () => {
           reload: true, // 重新載入
           setting: true // 設定
         }}
+        // 搜尋列 重置 的行為
+        onReset={reload}
         // 分頁
         pagination={{
           current: pagination.current,
           pageSize: pagination.pageSize,
           showQuickJumper: true,
           showSizeChanger: true,
-          pageSizeOptions: ['5', '10', '20', '50', '100'],
+          pageSizeOptions: pageSizeOptions,
           onChange: (page, pageSize) => {
             setPagination({ current: page, pageSize })
           }
         }}
         // 工具欄
-        toolBarRender={() => [
-          <>
-            <Button
-              type="primary"
-              onClick={() => {
-                navigate('/antdDemo/demo/PageTemplates/Create')
-              }}
-            >
-              新增
-            </Button>
-            <Tooltip title="清除資料">
-              <Button
-                icon={<ClearOutlined />}
-                onClick={() => {
-                  setCleared(true) // 開啟清除模式
-                  actionRef.current?.reload() // 啟動重新刷新
-                }}
-              />
-            </Tooltip>
-          </>
-        ]}
+        toolBarRender={toolBarRender}
       />
 
       {/* 懸浮按鈕 */}
