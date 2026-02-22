@@ -7,103 +7,61 @@ import dayjs from 'dayjs'
 import React, { useEffect, useRef, useState } from 'react'
 import './store/index.less'
 import { DeleteOutlined } from '@ant-design/icons'
+import { fetchAllData } from './Store/dataApi'
+import { rocStringToDayjs } from '@/utils/Dayjs/rocDateUtils'
 
 // 主元件定義
 const NestedEditableProTable: React.FC = () => {
-  // 狀態管理：載入中
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [loading, setLoading] = useState<boolean>(false)
-  // 表單參考，用來取得或設定表單資料
   const formRef = useRef<ProFormInstance>()
-  // 外層保單表格可編輯列的 key 值
+  const [loading, setLoading] = useState<boolean>(false)
+
+  // 可編輯的明細資料序號
   const [editableKeys, setEditableKeys] = useState<React.Key[]>([])
-  // 內層保障子表格的每一個保單對應的可編輯 key 值
-  const [coEditableKeys, setCoEditableKeys] = useState<Record<string, React.Key[]>>({})
-  // 控制展開列
-  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([])
+  const [subEditableKeys, setSubEditableKeys] = useState<Record<string, React.Key[]>>({})
 
-  // 模擬 API 載入資料
-  useEffect(() => {
-    const data = [
-      {
-        id: 1,
-        policyNo: '100000000001',
-        poStsCode: '有效',
-        poIssueDate: '114/01/10',
-        coList: [
-          {
-            id: 1,
-            coverageNo: 1,
-            planCode: 'A001',
-            rateScale: '0',
-            coStsCode: '有效',
-            coIssueDate: '114/01/01'
-          },
-          {
-            id: 2,
-            coverageNo: 2,
-            planCode: 'A002',
-            rateScale: '0',
-            coStsCode: '有效',
-            coIssueDate: '114/01/01'
-          }
-        ]
-      },
-      {
-        id: 2,
-        policyNo: '100000000002',
-        poStsCode: '有效',
-        poIssueDate: '113/10/14',
-        coList: [
-          {
-            id: 1,
-            coverageNo: 1,
-            planCode: 'B001',
-            rateScale: '0',
-            coStsCode: '有效',
-            coIssueDate: '113/10/14'
-          },
-          {
-            id: 2,
-            coverageNo: 2,
-            planCode: 'B002',
-            rateScale: '0',
-            coStsCode: '有效',
-            coIssueDate: '113/10/14'
-          }
-        ]
-      }
-    ]
-
-    // 將字串日期轉換為 dayjs 物件以供 ProForm 處理
-    const chgData = data.map((po) => ({
+  // 查詢 API 設定
+  const requestApi = async () => {
+    const res = await fetchAllData()
+    // 日期資料格式轉換
+    const data = res.map((po: any) => ({
       ...po,
-      poIssueDate: dayjs(po.poIssueDate, 'TTT/MM/DD'),
-      coList: po.coList.map((co) => ({
+      poIssueDate: rocStringToDayjs(po.poIssueDate),
+      coList: po.coList.map((co: any) => ({
         ...co,
-        coIssueDate: dayjs(co.coIssueDate, 'TTT/MM/DD')
+        coIssueDate: rocStringToDayjs(co.coIssueDate)
       }))
     }))
 
-    // 設定表單初始值
-    formRef.current?.setFieldsValue({ editTable: chgData })
+    // 資料儲存
+    formRef.current?.setFieldValue('editTable', data)
 
-    // 初始化保單可編輯列
-    setEditableKeys(data.map((item) => item.id))
-
-    // 初始化每張保單對應的保障項目可編輯列
-    setCoEditableKeys(
-      data.reduce(
-        (acc, item) => ({
-          ...acc,
-          [item.id]: item.coList?.map((co) => co.id) || []
-        }),
-        {}
-      )
+    // 設定目前資料列的 id 為可編輯
+    // 主表格
+    const ids = data.map((item) => item.id)
+    setEditableKeys(ids)
+    // 子表格
+    const subIds = data.reduce(
+      (acc, item) => ({
+        ...acc,
+        [item.id]: item.coList?.map((co: any) => co.id) || []
+      }),
+      {}
     )
+    setSubEditableKeys(subIds)
+
     // 預設展開全部資料
-    setExpandedRowKeys(chgData.map((item) => item.id))
+    setExpandedRowKeys(data.map((item) => item.id))
+  }
+
+  // 頁面初始化就要抓取資料
+  useEffect(() => {
+    setLoading(true)
+    requestApi()
+    setLoading(false)
   }, [])
+
+  // 控制展開列
+  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([])
 
   // 表單底部的提交按鈕渲染函式
   const submitterRender = () => {
@@ -139,7 +97,7 @@ const NestedEditableProTable: React.FC = () => {
     }
   }
 
-  // 外層保單表格的欄位定義
+  // 主表格 欄位設定
   const poColumns: ProColumns<any>[] = [
     {
       title: '操作',
@@ -167,7 +125,7 @@ const NestedEditableProTable: React.FC = () => {
     }
   ]
 
-  // 內層保障項目表格的欄位定義
+  // 子表格 欄位設定
   const coColumns: ProColumns<any>[] = [
     {
       title: '操作',
@@ -206,6 +164,54 @@ const NestedEditableProTable: React.FC = () => {
     }
   ]
 
+  // 主表格 編輯表格的操作區設定
+  const actionRender = (row: any) => [
+    <Popconfirm
+      key="delete"
+      title="確定刪除嗎？"
+      onConfirm={() => {
+        // 取得現有資料
+        const currentData = formRef.current?.getFieldValue('editTable') || []
+        // 過濾刪除該列
+        const newData = currentData.filter((item: any) => item.id !== row.id)
+        // 更新表單欄位資料
+        formRef.current?.setFieldValue('editTable', newData)
+        // 同步更新 editableKeys
+        setEditableKeys(newData.map((item: any) => item.id))
+      }}
+    >
+      <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: 16 }} />
+    </Popconfirm>
+  ]
+
+  // 子表格 編輯表格的操作區設定
+  const subActionRender = (row: any, record: any) => [
+    <Popconfirm
+      key="delete"
+      title="確定刪除保障嗎？"
+      onConfirm={() => {
+        const table = formRef.current?.getFieldValue('editTable') || []
+        const poIndex = table.findIndex((po: any) => po.id === record.id)
+
+        if (poIndex !== -1) {
+          const oldCoList = table[poIndex].coList || []
+          const newCoList = oldCoList.filter((co: any) => co.id !== row.id)
+
+          // 更新表單資料
+          formRef.current?.setFieldValue(['editTable', poIndex, 'coList'], newCoList)
+
+          // 更新 coEditableKeys
+          setSubEditableKeys((prev) => ({
+            ...prev,
+            [record.id]: newCoList.map((co: any) => co.id)
+          }))
+        }
+      }}
+    >
+      <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: 16 }} />
+    </Popconfirm>
+  ]
+
   return (
     <PageContainer
       header={{
@@ -217,11 +223,10 @@ const NestedEditableProTable: React.FC = () => {
           <Spin spinning={loading}>
             <EditableProTable
               name="editTable"
-              columns={poColumns}
               rowKey="id"
-              style={{
-                width: '100%'
-              }}
+              columns={poColumns}
+              size='small'
+              // 設定表格底色
               // rowClassName={'ant-table-row-selected'}  // 設定表格底色: 預設顏色
               rowClassName={() => 'custom-selected-row'} // 設定表格底色: 透過 CSS 設定
               // 新增按鈕
@@ -237,53 +242,30 @@ const NestedEditableProTable: React.FC = () => {
               editable={{
                 type: 'multiple',
                 editableKeys: editableKeys,
-                // 更新對應保單的保單可編輯列
                 onChange: setEditableKeys,
-                actionRender: (row) => [
-                  <Popconfirm
-                    key="delete"
-                    title="確定刪除嗎？"
-                    onConfirm={() => {
-                      // 取得現有資料
-                      const currentData = formRef.current?.getFieldValue('editTable') || []
-                      // 過濾刪除該列
-                      const newData = currentData.filter((item: any) => item.id !== row.id)
-                      // 更新表單欄位資料
-                      formRef.current?.setFieldValue('editTable', newData)
-                      // 同步更新 editableKeys
-                      setEditableKeys(newData.map((item: any) => item.id))
-                    }}
-                  >
-                    <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: 16 }} />
-                  </Popconfirm>
-                ]
+                actionRender: actionRender
               }}
-              pagination={false}
-              // 子表格（保障清單）展開設定
+              // 子表格
               expandable={{
-                expandedRowKeys,
-                onExpandedRowsChange: (keys: any) => setExpandedRowKeys(keys),
-                expandedRowRender: (record, index) => {
-                  // 有些型別定義 index 可能是可選，保險起見再算一次
+                expandedRowKeys, // 用狀態控制展開
+                onExpandedRowsChange: (keys: any) => setExpandedRowKeys(keys), // 更新展開狀態
+                expandedRowRender: (mainRow, index) => {
+                  // 建立索引 index
                   const table = formRef.current?.getFieldValue('editTable') || []
                   const rowIndex =
                     typeof index === 'number'
                       ? index
-                      : table.findIndex((x: any) => x.id === record.id)
-
+                      : table.findIndex((x: any) => x.id === mainRow.id)
                   return (
                     <EditableProTable
+                      name={['editTable', rowIndex, 'coList']}
                       rowKey="id"
                       columns={coColumns}
-                      pagination={false}
+                      size='small'
                       style={{
-                        width: '100%',
                         paddingLeft: 50,
-                        paddingBottom: 0,
-                        marginBottom: 0
                       }}
-                      // ✅ 用索引定位到當列的 coList
-                      name={['editTable', rowIndex, 'coList']}
+                      // 新增按鈕
                       recordCreatorProps={{
                         newRecordType: 'dataSource',
                         record: () => ({
@@ -292,37 +274,13 @@ const NestedEditableProTable: React.FC = () => {
                         creatorButtonText: '新增保障',
                         style: { backgroundColor: 'rgba(243, 255, 200, 1)' }
                       }}
+                      // 編輯設定
                       editable={{
                         type: 'multiple',
-                        editableKeys: coEditableKeys[record.id] || [],
+                        editableKeys: subEditableKeys[mainRow.id] || [],
                         onChange: (keys) =>
-                          setCoEditableKeys((prev) => ({ ...prev, [record.id]: keys })),
-                        actionRender: (row, config, defaultDoms) => [
-                          <Popconfirm
-                            key="delete"
-                            title="確定刪除保障嗎？"
-                            onConfirm={() => {
-                              const table = formRef.current?.getFieldValue('editTable') || []
-                              const poIndex = table.findIndex((po: any) => po.id === record.id)
-
-                              if (poIndex !== -1) {
-                                const oldCoList = table[poIndex].coList || []
-                                const newCoList = oldCoList.filter((co: any) => co.id !== row.id)
-
-                                // 更新表單資料
-                                formRef.current?.setFieldValue(['editTable', poIndex, 'coList'], newCoList)
-
-                                // 更新 coEditableKeys
-                                setCoEditableKeys((prev) => ({
-                                  ...prev,
-                                  [record.id]: newCoList.map((co: any) => co.id)
-                                }))
-                              }
-                            }}
-                          >
-                            <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: 16 }} />
-                          </Popconfirm>
-                        ]
+                          setSubEditableKeys((prev) => ({ ...prev, [mainRow.id]: keys })),
+                        actionRender: (row) => subActionRender(row, mainRow)
                       }}
                     />
                   )

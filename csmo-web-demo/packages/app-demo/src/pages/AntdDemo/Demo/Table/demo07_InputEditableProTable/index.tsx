@@ -1,6 +1,6 @@
 import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { FooterToolbar, PageContainer } from '@ant-design/pro-layout'
-import { Button, Card, Input, message, Modal, Popconfirm, Spin, Tag } from 'antd'
+import { Button, Input, message, Modal, Popconfirm, Spin, Tag } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
 import { fetchAllData } from './Store/dataApi'
@@ -25,6 +25,13 @@ const MyForm: React.FC = () => {
     setEditableKeys(ids)
   }
 
+  // 頁面初始化就要抓取資料
+  useEffect(() => {
+    setLoading(true)
+    requestApi()
+    setLoading(false)
+  }, [])
+
   // 控制送出後之動作
   const submitterRender = () => {
     Modal.confirm({
@@ -43,13 +50,6 @@ const MyForm: React.FC = () => {
       }
     })
   }
-
-  // 頁面初始化就要抓取資料
-  useEffect(() => {
-    setLoading(true)
-    requestApi()
-    setLoading(false)
-  }, [])
 
   // 表格欄位設定
   const columns: ProColumns<any>[] = [

@@ -191,6 +191,8 @@ const NestedProTable: React.FC = () => {
           }}
           // 子表格
           expandable={{
+            expandedRowKeys, // 用狀態控制展開
+            onExpandedRowsChange: (keys: any) => setExpandedRowKeys(keys), // 更新展開狀態
             expandedRowRender: (record) => (
               <ProTable
                 rowKey="key"
@@ -205,8 +207,6 @@ const NestedProTable: React.FC = () => {
                 options={false}
               />
             ),
-            expandedRowKeys, // 用狀態控制展開
-            onExpandedRowsChange: (keys: any) => setExpandedRowKeys(keys) // 更新展開狀態
           }}
           /** 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
           tableAlertRender={() => (
