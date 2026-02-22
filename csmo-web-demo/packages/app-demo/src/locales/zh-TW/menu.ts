@@ -70,7 +70,6 @@ export default {
   'menu.antd.Demo.Table.NestedEditableProTable': '嵌套可編輯表格 (NestedEditableProTable)',
   'menu.antd.Demo.Table.DragSortTable': '拖動排序表格 (DragSortTable)',
   'menu.antd.Demo.Table.EditableAmountTable': '可編輯金額表格 (EditableAmountTable)',
-  'menu.antd.Demo.Table.CaseSearchTable': '案例搜尋表格 (CaseSearchTable)',
   'menu.antd.Demo.Table.BatchEditablePolicyTable': '批量新增資料表格 (BatchEditablePolicyTable)',
   'menu.antd.Demo.LayoutUi': '佈局與視覺元件 (LayoutUi)',
   'menu.antd.Demo.LayoutUi.ProCard': '卡片 (ProCard)',

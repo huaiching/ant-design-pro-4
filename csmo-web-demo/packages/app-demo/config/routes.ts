@@ -389,14 +389,9 @@ export default [
                 component: './AntdDemo/Demo/Table/demo10_EditableAmountTable'
               },
               {
-                name: 'CaseSearchTable',
-                path: '/antdDemo/Demo/Table/CaseSearchTable',
-                component: './AntdDemo/Demo/Table/demo11_CaseSearchTable'
-              },
-              {
                 name: 'BatchEditablePolicyTable',
                 path: '/antdDemo/Demo/Table/BatchEditablePolicyTable',
-                component: './AntdDemo/Demo/Table/demo12_BatchEditablePolicyTable'
+                component: './AntdDemo/Demo/Table/demo11_BatchEditablePolicyTable'
               },
             ]
           },
