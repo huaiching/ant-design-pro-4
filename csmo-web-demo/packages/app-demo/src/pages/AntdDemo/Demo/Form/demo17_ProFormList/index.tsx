@@ -1,78 +1,64 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { ProForm, ProFormText, ProFormSelect, ProFormDigit, ProFormList, ProFormInstance } from '@ant-design/pro-form'
-import { Button, message, Typography } from 'antd'
+import { Button, message, Modal, Typography } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import ProCard from '@ant-design/pro-card'
 import { FooterToolbar, PageContainer } from '@ant-design/pro-layout'
 import { MliFormRow } from '@mli-csmo/base'
-import { log } from 'console'
-import { debounce } from 'lodash'
-
-// 模擬數據
-let data = {}
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>(null)
   const [benfCount, setBenfCount] = useState(0)
+    
+    // 初始載入時的設定
+    useEffect(() => {
+      // 讀取資料
+      // ...
+  
+      // 離開頁面前的處理
+      return () => {
+        // 離開頁面前先將資料塞回 mobx
+        handleValueChange()
+      }
+    }, []);
+  
+    // 表單值變更處理: 同步更新 Mobx 資料
+    const handleValueChange = () => {
+      const values = formRef.current?.getFieldsValue()
+      // 呼叫 Mobx 的 setting
+    }
 
-  useEffect(() => {
-    // 預設帶入表單資料
-    formRef.current?.setFieldsValue({
-      ...data,
+  // 控制送出後之動作
+  const submitterRender = () => {
+    Modal.confirm({
+      content: "確定要送出嗎？",
+      onOk() {
+        formRef.current?.validateFields().then(() => {
+          const formRefData = formRef.current?.getFieldsValue()
+          console.log('表單數據', formRefData);
+          
+          message.success('表單提交成功！')
+        })
+      },
+      onCancel() {
+        // 取消按鈕 點擊後 要進行的 API 操作
+        message.warning('取消作業')
+      }
     })
-  }, [])
+  }
 
-  // 定義關係選項
+  // 下拉式選單
   const relationshipOptions = [
     { label: '生存受益人', value: 'L' },
     { label: '滿期受益人', value: 'M' },
     { label: '身故受益人', value: 'D' }
   ]
 
-  // 表單提交處理
-  // 控制送出後之動作
-  const submitterRender = () => {
-    return {
-      render: () => (
-        <FooterToolbar>
-          <Button
-            type='primary'
-            onClick={async () => {
-              log('表單數據', data)
-              formRef.current?.validateFields().then(() => {
-                message.success('表單提交成功！')
-              })
-            }}
-            key='save'
-          >
-            確認
-          </Button>
-          <Button
-            onClick={async () => {
-              // 取消按鈕 點擊後 要進行的 API 操作
-              message.warning('取消作業')
-            }}
-          >
-            取消
-          </Button>
-        </FooterToolbar>
-      )
-    }
-  }
-
+  // 計算數量
   const calcBenfCount = () => {
     const benfList = formRef.current?.getFieldValue('benfList') || []
     setBenfCount(benfList.length)
   }
-
-  // 表單值變更處理，使用 debounce 限制觸發頻率
-  const handleValueChange = debounce(() => {
-    // 取得表單變更資料
-    const values = formRef.current?.getFieldsValue()
-    data = {
-      ...values
-    }
-  }, 300)
 
   return (
     <PageContainer>
@@ -80,11 +66,11 @@ const MyForm: React.FC = () => {
         grid
         formRef={formRef}
         layout='vertical'
+        submitter={false}
         onValuesChange={() => {
           calcBenfCount()
           handleValueChange()
         }}
-        submitter={submitterRender()}
       >
         <Typography.Text >目前受益人數量：{benfCount}</Typography.Text>
 
@@ -180,6 +166,11 @@ const MyForm: React.FC = () => {
             </ProCard>
           )}
         </ProFormList>
+
+        {/* 底部功能區 */}
+        <FooterToolbar>
+          <Button type='primary' onClick={submitterRender}>送出</Button>
+        </FooterToolbar>
       </ProForm>
     </PageContainer>
   )
