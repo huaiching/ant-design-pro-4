@@ -58,7 +58,7 @@ const NestedProTable: React.FC = () => {
   /** 快速搜尋 **/
   // 快速搜尋輸入文字狀態
   const [searchText, setSearchText] = useState('')
-  // 快速搜尋的資料分析
+  // 快速搜尋的資料篩選器: 當 數據變動 或 搜尋框有輸入資料 時啟動，進行 顯示資料 的異動
   const filteredData = useMemo(() => {
     if (!searchText) return dataSource
     // 將 搜尋文字 轉為 小寫
@@ -158,8 +158,10 @@ const NestedProTable: React.FC = () => {
           }}
           // 勾選設定
           rowSelection={{
+            type: 'checkbox', // checkbox 選擇框(預設) / radio 單選框
             selectedRowKeys,
-            onChange: (keys) => setSelectedRowKeys(keys)
+            onChange: (keys) => setSelectedRowKeys(keys),
+            selections: true
           }}
           // toolBarRender={() => [
           //   <Input

@@ -280,7 +280,8 @@ const SubSearch: React.FC = () => {
       formRef={formRef}
       cardProps={false} // 移除外層 Card
       form={{
-        component: false // 移除查詢表單的 Card
+        component: false, // 移除查詢表單的 Card
+        ignoreRules: false  // 不要忽略欄位驗證規則 (預設忽略)
       }}
       size='small'
       // 數據源
@@ -296,6 +297,8 @@ const SubSearch: React.FC = () => {
       onSubmit={requestApi}
       // 搜尋列 重置 的行為
       onReset={reload}
+      // 搜尋表單佈局
+      search={{ labelWidth: 'auto' }}
       // 分頁
       pagination={{
         current: pagination.current,

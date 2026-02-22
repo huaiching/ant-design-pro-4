@@ -19,7 +19,7 @@ const mockData: TableItem[] = Array.from({ length: 100 }, (_, index) => ({
 
 export const fetchAllData = async (
   params: { name?: string; age?: number; current?: number; pageSize?: number; birthDate?: string }
-): Promise<{ data: TableItem[]; success: boolean; total: number }> => {
+): Promise<any> => {
   const { name, age, birthDate, current = 1, pageSize = 10 } = params
 
   let filteredData = mockData
@@ -44,7 +44,6 @@ export const fetchAllData = async (
 
   return {
     data: filteredData.slice(startIndex, endIndex),
-    success: true,
     total: filteredData.length
   }
 }
