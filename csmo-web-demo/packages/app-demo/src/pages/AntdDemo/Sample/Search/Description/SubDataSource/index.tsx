@@ -35,9 +35,17 @@ const SampleSub: React.FC = () => {
         2. 其他欄位：定義了保單號碼、受理號碼、受理日期、變更生效日、變更選項等欄位，並根據需求設定了 valueType、fieldProps 等屬性來控制欄位的顯示和行為。 <br />
         3. 變更生效日 欄位：設定了 hideInSearch: true，表示在查詢表單中隱藏該欄位，因為變更生效日通常不會作為查詢條件。
       </Paragraph>
+
       <Paragraph>
-        ProTable 提供 formRef 用於儲存 搜尋列 的相關數據。 <br />
-        使用時 透過 <code>formRef.current?.getFieldsValue()</code> 即可獲取 搜尋列 的欄位數據。
+        非 操作欄位 可使用 <code>sorter 屬性</code> 開啟資料排序，使用時需根據 <code>類型</code> 設定排序比對條件 <br />
+        字串：使用 <code>localeCompare</code> 做為比對條件，如：<code>{`sorter: (a: any, b: any) => a.policyNo.localeCompare(b.policyNo)`}</code>。 <br />
+        日期：使用 <code>-</code> 做為比對條件，如：<code>{`sorter: (a: any, b: any) => a.receiveDate - b.receiveDate`}</code>。 <br />
+        數字：使用 <code>-</code> 做為比對條件，如：<code>{`sorter: (a: any, b: any) => a.age - b.age`}</code>。
+      </Paragraph>
+
+      <Paragraph type='danger'>
+        如果 搜尋列數據 中有 日期 資料，需要將其轉為 String 格式，才能將數據正確傳遞給 API。 <br />
+        透過 民國年日期工具 的 <code>dayjsToRocString</code> 與 <code>dayjsToRocStringMonth</code> 可快速進行轉換。
       </Paragraph>
 
       <Title level={5}>查詢 API</Title>
@@ -225,18 +233,21 @@ const SubSearch: React.FC = () => {
     {
       title: '保單號碼',
       dataIndex: 'policyNo',
-      valueType: 'text'
+      valueType: 'text',
+      sorter: (a: any, b: any) => a.policyNo.localeCompare(b.policyNo),
     },
     {
       title: '受理號碼',
       dataIndex: 'receiveNo',
       valueType: 'text',
+      sorter: (a: any, b: any) => a.receiveNo.localeCompare(b.receiveNo),
       fieldProps: { ...toUpperProps }
     },
     {
       title: '受理日期',
       dataIndex: 'receiveDate',
       valueType: 'date',
+      sorter: (a: any, b: any) => a.receiveDate - b.receiveDate,
       fieldProps: {
         format: 'TTT/MM/DD',
         style: { width: '100%' }
@@ -246,6 +257,7 @@ const SubSearch: React.FC = () => {
       title: '變更生效日',
       dataIndex: 'chgDate',
       valueType: 'date',
+      sorter: (a: any, b: any) => a.chgDate - b.chgDate,
       hideInSearch: true,
       fieldProps: {
         format: 'TTT/MM/DD',
@@ -256,6 +268,7 @@ const SubSearch: React.FC = () => {
       title: '變更選項',
       dataIndex: 'chgType',
       valueType: 'select',
+      sorter: (a: any, b: any) => a.chgType.localeCompare(b.chgType),
       fieldProps: { options: chgTypeOption }
     }
   ]

@@ -130,12 +130,14 @@ const SubSearch: React.FC = () => {
     {
       title: '保單號碼',
       dataIndex: 'policyNo',
-      valueType: 'text'
+      valueType: 'text',
+      sorter: (a: any, b: any) => a.policyNo.localeCompare(b.policyNo),
     },
     {
       title: '受理號碼',
       dataIndex: 'receiveNo',
       valueType: 'text',
+      sorter: (a: any, b: any) => a.receiveNo.localeCompare(b.receiveNo),
       fieldProps: {
         ...toUpperProps
       }
@@ -144,6 +146,7 @@ const SubSearch: React.FC = () => {
       title: '受理日期',
       dataIndex: 'receiveDate',
       valueType: 'date',
+      sorter: (a: any, b: any) => a.receiveDate - b.receiveDate,
       fieldProps: {
         format: 'TTT/MM/DD',
         style: { width: '100%' },
@@ -153,6 +156,7 @@ const SubSearch: React.FC = () => {
       title: '變更生效日',
       dataIndex: 'chgDate',
       valueType: 'date',
+      sorter: (a: any, b: any) => a.chgDate - b.chgDate,
       hideInSearch: true,
       fieldProps: {
         format: 'TTT/MM/DD',
@@ -163,6 +167,7 @@ const SubSearch: React.FC = () => {
       title: '變更選項',
       dataIndex: 'chgType',
       valueType: 'select',
+      sorter: (a: any, b: any) => a.chgType.localeCompare(b.chgType),
       fieldProps: {
         options: chgTypeOption
       }

@@ -58,22 +58,37 @@ const ProTableDemo: React.FC = () => {
       title: '姓名',
       dataIndex: 'name',
       valueType: 'text',
+      sorter: (a: any, b: any) => a.name.localeCompare(b.name),
       formItemProps: {
         rules: [{ required: true, message: '請輸入姓名！' }]
       }
     },
-    { title: '年齡', dataIndex: 'age', valueType: 'digit', sorter: true, copyable: true },
-    { title: '地址', dataIndex: 'address', valueType: 'text', search: false, sorter: true },
+    {
+      title: '年齡',
+      dataIndex: 'age',
+      valueType: 'digit',
+      sorter: (a: any, b: any) => a.age - b.age,
+      copyable: true
+    },
+    {
+      title: '地址',
+      dataIndex: 'address',
+      valueType: 'text',
+      search: false,
+      sorter: (a: any, b: any) => a.address.localeCompare(b.address),
+    },
     {
       title: '性別',
       dataIndex: 'sex',
       valueType: 'select',
+      sorter: (a: any, b: any) => a.sex.localeCompare(b.sex),
       fieldProps: { placeholder: '請選擇性別', options: genderInd }
     },
     {
       title: '生日',
       dataIndex: 'birthDate',
       valueType: 'date',
+      sorter: (a: any, b: any) => a.birthDate - b.birthDate,
       fieldProps: {
         format: 'TTT/MM/DD',
       }
