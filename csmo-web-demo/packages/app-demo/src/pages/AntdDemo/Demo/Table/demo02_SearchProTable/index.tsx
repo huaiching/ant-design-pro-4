@@ -168,7 +168,7 @@ const ProTableDemo: React.FC = () => {
           cardProps={false} // 移除外層 Card
           form={{
             component: false, // 移除查詢表單的 Card
-            ignoreRules: false  // 不要忽略欄位驗證規則 (預設忽略)
+            // ignoreRules: false  // 不要忽略欄位驗證規則 (預設忽略)
           }}
           // 自定義無資料要顯示的內容
           locale={{
