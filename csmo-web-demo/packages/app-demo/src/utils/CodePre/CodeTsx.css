@@ -1,0 +1,31 @@
+/* src/components/TsxHighlighter.css */
+.tsx-highlighter {
+  background: #1e1e1e;
+  border-radius: 0 0 6px 6px;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.tsx-code {
+  margin: 0;
+  padding: 16px;
+  color: #d4d4d4;
+}
+
+.tsx-code code {
+  background: none;
+  padding: 0;
+}
+
+.keyword   { color: #569cd6; font-weight: bold; }
+.type      { color: #4ec9b0; }
+.function  { color: #dcdcaa; }
+.string    { color: #ce9178; }
+.comment   { color: #6a9955; opacity: 0.8; }
+.number    { color: #b5cea8; }
+.tag-name  { color: #569cd6; }
+.attr-name { color: #9cdcfe; }
+.bracket   { color: #ffd700; }
+.brace     { color: #d4d4d4; }
