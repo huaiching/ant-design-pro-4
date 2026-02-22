@@ -110,6 +110,13 @@ const DragSortTableExample: React.FC = () => {
           size='small'
           // 數據源
           dataSource={dataSource}
+          // 表格操作選項
+          options={{
+            density: true, // 列表密度
+            fullScreen: true, // 全螢幕
+            reload: requestApi, // 重新載入
+            setting: true // 設定
+          }}
           // 搜尋欄
           search={false}
           // 分頁

@@ -34,7 +34,10 @@ const DateUtile: React.FC = () => {
               { title: '函式', dataIndex: 'method' }
             ]}
             dataSource={[
-              { name: '數字轉成千分位格式的字串', method: 'toSeprator' }
+              { name: '數字轉成千分位格式的字串', method: 'toSeprator(數字)' },
+              { name: '四捨五入', method: 'round(數字, 小數位數)' },
+              { name: '無條件進位', method: 'ceil(數字, 小數位數)' },
+              { name: '無條件捨去', method: 'floor(數字, 小數位數)' },
             ]}
             pagination={false}
           />
@@ -113,7 +116,40 @@ export const currencySelectProps = (currency: string = 'TWD', setCurrency: (valu
       </Select>
     ),
   }
-}`}
+}
+
+/**
+ * 四捨五入
+ * @param value 數字
+ * @param decimals 小數位數，預設 0
+ * @returns 四捨五入後的數字
+ */
+export const round = (value: number, decimals: number = 0): number => {
+  const factor = Math.pow(10, decimals);
+  return Math.round(value * factor) / factor;
+};
+
+/**
+ * 無條件進位
+ * @param value 數字
+ * @param decimals 小數位數，預設 0
+ * @returns 無條件進位後的數字
+ */
+export const ceil = (value: number, decimals: number = 0): number => {
+  const factor = Math.pow(10, decimals);
+  return Math.ceil(value * factor) / factor;
+};
+
+/**
+ * 無條件捨去
+ * @param value 數字
+ * @param decimals 小數位數，預設 0
+ * @returns 無條件捨去後的數字
+ */
+export const floor = (value: number, decimals: number = 0): number => {
+  const factor = Math.pow(10, decimals);
+  return Math.floor(value * factor) / factor;
+};`}
             />
           </details>
 

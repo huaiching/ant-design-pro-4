@@ -4,13 +4,34 @@ import { DeleteOutlined } from '@ant-design/icons'
 import { FooterToolbar, PageContainer } from '@ant-design/pro-components'
 import ProForm, { ProFormInstance } from '@ant-design/pro-form'
 import { EditableProTable, ProColumns } from '@ant-design/pro-table'
-import { Button, message, Popconfirm, Select, Spin, Table } from 'antd'
+import { Button, message, Modal, Popconfirm, Select, Spin, Table } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
+import { fetchAllData } from './Store/dataApi'
+import { currencyProps, round } from '@/utils/FieldUtil/DigitUtil'
 
 const EditableAmountTable: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(false)
   const formRef = useRef<ProFormInstance>()
+  const [loading, setLoading] = useState<boolean>(false)
+
+  // 可編輯的明細資料序號
   const [editableKeys, setEditableKeys] = useState<React.Key[]>([])
+
+  // 查詢 API 設定
+  const requestApi = async () => {
+    const res = await fetchAllData()
+    formRef.current?.setFieldValue('editTable', res)
+    // 設定目前資料列的 id 為可編輯
+    const ids = res.map((item) => item.id)
+    setEditableKeys(ids)
+  }
+
+  // 頁面初始化就要抓取資料
+  useEffect(() => {
+    setLoading(true)
+    requestApi()
+    setLoading(false)
+  }, [])
+
   // 幣別
   const [currency, setCurrency] = useState<string>('TWD')
   formRef.current?.setFieldValue('currency', currency)
@@ -18,18 +39,8 @@ const EditableAmountTable: React.FC = () => {
   const [totalAmount, setTotalAmount] = useState<number>(0)
   formRef.current?.setFieldValue('totalAmount', totalAmount)
 
-  // 初始化假資料
-  useEffect(() => {
-    setLoading(true)
-    const resData = [
-      { id: 1, item: '001', amount: 1000 },
-      { id: 2, item: '003', amount: 50 }
-    ]
-    formRef.current?.setFieldsValue({ editTable: resData })
-    setEditableKeys(resData.map((i) => i.id))
-    setLoading(false)
-  }, [])
-
+  // 下拉選單定義
+  // 幣別
   const currencyOptions = [
     { label: '新台幣', value: 'TWD' },
     { label: '美元', value: 'USD' },
@@ -37,13 +48,14 @@ const EditableAmountTable: React.FC = () => {
     { label: '歐元', value: 'EUR' }
   ]
 
+  // 品項
   const itemOptions = [
     { label: '001 紅茶', value: '001' },
     { label: '002 奶茶', value: '002' },
     { label: '003 咖啡', value: '003' }
   ]
 
-  // 欄位設定
+  // 表格欄位定義
   const columns: ProColumns<any>[] = [
     {
       title: 'ID',
@@ -62,60 +74,105 @@ const EditableAmountTable: React.FC = () => {
       dataIndex: 'item',
       valueType: 'select',
       fieldProps: { options: itemOptions },
-      formItemProps: { rules: [{ required: true, message: '請選擇品項！' }] }
+      formItemProps: {
+        rules: [
+          { required: true, message: '請選擇品項！' }
+        ]
+      }
     },
     {
       title: '金額',
       dataIndex: 'amount',
       valueType: 'digit',
-      fieldProps: (form: any, row: any) => {
-        return {
-          precision: currency === 'TWD' ? 0 : 2,
-          step: currency === 'TWD' ? 1 : 0.01,
-          min: 0,
-          style: { width: 200 },
-          addonAfter: '元',
-          changeOnWheel: true // 滾輪變更數值
-        }
+      fieldProps: {
+        ...currencyProps(currency),
+        style: { width: 200 },
+        addonAfter: '元',
       },
-      formItemProps: { rules: [{ required: true, message: '請輸入金額！' }] }
+      formItemProps: {
+        rules: [
+          { required: true, message: '請輸入金額！' }
+        ]
+      }
     }
   ]
 
   // 控制送出後之動作
   const submitterRender = () => {
-    return {
-      render: () => (
-        <FooterToolbar>
-          <Button
-            type="primary"
-            onClick={async () => {
-              formRef.current?.validateFields().then(() => {
-                // 確認按鈕 點擊後 要進行的 API 操作
-                const editableData = formRef.current?.getFieldValue('editTable')
-                const currency = formRef.current?.getFieldValue('currency')
-                const totalAmount = formRef.current?.getFieldValue('totalAmount')
-                console.info('editableData', editableData)
-                console.info('currency', currency)
-                console.info('totalAmount', totalAmount)
-                message.success('表單提交成功！')
-              })
-            }}
-            key="save"
-          >
-            確認
-          </Button>
-          <Button
-            onClick={async () => {
-              // 取消按鈕 點擊後 要進行的 API 操作
-              message.warning('取消作業')
-            }}
-          >
-            取消
-          </Button>
-        </FooterToolbar>
-      )
-    }
+    Modal.confirm({
+      content: "確定要送出嗎？",
+      onOk() {
+        formRef.current?.validateFields().then(() => {
+          // 取得資料
+          const data = formRef.current?.getFieldValue('editTable')
+          console.info('editableData', data)
+          const currency = formRef.current?.getFieldValue('currency')
+          console.info('currency', currency)
+          const totalAmount = formRef.current?.getFieldValue('totalAmount')
+          console.info('totalAmount', totalAmount)
+          message.success('表單提交成功！')
+        })
+      },
+      onCancel() {
+        // 取消按鈕 點擊後 要進行的 API 操作
+        message.warning('取消作業')
+      }
+    })
+  }
+
+  // 編輯表格的操作區設定
+  const actionRender = (row: any) => [
+    <Popconfirm
+      key="delete"
+      title="確定刪除嗎？"
+      onConfirm={() => {
+        // 取得現有資料
+        const currentData = formRef.current?.getFieldValue('editTable') || []
+        // 過濾刪除該列
+        const newData = currentData.filter((item: any) => item.id !== row.id)
+        // 更新表單欄位資料
+        formRef.current?.setFieldValue('editTable', newData)
+        // 同步更新 editableKeys
+        setEditableKeys(newData.map((item: any) => item.id))
+      }}
+    >
+      <DeleteOutlined style={{ color: 'red' }} />
+    </Popconfirm>
+  ]
+
+  // 工具欄
+  const toolBarRender = () => [
+    <Select
+      key="currency"
+      showSearch
+      placeholder="幣別"
+      options={currencyOptions}
+      onChange={(value) => setCurrency(value)}
+      value={currency}
+      style={{ width: 120 }}
+    />
+  ]
+
+  // 合計欄
+  const summary = () => {
+    // 取得現有資料
+    const dataList = formRef.current?.getFieldValue('editTable') || [];
+    // 計算金額總和
+    let total = 0;
+    dataList.forEach((data: any) => total += data.amount || 0);
+    // 根據幣別設定小數位數
+    const precision = currency === 'TWD' ? 0 : 2;
+    // 四捨五入
+    total = currency === 'TWD' ? round(total, 0) : round(total, 2);
+    setTotalAmount(total);
+
+    return (
+      <Table.Summary.Row>
+        <Table.Summary.Cell index={0}></Table.Summary.Cell>
+        <Table.Summary.Cell index={1}></Table.Summary.Cell>
+        <Table.Summary.Cell index={2}>合計：{total.toFixed(precision)} 元</Table.Summary.Cell>
+      </Table.Summary.Row>
+    );
   }
 
   return (
@@ -124,26 +181,16 @@ const EditableAmountTable: React.FC = () => {
         ghost: true
       }}
     >
-      <ProForm grid layout="vertical" formRef={formRef} submitter={submitterRender()}>
+      <ProForm grid layout="vertical" formRef={formRef} submitter={false}>
         <div style={{ width: '100%' }}>
           <Spin spinning={loading}>
             <EditableProTable
-              name="editTable"
-              columns={columns}
-              rowKey="id"
               headerTitle="金額編輯範例"
+              name="editTable"
+              rowKey="id"
+              columns={columns}
               cardProps={false} // 移除外層 Card
-              toolBarRender={() => [
-                <Select
-                  key="currency"
-                  showSearch
-                  placeholder="幣別"
-                  options={currencyOptions}
-                  onChange={(value) => setCurrency(value)}
-                  value={currency}
-                  style={{ width: 120 }}
-                />
-              ]}
+              size='small'
               // 新增按鈕
               recordCreatorProps={{
                 newRecordType: 'dataSource',
@@ -153,54 +200,23 @@ const EditableAmountTable: React.FC = () => {
                 creatorButtonText: '新增商品',
                 style: { backgroundColor: 'rgba(206, 230, 255, 1)' }
               }}
+              // 工具欄
+              toolBarRender={toolBarRender}
               // 編輯設定
               editable={{
                 type: 'multiple',
                 editableKeys: editableKeys,
                 onChange: setEditableKeys,
-                actionRender: (row) => [
-                  <Popconfirm
-                    key="delete"
-                    title="確定刪除嗎？"
-                    onConfirm={() => {
-                      // 取得現有資料
-                      const currentData = formRef.current?.getFieldValue('editTable') || []
-                      // 過濾刪除該列
-                      const newData = currentData.filter((item: any) => item.id !== row.id)
-                      // 更新表單欄位資料
-                      formRef.current?.setFieldValue('editTable', newData)
-                      // 同步更新 editableKeys
-                      setEditableKeys(newData.map((item: any) => item.id))
-                    }}
-                  >
-                    <DeleteOutlined style={{ color: 'red', cursor: 'pointer', fontSize: 16 }} />
-                  </Popconfirm>
-                ]
+                actionRender: actionRender
               }}
               // 表格合計欄位
-              summary={(pageData) => {
-                // 取得現有資料
-                const dataList = formRef.current?.getFieldValue('editTable') || [];
-                // 計算金額總和
-                let total = 0;
-                dataList.forEach((data: any) => {
-                  total += data.amount || 0;
-                });
-                // 根據幣別設定小數位數
-                const precision = currency === 'TWD' ? 0 : 2;
-                // 四捨五入
-                total = currency === 'TWD' ? Math.round(total) : Math.round(total * 100) / 100;
-                setTotalAmount(total);
-
-                return (
-                  <Table.Summary.Row>
-                    <Table.Summary.Cell index={0}></Table.Summary.Cell>
-                    <Table.Summary.Cell index={1}></Table.Summary.Cell>
-                    <Table.Summary.Cell index={2}>合計：{total.toFixed(precision)} 元</Table.Summary.Cell>
-                  </Table.Summary.Row>
-                );
-              }}
+              summary={summary}
             />
+
+            {/* 底部功能區 */}
+            <FooterToolbar>
+              <Button type='primary' onClick={submitterRender}>送出</Button>
+            </FooterToolbar>
           </Spin>
         </div>
       </ProForm>

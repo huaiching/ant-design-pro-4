@@ -63,3 +63,36 @@ export const currencySelectProps = (currency: string = 'TWD', setCurrency: (valu
     ),
   }
 }
+
+/**
+ * 四捨五入
+ * @param value 數字
+ * @param decimals 小數位數，預設 0
+ * @returns 四捨五入後的數字
+ */
+export const round = (value: number, decimals: number = 0): number => {
+  const factor = Math.pow(10, decimals);
+  return Math.round(value * factor) / factor;
+};
+
+/**
+ * 無條件進位
+ * @param value 數字
+ * @param decimals 小數位數，預設 0
+ * @returns 無條件進位後的數字
+ */
+export const ceil = (value: number, decimals: number = 0): number => {
+  const factor = Math.pow(10, decimals);
+  return Math.ceil(value * factor) / factor;
+};
+
+/**
+ * 無條件捨去
+ * @param value 數字
+ * @param decimals 小數位數，預設 0
+ * @returns 無條件捨去後的數字
+ */
+export const floor = (value: number, decimals: number = 0): number => {
+  const factor = Math.pow(10, decimals);
+  return Math.floor(value * factor) / factor;
+};
