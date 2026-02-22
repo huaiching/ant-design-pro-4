@@ -14,12 +14,12 @@ const PoEdit: React.FC<Props> = ({
     <ConfigProvider componentDisabled={poEdit !== 'edit'}>
       <MliFormRow>
         <ProFormText
-          name={['Q1', 'policyNo']}
+          name={['poChange', 'poData', 'policyNo']}
           label='保單號碼'
           placeholder=''
         />
         <ProFormText
-          name={['Q1', 'poStsCode']}
+          name={['poChange', 'poData', 'poStsCode']}
           label='保單狀態'
           placeholder=''
         />
