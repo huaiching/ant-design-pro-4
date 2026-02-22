@@ -1,74 +1,56 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ProTable, ProColumns, PageContainer, ProForm } from '@ant-design/pro-components'
 import { Card, Descriptions } from 'antd'
-
-/** 假資料 */
-const mockData: PolicyRecord[] = [
-  {
-    policyNo: 'P123456789',
-    poStsCode: 'A1',
-    basicPlanCode: 'H001',
-    basicRateScale: '2',
-    poIssueDate: '112/01/10',
-    o1Name: '王小明',
-    i1Name: '李大華',
-    address: '台北市信義區信義路100號',
-    phone: '0912345678',
-    eMail: 'test@example.com'
-  },
-  {
-    policyNo: 'P987654321',
-    poStsCode: 'B2',
-    basicPlanCode: 'C002',
-    basicRateScale: '3',
-    poIssueDate: '113/03/15',
-    o1Name: '陳美麗',
-    i1Name: '陳小美',
-    address: '新北市板橋區中山路1段123號',
-    phone: '0922333444',
-    eMail: 'meili@example.com'
-  }
-]
-
-/** 資料結構定義 */
-type PolicyRecord = {
-  policyNo: string
-  poStsCode: string
-  basicPlanCode: string
-  basicRateScale: string
-  poIssueDate?: string
-  o1Name?: string
-  i1Name?: string
-  address?: string
-  phone?: string
-  eMail?: string
-}
+import { fetchAllData } from './store/dataApi'
 
 const PolicyTable: React.FC = () => {
-  // 儲存選取的資料
-  const [selectedRow, setSelectedRow] = useState<PolicyRecord>()
 
-  /** 表格欄位定義 */
-  const columns: ProColumns<PolicyRecord>[] = [
+  // ProTable 的 分頁控制
+  const pageSizeOptions = ['5', '10', '20', '50', '100']
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10
+  })
+
+  // 數據源
+  const [dataSource, setDataSource] = useState<any[]>([])
+
+  // 查詢 API 設定
+  const requestApi = async () => {
+    const res = await fetchAllData()
+    setDataSource(res)
+    setPagination(prev => ({ ...prev, current: 1 }))
+  }
+
+  // 初始資料抓取
+  useEffect(() => {
+    requestApi()
+  }, []);
+
+  // 儲存選取的資料
+  const [selectedRow, setSelectedRow] = useState<any>()
+
+  // 表格欄位定義
+  const columns: ProColumns<any>[] = [
     {
       title: '保單號碼',
       dataIndex: 'policyNo',
-      key: 'policyNo'
+      valueType: 'text',
     },
     {
       title: '保單狀態',
       dataIndex: 'poStsCode',
-      key: 'poStsCode'
+      valueType: 'text',
     },
     {
       title: '主約險種代碼',
       dataIndex: 'basicPlanCode',
-      key: 'basicPlanCode'
+      valueType: 'text',
     },
     {
       title: '主約險種版數',
       dataIndex: 'basicRateScale',
-      key: 'basicRateScale'
+      valueType: 'text',
     }
   ]
 
@@ -112,7 +94,8 @@ const PolicyTable: React.FC = () => {
     {
       key: 'address',
       label: '通訊地址',
-      children: selectedRow?.address
+      children: selectedRow?.address,
+      span: 2
     },
     {
       key: 'phone',
@@ -134,13 +117,28 @@ const PolicyTable: React.FC = () => {
     >
       <ProForm submitter={false} layout="vertical">
         {/* 顯示保單主列表 */}
-        <ProTable<PolicyRecord>
-          rowKey='policyNo'     // 唯一鍵
-          columns={columns}     // 表格欄位
-          dataSource={mockData} // 數據實體
+        <ProTable
+          rowKey='policyNo'
+          columns={columns}
           cardProps={false}     //  移除 Card 包裝
-          search={false}        // 關閉搜尋功能
-          pagination={false}    // 關閉分頁功能
+          size='small'
+          // 數據源
+          dataSource={dataSource}
+          // 搜尋列
+          search={false}
+          // 表格配置
+          options={false}
+          // 分頁
+          pagination={{
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            showQuickJumper: true,
+            showSizeChanger: true,
+            pageSizeOptions: pageSizeOptions,
+            onChange: (page, pageSize) => {
+              setPagination({ current: page, pageSize })
+            }
+          }}
           // 點擊行時的事件處理
           onRow={(record) => ({
             onClick: () => setSelectedRow(record)
@@ -156,7 +154,7 @@ const PolicyTable: React.FC = () => {
           <Card title='保單詳細資料' style={{ marginTop: 24 }}>
             <Descriptions
               column={3}
-              // bordered
+              bordered
               items={descriptionItems}
             />
           </Card>
