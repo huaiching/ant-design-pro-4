@@ -15,7 +15,6 @@ const MyForm: React.FC = () => {
       <ProForm
         grid
         layout='vertical'
-        // formRef={formRef}
         submitter={false}
       >
         <MliFormRow gutter={[2, 2]} align='bottom' justify='start'>

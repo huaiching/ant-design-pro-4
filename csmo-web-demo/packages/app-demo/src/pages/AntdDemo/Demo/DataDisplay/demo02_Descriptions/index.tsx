@@ -1,21 +1,13 @@
 import React from 'react'
 import { Descriptions, DescriptionsProps } from 'antd'
-import dayjs from 'dayjs'
 import { PageContainer, ProCard, ProForm } from '@ant-design/pro-components'
-
-// 民國年格式化
-const formatROC = (dateStr: string) => {
-  const date = dayjs(dateStr)
-  const rocYear = (date.year() - 1911).toString().padStart(3, '0')
-  return `${rocYear}/${date.format('MM/DD')}`
-}
 
 // 模擬資料
 const userInfo = {
   name: '王小明',
   gender: '男',
   age: 28,
-  birthday: '2024-01-10',
+  birthday: '114/01/10',
   address: '台北市內湖區石潭路58號6樓'
 }
 
@@ -42,7 +34,7 @@ const items: DescriptionsProps['items'] = [
   {
     key: 'birthday',
     label: '生日',
-    children: formatROC(userInfo.birthday),
+    children: userInfo.birthday,
     span: 1
   },
   {
