@@ -1,0 +1,85 @@
+import { MliFormRow } from '@mli-csmo/base'
+import ProForm, { ProFormText } from '@ant-design/pro-form'
+import { Typography } from 'antd'
+import React from 'react'
+import { PageContainer } from '@ant-design/pro-components'
+
+const MyForm: React.FC = () => {
+
+  return (
+    <PageContainer
+      header={{
+        ghost: true
+      }}
+    >
+      <ProForm
+        grid
+        layout='vertical'
+        // formRef={formRef}
+        submitter={false}
+      >
+        <MliFormRow gutter={[2, 2]} align='bottom' justify='start'>
+          <MliFormRow gutter={[2, 2]} align='bottom' justify='start'>
+            <ProFormText
+              name='failed1_1'
+              colSize={1}
+              initialValue='1'
+              allowClear={false}
+            />
+            {[2, 3, 4].map(i => (
+              <ProFormText
+                key={`failed1_${i}`}
+                name={`failed1_${i}`}
+                colSize={1}
+                initialValue='1'
+                allowClear={false}
+              />
+            ))}
+          </MliFormRow>
+
+          <MliFormRow gutter={[2, 2]} align='bottom' justify='start'>
+            <ProFormText
+              name='failed2_1'
+              colSize={1 / 2}
+              initialValue='1/2'
+              allowClear={false}
+            />
+            {[2, 3, 4, 5, 6, 7, 8].map(i => (
+              <ProFormText
+                key={`failed2_${i}`}
+                name={`failed2_${i}`}
+                colSize={1 / 2}
+                initialValue='1/2'
+                allowClear={false}
+              />
+            ))}
+          </MliFormRow>
+          <MliFormRow gutter={[2, 2]} align='bottom' justify='start'>
+            <ProFormText
+              name='failed3_1'
+              colSize={1 / 3}
+              initialValue='1/3'
+              allowClear={false}
+            />
+            {[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(i => (
+              <ProFormText
+                key={`failed3_${i}`}
+                name={`failed3_${i}`}
+                colSize={1 / 3}
+                initialValue='1/3'
+                allowClear={false}
+              />
+            ))}
+          </MliFormRow>
+        </MliFormRow>
+        <Typography.Text type='danger'>
+          align: 垂直對齊。<br />
+          justify: 水平對齊。<br />
+          gutter: 間距。<br />
+        </Typography.Text>
+      </ProForm>
+    </PageContainer>
+  )
+}
+
+export default MyForm
