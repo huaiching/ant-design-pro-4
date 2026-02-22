@@ -42,6 +42,7 @@ const DateUtile: React.FC = () => {
                 { name: '民國日期字串 轉 Dayjs (年月) ', method: 'rocStringToDayjsMonth' },
                 { name: 'Dayjs 轉 民國日期字串 (年月日) ', method: 'dayjsToRocString' },
                 { name: 'Dayjs 轉 民國日期字串 (年月) ', method: 'dayjsToRocStringMonth' },
+                { name: 'Dayjs 轉 時間字串 ', method: 'dayjsToStringTime' },
               ]}
               pagination={false}
             />
@@ -223,6 +224,19 @@ export const dayjsToRocString = (input: Dayjs | null | undefined) => {
 export const dayjsToRocStringMonth = (input: Dayjs | null | undefined) => {
   if (input) {
     return dayjs(input).isValid() ? dayjs(input).format('TTT/MM') : ''
+  } else {
+    return ''
+  }
+}
+
+/**
+ * Dayjs 轉 時間字串
+ * @param input Dayjs
+ * @returns 時間字串
+ */
+export const dayjsToStringTime = (input: Dayjs | null | undefined) => {
+  if (input) {
+    return dayjs(input).isValid() ? dayjs(input).format('HH:mm:ss') : ''
   } else {
     return ''
   }

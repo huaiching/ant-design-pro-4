@@ -176,3 +176,16 @@ export const dayjsToRocStringMonth = (input: Dayjs | null | undefined) => {
     return ''
   }
 }
+
+/**
+ * Dayjs 轉 時間字串
+ * @param input Dayjs
+ * @returns 時間字串
+ */
+export const dayjsToStringTime = (input: Dayjs | null | undefined) => {
+  if (input) {
+    return dayjs(input).isValid() ? dayjs(input).format('HH:mm:ss') : ''
+  } else {
+    return ''
+  }
+}
