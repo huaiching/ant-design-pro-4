@@ -3,76 +3,62 @@
  * 數據資料 透過 api 取得後，直接放到 dataSource 中
  */
 
-import type { ActionType, ProFormInstance } from '@ant-design/pro-components'
+import type { ProColumns } from '@ant-design/pro-components'
 import { PageContainer, ProForm, ProTable } from '@ant-design/pro-components'
 import { Button, Input, List, message } from 'antd'
 import dayjs from 'dayjs'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import * as poApi from './store/poApi'
+import React, { useEffect, useMemo, useState } from 'react'
+import { fetchAllData } from './store/poApi'
+import { dayjsToRocString, rocStringToDayjs } from '@/utils/Dayjs/rocDateUtils'
 
-// 主表格欄位（保單）
-const policyColumns: any[] = [
-  {
-    title: '保單號碼',
-    dataIndex: 'policyNo',
-    valueType: 'text',
-    sorter: (a: any, b: any) => a.policyNo > b.policyNo
-  },
-  {
-    title: '保單狀態',
-    dataIndex: 'poStsCode',
-    valueType: 'text',
-    filters: [
-      {
-        text: '有效',
-        value: '有效'
-      },
-      {
-        text: '無效',
-        value: '失效'
-      }
-    ],
-    onFilter: (value: any, record: any) => record.poStsCode.includes(value)
-  },
-  {
-    title: '保單生效日',
-    dataIndex: 'poIssueDate',
-    valueType: 'date',
-    fieldProps: {
-      format: 'TTT/MM/DD'
-    },
-    sorter: (a: any, b: any) => dayjs(a.poIssueDate).unix() - dayjs(b.poIssueDate).unix()
-  }
-]
 
 const NestedProTable: React.FC = () => {
-  const formRef = useRef<ProFormInstance>() // 表單參照，讀取/寫入資料
-  const actionRef = useRef<ActionType>() // 表格操作引用（如 reload）
-  const [dataSource, setDataSource] = useState<any[]>([]) // 主表資料
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]) // 勾選中的保單 key
-  const [searchText, setSearchText] = useState('') // 快速搜尋輸入文字狀態
   // ProTable 的 分頁控制
+  const pageSizeOptions = ['5', '10', '20', '50', '100']
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 5
+    pageSize: 10
   })
 
-  // ✅ 頁面初始化：取得資料並設定到 form 與畫面
+  // 數據源
+  const [dataSource, setDataSource] = useState<any[]>([])
+
+  // 查詢 API 設定
+  const requestApi = async () => {
+    const res = await fetchAllData()
+    // 資料格式轉換: 如果有 日期 資料，要轉為 Dayjs 格式，才能正確顯示在 ProTable 的 date 欄位
+    const output = res.map((e: any) => ({
+      ...e,
+      poIssueDate: rocStringToDayjs(e.poIssueDate)
+    }))
+    setDataSource(output)
+    setPagination(prev => ({ ...prev, current: 1 }))
+  }
+
+  // 頁面初始化就要抓取資料
   useEffect(() => {
-    poApi.fetchAllData().then((data) => {
-      // 日期格式轉換
-      const chgData = data.map((e) => ({
-        ...e,
-        poIssueDate: dayjs(e.poIssueDate, 'TTT/MM/DD')
-      }))
-      // 給 table 顯示
-      setDataSource(chgData)
-      // 存入 form 中
-      formRef.current?.setFieldsValue({ policies: chgData })
-    })
+    requestApi()
   }, [])
 
-  // 利用 useMemo 篩選 dataSource ，依 searchText 過濾資料，避免每次渲染都重複計算
+  /** 勾選設定 **/
+  // 記錄勾選的key
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
+  // 勾選導出事件
+  const handleExport = () => {
+    const data = dataSource.filter((item) => selectedRowKeys.includes(item.key))
+    console.info('勾選導出資料：', data)
+    message.success(`已導出 ${data.length} 筆資料到 console`)
+  }
+  // 取消勾選事件
+  const handleCancel = () => {
+    setSelectedRowKeys([]) // 清空勾選
+    message.info('已清空勾選項目')
+  }
+
+  /** 快速搜尋 **/
+  // 快速搜尋輸入文字狀態
+  const [searchText, setSearchText] = useState('')
+  // 快速搜尋的資料分析
   const filteredData = useMemo(() => {
     if (!searchText) return dataSource
     // 將 搜尋文字 轉為 小寫
@@ -82,23 +68,44 @@ const NestedProTable: React.FC = () => {
       (item) =>
         item.policyNo?.toLowerCase().includes(lowerSearch) ||
         item.poStsCode?.toLowerCase().includes(lowerSearch) ||
-        item.poIssueDate?.toString().toLowerCase().includes(lowerSearch)
+        dayjsToRocString(item.poIssueDate)?.toLowerCase().includes(lowerSearch)
     )
   }, [searchText, dataSource])
 
-  // 導出按鈕事件：從 formRef 中取得 policies，再過濾出勾選的
-  const handleExport = () => {
-    const allData: any[] = formRef.current?.getFieldValue('policies') || []
-    const selectedData = allData.filter((item) => selectedRowKeys.includes(item.key))
-    console.info('勾選導出資料：', selectedData)
-    message.success(`已導出 ${selectedData.length} 筆資料到 console`)
-  }
-
-  // 取消按鈕事件
-  const handleCancel = () => {
-    setSelectedRowKeys([]) // 清空勾選
-    message.info('已清空勾選項目')
-  }
+  // 表格欄位定義
+  const columns: ProColumns<any>[] = [
+    {
+      title: '保單號碼',
+      dataIndex: 'policyNo',
+      valueType: 'text',
+      sorter: (a: any, b: any) => a.policyNo.localeCompare(b.policyNo),
+    },
+    {
+      title: '保單狀態',
+      dataIndex: 'poStsCode',
+      valueType: 'text',
+      filters: [
+        {
+          text: '有效',
+          value: '有效'
+        },
+        {
+          text: '無效',
+          value: '失效'
+        }
+      ],
+      onFilter: (value: any, record: any) => record.poStsCode.includes(value)
+    },
+    {
+      title: '保單生效日',
+      dataIndex: 'poIssueDate',
+      valueType: 'date',
+      fieldProps: {
+        format: 'TTT/MM/DD'
+      },
+      sorter: (a: any, b: any) => dayjs(a.poIssueDate).unix() - dayjs(b.poIssueDate).unix()
+    }
+  ]
 
   return (
     <PageContainer
@@ -107,11 +114,9 @@ const NestedProTable: React.FC = () => {
       }}
     >
       <ProForm
-        formRef={formRef} // 表單參考對象（可透過 get/set 取值）
         submitter={false} // 不顯示提交按鈕
         layout="vertical" // 垂直排列表單項目
       >
-        <h2>保單清單</h2>
         <Input
           key="search"
           placeholder="快速搜尋"
@@ -122,18 +127,26 @@ const NestedProTable: React.FC = () => {
         <ProTable
           // headerTitle="保單清單"
           rowKey="key" // 每筆唯一 key
-          actionRef={actionRef} // 表格操作參考
-          columns={policyColumns} // 表格欄位
-          dataSource={filteredData} // 傳入篩選後的資料，實現快速搜尋功能
-          options={false} // 關閉選單
-          search={false} // 關閉搜尋欄
-          // pagination={false} // 關閉分頁
+          columns={columns} // 表格欄位
+          dataSource={filteredData} // 數據源
+          size='small'
+          // 表格配置
+          options={false}
+          // options={{
+          //   density: true, // 列表密度
+          //   fullScreen: true, // 全螢幕
+          //   reload: requestApi, // 重新載入
+          //   setting: true // 設定
+          // }}
+          // 搜尋欄
+          search={false} 
+          // 分頁
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,
             showQuickJumper: true,
             showSizeChanger: true,
-            pageSizeOptions: ['5', '10', '20', '50', '100'],
+            pageSizeOptions: pageSizeOptions,
             onChange: (page, pageSize) => {
               setPagination({ current: page, pageSize })
             }
@@ -160,7 +173,7 @@ const NestedProTable: React.FC = () => {
           /** 使用 tableAlertRender 顯示勾選資料與導出按鈕 */
           tableAlertRender={() => (
             <Button color="danger" variant="filled" onClick={handleExport}>
-              導出數據(console)
+              導出數據
             </Button>
           )}
           /** 使用 tableAlertOptionRender 顯示取消勾選資料 */
