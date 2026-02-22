@@ -5,7 +5,7 @@ import { EditableProTable, ProColumns } from '@ant-design/pro-table'
 import { Button, message, Modal, Popconfirm, Spin } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { fetchAllData } from './Store/dataApi'
-import { rocStringToDayjs } from '@/utils/Dayjs/rocDateUtils'
+import { dayjsToRocString, rocStringToDayjs } from '@/utils/Dayjs/rocDateUtils'
 
 const MyForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>()
@@ -41,12 +41,13 @@ const MyForm: React.FC = () => {
       content: "確定要送出嗎？",
       onOk() {
         formRef.current?.validateFields().then(() => {
-          // 確認按鈕 點擊後 要進行的 API 操作
+          // 取得資料
+          const data = formRef.current?.getFieldValue('editTable')
           // 日期轉換為民國年
-          const editableData = formRef.current?.getFieldValue('editTable')
-          const newData = editableData.map((data: any) => {
+          const newData = data.map((e: any) => {
             return {
-              ...data
+              ...e,
+              birthDate: dayjsToRocString(e.birthDate)
             }
           })
           console.info('editableData', newData)
