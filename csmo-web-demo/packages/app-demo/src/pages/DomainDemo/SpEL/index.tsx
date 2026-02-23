@@ -1,6 +1,6 @@
 import CodeJava from '@/utils/CodePre/CodeJava'
 import { PageContainer } from '@ant-design/pro-components'
-import { Divider, Table, Typography } from 'antd'
+import { Anchor, Col, Divider, Row, Table, Typography } from 'antd'
 
 const { Title, Paragraph } = Typography
 
@@ -8,73 +8,81 @@ const SpELDemo: React.FC = () => {
   return (
     <PageContainer>
       <Typography>
-        <Paragraph>
-          <b>Spring Expression Language (SpEL)</b> 是 Spring 框架提供的 Java 表達式語言， 常用於{' '}
-          <b>動態運算</b> 與 <b>邏輯判斷</b>。
-        </Paragraph>
+        <Row>
+          <Col span={20}>
+            <Paragraph>
+              <b>Spring Expression Language (SpEL)</b> 是 Spring 框架提供的 Java 表達式語言， 常用於{' '}
+              <b>動態運算</b> 與 <b>邏輯判斷</b>。
+            </Paragraph>
 
-        <Title level={2}>語法格式</Title>
+            <Title level={2}>語法格式</Title>
 
-        <Title level={3}>1. 變數</Title>
-        <Paragraph>
-          變數需要使用 <code>Map&lt;String, Object&gt;</code> 保存：
-        </Paragraph>
-        <ul>
-          <li><code>key</code>：變數名稱</li>
-          <li><code>value</code>：變數值</li>
-        </ul>
+            <Title level={3} id="part-1">
+              1. 變數
+            </Title>
+            <Paragraph>
+              變數需要使用 <code>Map&lt;String, Object&gt;</code> 保存：
+            </Paragraph>
+            <ul>
+              <li>
+                <code>key</code>：變數名稱
+              </li>
+              <li>
+                <code>value</code>：變數值
+              </li>
+            </ul>
 
-        <CodeJava
-          code={`Map<String, Object> result = new HashMap<>();
+            <CodeJava
+              code={`Map<String, Object> result = new HashMap<>();
 result.put("age", 30);
 result.put("income", 50000);
 result.put("planClasCode", "9A21");`}
-        />
+            />
 
-        <Title level={3}>2. 基本結構</Title>
+            <Title level={3} id="part-2">
+              2. 基本結構
+            </Title>
 
-        <CodeJava
-          code={`ExpressionParser parser = new SpelExpressionParser();
+            <CodeJava
+              code={`ExpressionParser parser = new SpelExpressionParser();
 EvaluationContext context = new StandardEvaluationContext();
 變數Map.forEach(context::setVariable);
 
 String 判斷式 = "spEL 表達式 ? 符合結果 : 不符合結果";
 結果型態 result = parser.parseExpression(判斷式)
         .getValue(context, 結果型態.class);`}
-        />
+            />
 
-        <Paragraph>
-          <Title level={4}>說明：</Title>
-          <ul>
-            <li>
-              <code>#</code>：代表變數，如 <code>#age</code>
-            </li>
-            <li>判斷式可使用三元運算子</li>
-            <li>
-              <code>getValue()</code> 第二個參數為輸出型態
-            </li>
-            <li>
-              若 結果 為 Boolean，則 可以不使用 三元表達式，直接使用<code>spEL 表達式</code>
-            </li>
-          </ul>
-          <Title level={4}>優化：</Title>
-          <Paragraph>
-            為了提升效能，可將 SpEL 表達式 進行 <b>緩存</b>，避免每次都重新解析：
-          </Paragraph>
-          <CodeJava
-            code={`// SpEL 表達式解析器全局單例: 避免 多次 new 浪費記憶體
+            <Paragraph>
+              <Title level={4}>說明：</Title>
+              <ul>
+                <li>
+                  <code>#</code>：代表變數，如 <code>#age</code>
+                </li>
+                <li>判斷式可使用三元運算子</li>
+                <li>
+                  <code>getValue()</code> 第二個參數為輸出型態
+                </li>
+                <li>
+                  若 結果 為 Boolean，則 可以不使用 三元表達式，直接使用<code>spEL 表達式</code>
+                </li>
+              </ul>
+              <Title level={4}>優化：</Title>
+              <Paragraph>
+                為了提升效能，可將 SpEL 表達式 進行 <b>緩存</b>，避免每次都重新解析：
+              </Paragraph>
+              <CodeJava
+                code={`// SpEL 表達式解析器全局單例: 避免 多次 new 浪費記憶體
 private static final ExpressionParser PARSER = new SpelExpressionParser();
 
 // 表達式緩存
 // - Key: SpEL 檢核規則 字串
 // - Value: 已解析的 Expression 對象
 private final Map<String, Expression> expressionCache = new ConcurrentHashMap<>();`}
-          />
-          <Paragraph>
-            此時，使用下述方法進行 SpEL 表達式 解析
-          </Paragraph>
-          <CodeJava
-            code={`// 從緩存獲取或解析（Key 是完整的 ruleCode）
+              />
+              <Paragraph>此時，使用下述方法進行 SpEL 表達式 解析</Paragraph>
+              <CodeJava
+                code={`// 從緩存獲取或解析（Key 是完整的 ruleCode）
 Expression expression = expressionCache.computeIfAbsent(ruleCode, code -> {
     // 檢查緩存大小，防止無限增長
     if (expressionCache.size() >= 1000) {
@@ -83,12 +91,12 @@ Expression expression = expressionCache.computeIfAbsent(ruleCode, code -> {
     return PARSER.parseExpression(code);
 });
 Boolean result = expression.getValue(context, Boolean.class);`}
-          />
-          <Paragraph>
-            為了避免 緩存無限增長，可在每次新增前，檢查緩存大小，並適當清除舊的緩存資料
-          </Paragraph>
-          <CodeJava
-            code={`private void evictOldestEntries(Map<String, Expression> expressionCache) {
+              />
+              <Paragraph>
+                為了避免 緩存無限增長，可在每次新增前，檢查緩存大小，並適當清除舊的緩存資料
+              </Paragraph>
+              <CodeJava
+                code={`private void evictOldestEntries(Map<String, Expression> expressionCache) {
     int removeCount = 1000 / 5; // 清除 20%
     Iterator<String> iterator = expressionCache.keySet().iterator();
     int removed = 0;
@@ -99,13 +107,13 @@ Boolean result = expression.getValue(context, Boolean.class);`}
     }
     log.info("已清除 {} 個舊的表達式緩存項目", removed);
 }`}
-          />
-        </Paragraph>
+              />
+            </Paragraph>
 
-        <details>
-          <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>範例 (基本用法)</summary>
-          <CodeJava
-            code={`@Service
+            <details>
+              <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>範例 (基本用法)</summary>
+              <CodeJava
+                code={`@Service
 public class SampleSpelService {
     private static final Logger log = LoggerFactory.getLogger(SampleSpelService.class);
 
@@ -152,13 +160,13 @@ public class SampleSpelService {
         return output;
     }
 }`}
-          />
-        </details>
+              />
+            </details>
 
-        <details>
-          <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>範例 (優化)</summary>
-          <CodeJava
-            code={`@Service
+            <details>
+              <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>範例 (優化)</summary>
+              <CodeJava
+                code={`@Service
 public class Demo1Service {
     private static final Logger log = LoggerFactory.getLogger(Demo1Service.class);
 
@@ -244,232 +252,252 @@ public class Demo1Service {
         log.info("已清除 {} 個舊的表達式緩存項目", removed);
     }
 }`}
-          />
-        </details>
+              />
+            </details>
 
-        <Divider />
+            <Divider />
 
-        {/* ======================== 表格內容 ======================== */}
+            {/* ======================== 表格內容 ======================== */}
 
-        <Title level={2}>SpEL 表達式</Title>
-        <Title level={3}>1. 比較運算子</Title>
-        <Table
-          size="small"
-          bordered
-          columns={[
-            { title: '運算子', dataIndex: 'op', width: 100 },
-            { title: '說明', dataIndex: 'desc', width: 120 },
-            { title: '範例', dataIndex: 'example' }
-          ]}
-          dataSource={[
-            { key: 1, op: '==', desc: '等於', example: '#age == 18' },
-            { key: 2, op: '!=', desc: '不等於', example: "#planClasCode != '9A21'" },
-            { key: 3, op: '>', desc: '大於', example: '#income > 30000' },
-            { key: 4, op: '<', desc: '小於', example: '#age < 65' },
-            { key: 5, op: '>=', desc: '大於等於', example: '#age >= 18' },
-            { key: 6, op: '<=', desc: '小於等於', example: '#income <= 100000' }
-          ]}
-          pagination={false}
-        />
+            <Title level={2}>SpEL 表達式</Title>
+            <Title level={3} id="part-3-1">
+              1. 比較運算子
+            </Title>
+            <Table
+              size="small"
+              bordered
+              columns={[
+                { title: '運算子', dataIndex: 'op', width: 100 },
+                { title: '說明', dataIndex: 'desc', width: 120 },
+                { title: '範例', dataIndex: 'example' }
+              ]}
+              dataSource={[
+                { key: 1, op: '==', desc: '等於', example: '#age == 18' },
+                { key: 2, op: '!=', desc: '不等於', example: "#planClasCode != '9A21'" },
+                { key: 3, op: '>', desc: '大於', example: '#income > 30000' },
+                { key: 4, op: '<', desc: '小於', example: '#age < 65' },
+                { key: 5, op: '>=', desc: '大於等於', example: '#age >= 18' },
+                { key: 6, op: '<=', desc: '小於等於', example: '#income <= 100000' }
+              ]}
+              pagination={false}
+            />
 
-        <Divider />
+            <Divider />
 
-        {/* ---------- 算術運算子 ---------- */}
-        <Title level={3}>2. 算術運算子</Title>
-        <Table
-          size="small"
-          bordered
-          columns={[
-            { title: '運算子', dataIndex: 'op', width: 100 },
-            { title: '說明', dataIndex: 'desc', width: 120 },
-            { title: '範例', dataIndex: 'example' }
-          ]}
-          dataSource={[
-            { key: 1, op: '+', desc: '加法', example: '#x + #y == 10' },
-            { key: 2, op: '-', desc: '減法', example: '#x - #y > 0' },
-            { key: 3, op: '*', desc: '乘法', example: '#price * #quantity > 100' },
-            { key: 4, op: '/', desc: '除法', example: '#income / 12' },
-            { key: 5, op: '%', desc: '餘數', example: '#age % 2 == 0' },
-            { key: 6, op: '^', desc: '次方', example: '#x ^ 2 > 25' }
-          ]}
-          pagination={false}
-        />
+            {/* ---------- 算術運算子 ---------- */}
+            <Title level={3} id="part-3-2">
+              2. 算術運算子
+            </Title>
+            <Table
+              size="small"
+              bordered
+              columns={[
+                { title: '運算子', dataIndex: 'op', width: 100 },
+                { title: '說明', dataIndex: 'desc', width: 120 },
+                { title: '範例', dataIndex: 'example' }
+              ]}
+              dataSource={[
+                { key: 1, op: '+', desc: '加法', example: '#x + #y == 10' },
+                { key: 2, op: '-', desc: '減法', example: '#x - #y > 0' },
+                { key: 3, op: '*', desc: '乘法', example: '#price * #quantity > 100' },
+                { key: 4, op: '/', desc: '除法', example: '#income / 12' },
+                { key: 5, op: '%', desc: '餘數', example: '#age % 2 == 0' },
+                { key: 6, op: '^', desc: '次方', example: '#x ^ 2 > 25' }
+              ]}
+              pagination={false}
+            />
 
-        <Divider />
+            <Divider />
 
-        {/* ---------- 邏輯運算子 ---------- */}
-        <Title level={3}>3. 邏輯運算子</Title>
-        <Table
-          size="small"
-          bordered
-          columns={[
-            { title: '運算子', dataIndex: 'op', width: 100 },
-            { title: '說明', dataIndex: 'desc', width: 200 },
-            { title: '範例', dataIndex: 'example' }
-          ]}
-          dataSource={[
-            { key: 1, op: 'and', desc: '且', example: "#age >= 18 and #status == 'OK'" },
-            { key: 2, op: 'or', desc: '或', example: "#status == 'OK' or #count > 0" },
-            {
-              key: 3,
-              op: 'not',
-              desc: '反轉（true ⇄ false）',
-              example: "not (#status == 'OK' or #count > 0)"
-            }
-          ]}
-          pagination={false}
-        />
+            {/* ---------- 邏輯運算子 ---------- */}
+            <Title level={3} id="part-3-3">3. 邏輯運算子</Title>
+            <Table
+              size="small"
+              bordered
+              columns={[
+                { title: '運算子', dataIndex: 'op', width: 100 },
+                { title: '說明', dataIndex: 'desc', width: 200 },
+                { title: '範例', dataIndex: 'example' }
+              ]}
+              dataSource={[
+                { key: 1, op: 'and', desc: '且', example: "#age >= 18 and #status == 'OK'" },
+                { key: 2, op: 'or', desc: '或', example: "#status == 'OK' or #count > 0" },
+                {
+                  key: 3,
+                  op: 'not',
+                  desc: '反轉（true ⇄ false）',
+                  example: "not (#status == 'OK' or #count > 0)"
+                }
+              ]}
+              pagination={false}
+            />
 
-        <Divider />
+            <Divider />
 
-        {/* ---------- 正則 ---------- */}
-        <Title level={3}>4. 正則比對</Title>
-        <Table
-          size="small"
-          bordered
-          columns={[
-            { title: '運算子', dataIndex: 'op', width: 120 },
-            { title: '說明', dataIndex: 'desc', width: 200 },
-            { title: '範例', dataIndex: 'example' }
-          ]}
-          dataSource={[
-            {
-              key: 1,
-              op: 'matches',
-              desc: '正則運算式比對',
-              example: "#email matches '^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$'"
-            }
-          ]}
-          pagination={false}
-        />
+            {/* ---------- 正則 ---------- */}
+            <Title level={3} id="part-3-4">4. 正則比對</Title>
+            <Table
+              size="small"
+              bordered
+              columns={[
+                { title: '運算子', dataIndex: 'op', width: 120 },
+                { title: '說明', dataIndex: 'desc', width: 200 },
+                { title: '範例', dataIndex: 'example' }
+              ]}
+              dataSource={[
+                {
+                  key: 1,
+                  op: 'matches',
+                  desc: '正則運算式比對',
+                  example: "#email matches '^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$'"
+                }
+              ]}
+              pagination={false}
+            />
 
-        <Divider />
+            <Divider />
 
-        {/* ---------- 集合 ---------- */}
-        <Title level={3}>5. 集合操作</Title>
-        <Table
-          size="small"
-          bordered
-          columns={[
-            { title: '用法', dataIndex: 'usage', width: 200 },
-            { title: '說明', dataIndex: 'desc', width: 200 },
-            { title: '範例', dataIndex: 'example' }
-          ]}
-          dataSource={[
-            { key: 1, usage: '集合變數[index]', desc: '取得指定索引的元素', example: '#list[0]' },
-            { key: 2, usage: 'size()', desc: '取得集合長度', example: '#list.size()' },
-            { key: 3, usage: 'contains()', desc: '是否包含元素', example: "#list.contains('A')" },
-          ]}
-          pagination={false}
-        />
+            {/* ---------- 集合 ---------- */}
+            <Title level={3} id="part-3-5">5. 集合操作</Title>
+            <Table
+              size="small"
+              bordered
+              columns={[
+                { title: '用法', dataIndex: 'usage', width: 200 },
+                { title: '說明', dataIndex: 'desc', width: 200 },
+                { title: '範例', dataIndex: 'example' }
+              ]}
+              dataSource={[
+                {
+                  key: 1,
+                  usage: '集合變數[index]',
+                  desc: '取得指定索引的元素',
+                  example: '#list[0]'
+                },
+                { key: 2, usage: 'size()', desc: '取得集合長度', example: '#list.size()' },
+                {
+                  key: 3,
+                  usage: 'contains()',
+                  desc: '是否包含元素',
+                  example: "#list.contains('A')"
+                }
+              ]}
+              pagination={false}
+            />
 
-        <Divider />
+            <Divider />
 
-        {/* ---------- 集合 ---------- */}
-        <Title level={3}>6. 選擇運算子</Title>
-        <ul>
-          <li>遍歷集合</li>
-          <li>篩選符合條件的元素</li>
-          <li>回傳子集合</li>
-        </ul>
+            {/* ---------- 集合 ---------- */}
+            <Title level={3} id="part-3-6">6. 選擇運算子</Title>
+            <ul>
+              <li>遍歷集合</li>
+              <li>篩選符合條件的元素</li>
+              <li>回傳子集合</li>
+            </ul>
 
-        <Table
-          size="small"
-          bordered
-          columns={[
-            { title: '用法', dataIndex: 'usage', width: 200 },
-            { title: '說明', dataIndex: 'desc', width: 200 },
-            { title: '範例', dataIndex: 'example' }
-          ]}
-          dataSource={[
-            { key: 1, usage: '集合變數.?[檢核條件]', desc: '對集合內元素遍歷進行檢核，會回傳命中的集合清單', example: "#changeNew.?[functionInd MATCHES '[YX]' AND (flatRatingAmt > 0 OR multiRating1 > 0)]" }
-          ]}
-          pagination={false}
-        />
+            <Table
+              size="small"
+              bordered
+              columns={[
+                { title: '用法', dataIndex: 'usage', width: 200 },
+                { title: '說明', dataIndex: 'desc', width: 200 },
+                { title: '範例', dataIndex: 'example' }
+              ]}
+              dataSource={[
+                {
+                  key: 1,
+                  usage: '集合變數.?[檢核條件]',
+                  desc: '對集合內元素遍歷進行檢核，會回傳命中的集合清單',
+                  example:
+                    "#changeNew.?[functionInd MATCHES '[YX]' AND (flatRatingAmt > 0 OR multiRating1 > 0)]"
+                }
+              ]}
+              pagination={false}
+            />
 
-        <Divider />
+            <Divider />
 
-        {/* ---------- 函式 ---------- */}
-        <Title level={3}>7. 函式</Title>
-        <Table
-          size="small"
-          bordered
-          columns={[
-            { title: '函式', dataIndex: 'func', width: 200 },
-            { title: '說明', dataIndex: 'desc', width: 150 },
-            { title: '範例', dataIndex: 'example' }
-          ]}
-          dataSource={[
-            { key: 1, func: 'toUpperCase()', desc: '轉為大寫', example: '#name.toUpperCase()' },
-            { key: 2, func: 'toLowerCase()', desc: '轉為小寫', example: '#name.toLowerCase()' },
-            {
-              key: 3,
-              func: 'substring(start,end)',
-              desc: '擷取字串',
-              example: '#name.substring(0,2)'
-            },
-            { key: 4, func: 'isEmpty()', desc: '是否為空字串', example: '#name.isEmpty()' },
-            {
-              key: 5,
-              func: 'contains(text)',
-              desc: '是否包含指定文字',
-              example: "#planClasCode.contains('9A')"
-            },
-            {
-              key: 6,
-              func: 'startsWith(text)',
-              desc: '字首比對',
-              example: "#planClasCode.startsWith('9')"
-            },
-            {
-              key: 7,
-              func: 'endsWith(text)',
-              desc: '字尾比對',
-              example: "#planClasCode.endsWith('1')"
-            }
-          ]}
-          pagination={false}
-        />
+            {/* ---------- 函式 ---------- */}
+            <Title level={3} id="part-3-7">7. 函式</Title>
+            <Table
+              size="small"
+              bordered
+              columns={[
+                { title: '函式', dataIndex: 'func', width: 200 },
+                { title: '說明', dataIndex: 'desc', width: 150 },
+                { title: '範例', dataIndex: 'example' }
+              ]}
+              dataSource={[
+                { key: 1, func: 'toUpperCase()', desc: '轉為大寫', example: '#name.toUpperCase()' },
+                { key: 2, func: 'toLowerCase()', desc: '轉為小寫', example: '#name.toLowerCase()' },
+                {
+                  key: 3,
+                  func: 'substring(start,end)',
+                  desc: '擷取字串',
+                  example: '#name.substring(0,2)'
+                },
+                { key: 4, func: 'isEmpty()', desc: '是否為空字串', example: '#name.isEmpty()' },
+                {
+                  key: 5,
+                  func: 'contains(text)',
+                  desc: '是否包含指定文字',
+                  example: "#planClasCode.contains('9A')"
+                },
+                {
+                  key: 6,
+                  func: 'startsWith(text)',
+                  desc: '字首比對',
+                  example: "#planClasCode.startsWith('9')"
+                },
+                {
+                  key: 7,
+                  func: 'endsWith(text)',
+                  desc: '字尾比對',
+                  example: "#planClasCode.endsWith('1')"
+                }
+              ]}
+              pagination={false}
+            />
 
-        <Divider />
+            <Divider />
 
-        {/* ======================== 物件資料 ======================== */}
+            {/* ======================== 物件資料 ======================== */}
 
-        <Title level={3}>8. 物件資料</Title>
-        <Paragraph>
-          SpEL 不僅可操作基本型別，也能直接使用 <code>物件 (DTO)</code> 中的屬性。 <br />
-          當變數為物件時，可透過 <code>#變數.屬性</code> 方式存取屬性值，甚至支援 巢狀屬性存取（如{' '}
-          <code>#user.department.name</code>）。
-        </Paragraph>
-        <ul>
-          <li>
-            安全導向運算子 <code>?.</code> <br />
-            當物件屬性可能為 <code>null</code> 時，若直接使用 <code>#user.deptName</code>，會拋出{' '}
-            <code>NullPointerException</code>。 <br />
-            此時可使用 安全運算子 <code>#user?.name</code> 來避免異常，讓表達式會回傳{' '}
-            <code>null</code>。
-          </li>
-        </ul>
+            <Title level={3} id="part-3-8">8. 物件資料</Title>
+            <Paragraph>
+              SpEL 不僅可操作基本型別，也能直接使用 <code>物件 (DTO)</code> 中的屬性。 <br />
+              當變數為物件時，可透過 <code>#變數.屬性</code> 方式存取屬性值，甚至支援
+              巢狀屬性存取（如 <code>#user.department.name</code>）。
+            </Paragraph>
+            <ul>
+              <li>
+                安全導向運算子 <code>?.</code> <br />
+                當物件屬性可能為 <code>null</code> 時，若直接使用 <code>#user.deptName</code>
+                ，會拋出 <code>NullPointerException</code>。 <br />
+                此時可使用 安全運算子 <code>#user?.name</code> 來避免異常，讓表達式會回傳{' '}
+                <code>null</code>。
+              </li>
+            </ul>
 
-        <details>
-          <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>範例</summary>
-          <ul>
-            <li>
-              DTO
-              <CodeJava
-                code={`public class UserDto {
+            <details>
+              <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>範例</summary>
+              <ul>
+                <li>
+                  DTO
+                  <CodeJava
+                    code={`public class UserDto {
     private String userCode;
     private String userName;
     private String userDept;
 
     // Getter / Setter 省略
 }`}
-              />
-            </li>
-            <li>
-              取值範例
-              <CodeJava
-                code={`Map<String, Object> dataMap = new HashMap<>();
+                  />
+                </li>
+                <li>
+                  取值範例
+                  <CodeJava
+                    code={`Map<String, Object> dataMap = new HashMap<>();
 dataMap.put("user", new UserDto("ABC001", "測試人員", "90250"));
 
 ExpressionParser parser = new SpelExpressionParser();
@@ -480,12 +508,12 @@ String userCode = parser.parseExpression("#user.userCode")
         .getValue(context, String.class);
 
 System.out.println(userCode); // 輸出：ABC001`}
-              />
-            </li>
-            <li>
-              判斷範例
-              <CodeJava
-                code={`Map<String, Object> dataMap = new HashMap<>();
+                  />
+                </li>
+                <li>
+                  判斷範例
+                  <CodeJava
+                    code={`Map<String, Object> dataMap = new HashMap<>();
 dataMap.put("user", new UserDto("ABC001", "測試人員", "90250"));
 
 ExpressionParser parser = new SpelExpressionParser();
@@ -497,28 +525,28 @@ String result = parser.parseExpression(rule)
         .getValue(context, String.class);
 
 System.out.println(result); // 輸出：同部門`}
-              />
-            </li>
-          </ul>
-        </details>
+                  />
+                </li>
+              </ul>
+            </details>
 
-        <Divider />
+            <Divider />
 
-        {/* ======================== 數值運算 ======================== */}
+            {/* ======================== 數值運算 ======================== */}
 
-        <Title level={3}>9. 數值計算</Title>
-        <Paragraph>spEL 表達式 可以用來進行 數值計算，並且 可以使用 JAVA 的函式</Paragraph>
+            <Title level={3} id="part-3-9">9. 數值計算</Title>
+            <Paragraph>spEL 表達式 可以用來進行 數值計算，並且 可以使用 JAVA 的函式</Paragraph>
 
-        <Title level={4}>語法</Title>
-        <CodeJava code={`T(import).函式名稱(輸入參數)`} />
+            <Title level={4}>語法</Title>
+            <CodeJava code={`T(import).函式名稱(輸入參數)`} />
 
-        <Title level={4}>範例</Title>
-        <CodeJava code={`T(java.lang.Math).max(#V001, #V002)`} />
+            <Title level={4}>範例</Title>
+            <CodeJava code={`T(java.lang.Math).max(#V001, #V002)`} />
 
-        <details>
-          <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>完整範例</summary>
-          <CodeJava
-            code={`@Service
+            <details>
+              <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>完整範例</summary>
+              <CodeJava
+                code={`@Service
 public class Demo3Service {
     private static final Logger log = LoggerFactory.getLogger(Demo3Service.class);
 
@@ -599,32 +627,32 @@ public class Demo3Service {
         log.info("已清除 {} 個舊的表達式緩存項目", removed);
     }
 }`}
-          />
-        </details>
+              />
+            </details>
 
-        <Divider />
+            <Divider />
 
-        {/* ======================== 自製函式 ======================== */}
+            {/* ======================== 自製函式 ======================== */}
 
-        <Title level={3}>10. 使用 自製函式</Title>
-        <Paragraph>
-          spEL 表達式 可以使用 自製的函式，但需要進行函式註冊，且 需要 <code>try-catch</code>。{' '}
-          <br />
-        </Paragraph>
+            <Title level={3} id="part-3-10">10. 使用 自製函式</Title>
+            <Paragraph>
+              spEL 表達式 可以使用 自製的函式，但需要進行函式註冊，且 需要 <code>try-catch</code>。{' '}
+              <br />
+            </Paragraph>
 
-        <Title level={4}>註冊 自製函式</Title>
-        <CodeJava
-          code={`Method calcMethod = 自製函式程式.class.getDeclaredMethod("自製函式名稱", 輸入參數型態.class, ...);
+            <Title level={4}>註冊 自製函式</Title>
+            <CodeJava
+              code={`Method calcMethod = 自製函式程式.class.getDeclaredMethod("自製函式名稱", 輸入參數型態.class, ...);
 context.registerFunction("自製函式名稱", calcMethod);`}
-        />
+            />
 
-        <Title level={4}>使用 自製函式</Title>
-        <CodeJava code={`#自製函式名稱(參數...)`} />
+            <Title level={4}>使用 自製函式</Title>
+            <CodeJava code={`#自製函式名稱(參數...)`} />
 
-        <details>
-          <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>範例</summary>
-          <CodeJava
-            code={`@Service
+            <details>
+              <summary style={{ fontSize: '1.5em', fontWeight: 'bold' }}>範例</summary>
+              <CodeJava
+                code={`@Service
 public class Demo4Service {
     private static final Logger log = LoggerFactory.getLogger(Demo4Service.class);
 
@@ -722,8 +750,29 @@ public class Demo4Service {
         log.info("已清除 {} 個舊的表達式緩存項目", removed);
     }
 }`}
-          />
-        </details>
+              />
+            </details>
+          </Col>
+          <Col span={4}>
+            <Anchor
+              offsetTop={64} // 距離頂部的像素
+              items={[
+                { key: 'part-1', href: '#part-1', title: '變數' },
+                { key: 'part-2', href: '#part-2', title: '基本結構' },
+                { key: 'part-3-1', href: '#part-3-1', title: '表達式 - 比較運算子' },
+                { key: 'part-3-2', href: '#part-3-2', title: '表達式 - 算術運算子' },
+                { key: 'part-3-3', href: '#part-3-3', title: '表達式 - 邏輯運算子' },
+                { key: 'part-3-4', href: '#part-3-4', title: '表達式 - 正則比對' },
+                { key: 'part-3-5', href: '#part-3-5', title: '表達式 - 集合操作' },
+                { key: 'part-3-5', href: '#part-3-6', title: '表達式 - 選擇運算子' },
+                { key: 'part-3-7', href: '#part-3-7', title: '表達式 - 函式' },
+                { key: 'part-3-8', href: '#part-3-8', title: '表達式 - 物件資料' },
+                { key: 'part-3-9', href: '#part-3-9', title: '表達式 - 數值計算' },
+                { key: 'part-3-10', href: '#part-3-10', title: '表達式 - 使用 自製函式' },
+              ]}
+            />
+          </Col>
+        </Row>
       </Typography>
     </PageContainer>
   )
